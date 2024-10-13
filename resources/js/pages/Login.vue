@@ -2,20 +2,41 @@
 export default {
   name: "Login",
   data() {
-    return {};
+    return {
+      user: {
+        email: "",
+        password: "",
+      },
+      errors: {},
+    };
   },
-  methods: {},
+  methods: {
+    submit() {
+      axios
+        .post("/api/login", this.user)
+        .then(() => {
+          this.$router.push({ name: "dashboard" });
+        })
+        .catch((err) => {
+          this.errors = err.response.data.errors;
+        });
+    },
+  },
 };
 </script>
 <template>
   <h2>Login</h2>
-  <form @submit.prevent="">
-    <label for="name">name</label>
-    <input type="text" id="name" name="name" />
+  <form @submit.prevent="submit">
+    <!-- -- -->
     <label for="email">email</label>
-    <input type="email" id="email" name="email" />
+    <input type="email" id="email" name="email" v-model="user.email" />
     <label for="password">password</label>
-    <input type="password" id="password" name="password" />
+    <input
+      type="password"
+      id="password"
+      name="password"
+      v-model="user.password"
+    />
     <button type="submit">submit</button>
   </form>
 </template>
