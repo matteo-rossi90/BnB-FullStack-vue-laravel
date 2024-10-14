@@ -24,3 +24,4 @@ Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionControlle
 
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class , 'store']);
+

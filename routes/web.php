@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 // nel path della root in assenza di caratteri dopo / o caratteri sbagliati, la route reindirizza alla pagina app di vue
-Route::get('/{any}', function () {
+Route::get('/', function () {
     return view('welcome');
-})->where('any', '.*');
+});
+// Route::get('/{any}', function () {
+//     return view('welcome');
+// })->where('any', '.*');
