@@ -5,7 +5,18 @@ export default {
   data() {
     return {
          apartment:{
-             title:""
+             title:"",
+             address:"",
+             lat:"",
+             lon:"",
+             number_rooms:"",
+             number_beds:"",
+             number_bathrooms:"",
+             original_name:"",
+             image:"",
+             square_meters:"",
+
+
          },
         errors: {},
     };
@@ -41,24 +52,130 @@ export default {
                 <div class="modal-dialog">
                     <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Dati Appartamento</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form>
                         <div class="mb-3">
-                            <label for="recipient-name" class="col-form-label">Recipient:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <label for="title" class="col-form-label">Nome appartamento:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="title"
+                              name="title"
+                              maxlength="500"
+                              required
+
+                              >
                         </div>
                         <div class="mb-3">
-                            <label for="message-text" class="col-form-label">Message:</label>
-                            <textarea class="form-control" id="message-text"></textarea>
+                            <label for="address" class="col-form-label">Indirizzo:</label>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="address"
+                              name="address"
+                              required
+
+                              >
+
                         </div>
-                        </form>
-                    </div>
+                        <div class="mb-3">
+                            <label for="lat" class="col-form-label">latitudine:</label>
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="lat"
+                              name="lat"
+                              disabled
+                              >
+                        </div>
+                        <div class="mb-3">
+                            <label for="lon" class="col-form-label">longitudine:</label>
+                           <input
+                              type="text"
+                              class="form-control"
+                              id="lon"
+                              name="lon"
+                              disabled
+                              >
+                        </div>
+                        <div class="mb-3">
+                            <label for="number_rooms" class="col-form-label">numero stanze:</label>
+                           <input
+                              type="number"
+                              class="form-control"
+                              id="number_rooms"
+                              name="number_rooms"
+                              min="1"
+                              max="65535"
+                              required
+
+
+                              >
+                        </div>
+                        <div class="mb-3">
+                            <label for="number_beds" class="col-form-label">numero letti:</label>
+                           <input
+                              type="number"
+                              class="form-control"
+                              id="number_beds"
+                              name="number_beds"
+                              min="0"
+                              max="65535"
+                              required
+
+
+                              >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="number_bathrooms" class="col-form-label">numero bagni:</label>
+                           <input
+                              type="number"
+                              class="form-control"
+                              id="number_bathrooms"
+                              name="number_bathrooms"
+                              min="0"
+                              max="65535"
+                              required
+
+
+                              >
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="square_meters" class="col-form-label">metri quadri:</label>
+                           <input
+                              type="number"
+                              class="form-control"
+                              id="square_meters"
+                              name="square_meters"
+                              min="0"
+                              max="65535"
+                              required
+                              >
+                        </div>
+                        <div class="input-group mb-3">
+                            <input
+                              type="file"
+                              class="form-control"
+                              id="image"
+                              name="image"
+                              required
+                              >
+                            <label class="input-group-text" for="image">carica</label>
+                        </div>
+
+
+
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Send message</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">chiudi</button>
+                        <button type="submit" class="btn btn-dark">inserisci appartamento</button>
+                    </div>
+
+                        </form>
                     </div>
                     </div>
                 </div>
