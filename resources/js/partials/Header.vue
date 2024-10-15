@@ -158,8 +158,10 @@ header {
   }
 }
 p,
-.profile {
+.profile,
+.link {
   margin: 0;
+  padding: 0;
 }
 
 .disactive {
