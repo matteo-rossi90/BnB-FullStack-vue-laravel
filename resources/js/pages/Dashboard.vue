@@ -7,11 +7,21 @@ export default {
     };
   },
   methods: {},
-  mounted() {},
+  mounted() {
+        axios
+    .get("/api/user")
+    .then((res) => {
+        console.log(res);
+        this.name = res.data.name;
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+  },
 };
 </script>
 <template>
-  <h1>Dashboard di</h1>
+  <h1>Dashboard di {{ name }}</h1>
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
