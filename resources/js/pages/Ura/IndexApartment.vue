@@ -1,6 +1,6 @@
 <script>
 export default {
-  name: "Dashboard",
+  name: "IndexApartment",
   data() {
     return {
       name: "",
@@ -40,7 +40,7 @@ export default {
     </aside>
     <div id="dashboard-box">
       <div class="container my-3">
-        <h1>Dashboard di {{ name }}</h1>
+        <h2>I miei appartamenti</h2>
 
         <table class="table">
           <thead>
@@ -84,7 +84,7 @@ export default {
 </template>
 <style lang='scss' scoped>
 .wrapper {
-  height: calc(100vh - 24px);
+  height: calc(100vh - 48px);
   width: 100%;
   overflow: hidden;
 }
