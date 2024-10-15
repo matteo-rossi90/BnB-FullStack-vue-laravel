@@ -19,16 +19,8 @@
 </head>
 
 <body>
-    <div id="app">
 
-    </div>
-    <p>Matteo</p>
-    <p>Ludo</p>
-    <div class="container">
-
-        <h1 class="p-5">PD (Vincenzo) test branch</h1>
-    </div>
-    <p>Ale</p>
+    <div id="app"></div>
 
 </body>
 
