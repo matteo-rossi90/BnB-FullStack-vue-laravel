@@ -4,6 +4,7 @@ import Home from '../pages/Home.vue'
 import Login from '../pages/Login.vue'
 import Register from '../pages/Register.vue'
 import Dashboard from '../pages/Dashboard.vue'
+import CreateApartment from '../pages/Ura/CreateApartment.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -20,7 +21,7 @@ const router = createRouter({
             component: Login
         },
         {
-            path: '/register',
+            path: '/registrati',
             name: 'register',
             component: Register
         },
@@ -28,6 +29,11 @@ const router = createRouter({
             path: '/dashboard',
             name: 'dashboard',
             component: Dashboard
+        },
+        {
+            path: '/nuovo-appartamento',
+            name: 'createApartment',
+            component: CreateApartment
         },
 
     ]

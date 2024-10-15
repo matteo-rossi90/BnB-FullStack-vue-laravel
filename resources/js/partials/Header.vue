@@ -22,7 +22,6 @@ export default {
     axios
       .get("/api/user")
       .then((response) => {
-        console.log(response);
         this.name = response.data.name;
       })
       .catch((err) => {
@@ -33,11 +32,31 @@ export default {
 </script>
 <template>
   <header>
-    <router-link :to="{ name: 'home' }">home</router-link>
-    <router-link :to="{ name: 'login' }">login</router-link>
-    <router-link :to="{ name: 'register' }">register</router-link>
-    <router-link :to="{ name: 'dashboard' }">dashboard</router-link>
-    <a href="#" @click="logout">Logout {{ name }}</a>
+    <nav>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h2>logo</h2>
+          </div>
+          <div class="col">
+            <router-link class="link" :to="{ name: 'home' }">home</router-link>
+            <router-link class="link" :to="{ name: 'login' }"
+              >login</router-link
+            >
+            <router-link class="link" :to="{ name: 'register' }"
+              >register</router-link
+            >
+            <router-link class="link" :to="{ name: 'dashboard' }"
+              >dashboard</router-link
+            >
+            <router-link class="link" :to="{ name: 'createApartment' }"
+              >create apartment</router-link
+            >
+            <a href="#" @click="logout">Logout {{ name }}</a>
+          </div>
+        </div>
+      </div>
+    </nav>
   </header>
 </template>
 <style lang="scss" scoped>
