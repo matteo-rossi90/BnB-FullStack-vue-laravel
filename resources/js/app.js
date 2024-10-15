@@ -4,6 +4,8 @@ import '../scss/_general.scss'
 import { createApp } from 'vue';
 import router from './router/index';
 
+import '../scss/_variables.scss';
+
 // Importa i core di FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
 

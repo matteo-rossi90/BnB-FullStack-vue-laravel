@@ -1,6 +1,11 @@
 <script>
+import Routinglist from './partials/Routinglist.vue';
+import routinglist from './partials/Routinglist.vue';
 export default {
   name: "IndexApartment",
+  components:{
+    routinglist
+  },
   data() {
     return {
       name: "",
@@ -34,9 +39,7 @@ export default {
 <template>
   <div class="wrapper d-flex">
     <aside>
-      <ul>
-        <li>I miei appartamenti</li>
-      </ul>
+        <routinglist />
     </aside>
     <div id="dashboard-box">
       <div class="container my-3">
@@ -83,6 +86,9 @@ export default {
   </div>
 </template>
 <style lang='scss' scoped>
+
+@use '../../../scss/variables' as *;
+
 .wrapper {
   height: calc(100vh - 48px);
   width: 100%;
@@ -90,9 +96,9 @@ export default {
 }
 
 aside {
-  width: 200px;
+  width: 350px;
   height: 100%;
-  background-color: rgb(219, 219, 219);
+  border-right: 1px solid $color;
 }
 
 #dashboard-box {
