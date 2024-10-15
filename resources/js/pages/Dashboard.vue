@@ -36,11 +36,6 @@ export default {
     <aside>
       <ul>
         <li>I miei appartamenti</li>
-        <li>
-          <router-link class="link" :to="{ name: 'createApartment' }"
-            >create apartment</router-link
-          >
-        </li>
       </ul>
     </aside>
     <div id="dashboard-box">
