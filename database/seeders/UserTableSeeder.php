@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
     {
         $users = ['Ludovico', 'Tommaso', 'Vincenzo', 'Matteo', 'Alessandra'];
 
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $new_user = new User();
             $new_user->name = $user;
             $new_user->email = $user . '@admin.com';
