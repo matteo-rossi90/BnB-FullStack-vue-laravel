@@ -19,7 +19,6 @@ export default {
     axios
       .get("/api/user")
       .then((res) => {
-        // console.log(res);
         this.name = res.data.name;
       })
       .catch((err) => {
@@ -29,7 +28,6 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        console.log(response);
         this.apartments = response.data;
       })
       .catch((err) => {
@@ -43,8 +41,8 @@ export default {
     <aside>
         <routinglist />
     </aside>
-    <div id="dashboard-box">
-      <div class="container my-3">
+    <div class="dashboard-box">
+      <div class="container-fluid my-3">
         <h1>Dashboard di {{ name }}</h1>
       </div>
     </div>
@@ -53,22 +51,7 @@ export default {
 <style lang='scss' scoped>
 
 @use '../../../scss/variables' as *;
-
-.wrapper {
-  height: calc(100vh - 48px);
-  width: 100%;
-  overflow: hidden;
-}
-
-aside {
-  width: 350px;
-  height: 100%;
-  border-right: 1px solid $color;
-}
-
-#dashboard-box {
-  width: 100%;
-}
+@use '../../../scss/dashboard' as *;
 
 // @use 'path' as *;
 </style>
