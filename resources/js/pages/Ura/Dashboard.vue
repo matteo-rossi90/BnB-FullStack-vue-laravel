@@ -1,6 +1,8 @@
 <script>
-import IndexApartment from './Ura/IndexApartment.vue';
+import IndexApartment from './IndexApartment.vue';
+
 export default {
+
   name: "Dashboard",
   components:{
     IndexApartment
