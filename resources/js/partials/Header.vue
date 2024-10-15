@@ -3,10 +3,14 @@ export default {
   name: "Header",
   data() {
     return {
+      // name user
       name: "",
+      //   boolean dropdown
+      is_open: false,
     };
   },
   methods: {
+    // call axios for logout
     logout() {
       axios
         .post("/api/logout")
@@ -16,6 +20,10 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    openDrop() {
+      this.is_open = this.is_open ? false : true;
+      console.log(this.is_open);
     },
   },
   mounted() {
@@ -27,6 +35,11 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+    window.addEventListener("click", () => {
+      if (this.is_open) {
+        this.is_open = false;
+      }
+    });
   },
 };
 </script>
@@ -52,14 +65,14 @@ export default {
             <router-link class="link" :to="{ name: 'createApartment' }"
               >create apartment</router-link
             >
-            <div class="contDropDown">
+            <div class="contDropDown" @click.stop="openDrop()">
               <div
                 class="profile d-flex justify-content-between align-items-center gap-1"
               >
                 <p>{{ name }}</p>
                 <font-awesome-icon :icon="['fas', 'caret-down']" />
               </div>
-              <div class="dropDown">
+              <div class="dropDown" :class="{ active: is_open }">
                 <a href="#" class="link" @click="logout">Logout </a>
               </div>
             </div>
@@ -74,6 +87,7 @@ export default {
 header {
   display: flex;
   gap: 1rem;
+  z-index: 100;
   nav {
     width: 100%;
     height: 100%;
@@ -102,6 +116,10 @@ header {
         flex-direction: column;
         align-items: center;
         border-radius: 20px;
+        display: none;
+      }
+      .dropDown.active {
+        display: block;
       }
     }
   }
