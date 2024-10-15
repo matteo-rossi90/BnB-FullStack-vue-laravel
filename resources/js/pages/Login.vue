@@ -20,16 +20,7 @@ export default {
         .post("/api/login", this.user)
         .then(() => {
           store.is_logged = true;
-          // get a data of user
-          axios
-            .get("/api/user")
-            .then((response) => {
-              store.user = response.data;
-              console.log(response.data);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+
           this.$router.push({ name: "home" });
         })
         .catch((err) => {

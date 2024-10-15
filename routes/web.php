@@ -18,5 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/{any}', function () {
-    abort(404);
+    return view('welcome');
 })->where('any', '.*');

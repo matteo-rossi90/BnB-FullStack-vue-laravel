@@ -28,16 +28,7 @@ export default {
         .post("/api/register", this.user)
         .then(() => {
           store.is_logged = true;
-          // get a data of user
-          axios
-            .get("/api/user")
-            .then((response) => {
-              store.user = response.data;
-              console.log(response.data.name);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+
           this.$router.push({ name: "home" });
         })
         .catch((err) => {

@@ -1,4 +1,5 @@
 <script>
+import { store } from "./store/store.js";
 import Header from "./partials/Header.vue";
 import Footer from "./partials/Footer.vue";
 export default {
@@ -10,7 +11,17 @@ export default {
     Header,
     Footer,
   },
-  methods: {},
+  mounted() {
+    // get a data of user
+    axios
+      .get("/api/user")
+      .then((response) => {
+        store.user = response.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 <template>
