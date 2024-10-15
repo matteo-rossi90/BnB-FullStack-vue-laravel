@@ -2,9 +2,33 @@
 export default {
   name: "Header",
   data() {
-    return {};
+    return {
+      name: "",
+    };
   },
-  methods: {},
+  methods: {
+    logout() {
+      axios
+        .post("/api/logout")
+        .then((response) => {
+          this.$router.push({ name: "home" });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    axios
+      .get("/api/user")
+      .then((response) => {
+        console.log(response);
+        this.name = response.data.name;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 </script>
 <template>
@@ -13,6 +37,7 @@ export default {
     <router-link :to="{ name: 'login' }">login</router-link>
     <router-link :to="{ name: 'register' }">register</router-link>
     <router-link :to="{ name: 'dashboard' }">dashboard</router-link>
+    <a href="#" @click="logout">Logout {{ name }}</a>
   </header>
 </template>
 <style lang="scss" scoped>
