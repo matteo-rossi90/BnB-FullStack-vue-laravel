@@ -34,7 +34,7 @@ export default {
         </div>
         <div class="col-12 col-sm-6">
 
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Open modal for @mdo</button>
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">diventa Host di BolBnB</button>
 
 
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,11 +64,16 @@ export default {
                 </div>
                 </div>
         </div>
-        <div class="col-12 col-sm-6">2</div>
+        <div class="col-12 col-sm-6">
+            <img class="img-fluid" src="../../../../public/img/bed_and_breakfast_image.jpg" alt="imgBnB">
+        </div>
     </div>
 
   </div>
 
 </template>
 <style lang='scss' scoped>
+img{
+    max-height: 500px;
+}
 </style>
