@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth\Ura;
 
+use App\Function\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
@@ -32,8 +33,15 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        //
+
+        $data = $request->all();
+        $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+
+        // if(array_key_exists('image', $data)){
+
+        // }
     }
+
 
     /**
      * Display the specified resource.
