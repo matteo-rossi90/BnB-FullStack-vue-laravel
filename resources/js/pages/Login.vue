@@ -1,4 +1,5 @@
 <script>
+import { store } from "../store/store.js";
 export default {
   name: "Login",
   data() {
@@ -16,6 +17,7 @@ export default {
         .post("/api/login", this.user)
         .then(() => {
           this.$router.push({ name: "dashboard" });
+          store.is_logged = true;
         })
         .catch((err) => {
           this.errors = err.response.data.errors;

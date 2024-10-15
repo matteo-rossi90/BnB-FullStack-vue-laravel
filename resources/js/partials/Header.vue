@@ -1,4 +1,5 @@
 <script>
+import { store } from "../store/store.js";
 export default {
   name: "Header",
   data() {
@@ -16,6 +17,7 @@ export default {
         .post("/api/logout")
         .then((response) => {
           this.$router.push({ name: "home" });
+          store.is_logged = false;
         })
         .catch((err) => {
           console.log(err);
@@ -35,11 +37,17 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-    window.addEventListener("click", () => {
-      if (this.is_open) {
-        this.is_open = false;
-      }
-    });
+    // window.addEventListener("click", () => {
+    //   if (this.is_open) {
+    //     this.is_open = false;
+    //   }
+    // });
+  },
+  computed: {
+    isLogged() {
+      //   boolean login control for show right link
+      return store.is_logged;
+    },
   },
 };
 </script>
@@ -51,21 +59,32 @@ export default {
           <div class="col">
             <h2>logo</h2>
           </div>
-          <div class="col d-flex gap-2">
+          <div class="col d-flex gap-2 justify-content-end">
             <router-link class="link" :to="{ name: 'home' }">home</router-link>
-            <router-link class="link" :to="{ name: 'login' }"
-              >login</router-link
-            >
-            <router-link class="link" :to="{ name: 'register' }"
-              >register</router-link
-            >
+
             <router-link class="link" :to="{ name: 'dashboard' }"
               >dashboard</router-link
             >
             <router-link class="link" :to="{ name: 'createApartment' }"
               >create apartment</router-link
             >
-            <div class="contDropDown" @click.stop="openDrop()">
+            <router-link
+              class="link"
+              :class="{ disactive: isLogged }"
+              :to="{ name: 'login' }"
+              >Login</router-link
+            >
+            <router-link
+              class="link"
+              :class="{ disactive: isLogged }"
+              :to="{ name: 'register' }"
+              >Register</router-link
+            >
+            <div
+              class="contDropDown"
+              :class="{ active: isLogged }"
+              @click.stop="openDrop()"
+            >
               <div
                 class="profile d-flex justify-content-between align-items-center gap-1"
               >
@@ -97,17 +116,19 @@ header {
       margin-top: 0.5rem;
     }
     .contDropDown {
+      display: none;
+    }
+    .contDropDown.active {
       position: relative;
+      border-radius: 20px;
+      cursor: pointer;
+      display: block;
 
-      .profile {
-        border-radius: 20px;
-        cursor: pointer;
-
-        &:hover {
-          background-color: blue;
-          color: white;
-        }
+      &:hover {
+        background-color: blue;
+        color: white;
       }
+
       .dropDown {
         background-color: red;
         position: absolute;
@@ -126,5 +147,8 @@ header {
 }
 p {
   margin: 0;
+}
+.disactive {
+  display: none;
 }
 </style>
