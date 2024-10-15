@@ -25,7 +25,7 @@ class ApartmentSeeder extends Seeder
         $latitudes = config('citySeader.lat');
         $longitudes = config('citySeader.long');
 
-        for ($i=0; $i < 16; $i++) {
+        for ($i=0; $i < 25; $i++) {
             $new_apartment = new Apartment();
 
             // Assegna l'appartamento a un utente in modo ciclico
