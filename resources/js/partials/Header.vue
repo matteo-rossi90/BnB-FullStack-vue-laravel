@@ -34,11 +34,11 @@ export default {
   <header>
     <nav>
       <div class="container">
-        <div class="row">
+        <div class="row justify-content-between align-items-center">
           <div class="col">
             <h2>logo</h2>
           </div>
-          <div class="col">
+          <div class="col d-flex gap-2">
             <router-link class="link" :to="{ name: 'home' }">home</router-link>
             <router-link class="link" :to="{ name: 'login' }"
               >login</router-link
@@ -52,7 +52,17 @@ export default {
             <router-link class="link" :to="{ name: 'createApartment' }"
               >create apartment</router-link
             >
-            <a href="#" @click="logout">Logout {{ name }}</a>
+            <div class="contDropDown">
+              <div
+                class="profile d-flex justify-content-between align-items-center gap-1"
+              >
+                <p>{{ name }}</p>
+                <font-awesome-icon :icon="['fas', 'caret-down']" />
+              </div>
+              <div class="dropDown">
+                <a href="#" class="link" @click="logout">Logout </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -64,5 +74,39 @@ export default {
 header {
   display: flex;
   gap: 1rem;
+  nav {
+    width: 100%;
+    height: 100%;
+    .profile,
+    .link {
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+    }
+    .contDropDown {
+      position: relative;
+
+      .profile {
+        border-radius: 20px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: blue;
+          color: white;
+        }
+      }
+      .dropDown {
+        background-color: red;
+        position: absolute;
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 20px;
+      }
+    }
+  }
+}
+p {
+  margin: 0;
 }
 </style>

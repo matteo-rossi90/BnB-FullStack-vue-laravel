@@ -6,4 +6,9 @@
 
 .link{
     text-decoration: none;
+    color: black;
+    &:hover{
+        color: blue;
+        text-decoration: underline;
+    }
 }
