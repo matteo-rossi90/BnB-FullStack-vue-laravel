@@ -12,6 +12,9 @@ import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 // Aggiungi le icone alla libreria di Font Awesome
 library.add(faCaretDown);
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
 const app = createApp(App)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)
