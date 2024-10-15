@@ -65,6 +65,8 @@ export default {
                               id="title"
                               name="title"
                               maxlength="500"
+                              required
+
                               >
                         </div>
                         <div class="mb-3">
@@ -74,6 +76,8 @@ export default {
                               class="form-control"
                               id="address"
                               name="address"
+                              required
+
                               >
 
                         </div>
@@ -106,6 +110,8 @@ export default {
                               name="number_rooms"
                               min="1"
                               max="65535"
+                              required
+
 
                               >
                         </div>
@@ -118,6 +124,8 @@ export default {
                               name="number_beds"
                               min="0"
                               max="65535"
+                              required
+
 
                               >
                         </div>
@@ -131,6 +139,8 @@ export default {
                               name="number_bathrooms"
                               min="0"
                               max="65535"
+                              required
+
 
                               >
                         </div>
@@ -144,6 +154,7 @@ export default {
                               name="square_meters"
                               min="0"
                               max="65535"
+                              required
                               >
                         </div>
                         <div class="input-group mb-3">
@@ -151,7 +162,9 @@ export default {
                               type="file"
                               class="form-control"
                               id="image"
-                              name="image">
+                              name="image"
+                              required
+                              >
                             <label class="input-group-text" for="image">carica</label>
                         </div>
 
