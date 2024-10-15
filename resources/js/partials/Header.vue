@@ -4,9 +4,8 @@ export default {
   name: "Header",
   data() {
     return {
-      // name user
-      name: "",
-      //   boolean dropdown
+      //   // name user
+      //   name: store.user.name,
     };
   },
   methods: {
@@ -27,16 +26,6 @@ export default {
     },
   },
   mounted() {
-    // get a name of user
-    axios
-      .get("/api/user")
-      .then((response) => {
-        this.name = response.data.name;
-        console.log(response.data.name);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     window.addEventListener("click", () => {
       store.is_open = false;
     });
@@ -50,6 +39,9 @@ export default {
       //   boolean login control for show right link
       return store.is_open;
     },
+    userName() {
+      return store.user.name;
+    },
   },
 };
 </script>
@@ -62,7 +54,7 @@ export default {
             <h2>logo</h2>
           </div>
           <div class="col d-flex gap-2 justify-content-end">
-            <router-link class="link" :to="{ name: 'home' }">home</router-link>
+            <router-link class="link" :to="{ name: 'home' }">Home</router-link>
 
             <!-- user click dropdown class -->
             <div class="contDropDown" @click.stop="openDrop()">
@@ -70,7 +62,7 @@ export default {
                 class="profile d-flex justify-content-between align-items-center gap-1 m-0"
               >
                 <p class="nameUser" :class="isLogged ? 'active' : 'disactive'">
-                  {{ name }}
+                  {{ userName }}
                 </p>
                 <p class="nameUser" :class="isLogged ? 'disactive' : 'active'">
                   Accedi
@@ -152,6 +144,7 @@ header {
       .dropDown.active {
         background-color: red;
         position: absolute;
+        left: -62px;
         padding: 1rem;
         display: flex;
         flex-direction: column;
