@@ -16,6 +16,11 @@ aside {
     width: 100%;
 }
 
+ul {
+    padding-left: 0;
+    // font-size: 18px;
+}
+
 @media (max-width:1024px){
 
     .actions{
@@ -24,6 +29,7 @@ aside {
 }
 
 @media (max-width: 992px) {
+
     aside {
         width: 100px;
     }
@@ -34,9 +40,21 @@ aside {
 }
 
 @media (max-width: 576px) {
-    aside {
-        width: 50px;
+    .wrapper{
+        height:100vh;
+        overflow:auto;
     }
+
+    aside {
+        width: 100px;
+        position: fixed;
+        height: 100vh;
+
+    }
+
+        .dashboard-box {
+            margin-left: 100px;
+        }
 
     table {
         font-size: 10px;
