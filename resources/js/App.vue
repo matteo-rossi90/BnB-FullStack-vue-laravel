@@ -19,7 +19,7 @@ export default {
     <router-view></router-view>
   </main>
 
-  <Footer />
+  <!-- <Footer /> -->
 </template>
 <style scoped>
 /* // @use 'path' as *; */
