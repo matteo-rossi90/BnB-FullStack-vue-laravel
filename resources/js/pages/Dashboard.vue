@@ -1,6 +1,10 @@
 <script>
+import IndexApartment from './Ura/IndexApartment.vue';
 export default {
   name: "Dashboard",
+  components:{
+    IndexApartment
+  },
   data() {
     return {
       name: "",
@@ -35,53 +39,14 @@ export default {
     <div class="wrapper d-flex">
         <aside>
             <ul>
-                <li>I miei appartamenti</li>
+                <li>
+                    <router-link :to="{name: 'apartments'}" >I miei appartamenti</router-link>
+                </li>
             </ul>
         </aside>
         <div id="dashboard-box">
             <div class="container my-3">
                 <h1>Dashboard di {{ name }}</h1>
-
-            <table class="table">
-                <thead>
-                        <tr>
-                            <th scope="col">#id</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Luogo</th>
-                            <th scope="col">Azioni</th>
-                        </tr>
-                </thead>
-                <tbody>
-
-                    <tr v-for="apartment in apartments" :key="apartment.id">
-                        <td scope="row">
-                            {{ apartment.id }}
-                        </td>
-                        <td scope="row">
-                            {{ apartment.title }}
-                        </td>
-                        <td scope="row">
-                                -
-                        </td>
-                        <td scope="row">
-                            {{ apartment.address }}
-                        </td>
-                        <td scoper="row" class="d-flex gap-2">
-                            <a href="#" class="btn btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                            <a href="#" class="btn btn-warning">
-                                <i class="fa-solid fa-pencil"></i>
-                            </a>
-                            <a href="#" class="btn btn-danger">
-                                <i class="fa-solid fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
             </div>
 
         </div>
@@ -91,7 +56,7 @@ export default {
 <style lang='scss' scoped>
 
 .wrapper{
-    height: calc(100vh - 24px);
+    height: calc(100vh - 48px);
     width: 100%;
     overflow:hidden
 }
