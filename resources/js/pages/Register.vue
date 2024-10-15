@@ -28,6 +28,7 @@ export default {
         .post("/api/register", this.user)
         .then(() => {
           localStorage.setItem("is_logged", true);
+          store.is_logged = localStorage.getItem("is_logged");
 
           // get a data of user
           axios
@@ -44,8 +45,8 @@ export default {
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
-          console.log(err.response.data);
           localStorage.setItem("is_logged", false);
+          store.is_logged = localStorage.getItem("is_logged");
           //   this.$router.push({ name: "register" });
           if (err.response) {
             // Errore con risposta dal server

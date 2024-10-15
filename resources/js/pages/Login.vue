@@ -20,6 +20,7 @@ export default {
         .post("/api/login", this.user)
         .then(() => {
           localStorage.setItem("is_logged", true);
+          store.is_logged = localStorage.getItem("is_logged");
           // get a data of user
           axios
             .get("/api/user")
@@ -36,6 +37,7 @@ export default {
         })
         .catch((err) => {
           localStorage.setItem("is_logged", false);
+          store.is_logged = localStorage.getItem("is_logged");
           console.log(err);
         });
     },

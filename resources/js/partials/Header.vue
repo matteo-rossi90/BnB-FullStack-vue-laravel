@@ -16,6 +16,7 @@ export default {
           .post("/api/logout")
           .then((response) => {
             localStorage.setItem("is_logged", false);
+            store.is_logged = localStorage.getItem("is_logged");
             localStorage.setItem("userName", "Accedi");
             store.userName = localStorage.getItem("userName");
             this.$router.push({ name: "home" });
