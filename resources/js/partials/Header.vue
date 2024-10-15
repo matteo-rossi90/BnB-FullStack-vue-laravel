@@ -7,7 +7,6 @@ export default {
       // name user
       name: "",
       //   boolean dropdown
-      is_open: false,
     };
   },
   methods: {
@@ -24,29 +23,32 @@ export default {
         });
     },
     openDrop() {
-      this.is_open = this.is_open ? false : true;
-      console.log(this.is_open);
+      store.is_open = store.is_open ? false : true;
     },
   },
   mounted() {
+    // get a name of user
     axios
       .get("/api/user")
       .then((response) => {
         this.name = response.data.name;
+        console.log(response.data.name);
       })
       .catch((err) => {
         console.log(err);
       });
-    // window.addEventListener("click", () => {
-    //   if (this.is_open) {
-    //     this.is_open = false;
-    //   }
-    // });
+    window.addEventListener("click", () => {
+      store.is_open = false;
+    });
   },
   computed: {
     isLogged() {
       //   boolean login control for show right link
       return store.is_logged;
+    },
+    isOpen() {
+      //   boolean login control for show right link
+      return store.is_open;
     },
   },
 };
@@ -62,35 +64,45 @@ export default {
           <div class="col d-flex gap-2 justify-content-end">
             <router-link class="link" :to="{ name: 'home' }">home</router-link>
 
-            <router-link class="link" :to="{ name: 'dashboard' }"
-              >dashboard</router-link
-            >
-
-            <router-link
-              class="link"
-              :class="{ disactive: isLogged }"
-              :to="{ name: 'login' }"
-              >Login</router-link
-            >
-            <router-link
-              class="link"
-              :class="{ disactive: isLogged }"
-              :to="{ name: 'register' }"
-              >Register</router-link
-            >
-            <div
-              class="contDropDown"
-              :class="{ active: isLogged }"
-              @click.stop="openDrop()"
-            >
+            <!-- user click dropdown class -->
+            <div class="contDropDown" @click.stop="openDrop()">
               <div
-                class="profile d-flex justify-content-between align-items-center gap-1"
+                class="profile d-flex justify-content-between align-items-center gap-1 m-0"
               >
-                <p>{{ name }}</p>
+                <p class="nameUser" :class="isLogged ? 'active' : 'disactive'">
+                  {{ name }}
+                </p>
+                <p class="nameUser" :class="isLogged ? 'disactive' : 'active'">
+                  Accedi
+                </p>
                 <font-awesome-icon :icon="['fas', 'caret-down']" />
               </div>
-              <div class="dropDown" :class="{ active: is_open }">
-                <a href="#" class="link" @click="logout">Logout </a>
+              <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
+                <router-link
+                  class="link"
+                  :class="{ disactive: isLogged }"
+                  :to="{ name: 'login' }"
+                  >Login</router-link
+                >
+                <router-link
+                  class="link"
+                  :class="{ disactive: isLogged }"
+                  :to="{ name: 'register' }"
+                  >Register</router-link
+                >
+                <router-link
+                  class="link"
+                  :class="{ disactive: !isLogged }"
+                  :to="{ name: 'dashboard' }"
+                  >Dashboard</router-link
+                >
+                <a
+                  href="#"
+                  class="link"
+                  :class="{ disactive: !isLogged }"
+                  @click="logout"
+                  >Logout
+                </a>
               </div>
             </div>
           </div>
@@ -105,6 +117,8 @@ header {
   display: flex;
   gap: 1rem;
   z-index: 100;
+  border-bottom: 1px solid black;
+  padding: 0.5rem;
   nav {
     width: 100%;
     height: 100%;
@@ -113,21 +127,29 @@ header {
       padding: 0.5rem 1rem;
       margin-top: 0.5rem;
     }
+
     .contDropDown {
-      display: none;
-    }
-    .contDropDown.active {
       position: relative;
       border-radius: 20px;
       cursor: pointer;
       display: block;
 
+      border: 1px solid black;
       &:hover {
-        background-color: blue;
-        color: white;
       }
-
-      .dropDown {
+      .profile {
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .nameUser {
+        display: none;
+      }
+      .nameUser.active {
+        display: block;
+      }
+      .dropDown.active {
         background-color: red;
         position: absolute;
         padding: 1rem;
@@ -135,17 +157,18 @@ header {
         flex-direction: column;
         align-items: center;
         border-radius: 20px;
-        display: none;
       }
-      .dropDown.active {
-        display: block;
+      .dropDown.disactive {
+        display: none;
       }
     }
   }
 }
-p {
+p,
+.profile {
   margin: 0;
 }
+
 .disactive {
   display: none;
 }
