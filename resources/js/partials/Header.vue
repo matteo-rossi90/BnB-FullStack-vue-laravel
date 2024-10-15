@@ -65,9 +65,7 @@ export default {
             <router-link class="link" :to="{ name: 'dashboard' }"
               >dashboard</router-link
             >
-            <router-link class="link" :to="{ name: 'createApartment' }"
-              >create apartment</router-link
-            >
+
             <router-link
               class="link"
               :class="{ disactive: isLogged }"
