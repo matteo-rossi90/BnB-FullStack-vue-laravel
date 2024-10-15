@@ -8,15 +8,24 @@ export default {
   },
   methods: {},
   mounted() {
-        axios
+    axios
     .get("/api/user")
     .then((res) => {
-        console.log(res);
+        // console.log(res);
         this.name = res.data.name;
     })
     .catch((err) => {
         console.log(err);
     });
+
+    axios.get("api/user/utente/dashboard")
+    .then((response) =>{
+        console.log(response);
+    })
+    .catch((err) => {
+        console.log(err);
+    });
+
   },
 };
 </script>
