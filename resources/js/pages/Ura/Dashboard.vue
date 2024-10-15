@@ -1,6 +1,7 @@
 <script>
 import IndexApartment from "./IndexApartment.vue";
 import routinglist from "./partials/Routinglist.vue";
+import { store } from '../../store/store';
 
 export default {
   name: "Dashboard",
@@ -29,6 +30,7 @@ export default {
       .get("api/user/utente/dashboard")
       .then((response) => {
         this.apartments = response.data;
+        store.allApartment = response.data;
       })
       .catch((err) => {
         console.log(err);

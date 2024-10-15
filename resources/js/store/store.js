@@ -8,6 +8,7 @@ const store = reactive({
     is_open: false,
     // data of user
     user:{},
+    allApartment:[]
 })
 
 

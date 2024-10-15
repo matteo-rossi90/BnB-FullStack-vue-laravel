@@ -21,7 +21,6 @@
 <body>
 
     <div id="app"></div>
-    ciao sono app
 
 </body>
 
