@@ -66,7 +66,6 @@ export default {
                               name="title"
                               maxlength="500"
                               required
-
                               >
                         </div>
                         <div class="mb-3">
@@ -77,7 +76,6 @@ export default {
                               id="address"
                               name="address"
                               required
-
                               >
 
                         </div>
@@ -111,8 +109,6 @@ export default {
                               min="1"
                               max="65535"
                               required
-
-
                               >
                         </div>
                         <div class="mb-3">
@@ -125,8 +121,6 @@ export default {
                               min="0"
                               max="65535"
                               required
-
-
                               >
                         </div>
 
@@ -140,8 +134,6 @@ export default {
                               min="0"
                               max="65535"
                               required
-
-
                               >
                         </div>
 
