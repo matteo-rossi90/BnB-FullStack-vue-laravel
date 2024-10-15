@@ -4,12 +4,11 @@ import {reactive} from 'vue';
 const store = reactive({
     // data of user
     user:{},
+    userName: 'Accedi',
     // is logged user boolean
+    is_logged: localStorage.getItem('is_logged'),
+    have_apartment: false,
 
-    get is_logged() {
-        // Controlla se l'oggetto user ha delle proprietà
-        return Object.keys(this.user).length > 0;
-    },
     // boolean for dropdown menu of header
     is_open: false,
 

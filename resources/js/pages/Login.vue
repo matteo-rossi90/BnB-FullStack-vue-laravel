@@ -19,12 +19,24 @@ export default {
       axios
         .post("/api/login", this.user)
         .then(() => {
-          store.is_logged = true;
-
+          localStorage.setItem("is_logged", true);
+          // get a data of user
+          axios
+            .get("/api/user")
+            .then((response) => {
+              store.user = response.data;
+              localStorage.setItem("userName", response.data.name);
+              store.userName = localStorage.getItem("userName");
+            })
+            .catch((err) => {
+              store.userName = localStorage.setItem("userName", "Accedi");
+              console.log(err);
+            });
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
-          this.errors = err.response.data.errors;
+          localStorage.setItem("is_logged", false);
+          console.log(err);
         });
     },
 

@@ -6,16 +6,16 @@ export default {
     return {
       user: {
         name: "",
-        surname: "",
-        date_of_birth: "",
+        // surname: "",
+        // date_of_birth: "",
         email: "",
         password: "",
-        password_confirmation: "",
+        // password_confirmation: "",
       },
       errors: {
         name: "",
-        surname: "",
-        date_of_birth: "",
+        // surname: "",
+        // date_of_birth: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -27,13 +27,41 @@ export default {
       axios
         .post("/api/register", this.user)
         .then(() => {
-          store.is_logged = true;
+          localStorage.setItem("is_logged", true);
 
+          // get a data of user
+          axios
+            .get("/api/user")
+            .then((response) => {
+              store.user = response.data;
+              localStorage.setItem("userName", response.data.name);
+              store.userName = localStorage.getItem("userName");
+            })
+            .catch((err) => {
+              localStorage.setItem("userName", "Accedi");
+              console.log(err);
+            });
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
-          this.errors = err.response.data.errors;
-          this.$router.push({ name: "home" });
+          console.log(err.response.data);
+          localStorage.setItem("is_logged", false);
+          //   this.$router.push({ name: "register" });
+          if (err.response) {
+            // Errore con risposta dal server
+            console.log("Errore:", err.response.data);
+            console.log("Stato HTTP:", err.response.status);
+            console.log("Headers:", err.response.headers);
+          } else if (err.request) {
+            // La richiesta è stata fatta ma non ha ricevuto risposta
+            console.log("Nessuna risposta dal server:", err.request);
+          } else {
+            // Errore che è successo prima di fare la richiesta
+            console.log(
+              "Errore nella configurazione della richiesta:",
+              err.message
+            );
+          }
         });
     },
 
@@ -119,7 +147,7 @@ export default {
         this.submit();
       }
 
-      // this.submit();
+      this.submit();
     },
   },
 };

@@ -46,21 +46,21 @@ const router = createRouter({
 
     ]
 })
-// Condizioni per disabilitare rotte (esempio: autenticazione)
-router.beforeEach((to, from, next) => {
-    // Supponiamo di controllare se l'utente è autenticato
-    const isAuthenticated = store.user.id;
+// // Condizioni per disabilitare rotte (esempio: autenticazione)
+// router.beforeEach((to, from, next) => {
+//     // Supponiamo di controllare se l'utente è autenticato
+//     const isAuthenticated = store.user.id;
 
-    // Verifica se la rotta richiede autenticazione
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      if (!isAuthenticated) {
-        // Se non autenticato, reindirizza alla pagina di login
-        return next({ name: 'login' });
-      }
-    }
+//     // Verifica se la rotta richiede autenticazione
+//     if (to.matched.some(record => record.meta.requiresAuth)) {
+//       if (!isAuthenticated) {
+//         // Se non autenticato, reindirizza alla pagina di login
+//         return next({ name: 'login' });
+//       }
+//     }
 
-    // Se non ci sono restrizioni, continua la navigazione
-    next();
-  });
+//     // Se non ci sono restrizioni, continua la navigazione
+//     next();
+//   });
 
 export default router;

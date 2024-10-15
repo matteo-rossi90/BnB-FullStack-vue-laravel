@@ -11,15 +11,19 @@ export default {
   methods: {
     // call axios for logout
     logout() {
-      axios
-        .post("/api/logout")
-        .then((response) => {
-          this.$router.push({ name: "home" });
-          store.is_logged = false;
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      axios.get("/sanctum/csrf-cookie").then(() => {
+        axios
+          .post("/api/logout")
+          .then((response) => {
+            localStorage.setItem("is_logged", false);
+            localStorage.setItem("userName", "Accedi");
+            store.userName = localStorage.getItem("userName");
+            this.$router.push({ name: "home" });
+          })
+          .catch((err) => {
+            console.log("Errore nel logout:", err);
+          });
+      });
     },
     openDrop() {
       store.is_open = store.is_open ? false : true;
@@ -40,7 +44,10 @@ export default {
       return store.is_open;
     },
     userName() {
-      return store.user.name;
+      return store.userName;
+    },
+    loggedUserApartment() {
+      return localStorage.getItem("is_logged") && store.allApartment.length;
     },
   },
 };
@@ -61,40 +68,21 @@ export default {
               <div
                 class="profile d-flex justify-content-between align-items-center gap-1 m-0"
               >
-                <p class="nameUser" :class="isLogged ? 'active' : 'disactive'">
-                  {{ userName }}
-                </p>
-                <p class="nameUser" :class="isLogged ? 'disactive' : 'active'">
-                  Accedi
-                </p>
+                <p class="nameUser">{{ userName }}</p>
+
                 <font-awesome-icon :icon="['fas', 'caret-down']" />
               </div>
               <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
-                <router-link
-                  class="link"
-                  :class="{ disactive: isLogged }"
-                  :to="{ name: 'login' }"
+                <router-link class="link" :to="{ name: 'login' }"
                   >Login</router-link
                 >
-                <router-link
-                  class="link"
-                  :class="{ disactive: isLogged }"
-                  :to="{ name: 'register' }"
+                <router-link class="link" :to="{ name: 'register' }"
                   >Register</router-link
                 >
-                <router-link
-                  class="link"
-                  :class="{ disactive: !isLogged }"
-                  :to="{ name: 'dashboard' }"
+                <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <a
-                  href="#"
-                  class="link"
-                  :class="{ disactive: !isLogged }"
-                  @click="logout"
-                  >Logout
-                </a>
+                <a href="#" class="link" @click="logout">Logout </a>
               </div>
             </div>
           </div>
@@ -135,12 +123,7 @@ header {
         left: 50%;
         transform: translate(-50%, -50%);
       }
-      .nameUser {
-        display: none;
-      }
-      .nameUser.active {
-        display: block;
-      }
+
       .dropDown.active {
         background-color: red;
         position: absolute;

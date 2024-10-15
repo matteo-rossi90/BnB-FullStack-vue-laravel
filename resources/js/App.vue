@@ -11,17 +11,7 @@ export default {
     Header,
     Footer,
   },
-  mounted() {
-    // get a data of user
-    axios
-      .get("/api/user")
-      .then((response) => {
-        store.user = response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+  mounted() {},
 };
 </script>
 <template>

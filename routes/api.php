@@ -30,16 +30,13 @@ Route::middleware('auth:sanctum')
         Route::resource('/utente/dashboard', ApartmentController::class);
 });
 
+
+
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 
-
-
-
 Route::post('register', [RegisteredUserController::class, 'store']);
-
-
 Route::post('login', [AuthenticatedSessionController::class , 'store']);
 
-Route::get('register', [UserAlreadyAuth::class, 'register']);
-Route::get('login', [UserAlreadyAuth::class, 'login']);
+// Route::get('register', [UserAlreadyAuth::class, 'register']);
+// Route::get('login', [UserAlreadyAuth::class, 'login']);
 
