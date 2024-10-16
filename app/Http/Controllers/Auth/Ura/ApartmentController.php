@@ -23,9 +23,7 @@ class ApartmentController extends Controller
         return $apartment;
     }
 
-
-
-    #tommy riga 34
+#tommy riga 26
     /**
      * Store a newly created resource in storage.
      */
