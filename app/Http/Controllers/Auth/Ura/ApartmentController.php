@@ -39,6 +39,7 @@ class ApartmentController extends Controller
 
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+        $data['user_id'] =  auth()->user()->id;
 
         if (array_key_exists('image', $data)) {
 
@@ -49,6 +50,7 @@ class ApartmentController extends Controller
             $data['image'] = $image;
             $data['original_name'] = $original_name;
         }
+
 
         $apartment = Apartment::create($data);
         return $apartment;
