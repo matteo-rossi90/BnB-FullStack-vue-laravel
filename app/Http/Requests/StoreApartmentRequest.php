@@ -22,16 +22,25 @@ class StoreApartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => 'required|min:5|max|500',
-            "image" => 'required|image',
-            "original_name" => 'required|min:1|max:500',
-            "number_rooms" => 'required|integer>|min:1',
-            "number_beds" => 'required|integer>|min:1',
-            "number_bathrooms" => 'required|integer>|min:1',
-            "square_meters" => 'required|integer>|min:1',
+            // "title" => 'required|min:1|max:500',//
+            // "image" => 'required|image',
+            // "number_rooms" => 'required|integer|min:1',
+            // "number_beds" => 'required|integer|min:1',
+            // "number_bathrooms" => 'required|integer|min:1',
+            // "square_meters" => 'required|integer|min:1',
+            // "address" => 'required',
+            // "lat" => 'required|numeric',
+            // "lon" => 'required|numeric',
+
+            "title" => 'required|min:1|max:500',//
+            // "image" => 'required',
+            "number_rooms" => 'required|integer|min:0',
+            "number_beds" => 'required|integer|min:0',
+            "number_bathrooms" => 'required|integer|min:1',
+            "square_meters" => 'required|integer|min:1',
             "address" => 'required',
-            "lat" => 'required|numeric',
-            "lon" => 'required|numeric',
+            // "lat" => '|numeric',
+            // "lon" => '|numeric',
         ];
     }
 
@@ -42,12 +51,12 @@ class StoreApartmentRequest extends FormRequest
         "title.min" => "Il titolo deve contenere almeno 5 caratteri.",
         "title.max" => "Il titolo non può superare i 500 caratteri.",
 
-        "image.required" => "L'immagine è obbligatoria.",
-        "image.image" => "Il file caricato deve essere un'immagine valida.",
+        // "image.required" => "L'immagine è obbligatoria.",
+        // "image.image" => "Il file caricato deve essere un'immagine valida.",
 
-        "original_name.required" => "Il nome originale è obbligatorio.",
-        "original_name.min" => "Il nome originale deve contenere almeno 1 carattere.",
-        "original_name.max" => "Il nome originale non può superare i 500 caratteri.",
+        // "original_name.required" => "Il nome originale è obbligatorio.",
+        // "original_name.min" => "Il nome originale deve contenere almeno 1 carattere.",
+        // "original_name.max" => "Il nome originale non può superare i 500 caratteri.",
 
         "number_rooms.required" => "Il numero di stanze è obbligatorio.",
         "number_rooms.integer" => "Il numero di stanze deve essere un numero intero.",
@@ -67,11 +76,11 @@ class StoreApartmentRequest extends FormRequest
 
         "address.required" => "L'indirizzo è obbligatorio.",
 
-        "lat.required" => "La latitudine è obbligatoria.",
-        "lat.numeric" => "La latitudine deve essere un numero valido.",
+        // "lat.required" => "La latitudine è obbligatoria.",
+        // "lat.numeric" => "La latitudine deve essere un numero valido.",
 
-        "lon.required" => "La longitudine è obbligatoria.",
-        "lon.numeric" => "La longitudine deve essere un numero valido.",
+        // "lon.required" => "La longitudine è obbligatoria.",
+        // "lon.numeric" => "La longitudine deve essere un numero valido.",
     ];
 }
 
