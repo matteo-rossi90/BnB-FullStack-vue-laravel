@@ -13,7 +13,26 @@ export default {
       apartments: [],
     };
   },
-  methods: {},
+  methods: {
+
+    detailApartment(id){
+        axios
+            .get("api/user/utente/dashboard")
+            .then((response) => {
+                console.log(response);
+                this.apartments = response.data;
+
+                // prova per prendere un singolo elemento
+                const singleApartment = this.apartments.find(apartment => apartment.id === id);
+                console.log(singleApartment);
+
+
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+  },
   mounted() {
     axios
       .get("/api/user")
@@ -74,8 +93,8 @@ export default {
                                 <i class="fa-solid fa-chart-simple"></i>
                             </td>
                             <td scoper="row" class="actions d-flex gap-2">
-                                <RouterLink class="link" :to="{ name: 'showApartment' }">
-                                    <div class="btn btn-primary">
+                                <RouterLink class="link" :to="{ name: 'showApartment',  params: { id: apartment.id } }">
+                                    <div @click="detailApartment(id)" class="btn btn-primary">
                                         <i class="fa-solid fa-eye"></i>
                                     </div>
                                 </RouterLink>
