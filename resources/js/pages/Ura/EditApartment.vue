@@ -1,6 +1,5 @@
 <script>
-import axios from 'axios';
-import Routinglist from './partials/Routinglist.vue';
+
 import { store } from '../../store/store';
 
     export default {
