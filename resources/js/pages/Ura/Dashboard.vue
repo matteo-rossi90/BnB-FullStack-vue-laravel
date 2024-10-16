@@ -1,5 +1,7 @@
 <script>
 import IndexApartment from "./IndexApartment.vue";
+import Messages from "./Messages.vue";
+import Sponsor from "./Sponsor.vue";
 import routinglist from "./partials/Routinglist.vue";
 import { store } from '../../store/store';
 
@@ -7,6 +9,8 @@ export default {
   name: "Dashboard",
   components: {
     IndexApartment,
+    Messages,
+    Sponsor,
     routinglist
   },
   data() {
