@@ -51,11 +51,11 @@ export default {
                     <table class="table">
                         <thead>
                             <tr>
-                            <th scope="col">#id</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Messaggi</th>
-                            <th scope="col">Statistiche</th>
-                            <th scope="col">Azioni</th>
+                                <th scope="col">#id</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Messaggi</th>
+                                <th scope="col">Statistiche</th>
+                                <th scope="col">Azioni</th>
                             </tr>
                         </thead>
                         <tbody>
