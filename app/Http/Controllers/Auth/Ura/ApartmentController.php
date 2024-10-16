@@ -30,6 +30,8 @@ class ApartmentController extends Controller
         //
     }
 
+
+    #tommy riga 34
     /**
      * Store a newly created resource in storage.
      */
@@ -56,7 +58,7 @@ class ApartmentController extends Controller
         return $apartment;
     }
 
-
+#riga61
     /**
      * Display the specified resource.
      */
@@ -65,24 +67,62 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::find($id);
         return response()->json($apartment);
+
+
+
+
+
+
     }
 
+    #vincenzo riga 78
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Apartment $apartment)
     {
         //
-    }
 
+
+
+
+
+
+    }
+    #vincenzo 92
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
         //
+
+
+
+
+
+
+
+
+
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #matte da riga 125
     /**
      * Remove the specified resource from storage.
      */
