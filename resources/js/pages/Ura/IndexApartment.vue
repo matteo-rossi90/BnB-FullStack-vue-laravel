@@ -16,6 +16,30 @@ export default {
   },
   methods: {
 
+    deleteApartment(apartment) {
+            if (confirm(`Sei sicuro di voler eliminare l'appartamento "${apartment.title}"?`)) {
+                axios
+                    .delete(`/api/user/utente/dashboard/${apartment.id}`)  //chiamata API al backend con DELETE
+                    .then((res) => {
+                        //elimina l'appartamento dalla lista locale (frontend)
+                        this.apartments = this.apartments.filter(a => a.id !== apartment.id);
+
+                        //aggiorna il localStorage e lo store
+                        store.allApartmentGlobal = store.allApartmentGlobal.filter(a => a.id !== apartment.id);
+                        localStorage.setItem('apartments', JSON.stringify(store.allApartmentGlobal));
+
+
+                        this.message = `Appartamento "${apartment.title}" eliminato con successo`;
+                        this.messageType = 'success';
+                    })
+                    .catch((err) => {
+
+                        console.error(err);
+                        this.message = `Errore durante l'eliminazione dell'appartamento "${apartment.title}"`;
+                        this.messageType = 'error';
+                    });
+            }
+        }
 //     detailApartment(id){
 //             console.log(this.$route.params);
 
@@ -73,6 +97,10 @@ export default {
             <div class="col-lg-12 col-md-12">
                 <h2 class="mb-3">I miei appartamenti</h2>
 
+                <div v-if="message" :class="['alert', messageType === 'success' ? 'alert-success' : 'alert-danger']">
+                    {{ message }}
+                </div>
+
                 <div class="table-responsive">
                     <table class="table">
                         <thead>
@@ -111,7 +139,7 @@ export default {
                                 </RouterLink>
 
 
-                                <a href="#" class="btn btn-danger">
+                                <a href="#" class="btn btn-danger" @click.prevent="deleteApartment(apartment)">
                                 <i class="fa-solid fa-trash"></i>
                                 </a>
                             </td>
