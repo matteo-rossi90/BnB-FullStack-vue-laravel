@@ -105,11 +105,11 @@ export default {
         name="square_meters"
          />
 
-      <label for="" class="form-label">Immagine</label>
+      <!-- <label for="" class="form-label">Immagine</label>
       <input
         type="text"
         class="form-control"
-        />
+        /> -->
 
 
       <button type="submit" class="btn btn-primary">Invia</button>
