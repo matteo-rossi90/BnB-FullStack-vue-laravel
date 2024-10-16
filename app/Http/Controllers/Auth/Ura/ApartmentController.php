@@ -38,33 +38,23 @@ class ApartmentController extends Controller
     public function store(StoreApartmentRequest $request)
     {
         dd($request->all());
-        //"title" => "dfasdf"
-        //   "address" => "fdasd"
-        //   "lat" => null
-        //   "lon" => null
-        //   "number_rooms" => 1
-        //   "number_beds" => 1
-        //   "number_bathrooms" => 1
-        //   "image" => null
-        //   "square_meters" => 1
+
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
-
         if (array_key_exists('image', $data)) {
-
             $image = Storage::put('uploads', $data['image']);
-
             $original_name = $request->file('image')->getClientOriginalName();
-
             $data['image'] = $image;
             $data['original_name'] = $original_name;
         }
-
-
         $apartment = Apartment::create($data);
         return $apartment;
     }
+
+
+
+
 
 
 
