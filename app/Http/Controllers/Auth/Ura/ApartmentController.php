@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Support\Facades\Storage;
+
 
 class ApartmentController extends Controller
 {
@@ -39,25 +41,32 @@ class ApartmentController extends Controller
         #aggiungere id utente???$user = auth()->user(); $user->id
         #aggiungere original name
 
-        $user = auth()->user();
-        return $user->id;
-        // $data = $request->all();
+        $data = $request->all();
+        $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
 
-        // $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
-        // return $data;
+        if (array_key_exists('image', $data)) {
 
-        // if(array_key_exists('image', $data)){
+            $image_path = Storage::put('uploads', $data['image']);
 
-        // }
+            $original_name = $request->file('image')->getClientOriginalName();
+
+            $data['image'] = $image_path;
+            $data['original_name'] = $original_name;
+        }
+
+        $apartment = Apartment::create($data);
+        return $apartment;
     }
 
 
     /**
      * Display the specified resource.
      */
-    public function show(Apartment $apartment)
+    // public function show(Apartment $apartment)
+    public function show($id)
     {
-        //
+        $apartment = Apartment::find($id);
+        return response()->json($apartment);
     }
 
     /**
