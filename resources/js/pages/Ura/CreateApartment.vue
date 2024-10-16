@@ -189,15 +189,9 @@ export default {
             <img class="img-fluid" src="../../../../public/img/bed_and_breakfast_image.jpg" alt="imgBnB">
         </div>
       </div>
-      <div class="col-12 col-sm-6">
-        <img
-          class="img-fluid"
-          src="../../../../public/img/bed_and_breakfast_image.jpg"
-          alt="imgBnB"
-        />
-      </div>
+
     </div>
-  </div>
+
 </template>
 <style lang='scss' scoped>
 img {
