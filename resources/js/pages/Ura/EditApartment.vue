@@ -1,17 +1,15 @@
 <script>
-import axios from 'axios';
-import Routinglist from './partials/Routinglist.vue';
-import { store } from '../../store/store';
+import { store } from "../../store/store";
 
-    export default {
-        name: 'EditApartment',
+export default {
+  name: "EditApartment",
 
-        data() {
+  data() {
     return {
       apartment: {},
     };
   },
-        methods: {
+  methods: {
     findApartment() {
       // Recupera i dati dal localStorage
       let apartmentsJson = localStorage.getItem("apartments");
@@ -47,56 +45,45 @@ import { store } from '../../store/store';
   mounted() {
     this.findApartment();
     console.log(this.apartment);
-
   },
-
-    }
-
-
-
-
-
+};
 </script>
 
 <template>
-    <div class="container">
-        <h1>Edit</h1>
+  <div class="container">
+    <h1>Edit</h1>
 
-        <form action="">
-            <label for="title" class="form-label">Titolo</label>
-            <input
-              type="text"
-              class="form-control"
-              value="{{apartment.title}}"
-              id="title"
-              name="title">
+    <form action="">
+      <label for="title" class="form-label">Titolo</label>
+      <input
+        type="text"
+        class="form-control"
+        :value="apartment.title"
+        id="title"
+        name="title"
+      />
 
-            <label for="" class="form-label">Numero di stanze</label>
-            <input type="number" class="form-control" >
+      <label for="" class="form-label">Numero di stanze</label>
+      <input type="number" class="form-control" />
 
-            <label for="" class="form-label" >Numero di letti</label>
-            <input type="number" class="form-control">
+      <label for="" class="form-label">Numero di letti</label>
+      <input type="number" class="form-control" />
 
-            <label for="" class="form-label">Numero di bagni</label>
-            <input type="number" class="form-control">
+      <label for="" class="form-label">Numero di bagni</label>
+      <input type="number" class="form-control" />
 
-            <label for="" class="form-label" >Indirizzo</label>
-            <input type="text" class="form-control">
+      <label for="" class="form-label">Indirizzo</label>
+      <input type="text" class="form-control" />
 
-            <label for="" class="form-label">Immagine</label>
-            <input type="text" class="form-control">
+      <label for="" class="form-label">Immagine</label>
+      <input type="text" class="form-control" />
 
-            <button type="submit" class="btn btn-primary">Invia</button>
-
-
-        </form>
-
-    </div>
-
+      <button type="submit" class="btn btn-primary">Invia</button>
+    </form>
+  </div>
 </template>
 
 
 
 <style lang="scss" scoped>
-
 </style>
