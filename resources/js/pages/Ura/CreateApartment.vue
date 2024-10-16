@@ -17,22 +17,27 @@ export default {
              square_meters:"",
 
 
+
          },
         errors: {},
     };
   },
   methods: {
 
-    // submit() {
-    //   axios
-    //     .post("api/user/utente/dashboard", this.apartment)
-    //     .then(() => {
-    //       this.$router.push({ name: "dashboard" });
-    //     })
-    //     .catch((err) => {
-    //       this.errors = err.response.data.errors;
-    //     });
-  //}
+     submit() {
+       console.log(this.apartment);
+
+       axios
+         .post("api/user/utente/dashboard", this.apartment)
+         .then((res) => {
+        //    this.$router.push({ name: "dashboard" });
+        console.log(res);
+
+         })
+         .catch((err) => {
+           this.errors = err.response.data.errors;
+         });
+  }
 },
 }
 
@@ -56,7 +61,7 @@ export default {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form>
+                        <form @submit.prevent="submit">
                         <div class="mb-3">
                             <label for="title" class="col-form-label">Nome appartamento:</label>
                             <input
@@ -65,6 +70,7 @@ export default {
                               id="title"
                               name="title"
                               maxlength="500"
+                              v-model="apartment.title"
                               required
                               >
                         </div>
@@ -75,6 +81,7 @@ export default {
                               class="form-control"
                               id="address"
                               name="address"
+                              v-model="apartment.address"
                               required
                               >
 
@@ -86,6 +93,7 @@ export default {
                               class="form-control"
                               id="lat"
                               name="lat"
+
                               disabled
                               >
                         </div>
@@ -96,6 +104,7 @@ export default {
                               class="form-control"
                               id="lon"
                               name="lon"
+
                               disabled
                               >
                         </div>
@@ -108,6 +117,8 @@ export default {
                               name="number_rooms"
                               min="1"
                               max="65535"
+                              v-model="apartment.number_rooms"
+
                               required
                               >
                         </div>
@@ -120,6 +131,8 @@ export default {
                               name="number_beds"
                               min="0"
                               max="65535"
+                              v-model="apartment.number_beds"
+
                               required
                               >
                         </div>
@@ -133,6 +146,8 @@ export default {
                               name="number_bathrooms"
                               min="0"
                               max="65535"
+                              v-model="apartment.number_bathrooms"
+
                               required
                               >
                         </div>
@@ -146,6 +161,8 @@ export default {
                               name="square_meters"
                               min="0"
                               max="65535"
+                              v-model="apartment.square_meters"
+
                               required
                               >
                         </div>
@@ -155,17 +172,17 @@ export default {
                               class="form-control"
                               id="image"
                               name="image"
-                              required
+
                               >
                             <label class="input-group-text" for="image">carica</label>
                         </div>
 
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">chiudi</button>
-                        <button type="submit" class="btn btn-dark">inserisci appartamento</button>
-                    </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">chiudi</button>
+                            <button type="submit" class="btn btn-dark">inserisci appartamento</button>
+                        </div>
 
                         </form>
                     </div>
