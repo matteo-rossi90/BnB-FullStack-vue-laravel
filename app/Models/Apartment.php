@@ -12,5 +12,5 @@ class Apartment extends Model
 
 
     protected $fillable =
-    ['image', 'title', 'number_rooms', 'number_beds', 'number_bathrooms', 'square_meters',  'address', 'lat', 'lon'];
+    ['image', 'title', 'number_rooms', 'number_beds', 'number_bathrooms', 'square_meters', 'address'];
 }
