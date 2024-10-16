@@ -12,7 +12,6 @@ export default {
              number_rooms:"",
              number_beds:"",
              number_bathrooms:"",
-             original_name:"",
              image:"",
              square_meters:"",
 
@@ -70,6 +69,7 @@ export default {
                               id="title"
                               name="title"
                               maxlength="500"
+                              min="1"
                               v-model="apartment.title"
                               required
                               >
