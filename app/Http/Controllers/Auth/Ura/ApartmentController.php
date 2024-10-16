@@ -35,22 +35,18 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-        #il contenuto di request deve corrispondere al fillable del model
-        #controllare le colonne dalla migration che mancano e le inserisci te
-        #aggiungere slug
-        #aggiungere id utente???$user = auth()->user(); $user->id
-        #aggiungere original name
+
 
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
 
         if (array_key_exists('image', $data)) {
 
-            $image_path = Storage::put('uploads', $data['image']);
+            $image = Storage::put('uploads', $data['image']);
 
             $original_name = $request->file('image')->getClientOriginalName();
 
-            $data['image'] = $image_path;
+            $data['image'] = $image;
             $data['original_name'] = $original_name;
         }
 
