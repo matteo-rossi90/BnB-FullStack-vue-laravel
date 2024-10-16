@@ -7,6 +7,8 @@ import Register from '../pages/Register.vue'
 import Dashboard from '../pages/Ura/Dashboard.vue'
 import CreateApartment from '../pages/Ura/CreateApartment.vue'
 import IndexApartment from "../pages/Ura/IndexApartment.vue";
+import Messages from "../pages/Ura/Messages.vue";
+import Sponsor from "../pages/Ura/Sponsor.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -36,6 +38,16 @@ const router = createRouter({
             path: '/appartamenti',
             name: 'apartments',
             component: IndexApartment
+        },
+        {
+            path: '/lista-messaggi',
+            name: 'messages',
+            component: Messages
+        },
+        {
+            path: '/sponsor',
+            name: 'sponsor',
+            component: Sponsor
         },
         {
             path: '/nuovo-appartamento',

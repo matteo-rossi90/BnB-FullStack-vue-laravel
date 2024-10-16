@@ -1,10 +1,10 @@
 <script>
 import Routinglist from './partials/Routinglist.vue';
-import routinglist from './partials/Routinglist.vue';
+
 export default {
   name: "IndexApartment",
   components:{
-    routinglist
+    Routinglist
   },
   data() {
     return {
@@ -39,7 +39,7 @@ export default {
 <template>
   <div class="wrapper d-flex">
     <aside>
-        <routinglist />
+        <Routinglist />
     </aside>
     <div class="dashboard-box">
       <div class="container-fluid my-3">
