@@ -67,21 +67,50 @@ export default {
       <input
         type="number"
         class="form-control"
-        :value="apartment.numbe"
-        id="title"
-        name="title"/>
+        :value="apartment.number_rooms"
+        id="number_rooms"
+        name="number_rooms"/>
 
       <label for="" class="form-label">Numero di letti</label>
-      <input type="number" class="form-control" />
+      <input
+        type="number"
+        class="form-control"
+        :value="apartment.number_beds"
+        id="number_beds"
+        name="number_beds"/>
+
 
       <label for="" class="form-label">Numero di bagni</label>
-      <input type="number" class="form-control" />
+      <input
+        type="number"
+        class="form-control"
+        :value="apartment.number_bathrooms"
+        id="number_bathrooms"
+        name="number_bathrooms"/>
 
       <label for="" class="form-label">Indirizzo</label>
-      <input type="text" class="form-control" />
+      <input
+        type="text"
+        class="form-control"
+        :value="apartment.address"
+        id="address"
+        name="address"/>
+
+      <label for="" class="form-label">Metri quadri</label>
+      <input
+        type="text"
+        class="form-control"
+        :value="apartment.square_meters"
+        id="square_meters"
+        name="square_meters"
+         />
 
       <label for="" class="form-label">Immagine</label>
-      <input type="text" class="form-control" />
+      <input
+        type="text"
+        class="form-control"
+        />
+
 
       <button type="submit" class="btn btn-primary">Invia</button>
     </form>
