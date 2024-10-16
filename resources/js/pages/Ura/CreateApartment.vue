@@ -26,6 +26,8 @@ export default {
     };
   },
   methods: {
+    submit() {
+      let urlRequest = checkAdress(this.apartment.address);
 
       axios
         .get("http://127.0.0.1:8000/proxy-tomtom", {
