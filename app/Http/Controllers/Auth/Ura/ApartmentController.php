@@ -109,16 +109,13 @@ class ApartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request)
+    public function destroy($dashboard)
     {
-        // Recupera l'oggetto apartment dal corpo della richiesta
-        $apartmentData = $request->input();  // Ottieni l'intero oggetto apartment
 
-        // Recupera l'appartamento da eliminare tramite l'ID
-        $apartment = Apartment::find($apartmentData['id']);  // Usa l'ID presente nell'oggetto
-
+        $apartment = Apartment::find($dashboard);
+        //verifica se l'appartamento esiste e lo elimina
         if ($apartment) {
-            $apartment->delete();  // Elimina l'appartamento
+            $apartment->delete();  //elimina l'appartamento dal database
             return response()->json(['message' => 'Appartamento eliminato con successo'], 200);
         }
 
