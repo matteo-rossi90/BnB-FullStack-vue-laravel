@@ -22,13 +22,6 @@ class ApartmentController extends Controller
         return $apartment;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
 
     #tommy riga 34

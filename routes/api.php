@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Ura\ApartmentController;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -38,6 +39,8 @@ Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionControlle
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class , 'store']);
 
-// Route::get('register', [UserAlreadyAuth::class, 'register']);
-// Route::get('login', [UserAlreadyAuth::class, 'login']);
+
+
+
+
 

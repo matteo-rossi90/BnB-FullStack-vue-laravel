@@ -1,9 +1,11 @@
 <script>
+import axios from "axios";
+import { checkAdress } from "../../store/store";
 export default {
   name: "CreateApartment",
   data() {
     return {
-      // https://api.tomtom.com/search/2/geocode/via%20lago%20di%20misurina%20pomezia%20Roma.json?storeResult=false&view=Unified&key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI
+      //
       apartment: {
         title: "",
         address: "",
@@ -12,7 +14,6 @@ export default {
         number_rooms: "",
         number_beds: "",
         number_bathrooms: "",
-
         image: "",
         square_meters: "",
       },
@@ -21,22 +22,55 @@ export default {
   },
   methods: {
     submit() {
-      console.log(this.apartment);
+      let urlRequest = checkAdress(this.apartment.address);
 
       axios
-        .post("api/user/utente/dashboard", this.apartment)
-        .then((res) => {
-          //    this.$router.push({ name: "dashboard" });
-          console.log("funziona", res.data);
+        .get("http://127.0.0.1:8000/proxy-tomtom", {
+          params: { url: urlRequest }, // Passa l'URL come parametro
         })
-        .catch((err) => {
-          this.errors = err.response;
-          console.log(err.response);
+        .then((response) => {
+          this.apartment.lat = response.data.results[0].position.lat;
+          this.apartment.lon = response.data.results[0].position.lon;
+
+          axios
+            .post("api/user/utente/dashboard", this.apartment)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {});
+        })
+        .catch((error) => {
+          console.error("Errore:", error.response || error.message);
         });
+
+      //   axios
+      //     .post("api/user/utente/dashboard", this.apartment)
+      //     .then((res) => {
+      //       //    this.$router.push({ name: "dashboard" });
+      //       console.log("funziona", res.data);
+      //     })
+      //     .catch((err) => {
+      //       this.errors = err.response;
+      //       console.log(err.response);
+      //     });
     },
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+riga66
 <template>
   <div class="container-fluid p-5 d-flex justify-content-center gap-2">
     <div class="row">

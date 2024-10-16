@@ -13,7 +13,26 @@ const store = reactive({
     is_open: false,
 
     allApartment:[]
+
+
 })
 
+const checkAdress = (adress) =>{
+// trasform adress in array
+let stringRequest = adress
+// .split(" ")
+// .map((world, index, arr) => {
+//     if(arr.length - 1 !== index){
+//         return world + "%20";
+//     }else{
+//         return world;
+//     }
 
-export {store};
+// })
+// .join("").toUpperCase();
+let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(stringRequest)}.json?key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI`;
+
+return urlRequest
+//   array
+}
+export {store, checkAdress};
