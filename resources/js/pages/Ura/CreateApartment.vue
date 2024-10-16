@@ -3,6 +3,7 @@ import { RouterLink } from "vue-router";
 import { Modal } from "bootstrap";
 import Routinglist from "./partials/Routinglist.vue";
 import { checkAdress } from "../../store/store";
+
 export default {
   name: "CreateApartment",
   components: {
@@ -10,7 +11,6 @@ export default {
   },
   data() {
     return {
-      //
       apartment: {
         title: "",
         address: "",
@@ -40,15 +40,16 @@ export default {
           axios
             .post("api/user/utente/dashboard", this.apartment)
             .then((res) => {
-              //   // questo dovrebbe chiudere bootstrap..vedi se riesci a risolvere
-              //   // Ottieni il modal e chiudilo manualmente
-              //   const modalElement = document.getElementById("exampleModal");
-              //   const modalInstance =
-              //     window.bootstrap.Modal.getInstance(modalElement);
+              // Chiudi il modal
+              const modalElement = document.getElementById("exampleModal");
+              const modalInstance =
+                window.bootstrap.Modal.getInstance(modalElement);
 
-              //   if (modalInstance) {
-              //     modalInstance.hide(); // Chiudi il modal
-              //   }
+              if (modalInstance) {
+                modalInstance.hide(); // Chiudi il modal
+                this.removeBackdrop(); // Rimuovi il backdrop
+              }
+
               this.$router.push({ name: "apartments" });
             })
             .catch((err) => {
@@ -58,23 +59,16 @@ export default {
         .catch((error) => {
           console.error("Errore:", error.response || error.message);
         });
-
-      //   axios
-      //     .post("api/user/utente/dashboard", this.apartment)
-      //     .then((res) => {
-      //       //    this.$router.push({ name: "dashboard" });
-      //       console.log("funziona", res.data);
-      //     })
-      //     .catch((err) => {
-      //       this.errors = err.response;
-      //       console.log(err.response);
-      //     });
+    },
+    removeBackdrop() {
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        backdrop.remove(); // Rimuovi il backdrop dal DOM
+      }
     },
   },
-  mounted() {
-    // force bootstrap for close modale
-  },
 };
+
 </script>
 
 <template>
