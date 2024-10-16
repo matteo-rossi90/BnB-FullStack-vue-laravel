@@ -120,4 +120,7 @@ export default {
 
 
 <style lang="scss" scoped>
+button{
+    margin-top: 30px;
+}
 </style>
