@@ -62,7 +62,7 @@ const router = createRouter({
                 name: 'showApartment',
                 component: ShowApartment
             },{
-                path: '/modifica-appartamento',
+                path: '/modifica-appartamento/:id',
                 name: 'EditApartment',
                 component: EditApartment
             },
