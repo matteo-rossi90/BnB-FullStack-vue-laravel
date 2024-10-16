@@ -24,10 +24,10 @@ import Routinglist from './partials/Routinglist.vue';
     };
   },
     mounted() {
-            axios.get(`api/user/utente/dashboard/${apartment.slug}/edit`)
+            axios.get(`api/user/utente/dashboard/${apartment}`)
             .then((res) => {
          console.log(res);
-        this.name = res.data.name;
+
     })
     .catch((err) => {
         console.log(err);
