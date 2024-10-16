@@ -64,11 +64,6 @@ class StoreApartmentRequest extends FormRequest
 
             "address.required" => "L'indirizzo è obbligatorio.",
 
-            "lat.required" => "La latitudine è obbligatoria.",
-            "lat.numeric" => "La latitudine deve essere un numero valido.",
-
-            "lon.required" => "La longitudine è obbligatoria.",
-            "lon.numeric" => "La longitudine deve essere un numero valido.",
         ];
     }
 }

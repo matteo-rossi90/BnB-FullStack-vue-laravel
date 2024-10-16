@@ -35,6 +35,11 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
+        #il contenuto di request deve corrispondere al fillable del model
+        #controllare le colonne dalla migration che mancano e le inserisci te
+        #aggiungere slug
+        #aggiungere id utente???$user = auth()->user(); $user->id
+        #aggiungere original name
 
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);

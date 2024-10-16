@@ -1,45 +1,40 @@
 <script>
-
 export default {
   name: "CreateApartment",
   data() {
     return {
-         apartment:{
-             title:"",
-             address:"",
-             lat:"",
-             lon:"",
-             number_rooms:"",
-             number_beds:"",
-             number_bathrooms:"",
-             image:"",
-             square_meters:"",
+      apartment: {
+        title: "",
+        address: "",
+        lat: "",
+        lon: "",
+        number_rooms: "",
+        number_beds: "",
+        number_bathrooms: "",
 
-
-
-         },
-        errors: {},
+        image: "",
+        square_meters: "",
+      },
+      errors: {},
     };
   },
   methods: {
+    submit() {
+      console.log(this.apartment);
 
-     submit() {
-       console.log(this.apartment);
-
-       axios
-         .post("api/user/utente/dashboard", this.apartment)
-         .then((res) => {
-        //    this.$router.push({ name: "dashboard" });
-        console.log(res);
-
-         })
-         .catch((err) => {
-           this.errors = err.response.data.errors;
-         });
-  }
-},
-}
-
+      axios
+        .post("api/user/utente/dashboard", this.apartment)
+        .then((res) => {
+          //    this.$router.push({ name: "dashboard" });
+          console.log("funziona", res.data);
+        })
+        .catch((err) => {
+          this.errors = err.response;
+          console.log(err.response);
+        });
+    },
+  },
+};
 </script>
 <template>
   <div class="container-fluid p-5 d-flex justify-content-center gap-2">
@@ -193,13 +188,19 @@ export default {
         <div class="col-12 col-sm-6">
             <img class="img-fluid" src="../../../../public/img/bed_and_breakfast_image.jpg" alt="imgBnB">
         </div>
+      </div>
+      <div class="col-12 col-sm-6">
+        <img
+          class="img-fluid"
+          src="../../../../public/img/bed_and_breakfast_image.jpg"
+          alt="imgBnB"
+        />
+      </div>
     </div>
-
   </div>
-
 </template>
 <style lang='scss' scoped>
-img{
-    max-height: 500px;
+img {
+  max-height: 500px;
 }
 </style>
