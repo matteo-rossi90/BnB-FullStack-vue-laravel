@@ -1,4 +1,5 @@
 <script>
+import { RouterLink } from 'vue-router';
 import Routinglist from './partials/Routinglist.vue';
 
 export default {
@@ -51,11 +52,11 @@ export default {
                     <table class="table">
                         <thead>
                             <tr>
-                            <th scope="col">#id</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Messaggi</th>
-                            <th scope="col">Statistiche</th>
-                            <th scope="col">Azioni</th>
+                                <th scope="col">#id</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Messaggi</th>
+                                <th scope="col">Statistiche</th>
+                                <th scope="col">Azioni</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,9 +74,11 @@ export default {
                                 <i class="fa-solid fa-chart-simple"></i>
                             </td>
                             <td scoper="row" class="actions d-flex gap-2">
-                                <a href="#" class="btn btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                                </a>
+                                <RouterLink class="link" :to="{ name: 'showApartment' }">
+                                    <div class="btn btn-primary">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </div>
+                                </RouterLink>
                                 <a href="#" class="btn btn-warning">
                                 <i class="fa-solid fa-pencil"></i>
                                 </a>

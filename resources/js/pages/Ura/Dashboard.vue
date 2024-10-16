@@ -2,7 +2,7 @@
 import IndexApartment from "./IndexApartment.vue";
 import Messages from "./Messages.vue";
 import Sponsor from "./Sponsor.vue";
-import routinglist from "./partials/Routinglist.vue";
+import Routinglist from "./partials/Routinglist.vue";
 import { store } from '../../store/store';
 
 export default {
@@ -11,7 +11,7 @@ export default {
     IndexApartment,
     Messages,
     Sponsor,
-    routinglist
+    Routinglist
   },
   data() {
     return {
