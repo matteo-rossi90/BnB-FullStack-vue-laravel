@@ -32,9 +32,6 @@ Route::middleware('auth:sanctum')
 
 });
 
-
-
-
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 Route::post('register', [RegisteredUserController::class, 'store']);

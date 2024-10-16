@@ -4,6 +4,7 @@ import '../scss/_general.scss'
 // Includo il file CSS e JavaScript di Bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import 'bootstrap';  // Importa JavaScript di Bootstrap
 import '../scss/_variables.scss';
 import '../scss/_dashboard.scss';
 

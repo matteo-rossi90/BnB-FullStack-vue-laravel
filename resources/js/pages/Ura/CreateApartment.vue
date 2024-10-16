@@ -1,6 +1,8 @@
 <script>
 import { RouterLink } from "vue-router";
+import { Modal } from "bootstrap";
 import Routinglist from "./partials/Routinglist.vue";
+import { checkAdress } from "../../store/store";
 export default {
   name: "CreateApartment",
   components: {
@@ -29,7 +31,7 @@ export default {
 
       axios
         .get("http://127.0.0.1:8000/proxy-tomtom", {
-          params: { url: urlRequest }, // Passa l'URL come parametro
+          params: { url: urlRequest },
         })
         .then((response) => {
           this.apartment.lat = response.data.results[0].position.lat;
@@ -38,9 +40,20 @@ export default {
           axios
             .post("api/user/utente/dashboard", this.apartment)
             .then((res) => {
-              console.log(res);
+              // questo dovrebbe chiudere bootstrap..vedi se riesci a risolvere
+              // Ottieni il modal e chiudilo manualmente
+              const modalElement = document.getElementById("exampleModal");
+              const modalInstance =
+                window.bootstrap.Modal.getInstance(modalElement);
+
+              if (modalInstance) {
+                modalInstance.hide(); // Chiudi il modal
+              }
+              this.$router.push({ name: "apartments" });
             })
-            .catch((err) => {});
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((error) => {
           console.error("Errore:", error.response || error.message);
@@ -58,29 +71,12 @@ export default {
       //     });
     },
   },
+  mounted() {
+    // force bootstrap for close modale
+    window.addEventListener("click", function () {});
+  },
 };
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <template>
   <div class="wrapper d-flex">
