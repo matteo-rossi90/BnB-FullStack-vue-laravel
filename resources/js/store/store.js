@@ -28,7 +28,6 @@ let stringRequest = adress
 //         return world;
 //     }
 
-<<<<<<< HEAD
 // })
 // .join("").toUpperCase();
 let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(stringRequest)}.json?key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI`;
@@ -37,6 +36,3 @@ return urlRequest
 //   array
 }
 export {store, checkAdress};
-=======
-export { store };
->>>>>>> 4082605bc74e3c3b4422edf3f505a905a7c20ed7
