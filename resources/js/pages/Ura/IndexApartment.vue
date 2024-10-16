@@ -1,4 +1,5 @@
 <script>
+import { RouterLink } from 'vue-router';
 import Routinglist from './partials/Routinglist.vue';
 import routinglist from './partials/Routinglist.vue';
 export default {
@@ -71,9 +72,11 @@ export default {
                                 {{ apartment.address }}
                             </td>
                             <td scoper="row" class="actions d-flex gap-2">
-                                <a href="#" class="btn btn-primary">
-                                <i class="fa-solid fa-eye"></i>
-                                </a>
+                                <RouterLink class="link" :to="{ name: 'showApartment' }">
+                                    <div class="btn btn-primary">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </div>
+                                </RouterLink>
                                 <a href="#" class="btn btn-warning">
                                 <i class="fa-solid fa-pencil"></i>
                                 </a>
