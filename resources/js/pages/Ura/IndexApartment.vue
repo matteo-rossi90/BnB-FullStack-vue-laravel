@@ -53,8 +53,8 @@ export default {
                             <tr>
                             <th scope="col">#id</th>
                             <th scope="col">Nome</th>
-                            <th scope="col">Message</th>
-                            <th scope="col">Luogo</th>
+                            <th scope="col">Messaggi</th>
+                            <th scope="col">Statistiche</th>
                             <th scope="col">Azioni</th>
                             </tr>
                         </thead>
@@ -66,9 +66,11 @@ export default {
                             <td scope="row">
                                 {{ apartment.title }}
                             </td>
-                            <td scope="row">-</td>
                             <td scope="row">
-                                {{ apartment.address }}
+                                <i class="fa-solid fa-envelope"></i>
+                            </td>
+                            <td scope="row">
+                                <i class="fa-solid fa-chart-simple"></i>
                             </td>
                             <td scoper="row" class="actions d-flex gap-2">
                                 <a href="#" class="btn btn-primary">
