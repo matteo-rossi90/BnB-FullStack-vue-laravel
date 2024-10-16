@@ -10,6 +10,7 @@ import IndexApartment from "../pages/Ura/IndexApartment.vue";
 import Messages from "../pages/Ura/Messages.vue";
 import Sponsor from "../pages/Ura/Sponsor.vue";
 import ShowApartment from "../pages/Ura/ShowApartment.vue";
+import EditApartment from "../pages/Ura/EditApartment.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -56,10 +57,14 @@ const router = createRouter({
                 component: CreateApartment
             },
             {
-                path: '/dettaglio-appartamento',
-                // path: '/apartment/:id',
+                // path: '/dettaglio-appartamento',
+                path: '/apartment/:id',
                 name: 'showApartment',
                 component: ShowApartment
+            },{
+                path: '/modifica-appartamento',
+                name: 'EditApartment',
+                component: EditApartment
             },
         ]
 })

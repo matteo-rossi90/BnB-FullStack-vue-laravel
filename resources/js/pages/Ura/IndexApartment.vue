@@ -1,6 +1,7 @@
 <script>
 import { RouterLink } from 'vue-router';
 import Routinglist from './partials/Routinglist.vue';
+import {store} from '../../store/store';
 
 export default {
   name: "IndexApartment",
@@ -13,7 +14,13 @@ export default {
       apartments: [],
     };
   },
-  methods: {},
+  methods: {
+
+//     detailApartment(id){
+//             console.log(this.$route.params);
+
+//   },
+  },
   mounted() {
     axios
       .get("/api/user")
@@ -25,15 +32,33 @@ export default {
         console.log(err);
       });
 
+    // axios
+    //   .get("api/user/utente/dashboard")
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.apartments = response.data;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
     axios
-      .get("api/user/utente/dashboard")
-      .then((response) => {
-        console.log(response);
-        this.apartments = response.data;
-      })
-      .catch((err) => {
+    .get("api/user/utente/dashboard")
+    .then((response) => {
+        // console.log(response.data);
+        localStorage.setItem('apartments', JSON.stringify(response.data));
+        const apartmentJson = localStorage.getItem('apartments');
+        store.allApartmentGlobal = JSON.parse(apartmentJson);
+        this.apartments = store.allApartmentGlobal;
+
+        // console.log(this.apartments);
+
+
+    })
+    .catch((err) => {
         console.log(err);
-      });
+    });
+
   },
 };
 </script>
@@ -74,14 +99,18 @@ export default {
                                 <i class="fa-solid fa-chart-simple"></i>
                             </td>
                             <td scoper="row" class="actions d-flex gap-2">
-                                <RouterLink class="link" :to="{ name: 'showApartment' }">
+                                <RouterLink class="link" :to="{ name: 'showApartment',  params: { id: apartment.id } }">
                                     <div class="btn btn-primary">
                                         <i class="fa-solid fa-eye"></i>
                                     </div>
                                 </RouterLink>
-                                <a href="#" class="btn btn-warning">
-                                <i class="fa-solid fa-pencil"></i>
-                                </a>
+                                <RouterLink class="link" :to="{ name: 'EditApartment' }">
+                                    <div class="btn btn-warning">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </div>
+                                </RouterLink>
+
+
                                 <a href="#" class="btn btn-danger">
                                 <i class="fa-solid fa-trash"></i>
                                 </a>

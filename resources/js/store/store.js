@@ -1,9 +1,9 @@
-import {reactive} from 'vue';
+import { reactive } from 'vue';
 
 
 const store = reactive({
     // data of user
-    user:{},
+    user: {},
     userName: 'Accedi',
     // is logged user boolean
     is_logged: false,
@@ -12,9 +12,9 @@ const store = reactive({
     // boolean for dropdown menu of header
     is_open: false,
 
-    allApartment:[]
+    allApartment: [],
 
-
+    allApartmentGlobal: []
 })
 
 const checkAdress = (adress) =>{
@@ -28,6 +28,7 @@ let stringRequest = adress
 //         return world;
 //     }
 
+<<<<<<< HEAD
 // })
 // .join("").toUpperCase();
 let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(stringRequest)}.json?key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI`;
@@ -36,3 +37,6 @@ return urlRequest
 //   array
 }
 export {store, checkAdress};
+=======
+export { store };
+>>>>>>> 4082605bc74e3c3b4422edf3f505a905a7c20ed7

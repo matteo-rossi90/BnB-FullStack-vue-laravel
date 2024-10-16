@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Apartment;
 use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -60,44 +61,26 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::find($id);
         return response()->json($apartment);
-
-
-
-
-
-
     }
 
     #vincenzo riga 78
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Apartment $apartment)
-    {
-        //
 
-
-
-
-
-
-    }
     #vincenzo 92
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        //
+        $data = $request->all();
+        if ($data['title'] != $apartment->title) {
 
-
-
-
-
-
-
-
-
+            $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+        }
+        $apartment->update($data);
+        return $apartment;
     }
 
 
@@ -119,8 +102,19 @@ class ApartmentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Apartment $apartment)
+    public function destroy(Request $request)
     {
-        //
+        // Recupera l'oggetto apartment dal corpo della richiesta
+        $apartmentData = $request->input();  // Ottieni l'intero oggetto apartment
+
+        // Recupera l'appartamento da eliminare tramite l'ID
+        $apartment = Apartment::find($apartmentData['id']);  // Usa l'ID presente nell'oggetto
+
+        if ($apartment) {
+            $apartment->delete();  // Elimina l'appartamento
+            return response()->json(['message' => 'Appartamento eliminato con successo'], 200);
+        }
+
+        return response()->json(['message' => 'Appartamento non trovato'], 404);
     }
 }

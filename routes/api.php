@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')
     ->name('admin.')
     ->group(function(){
         Route::resource('/utente/dashboard', ApartmentController::class);
+
 });
 
 

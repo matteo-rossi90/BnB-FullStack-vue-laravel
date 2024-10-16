@@ -1,4 +1,5 @@
 <script>
+import {store} from '../../store/store';
 export default {
     name: 'ShowApartment',
 
@@ -17,24 +18,60 @@ export default {
         //      square_meters:"",
         //  },
 
-        apartment: null,
+        apartment: [],
         };
     },
 
     methods: {
-        // async fetchPost(id) {
-        //     try {
-        //         const response = await axios.get(`/api/apartment/${id}`);
-        //         this.post = response.data;
-        //     } catch (error) {
-        //         console.error("Errore nel recupero del post:", error);
-        //     }
-        // }
+        fetchApartment(id) {
+            // try {
+            //     const response = await axios.get(`/api/apartment/${id}`);
+            //     console.log(response);
+
+            //     // this.apartment = response.data;
+            //     // console.log(this.apartment);
+
+            // } catch (error) {
+            //     console.error("Errore nel recupero del post:", error);
+            // }
+
+
+            // axios.get(`api/user/utente/dashboard/${id}`)
+            //     .then(res=>{
+            //         // console.log(res);
+
+            //     })
+        },
+
+        findApartment(){
+            const apartments = store.allApartmentGlobal;
+
+            console.log('tutti app ' + apartments);
+            console.log(store.allApartmentGlobal);
+
+            this.apartment= apartments.find(apartment => apartment.id === this.$route.params.id);
+
+            console.log('singolo app ' + this.apartment);
+
+
+        }
     },
 
     mounted(){
-        // const postId = this.$route.params.id;
-        // this.fetchPost(postId);
+        // const apartmentId = this.$route.params.id;
+        // this.fetchApartment(apartmentId);
+
+        // function findApartment(){
+        //     const apartments = store.allApartmentGlobal;
+
+        //     this.apartment= apartments.filter(apartment => apartment.id === this.$route.params.id);
+        // }
+
+        this.findApartment();
+        console.log(this.$route.params.id);
+        // console.log(this.apartment);
+
+
     }
 }
 
