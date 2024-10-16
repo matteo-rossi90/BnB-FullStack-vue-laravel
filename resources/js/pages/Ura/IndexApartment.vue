@@ -1,6 +1,7 @@
 <script>
 import { RouterLink } from 'vue-router';
 import Routinglist from './partials/Routinglist.vue';
+import {store} from '../../store/store';
 
 export default {
   name: "IndexApartment",
@@ -10,7 +11,7 @@ export default {
   data() {
     return {
       name: "",
-      apartments: [],
+      apartments: store.allApartmentGlobal,
     };
   },
   methods: {
@@ -20,11 +21,10 @@ export default {
             .get("api/user/utente/dashboard")
             .then((response) => {
                 console.log(response);
-                this.apartments = response.data;
+                localStorage.setItem('apartments', response.data);
+                store.allApartmentGlobal = localStorage.getItem('apartments');
 
-                // prova per prendere un singolo elemento
-                const singleApartment = this.apartments.find(apartment => apartment.id === id);
-                console.log(singleApartment);
+
 
 
             })

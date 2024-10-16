@@ -1,9 +1,9 @@
-import {reactive} from 'vue';
+import { reactive } from 'vue';
 
 
 const store = reactive({
     // data of user
-    user:{},
+    user: {},
     userName: 'Accedi',
     // is logged user boolean
     is_logged: false,
@@ -12,8 +12,10 @@ const store = reactive({
     // boolean for dropdown menu of header
     is_open: false,
 
-    allApartment:[]
+    allApartment: [],
+
+    allApartmentGlobal: []
 })
 
 
-export {store};
+export { store };
