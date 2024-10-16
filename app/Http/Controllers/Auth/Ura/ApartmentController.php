@@ -81,13 +81,27 @@ class ApartmentController extends Controller
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
+
         $data = $request->all();
+        $data['user_id'] =  auth()->user()->id;
+
         if ($data['title'] != $apartment->title) {
 
             $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         }
+
+        if (array_key_exists('image', $data) && $data['image']) {
+            $image = Storage::put('uploads', $data['image']);
+            $original_name = $request->file('image')->getClientOriginalName();
+            $data['image'] = $image;
+            $data['original_name'] = $original_name;
+        }else{
+            $data['image'] = 'vuoto';
+            $data['original_name'] = 'vuoto';
+        }
+
         $apartment->update($data);
-        return $apartment;
+        return true;
     }
 
 
