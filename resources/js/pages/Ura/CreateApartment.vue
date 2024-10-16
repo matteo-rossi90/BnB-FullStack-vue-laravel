@@ -26,51 +26,7 @@ export default {
     };
   },
   methods: {
-    submit() {
-      let urlRequest = checkAdress(this.apartment.address);
 
-      axios
-        .get("http://127.0.0.1:8000/proxy-tomtom", {
-          params: { url: urlRequest },
-        })
-        .then((response) => {
-          this.apartment.lat = response.data.results[0].position.lat;
-          this.apartment.lon = response.data.results[0].position.lon;
-
-          axios
-            .post("api/user/utente/dashboard", this.apartment)
-            .then((res) => {
-              // questo dovrebbe chiudere bootstrap..vedi se riesci a risolvere
-              // Ottieni il modal e chiudilo manualmente
-              const modalElement = document.getElementById("exampleModal");
-              const modalInstance =
-                window.bootstrap.Modal.getInstance(modalElement);
-
-              if (modalInstance) {
-                modalInstance.hide(); // Chiudi il modal
-              }
-              this.$router.push({ name: "apartments" });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((error) => {
-          console.error("Errore:", error.response || error.message);
-        });
-
-      //   axios
-      //     .post("api/user/utente/dashboard", this.apartment)
-      //     .then((res) => {
-      //       //    this.$router.push({ name: "dashboard" });
-      //       console.log("funziona", res.data);
-      //     })
-      //     .catch((err) => {
-      //       this.errors = err.response;
-      //       console.log(err.response);
-      //     });
-    },
-  },
   mounted() {
     // force bootstrap for close modale
     window.addEventListener("click", function () {});
@@ -256,7 +212,7 @@ export default {
                         >
                           chiudi
                         </button>
-                        <button type="submit" class="btn btn-dark">
+                        <button type="submit" id="customCloseButton" class="btn btn-dark">
                           inserisci appartamento
                         </button>
                       </div>

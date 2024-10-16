@@ -25,7 +25,7 @@ import { store } from '../../store/store';
             <label for="" class="form-label">Numero di stanze</label>
             <input type="number" class="form-control" >
 
-            <label for=""class="form-label" >Numero di letti</label>
+            <label for="" class="form-label" >Numero di letti</label>
             <input type="number" class="form-control">
 
             <label for="" class="form-label">Numero di bagni</label>
