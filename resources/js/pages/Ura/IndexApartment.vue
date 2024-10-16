@@ -11,27 +11,15 @@ export default {
   data() {
     return {
       name: "",
-      apartments: store.allApartmentGlobal,
+      apartments: [],
     };
   },
   methods: {
 
-    detailApartment(id){
-        axios
-            .get("api/user/utente/dashboard")
-            .then((response) => {
-                console.log(response);
-                localStorage.setItem('apartments', response.data);
-                store.allApartmentGlobal = localStorage.getItem('apartments');
+//     detailApartment(id){
+//             console.log(this.$route.params);
 
-
-
-
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    }
+//   },
   },
   mounted() {
     axios
@@ -44,15 +32,33 @@ export default {
         console.log(err);
       });
 
+    // axios
+    //   .get("api/user/utente/dashboard")
+    //   .then((response) => {
+    //     console.log(response);
+    //     this.apartments = response.data;
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
+
     axios
-      .get("api/user/utente/dashboard")
-      .then((response) => {
-        console.log(response);
-        this.apartments = response.data;
-      })
-      .catch((err) => {
+    .get("api/user/utente/dashboard")
+    .then((response) => {
+        console.log(response.data);
+        localStorage.setItem('apartments', JSON.stringify(response.data));
+        const apartmentJson = localStorage.getItem('apartments');
+        store.allApartmentGlobal = JSON.parse(apartmentJson);
+        this.apartments = store.allApartmentGlobal;
+
+        console.log(this.apartments);
+
+
+    })
+    .catch((err) => {
         console.log(err);
-      });
+    });
+
   },
 };
 </script>
@@ -94,7 +100,7 @@ export default {
                             </td>
                             <td scoper="row" class="actions d-flex gap-2">
                                 <RouterLink class="link" :to="{ name: 'showApartment',  params: { id: apartment.id } }">
-                                    <div @click="detailApartment(id)" class="btn btn-primary">
+                                    <div class="btn btn-primary">
                                         <i class="fa-solid fa-eye"></i>
                                     </div>
                                 </RouterLink>

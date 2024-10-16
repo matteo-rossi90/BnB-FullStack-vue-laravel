@@ -35,17 +35,20 @@ export default {
             // }
 
 
-            axios.get(`api/user/utente/dashboard/${id}`)
-                .then(res=>{
-                    // console.log(res);
+            // axios.get(`api/user/utente/dashboard/${id}`)
+            //     .then(res=>{
+            //         // console.log(res);
 
-                })
+            //     })
         }
     },
 
     mounted(){
         const apartmentId = this.$route.params.id;
         this.fetchApartment(apartmentId);
+
+        console.log(this.$route.params.id);
+
     }
 }
 
