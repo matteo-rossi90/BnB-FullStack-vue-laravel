@@ -1,6 +1,11 @@
 <script>
+import { RouterLink } from 'vue-router';
+import Routinglist from './partials/Routinglist.vue';
 export default {
   name: "CreateApartment",
+  components:{
+    Routinglist
+  },
   data() {
     return {
       // https://api.tomtom.com/search/2/geocode/via%20lago%20di%20misurina%20pomezia%20Roma.json?storeResult=false&view=Unified&key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI
@@ -37,8 +42,36 @@ export default {
   },
 };
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <template>
-  <div class="container-fluid p-5 d-flex justify-content-center gap-2">
+    <div class="wrapper d-flex">
+  <aside>
+      <Routinglist />
+  </aside>
+    <div class="dashboard-box">
+        <div class="container-fluid p-5 d-flex justify-content-center gap-2">
+
     <div class="row">
       <div class="col-12">
         <h1>Inserisci un appartamento</h1>
@@ -223,6 +256,14 @@ export default {
       </div>
     </div>
   </div>
+    </div>
+    </div>
+
+
+
+
+
+
 </template>
 <style lang='scss' scoped>
 img {

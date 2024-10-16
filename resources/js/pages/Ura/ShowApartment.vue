@@ -22,19 +22,33 @@ export default {
     },
 
     methods: {
-        // async fetchPost(id) {
-        //     try {
-        //         const response = await axios.get(`/api/apartment/${id}`);
-        //         this.post = response.data;
-        //     } catch (error) {
-        //         console.error("Errore nel recupero del post:", error);
-        //     }
-        // }
+        fetchApartment(id) {
+            // try {
+            //     const response = await axios.get(`/api/apartment/${id}`);
+            //     console.log(response);
+
+            //     // this.apartment = response.data;
+            //     // console.log(this.apartment);
+
+            // } catch (error) {
+            //     console.error("Errore nel recupero del post:", error);
+            // }
+
+
+            // axios.get(`api/user/utente/dashboard/${id}`)
+            //     .then(res=>{
+            //         // console.log(res);
+
+            //     })
+        }
     },
 
     mounted(){
-        // const postId = this.$route.params.id;
-        // this.fetchPost(postId);
+        const apartmentId = this.$route.params.id;
+        this.fetchApartment(apartmentId);
+
+        console.log(this.$route.params.id);
+
     }
 }
 

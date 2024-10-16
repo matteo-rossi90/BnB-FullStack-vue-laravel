@@ -68,44 +68,26 @@ class ApartmentController extends Controller
     {
         $apartment = Apartment::find($id);
         return response()->json($apartment);
-
-
-
-
-
-
     }
 
     #vincenzo riga 78
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Apartment $apartment)
-    {
-        //
 
-
-
-
-
-
-    }
     #vincenzo 92
     /**
      * Update the specified resource in storage.
      */
     public function update(UpdateApartmentRequest $request, Apartment $apartment)
     {
-        //
+        $data = $request->all();
+        if ($data['title'] != $apartment->title) {
 
-
-
-
-
-
-
-
-
+            $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+        }
+        $apartment->update($data);
+        return $apartment;
     }
 
 
