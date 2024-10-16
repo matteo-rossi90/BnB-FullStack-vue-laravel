@@ -3,7 +3,6 @@ import { RouterLink } from "vue-router";
 import { Modal } from "bootstrap";
 import Routinglist from "./partials/Routinglist.vue";
 import { checkAdress } from "../../store/store";
-
 export default {
   name: "CreateApartment",
   components: {
@@ -11,6 +10,7 @@ export default {
   },
   data() {
     return {
+      //
       apartment: {
         title: "",
         address: "",
@@ -40,17 +40,9 @@ export default {
           axios
             .post("api/user/utente/dashboard", this.apartment)
             .then((res) => {
-              // Chiudi il modal
-              const modalElement = document.getElementById("exampleModal");
-              const modalInstance =
-                window.bootstrap.Modal.getInstance(modalElement);
 
-              if (modalInstance) {
-                modalInstance.hide(); // Chiudi il modal
-                this.removeBackdrop(); // Rimuovi il backdrop
-              }
+                this.$router.push({ name: "apartments" });
 
-              this.$router.push({ name: "apartments" });
             })
             .catch((err) => {
               console.log(err);
@@ -59,16 +51,15 @@ export default {
         .catch((error) => {
           console.error("Errore:", error.response || error.message);
         });
-    },
-    removeBackdrop() {
-      const backdrop = document.querySelector('.modal-backdrop');
-      if (backdrop) {
-        backdrop.remove(); // Rimuovi il backdrop dal DOM
-      }
+
+
     },
   },
+  mounted() {
+    // force bootstrap for close modale
+    window.addEventListener("click", function () {});
+  },
 };
-
 </script>
 
 <template>
