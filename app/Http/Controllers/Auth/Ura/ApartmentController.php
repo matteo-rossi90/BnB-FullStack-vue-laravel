@@ -37,28 +37,28 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-
+        dd($request->all());
 
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
-
         if (array_key_exists('image', $data)) {
-
             $image = Storage::put('uploads', $data['image']);
-
             $original_name = $request->file('image')->getClientOriginalName();
-
             $data['image'] = $image;
             $data['original_name'] = $original_name;
         }
-
-
         $apartment = Apartment::create($data);
         return $apartment;
     }
 
-#riga61
+
+
+
+
+
+
+    #riga61
     /**
      * Display the specified resource.
      */
