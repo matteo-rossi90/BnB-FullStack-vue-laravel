@@ -36,6 +36,7 @@ class ApartmentController extends Controller
 
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+        dump($data);
 
         // if(array_key_exists('image', $data)){
 
