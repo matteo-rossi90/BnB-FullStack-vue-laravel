@@ -8,12 +8,15 @@
 
 aside {
     width: 350px;
+    position:fixed;
+    left:0;
     height: 100%;
     border-right: 1px solid $color;
 }
 
 .dashboard-box {
-    width: 100%;
+    width:100%;
+    margin-left: 350px;
 }
 
 ul {
@@ -25,8 +28,6 @@ ul {
 
     aside {
         width: 250px;
-        position: fixed;
-        left: 0;
         }
 
     .dashboard-box {
