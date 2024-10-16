@@ -45,13 +45,13 @@ export default {
     axios
     .get("api/user/utente/dashboard")
     .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         localStorage.setItem('apartments', JSON.stringify(response.data));
         const apartmentJson = localStorage.getItem('apartments');
         store.allApartmentGlobal = JSON.parse(apartmentJson);
         this.apartments = store.allApartmentGlobal;
 
-        console.log(this.apartments);
+        // console.log(this.apartments);
 
 
     })

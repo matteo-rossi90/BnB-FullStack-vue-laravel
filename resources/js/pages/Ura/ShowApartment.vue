@@ -1,4 +1,5 @@
 <script>
+import {store} from '../../store/store';
 export default {
     name: 'ShowApartment',
 
@@ -17,7 +18,7 @@ export default {
         //      square_meters:"",
         //  },
 
-        apartment: null,
+        apartment: [],
         };
     },
 
@@ -40,14 +41,36 @@ export default {
             //         // console.log(res);
 
             //     })
+        },
+
+        findApartment(){
+            const apartments = store.allApartmentGlobal;
+
+            console.log('tutti app ' + apartments);
+            console.log(store.allApartmentGlobal);
+
+            this.apartment= apartments.find(apartment => apartment.id === this.$route.params.id);
+
+            console.log('singolo app ' + this.apartment);
+
+
         }
     },
 
     mounted(){
-        const apartmentId = this.$route.params.id;
-        this.fetchApartment(apartmentId);
+        // const apartmentId = this.$route.params.id;
+        // this.fetchApartment(apartmentId);
 
+        // function findApartment(){
+        //     const apartments = store.allApartmentGlobal;
+
+        //     this.apartment= apartments.filter(apartment => apartment.id === this.$route.params.id);
+        // }
+
+        this.findApartment();
         console.log(this.$route.params.id);
+        // console.log(this.apartment);
+
 
     }
 }
