@@ -37,8 +37,16 @@ class ApartmentController extends Controller
      */
     public function store(StoreApartmentRequest $request)
     {
-
-
+        dd($request->all());
+        //"title" => "dfasdf"
+        //   "address" => "fdasd"
+        //   "lat" => null
+        //   "lon" => null
+        //   "number_rooms" => 1
+        //   "number_beds" => 1
+        //   "number_bathrooms" => 1
+        //   "image" => null
+        //   "square_meters" => 1
         $data = $request->all();
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
@@ -58,7 +66,9 @@ class ApartmentController extends Controller
         return $apartment;
     }
 
-#riga61
+
+
+    #riga61
     /**
      * Display the specified resource.
      */

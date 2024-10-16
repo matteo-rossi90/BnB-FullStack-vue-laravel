@@ -30,8 +30,7 @@ Route::middleware('auth:sanctum')
         Route::resource('/utente/dashboard', ApartmentController::class);
 });
 
-// rotta show
-Route::middleware('auth:sanctum')->get('/apartment/{id}', [ApartmentControlle::class, 'show']);
+
 
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
