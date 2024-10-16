@@ -26,8 +26,6 @@ export default {
     };
   },
   methods: {
-    submit() {
-      let urlRequest = checkAdress(this.apartment.address);
 
       axios
         .get("http://127.0.0.1:8000/proxy-tomtom", {
@@ -249,7 +247,7 @@ export default {
                         >
                           chiudi
                         </button>
-                        <button type="submit" class="btn btn-dark">
+                        <button type="submit" id="customCloseButton" class="btn btn-dark">
                           inserisci appartamento
                         </button>
                       </div>
