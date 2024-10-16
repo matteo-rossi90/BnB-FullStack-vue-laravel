@@ -1,91 +1,67 @@
 <script>
-import {store} from '../../store/store';
+import { store } from "../../store/store";
 export default {
-    name: 'ShowApartment',
+  name: "ShowApartment",
 
-    data(){
-        return {
-        //     apartment:{
-        //      title:"",
-        //      address:"",
-        //      lat:"",
-        //      lon:"",
-        //      number_rooms:"",
-        //      number_beds:"",
-        //      number_bathrooms:"",
-        //      original_name:"",
-        //      image:"",
-        //      square_meters:"",
-        //  },
+  data() {
+    return {
+      apartment: {},
+    };
+  },
 
-        apartment: [],
-        };
-    },
+  methods: {
+    findApartment() {
+      // Recupera i dati dal localStorage
+      let apartmentsJson = localStorage.getItem("apartments");
 
-    methods: {
-        fetchApartment(id) {
-            // try {
-            //     const response = await axios.get(`/api/apartment/${id}`);
-            //     console.log(response);
+      // Verifica se i dati esistono e sono validi
+      if (!apartmentsJson) {
+        console.error("Nessun dato trovato nel localStorage");
+        return;
+      }
 
-            //     // this.apartment = response.data;
-            //     // console.log(this.apartment);
+      // Converte i dati JSON in un array di oggetti JavaScript
+      let apartments = JSON.parse(apartmentsJson);
+      console.log("Array di appartamenti:", apartments);
 
-            // } catch (error) {
-            //     console.error("Errore nel recupero del post:", error);
-            // }
+      // Assicurati che l'array di appartamenti sia valido
+      if (!Array.isArray(apartments)) {
+        console.error("Dati non validi, non è un array");
+        return;
+      }
 
-
-            // axios.get(`api/user/utente/dashboard/${id}`)
-            //     .then(res=>{
-            //         // console.log(res);
-
-            //     })
-        },
-
-        findApartment(){
-            const apartments = store.allApartmentGlobal;
-
-            console.log('tutti app ' + apartments);
-            console.log(store.allApartmentGlobal);
-
-            this.apartment= apartments.find(apartment => apartment.id === this.$route.params.id);
-
-            console.log('singolo app ' + this.apartment);
-
-
+      // Cerca l'appartamento con l'ID corrispondente
+      for (let i = 0; i < apartments.length; i++) {
+        if (apartments[i].id == this.$route.params.id) {
+          this.apartment = apartments[i];
+          console.log(
+            "Appartamento trovato: " + JSON.stringify(this.apartment, null, 2)
+          );
         }
+      }
     },
+  },
 
-    mounted(){
-        // const apartmentId = this.$route.params.id;
-        // this.fetchApartment(apartmentId);
-
-        // function findApartment(){
-        //     const apartments = store.allApartmentGlobal;
-
-        //     this.apartment= apartments.filter(apartment => apartment.id === this.$route.params.id);
-        // }
-
-        this.findApartment();
-        console.log(this.$route.params.id);
-        // console.log(this.apartment);
-
-
-    }
-}
-
+  mounted() {
+    this.findApartment();
+  },
+};
 </script>
 
 <template>
-<h1>pagina show</h1>
-<div>
-
+  <div>
     <!-- <p>{{ apartment.title }}</p> -->
-</div>
-
+    <p>titolo: {{ apartment.title }}</p>
+    <p>immagine se vuota è path: {{ apartment.image }}</p>
+    <p>numero di camere: {{ apartment.number_rooms }}</p>
+    <p>numero di letti: {{ apartment.number_beds }}</p>
+    <p>numero di bagni: {{ apartment.number_bathrooms }}</p>
+    <p>metri quadri: {{ apartment.square_meters }}</p>
+    <p>indirizzo {{ apartment.address }}</p>
+    <p>latitudine {{ apartment.lat }}</p>
+    <p>longitudine: {{ apartment.lon }}</p>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-
 </style>

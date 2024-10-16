@@ -40,15 +40,15 @@ export default {
           axios
             .post("api/user/utente/dashboard", this.apartment)
             .then((res) => {
-              // questo dovrebbe chiudere bootstrap..vedi se riesci a risolvere
-              // Ottieni il modal e chiudilo manualmente
-              const modalElement = document.getElementById("exampleModal");
-              const modalInstance =
-                window.bootstrap.Modal.getInstance(modalElement);
+              //   // questo dovrebbe chiudere bootstrap..vedi se riesci a risolvere
+              //   // Ottieni il modal e chiudilo manualmente
+              //   const modalElement = document.getElementById("exampleModal");
+              //   const modalInstance =
+              //     window.bootstrap.Modal.getInstance(modalElement);
 
-              if (modalInstance) {
-                modalInstance.hide(); // Chiudi il modal
-              }
+              //   if (modalInstance) {
+              //     modalInstance.hide(); // Chiudi il modal
+              //   }
               this.$router.push({ name: "apartments" });
             })
             .catch((err) => {
@@ -73,7 +73,6 @@ export default {
   },
   mounted() {
     // force bootstrap for close modale
-    window.addEventListener("click", function () {});
   },
 };
 </script>
