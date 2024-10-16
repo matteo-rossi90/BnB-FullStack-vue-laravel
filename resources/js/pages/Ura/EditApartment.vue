@@ -1,5 +1,6 @@
 <script>
 import { store } from "../../store/store";
+import { checkAdress } from "../../store/store";
 
 export default {
   name: "EditApartment",
@@ -40,11 +41,37 @@ export default {
         }
       }
     },
+    submit() {
+      let urlRequest = checkAdress(this.apartment.address);
+
+      axios
+        .get("http://127.0.0.1:8000/proxy-tomtom", {
+          params: { url: urlRequest },
+        })
+        .then((response) => {
+          this.apartment.lat = response.data.results[0].position.lat;
+          this.apartment.lon = response.data.results[0].position.lon;
+
+          axios
+            .patch(
+              `http://127.0.0.1:8000/api/user/utente/dashboard/${this.apartment.id}`,
+              this.apartment
+            )
+            .then((res) => {
+              this.$router.push({ name: "apartments" });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((error) => {
+          console.error("Errore:", error.response || error.message);
+        });
+    },
   },
 
   mounted() {
     this.findApartment();
-    console.log(this.apartment);
   },
 };
 </script>
@@ -53,12 +80,12 @@ export default {
   <div class="container">
     <h1>Edit</h1>
 
-    <form action="">
+    <form @submit.prevent="submit">
       <label for="title" class="form-label">Titolo</label>
       <input
         type="text"
         class="form-control"
-        :value="apartment.title"
+        v-model="apartment.title"
         id="title"
         name="title"
       />
@@ -67,50 +94,52 @@ export default {
       <input
         type="number"
         class="form-control"
-        :value="apartment.number_rooms"
+        v-model="apartment.number_rooms"
         id="number_rooms"
-        name="number_rooms"/>
+        name="number_rooms"
+      />
 
       <label for="" class="form-label">Numero di letti</label>
       <input
         type="number"
         class="form-control"
-        :value="apartment.number_beds"
+        v-model="apartment.number_beds"
         id="number_beds"
-        name="number_beds"/>
-
+        name="number_beds"
+      />
 
       <label for="" class="form-label">Numero di bagni</label>
       <input
         type="number"
         class="form-control"
-        :value="apartment.number_bathrooms"
+        v-model="apartment.number_bathrooms"
         id="number_bathrooms"
-        name="number_bathrooms"/>
+        name="number_bathrooms"
+      />
 
       <label for="" class="form-label">Indirizzo</label>
       <input
         type="text"
         class="form-control"
-        :value="apartment.address"
+        v-model="apartment.address"
         id="address"
-        name="address"/>
+        name="address"
+      />
 
       <label for="" class="form-label">Metri quadri</label>
       <input
         type="text"
         class="form-control"
-        :value="apartment.square_meters"
+        v-model="apartment.square_meters"
         id="square_meters"
         name="square_meters"
-         />
+      />
 
       <!-- <label for="" class="form-label">Immagine</label>
       <input
         type="text"
         class="form-control"
         /> -->
-
 
       <button type="submit" class="btn btn-primary">Invia</button>
     </form>
@@ -120,7 +149,7 @@ export default {
 
 
 <style lang="scss" scoped>
-button{
-    margin-top: 30px;
+button {
+  margin-top: 30px;
 }
 </style>

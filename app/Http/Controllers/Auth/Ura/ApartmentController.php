@@ -79,10 +79,12 @@ class ApartmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateApartmentRequest $request, Apartment $apartment)
+    public function update(Request $request, Apartment $apartment)
     {
 
+
         $data = $request->all();
+        $oldApartament = Apartment::find($data['id']);
         $data['user_id'] =  auth()->user()->id;
 
         if ($data['title'] != $apartment->title) {
@@ -90,18 +92,21 @@ class ApartmentController extends Controller
             $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         }
 
-        if (array_key_exists('image', $data) && $data['image']) {
-            $image = Storage::put('uploads', $data['image']);
-            $original_name = $request->file('image')->getClientOriginalName();
-            $data['image'] = $image;
-            $data['original_name'] = $original_name;
-        }else{
-            $data['image'] = 'vuoto';
-            $data['original_name'] = 'vuoto';
-        }
 
-        $apartment->update($data);
-        return true;
+        // if ($oldApartament->image === $data['image'] && $oldApartament->original_name !== $data['original_name'] && ) {
+        //     $image = Storage::put('uploads', $data['image']);
+        //     $original_name = $request->file('image')->getClientOriginalName();
+        //     $data['image'] = $image;
+        //     $data['original_name'] = $original_name;
+        // }else{
+        //     $data['image'] = 'vuoto';
+        //     $data['original_name'] = 'vuoto';
+        // }
+
+
+        $oldApartament->update($data);
+
+        return $apartment;
     }
 
 
