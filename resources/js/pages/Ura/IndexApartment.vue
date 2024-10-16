@@ -98,9 +98,13 @@ export default {
                                         <i class="fa-solid fa-eye"></i>
                                     </div>
                                 </RouterLink>
-                                <a href="#" class="btn btn-warning">
-                                <i class="fa-solid fa-pencil"></i>
-                                </a>
+                                <RouterLink class="link" :to="{ name: 'EditApartment' }">
+                                    <div class="btn btn-warning">
+                                        <i class="fa-solid fa-pencil"></i>
+                                    </div>
+                                </RouterLink>
+
+
                                 <a href="#" class="btn btn-danger">
                                 <i class="fa-solid fa-trash"></i>
                                 </a>
