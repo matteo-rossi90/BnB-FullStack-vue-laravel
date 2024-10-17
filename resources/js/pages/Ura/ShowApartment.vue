@@ -89,7 +89,7 @@ export default {
     <!-- Indirizzo dell'appartamento -->
     <div class="row mb-4">
       <div class="col-12 text-center">
-        <h3 class="apartment-address">Indirizzo: {{ apartment.address }}</h3>
+        <h3 class="apartment-address">{{ apartment.address }}</h3>
       </div>
     </div>
 
