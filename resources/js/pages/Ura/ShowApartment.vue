@@ -71,7 +71,7 @@ export default {
 <template>
   <div v-if="exist">
     <div class="container mt-5">
-      <!-- Titolo dell'appartamento -->
+      <!-- Titolo riepilogativo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-center">
           <h1 class="apartment-title">{{ apartment.title }}</h1>
@@ -81,106 +81,109 @@ export default {
       <!-- Immagini -->
       <div class="row my-4">
         <div class="col-12 text-center">
-          <!-- Se c'è un'immagine valida, la mostra -->
           <div v-if="apartment.image" class="image-container mb-4">
-            <img
-              :src="apartment.image"
-              alt="Immagine dell'appartamento"
-              class="img-fluid rounded shadow-sm"
-            />
+            <img :src="apartment.image" alt="Immagine dell'appartamento" class="img-fluid rounded shadow-sm" />
           </div>
-          <!-- Altrimenti, mostra un'immagine di placeholder -->
           <div v-else class="image-container mb-4">
-            <img
-              src="https://app-assets.outeast.com/assets/modules/Shared/placeholder_house-b1447eab513e59327c82175ec088599a3c16f80a51501f59d8b89bd60cb00112.png"
-              alt="Placeholder"
-              class="img-fluid rounded shadow-sm"
-            />
+            <img src="https://app-assets.outeast.com/assets/modules/Shared/placeholder_house-b1447eab513e59327c82175ec088599a3c16f80a51501f59d8b89bd60cb00112.png" alt="Placeholder" class="img-fluid rounded shadow-sm" />
           </div>
         </div>
       </div>
 
-      <!-- Indirizzo dell'appartamento -->
+      <!-- Indirizzo completo dell'appartamento con latitudine e longitudine -->
       <div class="row mb-4">
         <div class="col-12 text-center">
-          <h3 class="apartment-address">{{ apartment.address }}</h3>
+          <h3 class="apartment-address">
+            Indirizzo: {{ apartment.address }} <br />
+            Latitudine: {{ apartment.lat }}, Longitudine: {{ apartment.lon }}
+          </h3>
         </div>
       </div>
 
       <!-- Informazioni dell'appartamento -->
       <div class="row text-center info-section">
-        <!-- Numero di camere -->
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-door-closed icon"></i>
           <p>Camere: {{ apartment.number_rooms }}</p>
         </div>
 
-        <!-- Numero di letti -->
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-bed icon"></i>
           <p>Letti: {{ apartment.number_beds }}</p>
         </div>
 
-        <!-- Numero di bagni -->
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-bath icon"></i>
           <p>Bagni: {{ apartment.number_bathrooms }}</p>
         </div>
 
-        <!-- Metri quadri -->
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-ruler-combined icon"></i>
           <p>Metri quadri: {{ apartment.square_meters }} m²</p>
         </div>
       </div>
 
-      <!-- Form per inviare un messaggio -->
-      <div class="row mt-5">
-        <div class="col-12 text-center">
-          <h2 class="form-title">Invia un messaggio al proprietario</h2>
+      <div class="row">
+        <!-- Colonna sinistra per Servizi e Visibilità -->
+        <div class="col-md-4 mb-4">
+          <div class="row">
+            <!-- Servizi Aggiuntivi -->
+            <div class="col-12 mb-3">
+              <h3>Servizi Aggiuntivi</h3>
+              <ul>
+                <!-- <li v-for="service in services" :key="service.id">{{ service.name }}</li> -->
+                 <li><i class="fas fa-wifi icon"></i> WiFi</li>
+                <li><i class="fas fa-parking icon"></i> Posto Macchina</li>
+                <li><i class="fas fa-swimmer icon"></i> Piscina</li>
+                <li><i class="fas fa-door-open icon"></i> Portineria</li>
+                <li><i class="fas fa-hot-tub icon"></i> Sauna</li>
+                <li><i class="fas fa-water icon"></i> Vista Mare</li>
+
+              </ul>
+            </div>
+
+            <!-- Stato di Visibilità -->
+            <div class="col-12">
+              <h3>Disponibile: {{ apartment.visible ? "Sì" : "No" }}</h3>
+            </div>
+          </div>
         </div>
 
-        <div class="col-12 col-md-6 mx-auto">
-          <form class="message-form p-4 shadow-sm rounded">
-            <!-- Campo per l'email -->
-            <div class="mb-3">
-              <label for="email" class="form-label">La tua email</label>
-              <input
-                type="email"
-                id="email"
-                class="form-control"
-                placeholder="Inserisci la tua email"
-                required
-              />
+        <!-- Colonna destra per il Form di messaggio -->
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="form-title">Invia un messaggio al proprietario</h2>
             </div>
 
-            <!-- Campo per il messaggio -->
-            <div class="mb-3">
-              <label for="message" class="form-label">Il tuo messaggio</label>
-              <textarea
-                id="message"
-                class="form-control"
-                rows="5"
-                placeholder="Scrivi il tuo messaggio..."
-                required
-              ></textarea>
-            </div>
+            <div class="col-12 col-md-10 mx-auto">
+              <form class="message-form p-4 shadow-sm rounded">
+                <!-- Campo per l'email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">La tua email</label>
+                  <input type="email" id="email" class="form-control" placeholder="Inserisci la tua email" required />
+                </div>
 
-            <!-- Bottone invia -->
-            <button type="submit" class="btn btn-primary btn-lg w-100">
-              Invia il messaggio
-            </button>
-          </form>
+                <!-- Campo per il messaggio -->
+                <div class="mb-3">
+                  <label for="message" class="form-label">Il tuo messaggio</label>
+                  <textarea id="message" class="form-control" rows="5" placeholder="Scrivi il tuo messaggio..." required></textarea>
+                </div>
+
+                <!-- Bottone invia -->
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                  Invia il messaggio
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
-  <div v-else>appartamento non trovato</div>
+  <div v-else>Appartamento non trovato</div>
 </template>
-
-
-
-
 
 
 <style lang="scss" scoped>
@@ -198,7 +201,8 @@ h3 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
-  //   color: #ff385c;
+    //   color: #ff385c;
+
 }
 
 .apartment-address {
@@ -214,6 +218,10 @@ h3 {
 }
 
 .info-section {
+  margin-bottom: 40px;
+}
+
+.additional-services {
   margin-bottom: 40px;
 }
 
