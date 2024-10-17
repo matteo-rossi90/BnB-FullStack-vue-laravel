@@ -92,13 +92,6 @@ export default {
     </nav>
   </header>
 </template>
-
-
-
-
-
-
-
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
 header {
@@ -120,7 +113,7 @@ header {
       border-radius: 20px;
       cursor: pointer;
       display: block;
-      z-index: 100;
+
       border: 1px solid black;
       &:hover {
       }
