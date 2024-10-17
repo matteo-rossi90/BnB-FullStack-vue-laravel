@@ -78,7 +78,7 @@ export default {
 
 <template>
   <div class="container">
-    <h1>Edit</h1>
+    <h1>Modifica di {{ apartment.title }}</h1>
 
     <form @submit.prevent="submit">
       <label for="title" class="form-label">Titolo</label>
