@@ -144,7 +144,7 @@ export default {
 
             <!-- Stato di Visibilità -->
             <div class="col-12">
-              <h3>Disponibile: {{ apartment.visible ? "Sì" : "No" }}</h3>
+              <h3>Disponibile: {{ apartment.is_visible ? "Sì" : "No" }}</h3>
             </div>
           </div>
         </div>
