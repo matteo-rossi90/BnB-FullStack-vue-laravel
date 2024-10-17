@@ -12,7 +12,7 @@ const store = reactive({
     // boolean for dropdown menu of header
     is_open: false,
 
-    allApartment: [],
+    allApartments: [],
 
     allApartmentGlobal: []
 })
