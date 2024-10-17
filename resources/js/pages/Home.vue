@@ -48,14 +48,35 @@ export default {
 };
 </script>
 <template>
-    <h1>Home dell'utente senza login</h1>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="(apartment, index) in apartments" :key="index">
-                <ApartmentCard :apartment="apartment"/>
+    <!-- <h1>Home dell'utente senza login</h1> -->
+      <!-- Barra di ricerca  -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group stylish-input-group">
+                    <input type="text" class="form-control" placeholder="Cerca appartamenti per indirizzo..."
+                        v-model="searchQuery" />
+                    <span class="input-group-addon">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- card -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 mb-4" v-for="(apartment, index) in apartments" :key="index">
+                <ApartmentCard :apartment="apartment" />
+            </div>
+        </div>
+    </div>
+
+
+
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
