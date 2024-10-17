@@ -25,6 +25,15 @@ export default {
           localStorage.setItem("userName", "Accedi");
           console.log(err);
         });
+
+      axios
+        .get("api/home")
+        .then((res) => {
+          console.log("alldata", res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     });
   },
 };

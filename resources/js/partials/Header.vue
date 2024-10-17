@@ -92,6 +92,13 @@ export default {
     </nav>
   </header>
 </template>
+
+
+
+
+
+
+
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
 header {
@@ -108,13 +115,12 @@ header {
       padding: 0.5rem 1rem;
       margin-top: 0.5rem;
     }
-
     .contDropDown {
       position: relative;
       border-radius: 20px;
       cursor: pointer;
       display: block;
-
+      z-index: 100;
       border: 1px solid black;
       &:hover {
       }
