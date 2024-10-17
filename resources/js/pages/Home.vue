@@ -9,7 +9,7 @@ export default {
     },
   data() {
       return {
-        apartments: store.allApartment,
+        apartments: store.allApartments,
     };
   },
   methods: {},
@@ -26,24 +26,24 @@ export default {
         //     });
 
     // Chiamata per l'utente autenticato
-    axios
-      .get("/api/user")
-      .then((response) => {
-        store.user = response.data;
+    // axios
+    //   .get("/api/user")
+    //   .then((response) => {
+    //     store.user = response.data;
 
-        axios
-          .get("api/user/utente/dashboard")
-          .then((response) => {
-              store.allApartment = response.data;
-              console.log(store.allApartment);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    //     // axios
+    //     //   .get("api/user/utente/dashboard")
+    //     //   .then((response) => {
+    //     //       store.allApartment = response.data;
+    //     //       console.log(store.allApartment);
+    //     //   })
+    //     //   .catch((err) => {
+    //     //     console.log(err);
+    //     //   });
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   },
 };
 </script>
