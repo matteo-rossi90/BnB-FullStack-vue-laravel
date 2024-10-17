@@ -35,6 +35,8 @@ export default {
       .then((response) => {
         this.apartments = response.data;
         store.allApartment = response.data;
+        console.log(this.apartments);
+
       })
       .catch((err) => {
         console.log(err);
@@ -50,6 +52,7 @@ export default {
     <div class="dashboard-box">
       <div class="container-fluid my-3">
         <h1>Dashboard di {{ name }}</h1>
+        <h4 class="my-5">Al momento hai registrato {{ apartments.length }} appartmanenti su BoolBnb</h4>
       </div>
     </div>
   </div>
