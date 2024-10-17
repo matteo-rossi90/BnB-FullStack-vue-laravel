@@ -15,12 +15,24 @@ export default {
     };
   },
   methods: {
+
+    // // mostra toast
+    // showToast() {
+    //   const toastEl = this.$refs.liveToast; // Riferimento al toast
+    //   const toast = new bootstrap.Toast(toastEl); // Creazione dell'istanza Toast di Bootstrap
+    //   toast.show(); // Mostra il toast
+    // },
+
+    // hideToast() {
+    //   const toastEl = this.$refs.liveToast;
+    //   const toast = new bootstrap.Toast(toastEl);
+    //   toast.hide();
+    // },
+
+
+
+
     deleteApartment(apartment) {
-      if (
-        confirm(
-          `Sei sicuro di voler eliminare l'appartamento "${apartment.title}"?`
-        )
-      ) {
         axios
           .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
           .then((res) => {
@@ -48,11 +60,11 @@ export default {
           });
       }
     },
-    //     detailApartment(id){
-    //             console.log(this.$route.params);
+        detailApartment(id){
+                console.log(this.$route.params);
 
-    //   },
-  },
+    },
+
   mounted() {
     axios
       .get("/api/user")
@@ -129,26 +141,26 @@ export default {
                 </thead>
                 <tbody>
                   <tr v-for="apartment in apartments" :key="apartment.id">
-                    <td scope="row">
+                    <td scope="row" class="align-middle">
                       {{ apartment.id }}
                     </td>
                     <td class="img-container" scope="row">
                       <img class="img-fluid" src="../../../../public/img/bed_and_breakfast_image.jpg" alt="">
                     </td>
-                    <td scope="row">
+                    <td scope="row" class="align-middle">
                       {{ apartment.title }}
                     </td>
-                    <td scope="row">
+                    <td scope="row" class="align-middle">
                         <p class="badge text-bg-success" v-if="apartment.is_visible === 1" >Disponibile</p>
                         <p class="badge text-bg-danger" v-else>Occupato</p>
                     </td>
-                    <td scope="row">
+                    <td scope="row" class="align-middle">
                       <i class="fa-solid fa-envelope"></i>
                     </td>
-                    <td scope="row">
+                    <td scope="row" class="align-middle">
                       <i class="fa-solid fa-chart-simple"></i>
                     </td>
-                    <td scope="row" class="actions">
+                    <td scope="row" class="actions align-middle">
                       <RouterLink
                         class="link"
                         :to="{
@@ -172,18 +184,47 @@ export default {
                         </div>
                       </RouterLink>
 
-                      <a
-                        href="#"
-                        class="btn btn-danger"
-                        @click.prevent="deleteApartment(apartment)"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                      </a>
+                        <div class="d-inline-block">
+
+                          <button
+                          type="button"
+                          class="btn btn-danger"
+                            id="liveToastBtn"
+                            data-bs-toggle="modal" data-bs-target="#exampleModal"
+                            >
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
+
+                          <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Sei sicuro di voler eliminare l'appartamento?</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            In questo modo {{ apartment.title }} non sarà più disponibile
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                                            <button @click="deleteApartment(apartment)" type="button" class="btn btn-danger">Elimina</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+
+
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
+
           </div>
         </div>
       </div>
@@ -196,8 +237,9 @@ export default {
 
 td{
     height: 100px;
-    line-height: 100px;
+
 }
+
 .img-container{
     width: 5%;
 
@@ -206,6 +248,9 @@ td{
 .btn{
     margin-right: 10px;
 }
+
+
+
 
 // @use 'path' as *;
 </style>
