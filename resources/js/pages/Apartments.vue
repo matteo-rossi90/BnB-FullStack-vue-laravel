@@ -48,18 +48,28 @@ export default{
             <h2 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h2>
             <small>Totale ricercati: n </small>
             <div class="my-3 col-sm-12 col-md-6 col-lg-8">
-                <div class="row">
-                    <div class="col-lg-4 col-md-6 col-sm-12 mb-4" v-for="(card, index) in cards" :key="index">
-                        <div class="card shadow-sm border-0 rounded">
-                            <img :src="card.img" class="card-img-top" alt="Appart-Img">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ card.name }}</h5>
-                                <p class="card-text">{{ card.ratings }}</p>
-                                <p class="card-text">Descrizione: Appartamento con 2 camere da letto e 1 bagno.</p>
+                <div class="cards-wrapper">
+                    <div id="box-scrollable">
+                        <div class="row">
+
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-4" v-for="(card, index) in cards" :key="index">
+
+                                <div class="card shadow-sm border-0 rounded">
+                                    <img :src="card.img" class="card-img-top" alt="Appart-Img">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ card.name }}</h5>
+                                        <p class="card-text">{{ card.ratings }}</p>
+                                        <p class="card-text">Descrizione: Appartamento con 2 camere da letto e 1 bagno.</p>
+                                    </div>
+                                </div>
+
                             </div>
+
                         </div>
-                    </div>
                 </div>
+
+                </div>
+
             </div>
             <div class="my-3 col">
                 mappa
@@ -111,6 +121,12 @@ export default{
 
 .card-text:last-child {
     margin-bottom: 0;
+}
+
+img{
+    object-fit:cover;
+    height: 250px;
+    width: 250px;
 }
 
 
