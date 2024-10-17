@@ -37,48 +37,75 @@ export default{
             ]
         }
     },
-    methods:{},
-    mounted(){}
+    methods:{
+        getMap(){
+            const tt = window.tt;  //accesso alla libreria TomTom
+            let center = [12.49427, 41.89056]; //centro della mappa
+
+            const map = tt.map({
+                key: 'qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI',
+                center: center,
+                container: 'map',
+                zoom: 2,
+            });
+
+            const bounds = [
+            [4.5, 35.5],  //estremi ovest e sud
+            [20.0, 48.0]   //estremi est e nord
+
+            ];
+
+            map.setMaxBounds(bounds);
+
+            map.addControl(new tt.FullscreenControl());
+            map.addControl(new tt.NavigationControl());
+        },
+    },
+    mounted(){
+        this.getMap();
+    }
 }
 </script>
 
 <template>
     <div class="container">
         <div class="row py-3">
-            <h2 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h2>
-            <small>Totale ricercati: n </small>
-            <div class="my-3 col-sm-12 col-md-6 col-lg-8">
-                <div class="cards-wrapper">
-                    <div id="box-scrollable">
-                        <div class="row">
+            <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>
+            <small>Appartamenti trovati: {{ cards.length }} </small>
+            <div class="my-3 col-sm-12 col-md-12 col-lg-6 scrollable-cards">
 
-                            <div class="col-lg-4 col-md-6 col-sm-12 mb-4" v-for="(card, index) in cards" :key="index">
+                <div class="row">
 
-                                <div class="card shadow-sm border-0 rounded">
-                                    <img :src="card.img" class="card-img-top" alt="Appart-Img">
-                                    <div class="card-body">
-                                        <h5 class="card-title">{{ card.name }}</h5>
-                                        <p class="card-text">{{ card.ratings }}</p>
-                                        <p class="card-text">Descrizione: Appartamento con 2 camere da letto e 1 bagno.</p>
-                                    </div>
-                                </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-4" v-for="(card, index) in cards" :key="index">
 
+                        <div class="card shadow-sm border-0 rounded">
+                            <img :src="card.img" class="card-img-top" alt="Appart-Img">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ card.name }}</h5>
+                                <p class="card-text">{{ card.ratings }}</p>
+                                <p class="card-text">Descrizione: Appartamento con 2 camere da letto e 1 bagno.</p>
                             </div>
-
                         </div>
-                </div>
+
+                    </div>
 
                 </div>
 
             </div>
             <div class="my-3 col">
-                mappa
+                <div id="map"></div>
             </div>
         </div>
     </div>
 </template>
 
 <style lang="scss">
+
+// .scrollable-cards{
+    // max-height: 650px;
+//   overflow-y: auto;
+//   padding-right: 15px;
+// }
 
 .card {
     max-width: 100%;
@@ -125,8 +152,14 @@ export default{
 
 img{
     object-fit:cover;
-    height: 250px;
-    width: 250px;
+    height: 200px;
+    width: 200px;
+}
+
+#map {
+    width: 100%;
+    height: 650px;
+    border-radius: 20px;
 }
 
 
