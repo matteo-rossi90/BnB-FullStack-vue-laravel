@@ -13,17 +13,6 @@ use GuzzleHttp\Client;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-// nel path della root in assenza di caratteri dopo / o caratteri sbagliati, la route reindirizza alla pagina app di vue
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Route::get('/{any}', function () {
-//     return view('welcome');
-// })->where('any', '.*');
-
-
 Route::get('/proxy-tomtom', function(Request $request) {
     $url = $request->query('url');
 
@@ -48,3 +37,14 @@ Route::get('/proxy-tomtom', function(Request $request) {
         return response()->json(['error' => 'Errore nella richiesta: ' . $e->getMessage()], 500);
     }
 });
+// nel path della root in assenza di caratteri dopo / o caratteri sbagliati, la route reindirizza alla pagina app di vue
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/{any}', function () {
+    return view('welcome');
+})->where('any', '.*');
+
+
+

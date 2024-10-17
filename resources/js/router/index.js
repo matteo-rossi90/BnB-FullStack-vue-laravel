@@ -3,6 +3,7 @@ import { store } from '../store/store'
 
 import Home from '../pages/Home.vue'
 import Login from '../pages/Login.vue'
+import NotFoundComponent from '../pages/NotFoundComponent.vue'
 import Register from '../pages/Register.vue'
 import Dashboard from '../pages/Ura/Dashboard.vue'
 import CreateApartment from '../pages/Ura/CreateApartment.vue'
@@ -59,7 +60,7 @@ const router = createRouter({
             },
             {
                 // path: '/dettaglio-appartamento',
-                path: '/apartment/:id',
+                path: '/appartamento-singolo/:id',
                 name: 'showApartment',
                 component: ShowApartment
             },{
@@ -71,6 +72,11 @@ const router = createRouter({
                 path: '/appartamenti-ricerca',
                 name: 'apartmentsMap',
                 component: Apartments //route temporanea per visualizzare gli appartamenti + mappa
+            },
+            {
+                path: '/:pathMatch(.*)*',
+                name: 'NotFound',
+                component: NotFoundComponent,
             },
         ]
 })
