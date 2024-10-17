@@ -8,10 +8,13 @@ export default {
         name: "",
         surname: "",
         date_of_birth: "",
+        surname: "",
+        date_of_birth: "",
         email: "",
         password: "",
         password_confirmation: "",
       },
+      password_confirmed: "",
       errors: {
         name: "",
         surname: "",
@@ -19,6 +22,8 @@ export default {
         email: "",
         password: "",
         password_confirmation: "",
+
+        // email_verified_at: "",
       },
     };
   },
@@ -27,8 +32,8 @@ export default {
       axios
         .post("/api/register", this.user)
         .then(() => {
-          localStorage.setItem("is_logged", true);
-          store.is_logged = localStorage.getItem("is_logged");
+          localStorage.setItem("is_logged", "true");
+          store.is_logged = localStorage.getItem("is_logged") === "true";
 
           // get a data of user
           axios
@@ -45,8 +50,8 @@ export default {
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
-          localStorage.setItem("is_logged", false);
-          store.is_logged = localStorage.getItem("is_logged");
+          localStorage.setItem("is_logged", "false");
+          store.is_logged = localStorage.getItem("is_logged") === "false";
           //   this.$router.push({ name: "register" });
           if (err.response) {
             // Errore con risposta dal server
@@ -85,6 +90,15 @@ export default {
         this.errors.surname = "";
       }
     },
+    validateSurname() {
+      if (!this.user.surname) {
+        this.errors.surname = "Il cognome è obbligatorio.";
+      } else if (!/^[a-zA-Z]+$/.test(this.user.surname)) {
+        this.errors.surname = "Il cognome deve contenere solo lettere.";
+      } else {
+        this.errors.surname = "";
+      }
+    },
 
     validateDateOfBirth() {
       const dobDate = new Date(this.user.date_of_birth);
@@ -106,7 +120,7 @@ export default {
     },
 
     validateEmail() {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!this.user.email) {
         this.errors.email = "L'email è obbligatoria.";
@@ -147,14 +161,35 @@ export default {
       this.validatePassword();
       this.validatePasswordConfirmation();
 
-      if (Object.values(this.errors).every((error) => error === "")) {
-        this.submit();
-      }
-
       this.submit();
     },
   },
 };
+// validazioni che fa fortify
+// Validator::make($input, [
+//             'name' => ['required', 'string', 'max:255'],
+//             'email' => [
+//                 'required',
+//                 'string',
+//                 'email',
+//                 'max:255',
+//                 Rule::unique(User::class),
+//             ],
+//             'surname' => ['required', 'string', 'max:255'],
+//             'date_of_birth' => ['required', 'date', 'before:today'],
+//             'email_verified_at' =>['required', 'date'],
+//             'password' => $this->passwordRules(),
+//         ])->validate();
+
+//         return User::create([
+//             'name' => $input['name'],
+//             'email' => $input['email'],
+//             'surname' => $input['surname'],
+//             'date_of_birth' => $input['date_of_birth'],
+//             'email_verified_at' => $input['email_verified_at'],
+//             'password' => Hash::make($input['password']),
+
+//         ]);
 </script>
 
 <template>

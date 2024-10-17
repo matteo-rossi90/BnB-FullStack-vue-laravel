@@ -16,12 +16,16 @@ class UserTableSeeder extends Seeder
     public function run(): void
     {
         $users = ['Ludovico', 'Tommaso', 'Vincenzo', 'Matteo', 'Alessandra'];
-
+        $surname = ['ilMeglio', 'ilMeglio', 'ilMeglio', 'ilMeglio', 'laMeglio'];
+        $i = 0;
         foreach ($users as $user) {
+
             $new_user = new User();
             $new_user->name = $user;
-            $new_user->email = $user . '@admin.com';
+            $new_user->surname = $surname[$i];
+            $new_user->email = "$user@admin.com";
             $new_user->password = Hash::make('12345678');
+            $i++;
             $new_user->save();
         }
     }
