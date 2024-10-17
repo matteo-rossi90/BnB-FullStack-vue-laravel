@@ -6,16 +6,16 @@ export default {
     return {
       user: {
         name: "",
-        // surname: "",
-        // date_of_birth: "",
+        surname: "",
+        date_of_birth: "",
         email: "",
         password: "",
-        // password_confirmation: "",
+        password_confirmation: "",
       },
       errors: {
         name: "",
-        // surname: "",
-        // date_of_birth: "",
+        surname: "",
+        date_of_birth: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -76,31 +76,34 @@ export default {
       }
     },
 
-    // validateSurname() {
-    //   if (!this.user.surname) {
-    //     this.errors.surname = 'Il cognome è obbligatorio.';
-    //   } else if (!/^[a-zA-Z]+$/.test(this.user.surname)) {
-    //     this.errors.surname = 'Il cognome deve contenere solo lettere.';
-    //   } else {
-    //     this.errors.surname = '';
-    //   }
-    // },
+    validateSurname() {
+      if (!this.user.surname) {
+        this.errors.surname = "Il cognome è obbligatorio.";
+      } else if (!/^[a-zA-Z]+$/.test(this.user.surname)) {
+        this.errors.surname = "Il cognome deve contenere solo lettere.";
+      } else {
+        this.errors.surname = "";
+      }
+    },
 
-    // validateDateOfBirth() {
-    //   const dobDate = new Date(this.user.date_of_birth);
-    //   const today = new Date();
-    //   const age = today.getFullYear() - dobDate.getFullYear();
-    //   const month = today.getMonth() - dobDate.getMonth();
-    //   const day = today.getDate() - dobDate.getDate();
+    validateDateOfBirth() {
+      const dobDate = new Date(this.user.date_of_birth);
+      const today = new Date();
+      const age = today.getFullYear() - dobDate.getFullYear();
+      const month = today.getMonth() - dobDate.getMonth();
+      const day = today.getDate() - dobDate.getDate();
 
-    //   if (!this.user.date_of_birth) {
-    //     this.errors.date_of_birth = 'La data di nascita è obbligatoria.';
-    //   } else if (age < 18 || (age === 18 && (month < 0 || (month === 0 && day < 0)))) {
-    //     this.errors.date_of_birth = 'Devi avere almeno 18 anni.';
-    //   } else {
-    //     this.errors.date_of_birth = '';
-    //   }
-    // },
+      if (!this.user.date_of_birth) {
+        this.errors.date_of_birth = "La data di nascita è obbligatoria.";
+      } else if (
+        age < 18 ||
+        (age === 18 && (month < 0 || (month === 0 && day < 0)))
+      ) {
+        this.errors.date_of_birth = "Devi avere almeno 18 anni.";
+      } else {
+        this.errors.date_of_birth = "";
+      }
+    },
 
     validateEmail() {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
@@ -138,8 +141,8 @@ export default {
 
     submitForm() {
       this.validateName();
-      // this.validateSurname();
-      // this.validateDateOfBirth();
+      this.validateSurname();
+      this.validateDateOfBirth();
       this.validateEmail();
       this.validatePassword();
       this.validatePasswordConfirmation();
@@ -177,17 +180,35 @@ export default {
             }}</small>
           </div>
 
-          <!-- <div class="input-container">
-                        <label class="form-label" for="surname">Cognome</label>
-                        <input class="form-control" type="text" id="surname" name="surname" v-model="user.surname" />
-                        <small v-if="errors.surname" class="error-message">{{ errors.surname }}</small>
-                    </div>
+          <div class="input-container">
+            <label class="form-label" for="surname">Cognome</label>
+            <input
+              class="form-control"
+              type="text"
+              id="surname"
+              name="surname"
+              v-model="user.surname"
+            />
+            <small v-if="errors.surname" class="error-message">{{
+              errors.surname
+            }}</small>
+          </div>
 
-                    <div class="input-container">
-                        <label class="form-label" for="date_of_birth">Data di nascita</label>
-                        <input class="form-control" type="date" id="date_of_birth" name="date_of_birth" v-model="user.date_of_birth" />
-                        <small v-if="errors.date_of_birth" class="error-message">{{ errors.date_of_birth }}</small>
-                    </div> -->
+          <div class="input-container">
+            <label class="form-label" for="date_of_birth"
+              >Data di nascita</label
+            >
+            <input
+              class="form-control"
+              type="date"
+              id="date_of_birth"
+              name="date_of_birth"
+              v-model="user.date_of_birth"
+            />
+            <small v-if="errors.date_of_birth" class="error-message">{{
+              errors.date_of_birth
+            }}</small>
+          </div>
 
           <div class="input-container">
             <label class="form-label" for="email">Email</label>

@@ -12,6 +12,15 @@ export default {
     Footer,
   },
   mounted() {
+    axios
+      .get("api/home")
+      .then((res) => {
+        localStorage.setItem("allApartments", JSON.stringify(res.data));
+        store.allApartments = JSON.parse(localStorage.getItem("allApartments"));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     window.addEventListener("load", () => {
       // get a data of user
       axios
@@ -23,15 +32,6 @@ export default {
         })
         .catch((err) => {
           localStorage.setItem("userName", "Accedi");
-          console.log(err);
-        });
-
-      axios
-        .get("api/home")
-        .then((res) => {
-          console.log("alldata", res.data);
-        })
-        .catch((err) => {
           console.log(err);
         });
     });

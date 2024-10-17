@@ -21,6 +21,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        // #non da problemi nella registrazione ma non li inserisce nel database
+        // 'surname',
+        // 'date_of_birth'
     ];
 
     /**
