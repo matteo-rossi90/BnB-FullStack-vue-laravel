@@ -13,6 +13,7 @@ export default{
         getMap(){
             const tt = window.tt;  //accesso alla libreria TomTom
             let center = [12.4964, 41.9028]; //centro della mappa
+            let size = 50; //dimensioni del popup
 
             const map = tt.map({
                 key: 'qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI',
@@ -26,20 +27,21 @@ export default{
                 const lat = apartment.lat; //valore della latitudine di ogni appartamento
                 const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
 
+                let boxContent = document.createElement('div')
+                boxContent.innerHTML = `
+                <div class="card-body">
+                    <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
+                    <p class="title-popup">${apartment.address}</p>
+                    <small>8000 euro</small>
+                </div>`
+
                 let popup = new tt.Popup({
                 closeButton: true,  //permettere la chiusura il popup
-                closeOnClick: true  //chiudere il popup al click su un'altra parte della mappa
+                closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+                offset: size,
+                anchor: 'bottom'
 
-            }).setHTML(`
-                <div class="card shadow-sm border-0 rounded">
-                    <div class="card-body">
-                        <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
-                        <p class="title-popup">${apartment.address}</p>
-                    </div>
-                </div>
-
-            `);
-             //contenuto dinamico del popup in base alle cards degli appartamenti
+            }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
 
             //creare il marker per l'appartamento
             let marker = new tt.Marker()
