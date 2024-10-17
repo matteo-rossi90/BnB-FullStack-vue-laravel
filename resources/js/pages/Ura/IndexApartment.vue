@@ -102,6 +102,8 @@ export default {
           <div class="col-lg-12 col-md-12">
             <h2 class="mb-3">I miei appartamenti</h2>
 
+            <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4>
+
             <div
               v-if="message"
               :class="[
