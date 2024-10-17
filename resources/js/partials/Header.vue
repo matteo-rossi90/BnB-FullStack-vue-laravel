@@ -113,7 +113,7 @@ header {
       border-radius: 20px;
       cursor: pointer;
       display: block;
-
+      z-index: 100;
       border: 1px solid black;
       &:hover {
       }
