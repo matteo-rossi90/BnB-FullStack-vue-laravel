@@ -117,7 +117,9 @@ export default {
                 <thead>
                   <tr>
                     <th scope="col">#id</th>
+                    <th scope="col">Immagine</th>
                     <th scope="col">Nome</th>
+                    <th scope="col">Disponibilità</th>
                     <th scope="col">Messaggi</th>
                     <th scope="col">Statistiche</th>
                     <th scope="col">Azioni</th>
@@ -128,8 +130,14 @@ export default {
                     <td scope="row">
                       {{ apartment.id }}
                     </td>
+                    <td class="img-container" scope="row">
+                      <img class="img-fluid" src="../../../../public/img/bed_and_breakfast_image.jpg" alt="">
+                    </td>
                     <td scope="row">
                       {{ apartment.title }}
+                    </td>
+                    <td scope="row">
+                      {{ apartment.is_visible }}
                     </td>
                     <td scope="row">
                       <i class="fa-solid fa-envelope"></i>
@@ -137,7 +145,7 @@ export default {
                     <td scope="row">
                       <i class="fa-solid fa-chart-simple"></i>
                     </td>
-                    <td scoper="row" class="actions d-flex gap-2">
+                    <td scope="row" class="actions">
                       <RouterLink
                         class="link"
                         :to="{
@@ -182,6 +190,16 @@ export default {
 <style lang='scss' scoped>
 @use "../../../scss/variables" as *;
 @use "../../../scss/dashboard" as *;
+
+
+.img-container{
+    width: 5%;
+
+}
+
+.btn{
+    margin: 10px;
+}
 
 // @use 'path' as *;
 </style>
