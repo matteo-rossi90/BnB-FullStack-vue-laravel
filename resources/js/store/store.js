@@ -35,4 +35,6 @@ let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(s
 return urlRequest
 //   array
 }
+
+
 export {store, checkAdress};
