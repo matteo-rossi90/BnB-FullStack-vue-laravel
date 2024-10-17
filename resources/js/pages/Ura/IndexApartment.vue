@@ -137,7 +137,8 @@ export default {
                       {{ apartment.title }}
                     </td>
                     <td scope="row">
-                      {{ apartment.is_visible }}
+                        <p class="badge text-bg-success" v-if="apartment.is_visible === 1" >Disponibile</p>
+                        <p class="badge text-bg-danger" v-else>Occupato</p>
                     </td>
                     <td scope="row">
                       <i class="fa-solid fa-envelope"></i>
@@ -191,14 +192,17 @@ export default {
 @use "../../../scss/variables" as *;
 @use "../../../scss/dashboard" as *;
 
-
+td{
+    height: 100px;
+    line-height: 100px;
+}
 .img-container{
     width: 5%;
 
 }
 
 .btn{
-    margin: 10px;
+    margin-right: 10px;
 }
 
 // @use 'path' as *;
