@@ -134,7 +134,7 @@ export default {
                           required
                         />
                       </div>
-                      <div class="mb-3">
+                      <!-- <div class="mb-3">
                         <label for="lat" class="col-form-label"
                           >latitudine:</label
                         >
@@ -145,8 +145,8 @@ export default {
                           name="lat"
                           disabled
                         />
-                      </div>
-                      <div class="mb-3">
+                      </div> -->
+                      <!-- <div class="mb-3">
                         <label for="lon" class="col-form-label"
                           >longitudine:</label
                         >
@@ -157,7 +157,7 @@ export default {
                           name="lon"
                           disabled
                         />
-                      </div>
+                      </div> -->
                       <div class="mb-3">
                         <label for="number_rooms" class="col-form-label"
                           >numero stanze:</label
