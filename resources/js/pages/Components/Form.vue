@@ -1,12 +1,11 @@
 <script>
-import { RouterLink } from "vue-router";
-import { Modal } from "bootstrap";
-import Routinglist from "./partials/Routinglist.vue";
-import { checkAdress } from "../../store/store";
+import { checkAdress } from '../../store/store';
+import { store } from '../../store/store';
 export default {
-  name: "CreateApartment",
+
+  name: "Form",
   components: {
-    Routinglist,
+
   },
   data() {
     return {
@@ -63,10 +62,7 @@ export default {
 </script>
 
 <template>
-  <div class="wrapper d-flex">
-    <aside>
-      <Routinglist />
-    </aside>
+
     <div class="dashboard-box">
       <div class="container-fluid p-5 d-flex justify-content-center gap-2">
         <div class="row">
@@ -134,7 +130,7 @@ export default {
                           required
                         />
                       </div>
-                      <div class="mb-3">
+                      <!-- <div class="mb-3">
                         <label for="lat" class="col-form-label"
                           >latitudine:</label
                         >
@@ -145,8 +141,8 @@ export default {
                           name="lat"
                           disabled
                         />
-                      </div>
-                      <div class="mb-3">
+                      </div> -->
+                      <!-- <div class="mb-3">
                         <label for="lon" class="col-form-label"
                           >longitudine:</label
                         >
@@ -157,7 +153,7 @@ export default {
                           name="lon"
                           disabled
                         />
-                      </div>
+                      </div> -->
                       <div class="mb-3">
                         <label for="number_rooms" class="col-form-label"
                           >numero stanze:</label
@@ -260,7 +256,7 @@ export default {
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 <style lang='scss' scoped>
 img {

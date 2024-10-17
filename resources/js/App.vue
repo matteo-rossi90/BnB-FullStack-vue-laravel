@@ -23,19 +23,19 @@ export default {
     //   });
     window.addEventListener("load", () => {
       // get a data of user
-      axios
-        .get("/api/user")
-        .then((response) => {
-          store.user = response.data;
-          localStorage.setItem("userName", response.data.name);
-          store.userName = localStorage.getItem("userName");
-        })
-        .catch((err) => {
-          localStorage.setItem("userName", "Accedi");
-          console.log(err);
-        });
     });
-  },
+    axios
+      .get("/api/user")
+      .then((response) => {
+        store.user = response.data;
+        localStorage.setItem("userName", response.data.name);
+        store.userName = localStorage.getItem("userName");
+      })
+      .catch((err) => {
+        localStorage.setItem("userName", "Accedi");
+        console.log(err);
+      });
+},
 };
 </script>
 <template>
