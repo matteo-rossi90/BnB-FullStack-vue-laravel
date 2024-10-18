@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('address');
             $table->double('lat', 7, 5);
             $table->double('lon', 7, 5);
+            $table->softDeletes();
             $table->timestamps();
 
         });
