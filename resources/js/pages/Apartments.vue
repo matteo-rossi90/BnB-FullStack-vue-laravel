@@ -94,14 +94,17 @@ export default{
 
                     <div class="col-lg-6 col-md-6 col-sm-12 mb-4" v-for="(apartment, index) in apartments" :key="index">
 
-                        <div class="card shadow-sm border-0 rounded">
-                            <img src="https://via.placeholder.com/150" class="apartment-image card-img-top" alt="Appart-Img">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ apartment.title }}</h5>
-                                <p class="card-text">{{ apartment.address }}</p>
-                                <p class="card-text">Descrizione: Appartamento con 2 camere da letto e 1 bagno.</p>
+                        <router-link :to="{ name:'showApartment', params:{id: apartment.id} }">
+                            <div class="card shadow-sm border-0 rounded">
+                                <img src="https://via.placeholder.com/150" class="apartment-image card-img-top" alt="Appart-Img">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ apartment.title }}</h5>
+                                    <p class="card-text">{{ apartment.address }}</p>
+                                    <p class="card-text">Descrizione: Appartamento con 2 camere da letto e 1 bagno.</p>
+                                </div>
                             </div>
-                        </div>
+
+                        </router-link>
 
                     </div>
 
@@ -180,6 +183,10 @@ img{
 
 .title-popup{
     font-size: 10px;
+}
+
+a{
+    text-decoration:none;
 }
 
 
