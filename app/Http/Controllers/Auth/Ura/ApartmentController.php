@@ -30,23 +30,38 @@ class ApartmentController extends Controller
     public function store(StoreApartmentRequest $request)
     {
 
-
         $data = $request->all();
 
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
 
-        if (array_key_exists('image', $data) && $data['image']) {
-            $image = Storage::put('uploads', $data['image']);
-            $original_name = $request->file('image')->getClientOriginalName();
-            $data['image'] = $image;
-            $data['original_name'] = $original_name;
-        }else{
-            $data['image'] = 'vuoto';
-            $data['original_name'] = 'vuoto';
+        // if (array_key_exists('image', $data) && $data['image']) {
+        //     $image = Storage::put('uploads', $data['image']);
+        //     $original_name = $request->file('image')->getClientOriginalName();
+        //     $data['image'] = $image;
+        //     $data['original_name'] = $original_name;
+        // }else{
+        //     $data['image'] = 'vuoto';
+        //     $data['original_name'] = 'vuoto';
+        // }
+
+        if($image = $request->file('file')){
+            $path = 'img/';
+            $image->move($path);
+
         }
 
         $apartment = Apartment::create($data);
+
+        // // gestione img
+        // if(array_key_exists('image', $data)){
+        //     $image = Storage::put('uploads', $data['image']);
+        //     // $original_name= $request->file('cover_img')->getClientOriginalName();
+        //     $data['image'] = $image;
+        //     // $data['original_img_name'] = $original_name;
+        // }
+
+
 
         // Se non ci sono errori, restituisci i dati codificati come JSON
         return $apartment;

@@ -1,10 +1,14 @@
 <script>
 import Routinglist from "./partials/Routinglist.vue";
 import { checkAdress } from "../../store/store";
+
+
 export default {
   name: "CreateApartment",
   components: {
     Routinglist,
+
+
   },
   data() {
     return {
@@ -25,9 +29,30 @@ export default {
       services:[],
 
       errors: {},
+
     };
   },
   methods: {
+
+    savePhoto(event){
+        this.apartment.image = event.target.files[0];
+        console.log(event);
+        // console.log(event.target.files[0]);
+
+        let reader = new FileReader();
+        reader.addEventListener('load', function(){
+            this.imagePreview = reader.result;
+        }.bind(this), false);
+
+        if(this.apartment.image){
+            if(/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
+                reader.readAsDataURL(this.apartment.image);
+            }
+        }
+
+
+    },
+
     submit() {
       let urlRequest = checkAdress(this.apartment.address);
 
@@ -87,7 +112,8 @@ export default {
                     </div>
                     <div class="col-12 col-sm-6">
 
-                        <form @submit.prevent="submit">
+                        <form @submit.prevent="submit" enctype="multipart/form-data">
+
                             <div class="mb-3">
                                 <label for="title" class="col-form-label">Nome appartamento:</label>
                                 <input
@@ -181,6 +207,7 @@ export default {
                                 class="form-control"
                                 id="image"
                                 name="image"
+                                @change="savePhoto"
                                 />
                                 <label class="input-group-text" for="image"
                                 >carica</label
