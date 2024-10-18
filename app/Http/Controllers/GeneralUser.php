@@ -8,9 +8,12 @@ use Illuminate\Http\Request;
 class GeneralUser extends Controller
 {
     public function allApartment(){
-        $allApartment = Apartment::all();
+
+        $allApartment = Apartment::with('services')->get();
 
         return $allApartment;
 
     }
+
+
 }

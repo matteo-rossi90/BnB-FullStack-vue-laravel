@@ -11,6 +11,11 @@ class Apartment extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function services(){
+
+        return $this->belongsToMany(Service::class);
+    }
+
 
 
     protected $fillable =
