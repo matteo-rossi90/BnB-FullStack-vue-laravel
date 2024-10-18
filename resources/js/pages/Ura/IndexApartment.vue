@@ -208,7 +208,7 @@ export default {
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                                            <button @click="deleteApartment(apartment)" type="button" class="btn btn-danger">Elimina</button>
+                                            <button @click="deleteApartment(apartment)" type="button" class="btn btn-danger" data-bs-dismiss="modal">Elimina</button>
                                         </div>
                                     </div>
                                 </div>
