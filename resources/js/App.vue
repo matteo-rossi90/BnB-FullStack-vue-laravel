@@ -53,6 +53,9 @@ export default {
 
   <!-- <Footer /> -->
 </template>
-<style scoped>
+<style lang="scss" scoped>
 /* // @use 'path' as *; */
+main {
+  padding-top: 8.5rem;
+}
 </style>

@@ -1,6 +1,7 @@
 <script>
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
+import { height } from "@fortawesome/free-solid-svg-icons/fa0";
 export default {
   name: "Header",
   data() {
@@ -54,7 +55,15 @@ export default {
         })
         .then((response) => {
           this.address = response.data.results;
-          console.log(this.address[0].address);
+          //   {{ addressObj.address.streetName }}, n°
+          // {{
+          //     addressObj.address.streetNumber
+          //     ? addressObj.address.streetNumber
+          //     : 0
+          // }},
+          // {{ addressObj.address.municipality }}
+          // {{ addressObj.address.postalCode }}
+          // {{ addressObj.address.neighbourhood }}
         })
         .catch((err) => {
           console.log(err);
@@ -67,6 +76,23 @@ export default {
   mounted() {
     window.addEventListener("click", () => {
       store.is_open = false;
+    });
+    window.addEventListener("scroll", () => {
+      if (!isThrottled) {
+        let firstRow = document.getElementById("firstRow");
+        let scrollAmount = window.scrollY;
+
+        if (scrollAmount > 20) {
+          firstRow.classList.add("hidden");
+        } else {
+          firstRow.classList.remove("hidden");
+        }
+
+        isThrottled = true;
+        setTimeout(() => {
+          isThrottled = false;
+        }, 100); // 100ms di pausa tra un evento scroll e il successivo
+      }
     });
   },
   computed: {
@@ -82,7 +108,7 @@ export default {
       return store.userName;
     },
     loggedUserApartment() {
-      return localStorage.getItem("is_logged") && store.allApartment.length;
+      return localStorage.getItem("is_logged") && store.allApartments.length;
     },
     suggestAdress() {
       return this.address;
@@ -93,15 +119,22 @@ export default {
 <template>
   <header>
     <nav>
-      <div class="container">
-        <div class="row justify-content-between align-items-center">
+      <div class="container-fluid">
+        <div
+          class="row justify-content-between align-items-center"
+          id="firstRow"
+        >
           <div class="col">
-            <router-link :to="{ name: 'home' }">logo</router-link>
+            <router-link class="contLogo" :to="{ name: 'home' }">
+              <img
+                class="logo"
+                src="../provvisional images/logo.jpg"
+                alt="airbnb photo"
+              />
+            </router-link>
           </div>
 
           <div class="col d-flex gap-2 justify-content-end">
-            <router-link class="link" :to="{ name: 'home' }">Home</router-link>
-
             <!-- user click dropdown class -->
             <div class="contDropDown" @click.stop="openDrop()">
               <div
@@ -112,6 +145,9 @@ export default {
                 <font-awesome-icon :icon="['fas', 'caret-down']" />
               </div>
               <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
+                <router-link class="link" :to="{ name: 'home' }"
+                  >Home</router-link
+                >
                 <router-link class="link" :to="{ name: 'login' }"
                   >Login</router-link
                 >
@@ -128,8 +164,9 @@ export default {
         </div>
         <div class="row justify-content-center align-items-center">
           <div class="col-sm-10 col-lg-8">
+            <!-- search input for adress -->
             <div class="input-group stylish-input-group">
-              <div class="contInput">
+              <div class="contInput d-flex">
                 <input
                   type="text"
                   class="form-control"
@@ -137,6 +174,8 @@ export default {
                   v-model="searchQuery"
                   @input="debouncedSearch"
                 />
+                <span class="button">invia</span>
+
                 <div class="suggest" v-if="searchQuery">
                   <ul>
                     <li
@@ -176,6 +215,7 @@ export default {
       </div>
     </nav>
   </header>
+  <nav class="responsiveNavBar">navbar</nav>
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
@@ -185,6 +225,11 @@ header {
   z-index: 100;
   border-bottom: 1px solid black;
   padding: 0.5rem;
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  padding: 1rem;
+
   nav {
     width: 100%;
     height: 100%;
@@ -200,6 +245,7 @@ header {
       display: block;
       z-index: 100;
       border: 1px solid black;
+      z-index: 101;
       &:hover {
       }
       .profile {
@@ -210,7 +256,7 @@ header {
       }
 
       .dropDown.active {
-        background-color: red;
+        background-color: white;
         position: absolute;
         left: -62px;
         padding: 1rem;
@@ -218,13 +264,28 @@ header {
         flex-direction: column;
         align-items: center;
         border-radius: 20px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        .link {
+          border-radius: 20px;
+          &:hover {
+            background-color: rgb(241, 240, 240);
+            color: black;
+          }
+        }
       }
       .dropDown.disactive {
         display: none;
       }
     }
+    .contLogo {
+      height: 3rem;
+      img.logo {
+        height: 100%;
+      }
+    }
   }
 }
+
 p,
 .profile,
 .link {
@@ -235,12 +296,36 @@ p,
 .disactive {
   display: none;
 }
+//#inputAdress
 .contInput {
   width: 70%;
   padding: 0.5rem;
   border-radius: 20px;
   border: 1px solid black;
   position: relative;
+  left: 50%;
+  transform: translate(-50%);
+  //   width: 70%;
+  //   padding: 0.5rem;
+  //   border-radius: 20px;
+  //   border: 1px solid black;
+  //   position: relative;
+}
+.button {
+  display: none;
+  background-color: white;
+  border: 1px solid grey;
+  padding: 0.5rem;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  margin-left: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
 }
 .suggest {
   position: absolute;
@@ -259,6 +344,25 @@ p,
       background-color: rgb(217, 217, 217);
       cursor: pointer;
     }
+  }
+}
+@media all and (max-width: 623px) {
+  .responsiveNavBar {
+    height: 4rem;
+    width: 100%;
+    background-color: red;
+    position: fixed;
+    bottom: 0;
+    z-index: 100;
+  }
+  #firstRow {
+    display: none;
+  }
+  .contInput {
+    width: 100%;
+  }
+  .button {
+    display: block;
   }
 }
 </style>
