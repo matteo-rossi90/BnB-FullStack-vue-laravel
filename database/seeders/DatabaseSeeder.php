@@ -18,7 +18,8 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             ApartmentSeeder::class,
             ServiceTableSeeder::class,
-            ApartmentServiceTableSeeder::class
+            ApartmentServiceTableSeeder::class,
+            MessageSeeder::class
         ]);
 
     }
