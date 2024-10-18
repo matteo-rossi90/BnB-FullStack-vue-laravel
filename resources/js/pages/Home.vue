@@ -1,8 +1,6 @@
 <script>
 import axios from "axios";
 import { store } from "../store/store";
-
-// importo il componente ApartmentCard
 import ApartmentCard from "./components/ApartmentCard.vue";
 export default {
   name: "Home",

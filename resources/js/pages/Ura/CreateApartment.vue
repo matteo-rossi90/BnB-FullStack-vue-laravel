@@ -56,8 +56,7 @@ export default {
     },
   },
   mounted() {
-    // force bootstrap for close modale
-    window.addEventListener("click", function () {});
+
   },
 };
 </script>
@@ -102,30 +101,7 @@ export default {
                                 required
                                 />
                             </div>
-                            <div class="mb-3">
-                                <label for="lat" class="col-form-label"
-                                >latitudine:</label
-                                >
-                                <input
-                                type="text"
-                                class="form-control"
-                                id="lat"
-                                name="lat"
-                                disabled
-                                />
-                            </div>
-                            <div class="mb-3">
-                                <label for="lon" class="col-form-label"
-                                >longitudine:</label
-                                >
-                                <input
-                                type="text"
-                                class="form-control"
-                                id="lon"
-                                name="lon"
-                                disabled
-                                />
-                            </div>
+
                             <div class="mb-3">
                                 <label for="number_rooms" class="col-form-label"
                                 >numero stanze:</label
@@ -197,6 +173,18 @@ export default {
                                 >carica</label
                                 >
                             </div>
+
+                            <div class="input-group mb-3 d-flex">
+                                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btn-check-outlined">servizi</label>
+                                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btn-check-outlined">servizi</label><input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
+                                <label class="btn btn-outline-dark" for="btn-check-outlined">servizi</label>
+
+                            </div>
+
+
+
 
 
 
