@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       apartment: {},
+
     };
   },
   methods: {
@@ -38,9 +39,18 @@ export default {
           console.log(
             "Appartamento trovato: " + JSON.stringify(this.apartment, null, 2)
           );
+
         }
       }
     },
+
+    changeVisibility() {
+      // Cambia il valore booleano di is_visible
+      this.apartment.is_visible = !this.apartment.is_visible;
+
+    },
+
+
     submit() {
       let urlRequest = checkAdress(this.apartment.address);
 
@@ -141,6 +151,16 @@ export default {
         class="form-control"
         /> -->
 
+        <label class="form-check-label" for="flexSwitchCheckDefault">Disponibilità</label>
+        <div class="form-check form-switch">
+            <input @click="changeVisibility" class="form-check-input" type="checkbox" role="switch" :checked="!apartment.is_visible">
+
+             <span v-if="apartment.is_visible">Appartamento disponibile</span>
+             <span v-else>Appartamento occupato</span>
+        </div>
+
+
+
       <button type="submit" class="btn btn-primary">Invia</button>
     </form>
   </div>
@@ -149,7 +169,13 @@ export default {
 
 
 <style lang="scss" scoped>
+label {
+    margin-top: 20px;
+}
 button {
   margin-top: 30px;
 }
+
+
+
 </style>

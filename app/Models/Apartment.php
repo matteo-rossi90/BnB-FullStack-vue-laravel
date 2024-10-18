@@ -11,6 +11,16 @@ class Apartment extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function services(){
+
+        return $this->belongsToMany(Service::class);
+    }
+
+    public function messages(){
+
+        return $this->hasMany(Message::class);
+    }
+
 
 
     protected $fillable =
@@ -26,6 +36,7 @@ class Apartment extends Model
         'square_meters',
         'address',
         'lat',
-        'lon'
+        'lon',
+        'is_visible'
     ];
 }
