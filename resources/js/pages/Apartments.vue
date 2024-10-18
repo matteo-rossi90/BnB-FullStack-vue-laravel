@@ -6,14 +6,14 @@ export default{
     name:'Apartments',
     data(){
         return{
-            apartments: store.allApartment
+            apartments: store.allApartments
         }
     },
     methods:{
-
         getMap(){
             const tt = window.tt;  //accesso alla libreria TomTom
             let center = [12.4964, 41.9028]; //centro della mappa
+            let size = 50; //dimensioni del popup
 
             const map = tt.map({
                 key: 'qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI',
@@ -27,12 +27,34 @@ export default{
                 const lat = apartment.lat; //valore della latitudine di ogni appartamento
                 const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
 
-                new tt.Marker().setLngLat([lon, lat]).addTo(map);
+                let boxContent = document.createElement('div')
+                boxContent.innerHTML = `
+                <div class="card-body">
+                    <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
+                    <p class="title-popup">${apartment.address}</p>
+                    <small>8000 euro</small>
+                </div>`
+
+                let popup = new tt.Popup({
+                closeButton: true,  //permettere la chiusura il popup
+                closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+                offset: size,
+                anchor: 'bottom'
+
+            }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+
+            //creare il marker per l'appartamento
+            let marker = new tt.Marker()
+                .setLngLat([lon, lat])
+                .setPopup(popup)  //collegare il popup al marker
+
+                marker.addTo(map);
+
             });
 
             const bounds = [
-                [10.5010, 40.7994],  // estremi sud-ovest (longitudine, latitudine)
-                [13.9894, 42.8995]   // estremi nord-est (longitudine, latitudine)
+                [10.5010, 40.7994],  //estremi sud-ovest (longitudine, latitudine)
+                [13.9894, 42.8995]   //estremi nord-est (longitudine, latitudine)
             ];
 
 
@@ -43,7 +65,20 @@ export default{
         },
     },
     mounted(){
-        this.getMap();
+        axios
+        .get("api/user/utente/dashboard")
+        .then((response) => {
+            this.apartments = response.data;
+            store.allApartments = response.data;
+            console.log(this.apartments);
+            console.log(store.allApartments)
+            this.getMap();
+
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
     }
 }
 </script>
@@ -60,7 +95,7 @@ export default{
                     <div class="col-lg-6 col-md-6 col-sm-12 mb-4" v-for="(apartment, index) in apartments" :key="index">
 
                         <div class="card shadow-sm border-0 rounded">
-                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Appart-Img">
+                            <img src="https://via.placeholder.com/150" class="apartment-image card-img-top" alt="Appart-Img">
                             <div class="card-body">
                                 <h5 class="card-title">{{ apartment.title }}</h5>
                                 <p class="card-text">{{ apartment.address }}</p>
@@ -141,6 +176,10 @@ img{
     width: 100%;
     height: 500px;
     border-radius: 20px;
+}
+
+.title-popup{
+    font-size: 10px;
 }
 
 

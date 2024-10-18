@@ -1,11 +1,15 @@
 <script>
 import { store } from "../store/store.js";
+import { checkAdress } from "../store/store";
 export default {
   name: "Header",
   data() {
     return {
       //   // name user
       //   name: store.user.name,
+      searchQuery: "",
+      address: [],
+      debounceTimeout: null,
     };
   },
   methods: {
@@ -29,6 +33,36 @@ export default {
     openDrop() {
       store.is_open = store.is_open ? false : true;
     },
+    debouncedSearch() {
+      // Cancella il timeout precedente (se esiste)
+      clearTimeout(this.debounceTimeout);
+
+      // Imposta un nuovo timeout
+      this.debounceTimeout = setTimeout(() => {
+        this.performSearch(); // Esegui la chiamata dopo un ritardo di 300ms
+      }, 300); // Cambia questo valore per regolare il ritardo
+    },
+    performSearch() {
+      if (!this.searchQuery.trim()) {
+        return;
+      }
+      let urlRequest = checkAdress(this.searchQuery);
+
+      axios
+        .get("http://127.0.0.1:8000/proxy-tomtom", {
+          params: { url: urlRequest },
+        })
+        .then((response) => {
+          this.address = response.data.results;
+          console.log(this.address[0].address);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    clearData() {
+      this.searchQuery = "";
+    },
   },
   mounted() {
     window.addEventListener("click", () => {
@@ -50,6 +84,9 @@ export default {
     loggedUserApartment() {
       return localStorage.getItem("is_logged") && store.allApartment.length;
     },
+    suggestAdress() {
+      return this.address;
+    },
   },
 };
 </script>
@@ -59,8 +96,9 @@ export default {
       <div class="container">
         <div class="row justify-content-between align-items-center">
           <div class="col">
-            <h2>logo</h2>
+            <router-link :to="{ name: 'home' }">logo</router-link>
           </div>
+
           <div class="col d-flex gap-2 justify-content-end">
             <router-link class="link" :to="{ name: 'home' }">Home</router-link>
 
@@ -84,6 +122,53 @@ export default {
                   >Dashboard</router-link
                 >
                 <a href="#" class="link" @click="logout">Logout </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row justify-content-center align-items-center">
+          <div class="col-sm-10 col-lg-8">
+            <div class="input-group stylish-input-group">
+              <div class="contInput">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Cerca appartamenti per indirizzo..."
+                  v-model="searchQuery"
+                  @input="debouncedSearch"
+                />
+                <div class="suggest" v-if="searchQuery">
+                  <ul>
+                    <li
+                      v-for="(addressObj, index) in suggestAdress"
+                      :key="index"
+                    >
+                      <router-link
+                        class="link"
+                        @click="clearData"
+                        :to="{
+                          name: 'apartmentsMap',
+                          params: { city: 'rome' },
+                        }"
+                      >
+                        {{ addressObj.address.streetName }}, n°
+                        {{
+                          addressObj.address.streetNumber
+                            ? addressObj.address.streetNumber
+                            : 0
+                        }},
+                        {{ addressObj.address.municipality }}
+                        {{ addressObj.address.postalCode }}
+                        {{ addressObj.address.neighbourhood }}
+                      </router-link>
+                    </li>
+                  </ul>
+                </div>
+                <div
+                  class="col-lg-3 col-md-4 col-sm-6 mb-4"
+                  v-for="(apartment, index) in apartments"
+                  :key="index"
+                ></div>
               </div>
             </div>
           </div>
@@ -149,5 +234,31 @@ p,
 
 .disactive {
   display: none;
+}
+.contInput {
+  width: 70%;
+  padding: 0.5rem;
+  border-radius: 20px;
+  border: 1px solid black;
+  position: relative;
+}
+.suggest {
+  position: absolute;
+  width: 100%;
+  top: 100%;
+  background-color: rgb(237, 237, 237);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  z-index: 10;
+
+  li {
+    padding: 0.3rem 0.5rem;
+    border-radius: 20px;
+    margin-bottom: 0.1rem;
+    &:hover {
+      background-color: rgb(217, 217, 217);
+      cursor: pointer;
+    }
+  }
 }
 </style>
