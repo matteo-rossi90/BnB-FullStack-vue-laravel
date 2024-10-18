@@ -26,6 +26,7 @@ export default {
       axios
         .get("/api/user")
         .then((response) => {
+          //#
           store.user = response.data;
           localStorage.setItem("userName", response.data.name);
           store.userName = localStorage.getItem("userName");

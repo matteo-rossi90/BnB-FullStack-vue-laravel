@@ -103,8 +103,6 @@ export default {
           name: "apartmentsMap",
           params: { id: string },
         });
-
-        console.log(string);
       } else {
         console.warn("Stringa indirizzo vuota, non reindirizzo");
       }

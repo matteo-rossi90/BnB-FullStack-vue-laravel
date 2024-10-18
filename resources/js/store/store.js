@@ -14,7 +14,7 @@ const store = reactive({
     // all apartment visible
     allApartments: [],
     // apartment of singol user
-    allApartmentGlobal: [],
+    userApartment: [],
 
     center: [],
     // filtred apartment near of the center of map

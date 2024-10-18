@@ -64,20 +64,6 @@ export default {
   mounted() {
     // change data from the center of map
     filterApartment(store.allApartments);
-    console.log("tutti gli appartamenti", this.apartments);
-    axios
-      .get("api/user/utente/dashboard")
-      .then((response) => {
-        this.apartments = response.data;
-        store.allApartmentGlobal = response.data;
-        console.log(this.apartments);
-        console.log(store.allApartments);
-        this.getMap();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    console.log(this.$router);
   },
 };
 </script>
