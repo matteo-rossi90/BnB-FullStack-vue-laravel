@@ -140,4 +140,6 @@ class ApartmentController extends Controller
 
         return response()->json(['message' => 'Appartamento non trovato'], 404);
     }
+
+
 }

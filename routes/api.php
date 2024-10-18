@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')
 });
 
 Route::get('/home', [GeneralUser::class, 'allApartment']);
+Route::get('/services',[GeneralUser::class, 'services']);
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 
