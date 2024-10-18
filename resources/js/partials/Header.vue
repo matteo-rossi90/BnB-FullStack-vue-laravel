@@ -2,7 +2,8 @@
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
 import { findZone } from "../store/store";
-import { height } from "@fortawesome/free-solid-svg-icons/fa0";
+import { throttle } from "lodash";
+
 export default {
   name: "Header",
   data() {
@@ -195,7 +196,7 @@ export default {
                 <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <a href="#" class="link" @click="logout">Logout </a>
+                <p class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>
