@@ -39,7 +39,7 @@ export default{
                 closeButton: true,  //permettere la chiusura il popup
                 closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
                 offset: size,
-                anchor: 'bottom'
+                // anchor: 'none'
 
             }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
 
