@@ -26,6 +26,7 @@ class Apartment extends Model
         'square_meters',
         'address',
         'lat',
-        'lon'
+        'lon',
+        'is_visible'
     ];
 }
