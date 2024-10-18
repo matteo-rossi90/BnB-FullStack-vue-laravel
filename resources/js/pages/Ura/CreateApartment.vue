@@ -1,12 +1,14 @@
 <script>
-import { RouterLink } from "vue-router";
-import { Modal } from "bootstrap";
 import Routinglist from "./partials/Routinglist.vue";
 import { checkAdress } from "../../store/store";
+
+
 export default {
   name: "CreateApartment",
   components: {
     Routinglist,
+
+
   },
   data() {
     return {
@@ -21,11 +23,36 @@ export default {
         number_bathrooms: "",
         image: "",
         square_meters: "",
+        // services:[]
+
       },
+      services:[],
+
       errors: {},
+
     };
   },
   methods: {
+
+    savePhoto(event){
+        this.apartment.image = event.target.files[0];
+        console.log(event);
+        // console.log(event.target.files[0]);
+
+        let reader = new FileReader();
+        reader.addEventListener('load', function(){
+            this.imagePreview = reader.result;
+        }.bind(this), false);
+
+        if(this.apartment.image){
+            if(/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
+                reader.readAsDataURL(this.apartment.image);
+            }
+        }
+
+
+    },
+
     submit() {
       let urlRequest = checkAdress(this.apartment.address);
 
@@ -57,6 +84,17 @@ export default {
   },
   mounted() {
 
+    axios.get('api/services')
+      .then(response => {
+          this.services = response.data;
+          console.log(this.services[0]);
+      })
+      .catch(error => {
+        console.error('Errore durante il caricamento dei dati:', error);
+      });
+
+
+
   },
 };
 </script>
@@ -74,7 +112,8 @@ export default {
                     </div>
                     <div class="col-12 col-sm-6">
 
-                        <form @submit.prevent="submit">
+                        <form @submit.prevent="submit" enctype="multipart/form-data">
+
                             <div class="mb-3">
                                 <label for="title" class="col-form-label">Nome appartamento:</label>
                                 <input
@@ -168,25 +207,20 @@ export default {
                                 class="form-control"
                                 id="image"
                                 name="image"
+                                @change="savePhoto"
                                 />
                                 <label class="input-group-text" for="image"
                                 >carica</label
                                 >
                             </div>
 
-                            <div class="input-group mb-3 d-flex">
-                                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btn-check-outlined">servizi</label>
-                                <input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btn-check-outlined">servizi</label><input type="checkbox" class="btn-check" id="btn-check-outlined" autocomplete="off">
-                                <label class="btn btn-outline-dark" for="btn-check-outlined">servizi</label>
+                            <div class="input-group mb-3 d-flex justify-content-between">
+                             <div  v-for="item in services" :key="item.id">
+                                <input  type="checkbox" class="btn-check" v-model="item.name" autocomplete="off">
+                                <label class="btn btn-outline-dark" :for="item.id" >{{ item.name }} </label>
+                             </div>
 
                             </div>
-
-
-
-
-
 
                         <button type="submit"  class="btn btn-dark">inserisci appartamento</button>
 
