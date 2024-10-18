@@ -56,7 +56,7 @@ export default {
         });
     },
   },
-  detailApartment(id) {},
+  //   detailApartment(id) {},
 
   mounted() {
     axios
@@ -159,8 +159,7 @@ export default {
                       <i class="fa-solid fa-chart-simple"></i>
                     </td>
                     <td scope="row" class="actions align-middle">
-                      <RouterLink
-                        class="link"
+                      <router-link
                         :to="{
                           name: 'showApartment',
                           params: { id: apartment.id },
@@ -169,8 +168,8 @@ export default {
                         <div class="btn btn-primary">
                           <i class="fa-solid fa-eye"></i>
                         </div>
-                      </RouterLink>
-                      <RouterLink
+                      </router-link>
+                      <router-link
                         class="link"
                         :to="{
                           name: 'EditApartment',
@@ -180,7 +179,7 @@ export default {
                         <div class="btn btn-warning">
                           <i class="fa-solid fa-pencil"></i>
                         </div>
-                      </RouterLink>
+                      </router-link>
 
                       <div class="d-inline-block">
                         <button
