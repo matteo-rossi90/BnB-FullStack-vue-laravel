@@ -8,8 +8,6 @@ export default {
         name: "",
         surname: "",
         date_of_birth: "",
-        surname: "",
-        date_of_birth: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -73,29 +71,24 @@ export default {
 
     validateName() {
       if (!this.user.name) {
-        this.errors.name = "Il nome è obbligatorio.";
-      } else if (!/^[a-zA-Z]+$/.test(this.user.name)) {
-        this.errors.name = "Il nome deve contenere solo lettere.";
-      } else {
+        this.errors.name = "";
+      } else if(!/^[a-zA-Z]+$/.test(this.user.name)) {
+        this.errors.name = "Il nome deve contenere solo lettere";
+      } else if(this.user.name.length < 4){
+        this.errors.name = "il nome non può avere una lunghezza inferiore di 4 caratteri"
+      }else{
         this.errors.name = "";
       }
     },
 
     validateSurname() {
       if (!this.user.surname) {
-        this.errors.surname = "Il cognome è obbligatorio.";
-      } else if (!/^[a-zA-Z]+$/.test(this.user.surname)) {
-        this.errors.surname = "Il cognome deve contenere solo lettere.";
-      } else {
         this.errors.surname = "";
-      }
-    },
-    validateSurname() {
-      if (!this.user.surname) {
-        this.errors.surname = "Il cognome è obbligatorio.";
-      } else if (!/^[a-zA-Z]+$/.test(this.user.surname)) {
-        this.errors.surname = "Il cognome deve contenere solo lettere.";
-      } else {
+      }else if(!/^[a-zA-Z]+$/.test(this.user.surname)){
+        this.errors.surname = "Il cognome deve contenere solo lettere";
+      }else if(this.user.surname.length < 4){
+        this.errors.surname = "Il cognome non può avere una lunghezza inferiore di 4 caratteri"
+      }else{
         this.errors.surname = "";
       }
     },
@@ -108,7 +101,7 @@ export default {
       const day = today.getDate() - dobDate.getDate();
 
       if (!this.user.date_of_birth) {
-        this.errors.date_of_birth = "La data di nascita è obbligatoria.";
+        this.errors.date_of_birth = "";
       } else if (
         age < 18 ||
         (age === 18 && (month < 0 || (month === 0 && day < 0)))
@@ -120,12 +113,12 @@ export default {
     },
 
     validateEmail() {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!this.user.email) {
         this.errors.email = "L'email è obbligatoria.";
       } else if (!emailRegex.test(this.user.email)) {
-        this.errors.email = "Inserisci una email valida.";
+        this.errors.email = "Inserisci una email valida, ad esempio: nome.cognome@mail.com";
       } else {
         this.errors.email = "";
       }
@@ -209,6 +202,7 @@ export default {
               id="name"
               name="name"
               v-model="user.name"
+              @input="validateName"
             />
             <small v-if="errors.name" class="error-message">{{
               errors.name
@@ -223,6 +217,7 @@ export default {
               id="surname"
               name="surname"
               v-model="user.surname"
+              @input="validateSurname"
             />
             <small v-if="errors.surname" class="error-message">{{
               errors.surname
@@ -246,13 +241,14 @@ export default {
           </div>
 
           <div class="input-container">
-            <label class="form-label" for="email">Email</label>
+            <label class="form-label" for="email">Email*</label>
             <input
               class="form-control"
               type="email"
               id="email"
               name="email"
               v-model="user.email"
+              @input="validateEmail"
             />
             <small v-if="errors.email" class="error-message">{{
               errors.email
@@ -260,13 +256,14 @@ export default {
           </div>
 
           <div class="input-container">
-            <label class="form-label" for="password">Password</label>
+            <label class="form-label" for="password">Password*</label>
             <input
               class="form-control"
               type="password"
               id="password"
               name="password"
               v-model="user.password"
+              @input="validatePassword"
             />
             <small v-if="errors.password" class="error-message">{{
               errors.password
@@ -275,7 +272,7 @@ export default {
 
           <div class="input-container">
             <label class="form-label" for="password_confirmation"
-              >Conferma la password</label
+              >Conferma la password*</label
             >
             <input
               class="form-control"
@@ -283,6 +280,7 @@ export default {
               id="password_confirmation"
               name="password_confirmation"
               v-model="user.password_confirmation"
+              @input="validatePasswordConfirmation"
             />
             <small v-if="errors.password_confirmation" class="error-message">{{
               errors.password_confirmation
