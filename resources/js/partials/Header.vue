@@ -76,6 +76,7 @@ export default {
         store.center = [addressObj.position.lon, addressObj.position.lat];
         findZone(addressObj.position.lon, addressObj.position.lat);
         this.searchQuery = "";
+        console.log(store.filtredApartment);
         this.$router.push({
           name: "apartmentsMap",
           params: { id: urlString },

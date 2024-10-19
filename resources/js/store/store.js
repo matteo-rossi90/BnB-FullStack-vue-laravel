@@ -64,15 +64,18 @@ const findZone = (lon, lat, distance = 20) =>{
      store.minLong = lon - deltaLong;
      store.maxLong = lon + deltaLong;
 
+     filterApartment(store.allApartments)
 }
 
 const filterApartment = (apartments) => {
 
+    if(apartments.length){
 
-    // apartment filtred near the center of map
-    store.filtredApartment = apartments.filter(apartment =>{
-        return apartment.lon >= store.minLong && apartment.lon <= store.maxLong && apartment.lat >= store.minLat &&  apartment.lat <= store.maxLat
-    })
+        // apartment filtred near the center of map
+        store.filtredApartment = apartments.filter(apartment =>{
+            return apartment.lon >= store.minLong && apartment.lon <= store.maxLong && apartment.lat >= store.minLat &&  apartment.lat <= store.maxLat
+        })
+    }
 
 
 
