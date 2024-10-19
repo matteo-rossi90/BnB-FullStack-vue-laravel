@@ -62,7 +62,7 @@ export default {
     axios.get('api/services')
       .then(response => {
           this.services = response.data;
-          console.log(this.services[0]);
+        //   console.log(this.services[0]);
       })
       .catch(error => {
         console.error('Errore durante il caricamento dei dati:', error);
@@ -189,7 +189,7 @@ export default {
 
                             <div class="input-group mb-3 d-flex justify-content-between">
                              <div  v-for="item in services" :key="item.id">
-                                <input  type="checkbox" class="btn-check" v-model="item.name" autocomplete="off">
+                                <input  type="checkbox" class="btn-check" v-model="item.name" autocomplete="off" value="item.id">
                                 <label class="btn btn-outline-dark" :for="item.id" >{{ item.name }} </label>
                              </div>
 
