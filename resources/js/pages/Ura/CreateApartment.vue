@@ -1,7 +1,6 @@
 <script>
 import Routinglist from "./partials/Routinglist.vue";
 import { checkAdress } from "../../store/store";
-
 export default {
   name: "CreateApartment",
   components: {
@@ -28,24 +27,24 @@ export default {
     };
   },
   methods: {
-    // savePhoto(event) {
-    //   this.apartment.image = event.target.files[0];
+    savePhoto(event) {
+      this.apartment.image = event.target.files[0];
 
-    //   let reader = new FileReader();
-    //   reader.addEventListener(
-    //     "load",
-    //     function () {
-    //       this.imagePreview = reader.result;
-    //     }.bind(this),
-    //     false
-    //   );
+      let reader = new FileReader();
+      reader.addEventListener(
+        "load",
+        function () {
+          this.imagePreview = reader.result;
+        }.bind(this),
+        false
+      );
 
-    //   if (this.apartment.image) {
-    //     if (/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
-    //       reader.readAsDataURL(this.apartment.image);
-    //     }
-    //   }
-    // },
+      if (this.apartment.image) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
+          reader.readAsDataURL(this.apartment.image);
+        }
+      }
+    },
 
     submit() {
       let urlRequest = checkAdress(this.apartment.address);
