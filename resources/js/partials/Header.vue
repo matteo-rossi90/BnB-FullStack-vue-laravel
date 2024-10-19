@@ -1,6 +1,7 @@
 <script>
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
+import { componeUrlString } from "../store/store";
 import { findZone } from "../store/store";
 // import { throttle } from "lodash";
 
@@ -68,38 +69,16 @@ export default {
         });
     },
     sendAdress(addressObj) {
-      let adress = addressObj.address;
-      let string = "";
-      this.searchQuery = "";
+      let urlString = componeUrlString(addressObj);
 
-      if (adress.streetName !== undefined) {
-        string += adress.streetName;
-        this.searchQuery = adress.streetName;
-      }
-      if (adress.streetNumber !== undefined) {
-        string += "-" + adress.streetNumber;
-        this.searchQuery += " " + adress.streetNumber;
-      }
-      if (adress.municipality !== undefined) {
-        string += "-" + adress.municipality;
-        this.searchQuery += " " + adress.municipality;
-      }
-      if (adress.postalCode !== undefined) {
-        string += "-" + adress.postalCode;
-        this.searchQuery += " " + adress.postalCode;
-      }
-
-      if (adress.neighbourhood !== undefined) {
-        string += "-" + adress.neighbourhood;
-        this.searchQuery += " " + adress.neighbourhood;
-      }
-      if (string && string.trim()) {
+      if (urlString) {
         this.isClose = false;
         store.center = [addressObj.position.lon, addressObj.position.lat];
         findZone(addressObj.position.lon, addressObj.position.lat);
+        this.searchQuery = "";
         this.$router.push({
           name: "apartmentsMap",
-          params: { id: string },
+          params: { id: urlString },
         });
       } else {
         console.warn("Stringa indirizzo vuota, non reindirizzo");
@@ -216,11 +195,7 @@ export default {
                     >
                       <p class="link" @click="sendAdress(addressObj)">
                         {{ addressObj.address.streetName }}
-                        {{
-                          addressObj.address.streetNumber
-                            ? addressObj.address.streetNumber
-                            : 0
-                        }},
+
                         {{ addressObj.address.municipality }}
                         {{ addressObj.address.postalCode }}
                         {{ addressObj.address.neighbourhood }}

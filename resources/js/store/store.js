@@ -80,5 +80,20 @@ const filterApartment = (apartments) => {
 
 }
 
+const componeUrlString = (objAdress) =>{
+    let arrElement = []
+    for (let key in objAdress.address) {
+        arrElement.push(objAdress.address[key])
+      }
 
-export {store, checkAdress, findZone, filterApartment};
+    // lo ciclo per formare una stringa con dei trattini in mezzo
+      let UrlString = arrElement.slice(0, 5).join(' ').split(' ').join('-')
+
+
+
+    return UrlString
+
+}
+
+
+export {store, checkAdress, findZone, filterApartment, componeUrlString};
