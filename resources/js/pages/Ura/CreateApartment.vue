@@ -281,9 +281,6 @@ export default {
             </form>
                   </div>
                 </div>
-              <button type="submit" class="btn btn-dark">
-                inserisci appartamento
-              </button>
 
       </div>
 
