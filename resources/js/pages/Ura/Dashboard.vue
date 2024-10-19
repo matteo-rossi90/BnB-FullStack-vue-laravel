@@ -3,7 +3,7 @@ import IndexApartment from "./IndexApartment.vue";
 import Messages from "./Messages.vue";
 import Sponsor from "./Sponsor.vue";
 import Routinglist from "./partials/Routinglist.vue";
-import { store } from '../../store/store';
+import { store } from "../../store/store";
 
 export default {
   name: "Dashboard",
@@ -11,7 +11,7 @@ export default {
     IndexApartment,
     Messages,
     Sponsor,
-    Routinglist
+    Routinglist,
   },
   data() {
     return {
@@ -34,9 +34,7 @@ export default {
       .get("api/user/utente/dashboard")
       .then((response) => {
         this.apartments = response.data;
-        store.allApartment = response.data;
-        console.log(this.apartments);
-
+        store.allApartments = response.data;
       })
       .catch((err) => {
         console.log(err);
@@ -47,20 +45,22 @@ export default {
 <template>
   <div class="wrapper d-flex">
     <aside>
-        <routinglist />
+      <routinglist />
     </aside>
     <div class="dashboard-box">
       <div class="container-fluid my-3">
         <h1>Dashboard di {{ name }}</h1>
-        <h4 class="my-5">Al momento hai registrato {{ apartments.length }} appartmanenti su BoolBnb</h4>
+        <h4 class="my-5">
+          Al momento hai registrato {{ apartments.length }} appartmanenti su
+          BoolBnb
+        </h4>
       </div>
     </div>
   </div>
 </template>
 <style lang='scss' scoped>
-
-@use '../../../scss/variables' as *;
-@use '../../../scss/dashboard' as *;
+@use "../../../scss/variables" as *;
+@use "../../../scss/dashboard" as *;
 
 // @use 'path' as *;
 </style>

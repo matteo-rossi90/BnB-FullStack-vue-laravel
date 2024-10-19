@@ -1,7 +1,7 @@
 <script>
+import ApartmentCard from "./components/ApartmentCard.vue";
 import axios from "axios";
 import { store } from "../store/store";
-import ApartmentCard from "./components/ApartmentCard.vue";
 export default {
   name: "Home",
   components: {
@@ -19,7 +19,6 @@ export default {
       .get("/api/home")
       .then((response) => {
         this.apartments = response.data;
-        console.log(this.apartments);
       })
       .catch((err) => {
         console.log(err);
@@ -35,7 +34,7 @@ export default {
     //     //   .get("api/user/utente/dashboard")
     //     //   .then((response) => {
     //     //       store.allApartment = response.data;
-    //     //       console.log(store.allApartment);
+    //     //
     //     //   })
     //     //   .catch((err) => {
     //     //     console.log(err);

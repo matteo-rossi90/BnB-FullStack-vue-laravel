@@ -12,20 +12,21 @@ export default {
     Footer,
   },
   mounted() {
-    // axios
-    //   .get("api/home")
-    //   .then((res) => {
-    //     localStorage.setItem("allApartments", JSON.stringify(res.data));
-    //     store.allApartments = JSON.parse(localStorage.getItem("allApartments"));
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios
+      .get("api/home")
+      .then((res) => {
+        localStorage.setItem("allApartments", JSON.stringify(res.data));
+        store.allApartments = JSON.parse(localStorage.getItem("allApartments"));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
     window.addEventListener("load", () => {
       // get a data of user
       axios
         .get("/api/user")
         .then((response) => {
+          //#
           store.user = response.data;
           localStorage.setItem("userName", response.data.name);
           store.userName = localStorage.getItem("userName");

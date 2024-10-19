@@ -22,7 +22,6 @@ export default {
 
       // Converte i dati JSON in un array di oggetti JavaScript
       let apartments = JSON.parse(apartmentsJson);
-      console.log("Array di appartamenti:", apartments);
 
       // Assicurati che l'array di appartamenti sia valido
       if (!Array.isArray(apartments)) {
@@ -34,78 +33,69 @@ export default {
       for (let i = 0; i < apartments.length; i++) {
         if (apartments[i].id == this.$route.params.id) {
           this.apartment = apartments[i];
-          console.log(
-            "Appartamento trovato: " + JSON.stringify(this.apartment, null, 2)
-          );
         }
       }
     },
-    getMap(){
-            const tt = window.tt;  //accesso alla libreria TomTom
-            let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
-            let size = 50; //dimensioni del popup
+    getMap() {
+      const tt = window.tt; //accesso alla libreria TomTom
+      let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
+      let size = 50; //dimensioni del popup
 
-            const map = tt.map({
-                key: 'qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI',
-                center: center,
-                container: 'map',
-                zoom: 12,
-            });
+      const map = tt.map({
+        key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+        center: center,
+        container: "map",
+        zoom: 12,
+      });
 
-            //accesso alle coordinate nel JSON generato dall'API
+      //accesso alle coordinate nel JSON generato dall'API
 
-            const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
-            const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
+      const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
+      const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
 
-            if (!lat || !lon) {
-                console.error("Coordinate non valide per l'appartamento");
-                return;
-            }
+      if (!lat || !lon) {
+        console.error("Coordinate non valide per l'appartamento");
+        return;
+      }
 
-            let boxContent = document.createElement('div')
-            boxContent.innerHTML = `
+      let boxContent = document.createElement("div");
+      boxContent.innerHTML = `
             <div class="card-body">
                 <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
                 <p class="title-popup">${this.apartment.address}</p>
                 <small>8000 euro</small>
-            </div>`
+            </div>`;
 
-            let popup = new tt.Popup({
-            closeButton: true,  //permettere la chiusura il popup
-            closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-            offset: size,
-            // anchor: 'none'
+      let popup = new tt.Popup({
+        closeButton: true, //permettere la chiusura il popup
+        closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+        offset: size,
+        // anchor: 'none'
+      }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
 
-            }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+      //creare il marker per l'appartamento
+      let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
 
-            //creare il marker per l'appartamento
-            let marker = new tt.Marker()
-                .setLngLat([lon, lat])
-                .setPopup(popup)  //collegare il popup al marker
+      marker.addTo(map);
 
-                marker.addTo(map);
+      const bounds = [
+        [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+        [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+      ];
 
-            const bounds = [
-                [10.5010, 40.7994],  //estremi sud-ovest (longitudine, latitudine)
-                [13.9894, 42.8995]   //estremi nord-est (longitudine, latitudine)
-            ];
+      map.setMaxBounds(bounds);
 
-
-            map.setMaxBounds(bounds);
-
-            map.addControl(new tt.FullscreenControl());
-            map.addControl(new tt.NavigationControl());
-        },
-
+      map.addControl(new tt.FullscreenControl());
+      map.addControl(new tt.NavigationControl());
     },
+  },
 
   mounted() {
     this.findApartment();
     // nextTick fa in modo che il DOM sia completamente pronto
     this.$nextTick(() => {
-        this.getMap();
+      this.getMap();
     });
-
   },
   computed: {
     exist() {
@@ -144,10 +134,18 @@ export default {
       <div class="row my-4">
         <div class="col-12 text-center">
           <div v-if="apartment.image" class="image-container mb-4">
-            <img :src="apartment.image" alt="Immagine dell'appartamento" class="img-fluid rounded shadow-sm" />
+            <img
+              :src="apartment.image"
+              alt="Immagine dell'appartamento"
+              class="img-fluid rounded shadow-sm"
+            />
           </div>
           <div v-else class="image-container mb-4">
-            <img src="https://app-assets.outeast.com/assets/modules/Shared/placeholder_house-b1447eab513e59327c82175ec088599a3c16f80a51501f59d8b89bd60cb00112.png" alt="Placeholder" class="img-fluid rounded shadow-sm" />
+            <img
+              src="https://app-assets.outeast.com/assets/modules/Shared/placeholder_house-b1447eab513e59327c82175ec088599a3c16f80a51501f59d8b89bd60cb00112.png"
+              alt="Placeholder"
+              class="img-fluid rounded shadow-sm"
+            />
           </div>
         </div>
       </div>
@@ -185,71 +183,81 @@ export default {
         </div>
       </div>
 
-        <div class="row">
-            <!-- Colonna sinistra per Servizi e Visibilità -->
-            <div class="col-md-4 mb-4">
-            <div class="row">
-                <!-- Servizi Aggiuntivi -->
-                <div class="col-12 mb-3">
-                <h3>Servizi Aggiuntivi</h3>
-                <ul>
-                    <!-- <li v-for="service in services" :key="service.id">{{ service.name }}</li> -->
-                    <li><i class="fas fa-wifi icon"></i> WiFi</li>
-                    <li><i class="fas fa-parking icon"></i> Posto Macchina</li>
-                    <li><i class="fas fa-swimmer icon"></i> Piscina</li>
-                    <li><i class="fas fa-door-open icon"></i> Portineria</li>
-                    <li><i class="fas fa-hot-tub icon"></i> Sauna</li>
-                    <li><i class="fas fa-water icon"></i> Vista Mare</li>
-
-                </ul>
-                </div>
-
-                <!-- Stato di Visibilità -->
-                <div class="col-12">
-                <h3>Disponibile: {{ apartment.is_visible ? "Sì" : "No" }}</h3>
-                </div>
-            </div>
+      <div class="row">
+        <!-- Colonna sinistra per Servizi e Visibilità -->
+        <div class="col-md-4 mb-4">
+          <div class="row">
+            <!-- Servizi Aggiuntivi -->
+            <div class="col-12 mb-3">
+              <h3>Servizi Aggiuntivi</h3>
+              <ul>
+                <!-- <li v-for="service in services" :key="service.id">{{ service.name }}</li> -->
+                <li><i class="fas fa-wifi icon"></i> WiFi</li>
+                <li><i class="fas fa-parking icon"></i> Posto Macchina</li>
+                <li><i class="fas fa-swimmer icon"></i> Piscina</li>
+                <li><i class="fas fa-door-open icon"></i> Portineria</li>
+                <li><i class="fas fa-hot-tub icon"></i> Sauna</li>
+                <li><i class="fas fa-water icon"></i> Vista Mare</li>
+              </ul>
             </div>
 
-            <!-- Colonna destra per il Form di messaggio -->
-            <div class="col-md-8">
-            <div class="row">
-                <div class="col-12 text-center">
-                <h2 class="form-title">Invia un messaggio al proprietario</h2>
-                </div>
+            <!-- Stato di Visibilità -->
+            <div class="col-12">
+              <h3>Disponibile: {{ apartment.is_visible ? "Sì" : "No" }}</h3>
+            </div>
+          </div>
+        </div>
 
-                <div class="col-12 col-md-10 mx-auto">
-                <form class="message-form p-4 shadow-sm rounded">
-                    <!-- Campo per l'email -->
-                    <div class="mb-3">
-                    <label for="email" class="form-label">La tua email</label>
-                    <input type="email" id="email" class="form-control" placeholder="Inserisci la tua email" required />
-                    </div>
-
-                    <!-- Campo per il messaggio -->
-                    <div class="mb-3">
-                    <label for="message" class="form-label">Il tuo messaggio</label>
-                    <textarea id="message" class="form-control" rows="5" placeholder="Scrivi il tuo messaggio..." required></textarea>
-                    </div>
-
-                    <!-- Bottone invia -->
-                    <button type="submit" class="btn btn-primary btn-lg w-100">
-                    Invia il messaggio
-                    </button>
-                </form>
-                </div>
-
+        <!-- Colonna destra per il Form di messaggio -->
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-12 text-center">
+              <h2 class="form-title">Invia un messaggio al proprietario</h2>
             </div>
 
+            <div class="col-12 col-md-10 mx-auto">
+              <form class="message-form p-4 shadow-sm rounded">
+                <!-- Campo per l'email -->
+                <div class="mb-3">
+                  <label for="email" class="form-label">La tua email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    class="form-control"
+                    placeholder="Inserisci la tua email"
+                    required
+                  />
+                </div>
+
+                <!-- Campo per il messaggio -->
+                <div class="mb-3">
+                  <label for="message" class="form-label"
+                    >Il tuo messaggio</label
+                  >
+                  <textarea
+                    id="message"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Scrivi il tuo messaggio..."
+                    required
+                  ></textarea>
+                </div>
+
+                <!-- Bottone invia -->
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                  Invia il messaggio
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
         <!-- mappa per la geolocalizzazione dell'appartamento -->
         <div class="row g-2">
-                <div class="my-4 col">
-                    <div id="map"></div>
-                </div>
-            </div>
+          <div class="my-4 col">
+            <div id="map"></div>
+          </div>
         </div>
-
+      </div>
     </div>
   </div>
   <div v-else>Appartamento non trovato</div>
@@ -271,8 +279,7 @@ h3 {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 20px;
-    //   color: #ff385c;
-
+  //   color: #ff385c;
 }
 
 .apartment-address {
@@ -335,9 +342,9 @@ p {
   background-color: #e0324a;
 }
 
-#map{
-    width:100%;
-    height: 500px;
-    border-radius: 10px;
+#map {
+  width: 100%;
+  height: 500px;
+  border-radius: 10px;
 }
 </style>

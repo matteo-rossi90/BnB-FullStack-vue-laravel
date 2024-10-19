@@ -1,16 +1,25 @@
 <script>
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
-import { height } from "@fortawesome/free-solid-svg-icons/fa0";
+import { findZone } from "../store/store";
+import { throttle } from "lodash";
+
 export default {
   name: "Header",
   data() {
     return {
       //   // name user
       //   name: store.user.name,
+      //   auto compiled v model input
       searchQuery: "",
+      //   data of all adress
       address: [],
+      //   timeout for bettere request after user write
       debounceTimeout: null,
+      //   query url with simbol - when start event send this data in params
+      urlSearchQuery: "",
+      isThrottled: false,
+      isClose: false,
     };
   },
   methods: {
@@ -48,29 +57,56 @@ export default {
         return;
       }
       let urlRequest = checkAdress(this.searchQuery);
-
+      this.isClose = true;
       axios
         .get("http://127.0.0.1:8000/proxy-tomtom", {
           params: { url: urlRequest },
         })
         .then((response) => {
           this.address = response.data.results;
-          //   {{ addressObj.address.streetName }}, n°
-          // {{
-          //     addressObj.address.streetNumber
-          //     ? addressObj.address.streetNumber
-          //     : 0
-          // }},
-          // {{ addressObj.address.municipality }}
-          // {{ addressObj.address.postalCode }}
-          // {{ addressObj.address.neighbourhood }}
+          this.urlSearchQuery = this.searchQuery;
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    clearData() {
+    sendAdress(addressObj) {
+      let adress = addressObj.address;
+      let string = "";
       this.searchQuery = "";
+
+      if (adress.streetName !== undefined) {
+        string += adress.streetName;
+        this.searchQuery = adress.streetName;
+      }
+      if (adress.streetNumber !== undefined) {
+        string += "-" + adress.streetNumber;
+        this.searchQuery += " " + adress.streetNumber;
+      }
+      if (adress.municipality !== undefined) {
+        string += "-" + adress.municipality;
+        this.searchQuery += " " + adress.municipality;
+      }
+      if (adress.postalCode !== undefined) {
+        string += "-" + adress.postalCode;
+        this.searchQuery += " " + adress.postalCode;
+      }
+
+      if (adress.neighbourhood !== undefined) {
+        string += "-" + adress.neighbourhood;
+        this.searchQuery += " " + adress.neighbourhood;
+      }
+      if (string) {
+        this.isClose = false;
+        store.center = [addressObj.position.lon, addressObj.position.lat];
+        findZone(addressObj.position.lon, addressObj.position.lat);
+        this.$router.push({
+          name: "apartmentsMap",
+          params: { id: string },
+        });
+      } else {
+        console.warn("Stringa indirizzo vuota, non reindirizzo");
+      }
     },
   },
   mounted() {
@@ -78,7 +114,7 @@ export default {
       store.is_open = false;
     });
     window.addEventListener("scroll", () => {
-      if (!isThrottled) {
+      if (!this.isThrottled) {
         let firstRow = document.getElementById("firstRow");
         let scrollAmount = window.scrollY;
 
@@ -88,9 +124,9 @@ export default {
           firstRow.classList.remove("hidden");
         }
 
-        isThrottled = true;
+        this.isThrottled = true;
         setTimeout(() => {
-          isThrottled = false;
+          this.isThrottled = false;
         }, 100); // 100ms di pausa tra un evento scroll e il successivo
       }
     });
@@ -112,6 +148,9 @@ export default {
     },
     suggestAdress() {
       return this.address;
+    },
+    urlRequest() {
+      return this.urlSearchQuery;
     },
   },
 };
@@ -157,7 +196,7 @@ export default {
                 <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <a href="#" class="link" @click="logout">Logout </a>
+                <p class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>
@@ -176,21 +215,14 @@ export default {
                 />
                 <span class="button">invia</span>
 
-                <div class="suggest" v-if="searchQuery">
+                <div class="suggest" v-if="isClose">
                   <ul>
                     <li
                       v-for="(addressObj, index) in suggestAdress"
                       :key="index"
                     >
-                      <router-link
-                        class="link"
-                        @click="clearData"
-                        :to="{
-                          name: 'apartmentsMap',
-                          params: { city: 'rome' },
-                        }"
-                      >
-                        {{ addressObj.address.streetName }}, n°
+                      <p class="link" @click="sendAdress(addressObj)">
+                        {{ addressObj.address.streetName }}
                         {{
                           addressObj.address.streetNumber
                             ? addressObj.address.streetNumber
@@ -199,15 +231,10 @@ export default {
                         {{ addressObj.address.municipality }}
                         {{ addressObj.address.postalCode }}
                         {{ addressObj.address.neighbourhood }}
-                      </router-link>
+                      </p>
                     </li>
                   </ul>
                 </div>
-                <div
-                  class="col-lg-3 col-md-4 col-sm-6 mb-4"
-                  v-for="(apartment, index) in apartments"
-                  :key="index"
-                ></div>
               </div>
             </div>
           </div>
