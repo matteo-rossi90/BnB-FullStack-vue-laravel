@@ -20,9 +20,8 @@ export default {
         image: "",
         square_meters: "",
         // services:[]
-
       },
-      services:[],
+      services: [],
 
       errors: {},
     };
@@ -61,9 +60,7 @@ export default {
           axios
             .post("api/user/utente/dashboard", this.apartment)
             .then((res) => {
-
-                this.$router.push({ name: "apartments" });
-
+              this.$router.push({ name: "apartments" });
             })
             .catch((err) => {
               console.log(err);
@@ -72,8 +69,6 @@ export default {
         .catch((error) => {
           console.error("Errore:", error.response || error.message);
         });
-
-
     },
   },
   mounted() {
@@ -83,12 +78,9 @@ export default {
         this.services = response.data;
         //   console.log(this.services[0]);
       })
-      .catch(error => {
-        console.error('Errore durante il caricamento dei dati:', error);
+      .catch((error) => {
+        console.error("Errore durante il caricamento dei dati:", error);
       });
-
-
-
   },
 };
 </script>

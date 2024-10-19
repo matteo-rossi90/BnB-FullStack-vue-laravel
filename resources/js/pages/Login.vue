@@ -43,12 +43,12 @@ export default {
     },
 
     validateEmail() {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+      const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!this.user.email) {
         this.errors.email = "L'email è obbligatoria.";
       } else if (!emailRegex.test(this.user.email)) {
-        this.errors.email = "Inserisci una email valida.";
+        this.errors.email = "Email non riconosciuta";
       } else {
         this.errors.email = "";
       }
@@ -85,13 +85,14 @@ export default {
         <h2>Effettua il login</h2>
         <form class="mx-auto" @submit.prevent="submitLogin">
           <div class="input-container">
-            <label class="form-label" for="email">Email</label>
+            <label class="form-label" for="email">Email*</label>
             <input
               class="form-control"
               type="email"
               id="email"
               name="email"
               v-model="user.email"
+              @input="validateEmail"
             />
             <small v-if="errors.email" class="error-message">{{
               errors.email
@@ -99,13 +100,14 @@ export default {
           </div>
 
           <div class="input-container">
-            <label class="form-label" for="password">Password</label>
+            <label class="form-label" for="password">Password*</label>
             <input
               class="form-control"
               type="password"
               id="password"
               name="password"
               v-model="user.password"
+              @input="validatePassword"
             />
             <small v-if="errors.password" class="error-message">{{
               errors.password

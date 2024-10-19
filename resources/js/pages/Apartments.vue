@@ -5,10 +5,7 @@ import { filterApartment } from "../store/store";
 export default {
   name: "Apartments",
   data() {
-    return {
-      // filtred apartment
-      apartments: store.allApartments,
-    };
+    return {};
   },
   methods: {
     getMap() {
@@ -61,9 +58,11 @@ export default {
       map.addControl(new tt.NavigationControl());
     },
   },
-  mounted() {
-    // change data from the center of map
-    filterApartment(store.allApartments);
+  mounted() {},
+  computed: {
+    apartmensFiltred() {
+      return store.filtredApartment;
+    },
   },
 };
 </script>
@@ -72,12 +71,12 @@ export default {
   <div class="container">
     <div class="row py-3">
       <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>
-      <small>Appartamenti trovati: {{ apartments.length }} </small>
+      <small>Appartamenti trovati: {{ apartmensFiltred.length }} </small>
       <div class="my-3 col-sm-12 col-md-12 col-lg-6 scrollable-cards">
-        <div class="row">
+        <div class="row" v-if="apartmensFiltred.length">
           <div
             class="col-lg-6 col-md-6 col-sm-12 mb-4"
-            v-for="(apartment, index) in apartments"
+            v-for="(apartment, index) in apartmensFiltred"
             :key="index"
           >
             <router-link
