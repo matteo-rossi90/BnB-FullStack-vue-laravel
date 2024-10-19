@@ -28,6 +28,25 @@ export default {
     };
   },
   methods: {
+    savePhoto(event) {
+      this.apartment.image = event.target.files[0];
+
+      let reader = new FileReader();
+      reader.addEventListener(
+        "load",
+        function () {
+          this.imagePreview = reader.result;
+        }.bind(this),
+        false
+      );
+
+      if (this.apartment.image) {
+        if (/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
+          reader.readAsDataURL(this.apartment.image);
+        }
+      }
+    },
+
     submit() {
       let urlRequest = checkAdress(this.apartment.address);
 
@@ -58,10 +77,10 @@ export default {
     },
   },
   mounted() {
-
-    axios.get('api/services')
-      .then(response => {
-          this.services = response.data;
+    axios
+      .get("api/services")
+      .then((response) => {
+        this.services = response.data;
         //   console.log(this.services[0]);
       })
       .catch(error => {
@@ -76,44 +95,114 @@ export default {
 
 <template>
   <div class="wrapper d-flex">
-        <aside>
-            <Routinglist />
-        </aside>
-        <div class="dashboard-box">
-            <div class="container-fluid p-5 d-flex justify-content-center gap-2">
-                <div class="row">
-                    <div class="col-12">
-                         <h1>Inserisci un appartamento</h1>
-                    </div>
-                    <div class="col-12 col-sm-6">
+    <aside>
+      <Routinglist />
+    </aside>
+    <div class="dashboard-box">
+      <div class="container-fluid p-5 d-flex justify-content-center gap-2">
+        <div class="row">
+          <div class="col-12">
+            <h1>Inserisci un appartamento</h1>
+          </div>
+          <div class="col-12 col-sm-6">
+            <form @submit.prevent="submit" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="title" class="col-form-label"
+                  >Nome appartamento:</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  maxlength="500"
+                  min="1"
+                  v-model="apartment.title"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="address" class="col-form-label">Indirizzo:</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  name="address"
+                  v-model="apartment.address"
+                  required
+                />
+              </div>
 
-                        <form @submit.prevent="submit">
-                            <div class="mb-3">
-                                <label for="title" class="col-form-label">Nome appartamento:</label>
-                                <input
-                                type="text"
-                                class="form-control"
-                                id="title"
-                                name="title"
-                                maxlength="500"
-                                min="1"
-                                v-model="apartment.title"
-                                required
-                                />
-                            </div>
-                            <div class="mb-3">
-                                <label for="address" class="col-form-label"
-                                >Indirizzo:</label
-                                >
-                                <input
-                                type="text"
-                                class="form-control"
-                                id="address"
-                                name="address"
-                                v-model="apartment.address"
-                                required
-                                />
-                            </div>
+              <div class="mb-3">
+                <label for="number_rooms" class="col-form-label"
+                  >numero stanze:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="number_rooms"
+                  name="number_rooms"
+                  min="1"
+                  max="65535"
+                  v-model="apartment.number_rooms"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="number_beds" class="col-form-label"
+                  >numero letti:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="number_beds"
+                  name="number_beds"
+                  min="0"
+                  max="65535"
+                  v-model="apartment.number_beds"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="number_bathrooms" class="col-form-label"
+                  >numero bagni:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="number_bathrooms"
+                  name="number_bathrooms"
+                  min="0"
+                  max="65535"
+                  v-model="apartment.number_bathrooms"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="square_meters" class="col-form-label"
+                  >metri quadri:</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="square_meters"
+                  name="square_meters"
+                  min="0"
+                  max="65535"
+                  v-model="apartment.square_meters"
+                  required
+                />
+              </div>
+              <div class="input-group mb-3">
+                <input
+                  type="file"
+                  class="form-control"
+                  id="image"
+                  name="image"
+                  @change="savePhoto"
+                />
+                <label class="input-group-text" for="image">carica</label>
+              </div>
 
                             <div class="mb-3">
                                 <label for="number_rooms" class="col-form-label"
@@ -200,8 +289,15 @@ export default {
                         </form>
                   </div>
                 </div>
-            </div>
+              </div>
+
+              <button type="submit" class="btn btn-dark">
+                inserisci appartamento
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
 
 

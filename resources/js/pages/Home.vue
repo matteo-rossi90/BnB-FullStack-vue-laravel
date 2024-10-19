@@ -9,27 +9,16 @@ export default {
   },
   data() {
     return {
-      apartments: store.allApartments,
+      store: store,
     };
   },
   methods: {},
   mounted() {
-    // Chiamata per gli appartamenti pubblici
-    axios
-      .get("/api/home")
-      .then((response) => {
-        this.apartments = response.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     // Chiamata per l'utente autenticato
     // axios
     //   .get("/api/user")
     //   .then((response) => {
     //     store.user = response.data;
-
     //     // axios
     //     //   .get("api/user/utente/dashboard")
     //     //   .then((response) => {
@@ -44,7 +33,17 @@ export default {
     //     console.log(err);
     //   });
   },
-  computed: {},
+  computed: {
+    allApartmentsComputed() {},
+  },
+  //   beforeRouteEnter(to, from, next) {
+  //     // Questo viene eseguito ogni volta che si accede a questa pagina tramite il router
+  //     next((vm) => {
+  //       // Puoi accedere al componente 'vm' e chiamare metodi o eseguire logica
+  //       console.log("Entered the HomePage route");
+  //       vm.fillAllApartment(); // Esegui una funzione che desideri
+  //     });
+  //   },
 };
 </script>
 <template>
@@ -61,7 +60,7 @@ export default {
     <div class="row">
       <div
         class="col-lg-3 col-md-4 col-sm-6 mb-4"
-        v-for="(apartment, index) in apartments"
+        v-for="(apartment, index) in store.allApartments"
         :key="index"
       >
         <ApartmentCard :apartment="apartment" />

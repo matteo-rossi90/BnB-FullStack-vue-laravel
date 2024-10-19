@@ -1,5 +1,4 @@
 <script>
-import axios from "axios";
 import { store } from "../store/store";
 import { filterApartment } from "../store/store";
 
@@ -7,7 +6,8 @@ export default {
   name: "Apartments",
   data() {
     return {
-      apartments: store.filtredApartment,
+      // filtred apartment
+      apartments: store.allApartments,
     };
   },
   methods: {

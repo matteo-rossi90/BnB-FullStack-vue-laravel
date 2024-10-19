@@ -13,9 +13,15 @@ export default {
     };
   },
   mounted() {
-    axios.get("api/user/utente/messaggi").then((res) => {
-      this.messages = res.data;
-    });
+    axios
+      .get("api/user/utente/messaggi")
+      .then((res) => {
+        
+        this.messages = res.data;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
 };
 </script>

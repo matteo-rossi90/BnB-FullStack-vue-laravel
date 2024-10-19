@@ -11,17 +11,16 @@ export default {
 
   methods: {
     findApartment() {
-      // Recupera i dati dal localStorage
-      let apartmentsJson = localStorage.getItem("apartments");
+      //   // Recupera i dati dal localStorage
+      //   let apartmentsJson = localStorage.getItem("apartments");
 
-      // Verifica se i dati esistono e sono validi
-      if (!apartmentsJson) {
-        console.error("Nessun dato trovato nel localStorage");
-        return;
-      }
+      //   // Verifica se i dati esistono e sono validi
+      //   if (!apartmentsJson) {
+      //     console.error("Nessun dato trovato nel localStorage");
+      //     return;
+      //   }
 
-      // Converte i dati JSON in un array di oggetti JavaScript
-      let apartments = JSON.parse(apartmentsJson);
+      let apartments = store.allApartments;
 
       // Assicurati che l'array di appartamenti sia valido
       if (!Array.isArray(apartments)) {

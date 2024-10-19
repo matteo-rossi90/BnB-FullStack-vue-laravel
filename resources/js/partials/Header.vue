@@ -2,7 +2,7 @@
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
 import { findZone } from "../store/store";
-import { throttle } from "lodash";
+// import { throttle } from "lodash";
 
 export default {
   name: "Header",
@@ -29,10 +29,7 @@ export default {
         axios
           .post("/api/logout")
           .then((response) => {
-            localStorage.setItem("is_logged", false);
-            store.is_logged = localStorage.getItem("is_logged");
-            localStorage.setItem("userName", "Accedi");
-            store.userName = localStorage.getItem("userName");
+            store.userName = "Accedi";
             this.$router.push({ name: "home" });
           })
           .catch((err) => {
@@ -96,7 +93,7 @@ export default {
         string += "-" + adress.neighbourhood;
         this.searchQuery += " " + adress.neighbourhood;
       }
-      if (string) {
+      if (string && string.trim()) {
         this.isClose = false;
         store.center = [addressObj.position.lon, addressObj.position.lat];
         findZone(addressObj.position.lon, addressObj.position.lat);
@@ -113,23 +110,23 @@ export default {
     window.addEventListener("click", () => {
       store.is_open = false;
     });
-    window.addEventListener("scroll", () => {
-      if (!this.isThrottled) {
-        let firstRow = document.getElementById("firstRow");
-        let scrollAmount = window.scrollY;
+    // window.addEventListener("scroll", () => {
+    //   if (!this.isThrottled) {
+    //     let firstRow = document.getElementById("firstRow");
+    //     let scrollAmount = window.scrollY;
 
-        if (scrollAmount > 20) {
-          firstRow.classList.add("hidden");
-        } else {
-          firstRow.classList.remove("hidden");
-        }
+    //     if (scrollAmount > 20) {
+    //       firstRow.classList.add("hidden");
+    //     } else {
+    //       firstRow.classList.remove("hidden");
+    //     }
 
-        this.isThrottled = true;
-        setTimeout(() => {
-          this.isThrottled = false;
-        }, 100); // 100ms di pausa tra un evento scroll e il successivo
-      }
-    });
+    //     this.isThrottled = true;
+    //     setTimeout(() => {
+    //       this.isThrottled = false;
+    //     }, 100); // 100ms di pausa tra un evento scroll e il successivo
+    //   }
+    // });
   },
   computed: {
     isLogged() {
@@ -144,7 +141,7 @@ export default {
       return store.userName;
     },
     loggedUserApartment() {
-      return localStorage.getItem("is_logged") && store.allApartments.length;
+      return store.userName !== "Accedi";
     },
     suggestAdress() {
       return this.address;
@@ -165,11 +162,7 @@ export default {
         >
           <div class="col">
             <router-link class="contLogo" :to="{ name: 'home' }">
-              <img
-                class="logo"
-                src="../provvisional images/logo.jpg"
-                alt="airbnb photo"
-              />
+              <img class="logo" src="" alt="airbnb photo" />
             </router-link>
           </div>
 
