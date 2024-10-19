@@ -11,38 +11,55 @@ export default {
     Header,
     Footer,
   },
-  mounted() {
-    axios
-      .get("api/home")
-      .then((res) => {
-        localStorage.setItem("allApartments", JSON.stringify(res.data));
-        store.allApartments = JSON.parse(localStorage.getItem("allApartments"));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    window.addEventListener("load", () => {
-      // get a data of user
+  methods: {
+    fillData() {
+      // fill data userApartment, allApartments, user, userName
+
+      //   all apartment
       axios
-        .get("/api/user")
-        .then((response) => {
-          //#
-          store.user = response.data;
-          localStorage.setItem("userName", response.data.name);
-          store.userName = localStorage.getItem("userName");
+        .get("api/home")
+        .then((res) => {
+          console.log("app- all apartment");
+          store.allApartments = res.data;
         })
         .catch((err) => {
-          localStorage.setItem("userName", "Accedi");
           console.log(err);
         });
 
-      //   axios
-      //     .get("api/home")
-      //     .then((res) => {})
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-    });
+      //   name and data of user logged
+      axios
+        .get("/api/user")
+        .then((response) => {
+          store.user = response.data;
+          store.userName = response.data.name;
+          console.log("app- user e user name");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // userApartment
+      axios
+        .get("api/user/utente/dashboard")
+        .then((response) => {
+          store.userApartment = response.data;
+          console.log("app- user apartment");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    this.fillData();
+    // window.addEventListener("load", () => {
+    //   // get a data of user
+    //   //   axios
+    //   //     .get("api/home")
+    //   //     .then((res) => {})
+    //   //     .catch((err) => {
+    //   //       console.log(err);
+    //   //     });
+    // });
   },
 };
 </script>

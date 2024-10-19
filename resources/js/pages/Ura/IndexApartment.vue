@@ -11,7 +11,7 @@ export default {
   data() {
     return {
       name: "",
-      apartments: [],
+      apartments: store.userApartment,
     };
   },
   methods: {
@@ -21,40 +21,36 @@ export default {
     //   const toast = new bootstrap.Toast(toastEl); // Creazione dell'istanza Toast di Bootstrap
     //   toast.show(); // Mostra il toast
     // },
-
     // hideToast() {
     //   const toastEl = this.$refs.liveToast;
     //   const toast = new bootstrap.Toast(toastEl);
     //   toast.hide();
     // },
-
-    deleteApartment(apartment) {
-      axios
-        .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
-        .then((res) => {
-          //elimina l'appartamento dalla lista locale (frontend)
-          this.apartments = this.apartments.filter(
-            (a) => a.id !== apartment.id
-          );
-
-          //aggiorna il localStorage e lo store
-          store.userApartment = store.userApartment.filter(
-            (a) => a.id !== apartment.id
-          );
-          localStorage.setItem(
-            "apartments",
-            JSON.stringify(store.userApartment)
-          );
-
-          this.message = `Appartamento "${apartment.title}" eliminato con successo`;
-          this.messageType = "success";
-        })
-        .catch((err) => {
-          console.error(err);
-          this.message = `Errore durante l'eliminazione dell'appartamento "${apartment.title}"`;
-          this.messageType = "error";
-        });
-    },
+    // deleteApartment(apartment) {
+    //   axios
+    //     .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
+    //     .then((res) => {
+    //       //elimina l'appartamento dalla lista locale (frontend)
+    //     //   this.apartments = this.apartments.filter(
+    //     //     (a) => a.id !== apartment.id
+    //     //   );
+    //       //aggiorna il localStorage e lo store
+    //       store.userApartment = store.userApartment.filter(
+    //         (a) => a.id !== apartment.id
+    //       );
+    //       localStorage.setItem(
+    //         "apartments",
+    //         JSON.stringify(store.userApartment)
+    //       );
+    //       this.message = `Appartamento "${apartment.title}" eliminato con successo`;
+    //       this.messageType = "success";
+    //     })
+    //     .catch((err) => {
+    //       console.error(err);
+    //       this.message = `Errore durante l'eliminazione dell'appartamento "${apartment.title}"`;
+    //       this.messageType = "error";
+    //     });
+    // },
   },
   //   detailApartment(id) {},
 
@@ -81,9 +77,8 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        localStorage.setItem("apartments", JSON.stringify(response.data));
-        const apartmentJson = localStorage.getItem("apartments");
-        store.userApartment = JSON.parse(apartmentJson);
+        console.log(response.data);
+        store.userApartment = response.data;
         this.apartments = store.userApartment;
       })
       .catch((err) => {

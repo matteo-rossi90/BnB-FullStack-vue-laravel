@@ -45,11 +45,11 @@ class ApartmentController extends Controller
         //     $data['original_name'] = 'vuoto';
         // }
 
-        if($image = $request->file('file')){
-            $path = 'img/';
-            $image->move($path);
+        // if($image = $request->file('file')){
+        //     $path = 'img/';
+        //     $image->move($path);
 
-        }
+        // }
 
         $apartment = Apartment::create($data);
 

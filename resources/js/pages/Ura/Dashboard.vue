@@ -3,7 +3,7 @@ import IndexApartment from "./IndexApartment.vue";
 import Messages from "./Messages.vue";
 import Sponsor from "./Sponsor.vue";
 import Routinglist from "./partials/Routinglist.vue";
-import { store } from "../../store/store";
+import { store } from "../../store/store.js";
 
 export default {
   name: "Dashboard",
@@ -16,25 +16,17 @@ export default {
   data() {
     return {
       name: "",
-      apartments: [],
+      apartments: store.userApartment,
     };
   },
   methods: {},
-  mounted() {
-    axios
-      .get("/api/user")
-      .then((res) => {
-        this.name = res.data.name;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
 
+  mounted() {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        this.apartments = response.data;
-        store.allApartments = response.data;
+        console.log("dash- user apartment");
+        store.userApartment = response.data;
       })
       .catch((err) => {
         console.log(err);

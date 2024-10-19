@@ -52,7 +52,7 @@ export default {
         .catch((err) => {
           localStorage.setItem("is_logged", "false");
           store.is_logged = localStorage.getItem("is_logged") === "false";
-          //   this.$router.push({ name: "register" });
+
           if (err.response) {
             // Errore con risposta dal server
             console.log("Errore:", err.response.data);
