@@ -73,10 +73,11 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get("api/services")
-      .then((response) => {
-        this.services = response.data;
+
+    axios.get('api/services')
+      .then(response => {
+          this.services = response.data;
+        //   console.log(this.services[0]);
       })
       .catch((error) => {
         console.error("Errore durante il caricamento dei dati:", error);
@@ -196,17 +197,90 @@ export default {
                 <label class="input-group-text" for="image">carica</label>
               </div>
 
-              <div class="input-group mb-3 d-flex justify-content-between">
-                <div v-for="item in services" :key="item.id">
-                  <input
-                    type="checkbox"
-                    class="btn-check"
-                    v-model="item.name"
-                    autocomplete="off"
-                  />
-                  <label class="btn btn-outline-dark" :for="item.id"
-                    >{{ item.name }}
-                  </label>
+                            <div class="mb-3">
+                                <label for="number_rooms" class="col-form-label"
+                                >numero stanze:</label
+                                >
+                                <input
+                                type="number"
+                                class="form-control"
+                                id="number_rooms"
+                                name="number_rooms"
+                                min="1"
+                                max="65535"
+                                v-model="apartment.number_rooms"
+                                required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="number_beds" class="col-form-label"
+                                >numero letti:</label
+                                >
+                                <input
+                                type="number"
+                                class="form-control"
+                                id="number_beds"
+                                name="number_beds"
+                                min="0"
+                                max="65535"
+                                v-model="apartment.number_beds"
+                                required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="number_bathrooms" class="col-form-label"
+                                >numero bagni:</label
+                                >
+                                <input
+                                type="number"
+                                class="form-control"
+                                id="number_bathrooms"
+                                name="number_bathrooms"
+                                min="0"
+                                max="65535"
+                                v-model="apartment.number_bathrooms"
+                                required
+                                />
+                            </div>
+                            <div class="mb-3">
+                                <label for="square_meters" class="col-form-label"
+                                >metri quadri:</label
+                                >
+                                <input
+                                type="number"
+                                class="form-control"
+                                id="square_meters"
+                                name="square_meters"
+                                min="0"
+                                max="65535"
+                                v-model="apartment.square_meters"
+                                required
+                                />
+                            </div>
+                            <div class="input-group mb-3">
+                                <input
+                                type="file"
+                                class="form-control"
+                                id="image"
+                                name="image"
+                                />
+                                <label class="input-group-text" for="image"
+                                >carica</label
+                                >
+                            </div>
+
+                            <div class="input-group mb-3 d-flex justify-content-between">
+                             <div  v-for="item in services" :key="item.id">
+                                <input  type="checkbox" class="btn-check" v-model="item.name" autocomplete="off" value="item.id">
+                                <label class="btn btn-outline-dark" :for="item.id" >{{ item.name }} </label>
+                             </div>
+
+                            </div>
+
+                        <button type="submit"  class="btn btn-dark">inserisci appartamento</button>
+
+                        </form>
+                  </div>
                 </div>
               </div>
 
