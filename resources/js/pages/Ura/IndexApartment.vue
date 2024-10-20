@@ -26,31 +26,31 @@ export default {
     //   const toast = new bootstrap.Toast(toastEl);
     //   toast.hide();
     // },
-    // deleteApartment(apartment) {
-    //   axios
-    //     .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
-    //     .then((res) => {
-    //       //elimina l'appartamento dalla lista locale (frontend)
-    //     //   this.apartments = this.apartments.filter(
-    //     //     (a) => a.id !== apartment.id
-    //     //   );
-    //       //aggiorna il localStorage e lo store
-    //       store.userApartment = store.userApartment.filter(
-    //         (a) => a.id !== apartment.id
-    //       );
-    //       localStorage.setItem(
-    //         "apartments",
-    //         JSON.stringify(store.userApartment)
-    //       );
-    //       this.message = `Appartamento "${apartment.title}" eliminato con successo`;
-    //       this.messageType = "success";
-    //     })
-    //     .catch((err) => {
-    //       console.error(err);
-    //       this.message = `Errore durante l'eliminazione dell'appartamento "${apartment.title}"`;
-    //       this.messageType = "error";
-    //     });
-    // },
+    deleteApartment(apartment) {
+       axios
+         .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
+         .then((res) => {
+           //elimina l'appartamento dalla lista locale (frontend)
+            this.apartments = this.apartments.filter(
+              (a) => a.id !== apartment.id
+            );
+           //aggiorna il localStorage e lo store
+           store.userApartment = store.userApartment.filter(
+             (a) => a.id !== apartment.id
+           );
+           localStorage.setItem(
+             "apartments",
+             JSON.stringify(store.userApartment)
+           );
+           this.message = `Appartamento "${apartment.title}" eliminato con successo`;
+           this.messageType = "success";
+         })
+         .catch((err) => {
+           console.error(err);
+           this.message = `Errore durante l'eliminazione dell'appartamento "${apartment.title}"`;
+           this.messageType = "error";
+         });
+     },
   },
   //   detailApartment(id) {},
 
@@ -96,7 +96,7 @@ export default {
       <div class="container-fluid my-3">
         <div class="row">
           <div class="col-lg-12 col-md-12">
-            <h2 class="mb-3">I miei appartamenti</h2>
+            <h2 class="my-4">I miei appartamenti</h2>
 
             <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4>
 

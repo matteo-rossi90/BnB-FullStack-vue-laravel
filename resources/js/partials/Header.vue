@@ -278,12 +278,12 @@ header {
         color:#FF5757;
 
       img.logo {
-        height: 65px;
-        width: 65px;
+        height: 50px;
+        width: 50px;
       }
 
       strong{
-        font-size: 2rem;
+        font-size: 20px;
       }
 
     }
