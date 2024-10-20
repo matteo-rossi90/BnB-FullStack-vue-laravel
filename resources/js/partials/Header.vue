@@ -141,8 +141,9 @@ export default {
           id="firstRow"
         >
           <div class="col">
-            <router-link class="contLogo" :to="{ name: 'home' }">
-              <img class="logo" src="" alt="airbnb photo" />
+            <router-link class="contLogo d-flex align-items-center" :to="{ name: 'home' }">
+              <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
+              <span><strong>BoolBnb</strong></span>
             </router-link>
           </div>
 
@@ -273,12 +274,20 @@ header {
         display: none;
       }
     }
-    .contLogo {
-      height: 3rem;
+    a.contLogo {
+        color:#FF5757;
+
       img.logo {
-        height: 100%;
+        height: 65px;
+        width: 65px;
       }
+
+      strong{
+        font-size: 2rem;
+      }
+
     }
+
   }
 }
 
