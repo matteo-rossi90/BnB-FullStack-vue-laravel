@@ -1,9 +1,9 @@
 @import '../scss/variables';
 
 .wrapper {
-    height: calc(100vh - 64.8px);
+    height: calc(100vh - auto);
     width: 100%;
-    overflow: auto;
+    // overflow: auto;
 }
 
 aside {
@@ -20,7 +20,7 @@ aside {
 }
 
 ul {
-    padding: 15px;
+    padding: 0 3rem;
     // font-size: 18px;
 }
 
@@ -28,6 +28,9 @@ ul {
 
     aside {
         width: 250px;
+        ul {
+                padding: 0 1.5rem;
+            }
         }
 
     .dashboard-box {
@@ -43,6 +46,10 @@ ul {
 
     aside {
         width: 100px;
+
+        ul{
+            align-items: center;
+        }
     }
 
     .dashboard-box {
@@ -61,7 +68,9 @@ ul {
 
     aside {
         width: 50px;
-
+        ul {
+                padding: 0 0.5rem;
+            }
     }
 
     .dashboard-box {
