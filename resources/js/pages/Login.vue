@@ -12,6 +12,7 @@ export default {
         email: "",
         password: "",
       },
+      loginError:""
     };
   },
   methods: {
@@ -39,6 +40,13 @@ export default {
           localStorage.setItem("is_logged", false);
           store.is_logged = localStorage.getItem("is_logged");
           console.log(err);
+
+          if (err.response && err.response.status === 401) {
+            this.loginError = "Email o password errati.";
+          } else {
+            console.log("Errore durante il login:", err);
+            this.loginError = "Si è verificato un errore durante il login.";
+          }
         });
     },
 
@@ -48,7 +56,7 @@ export default {
       if (!this.user.email) {
         this.errors.email = "L'email è obbligatoria.";
       } else if (!emailRegex.test(this.user.email)) {
-        this.errors.email = "Email non riconosciuta";
+        this.errors.email = "L'email non è valida";
       } else {
         this.errors.email = "";
       }
@@ -114,6 +122,10 @@ export default {
             }}</small>
           </div>
           <button class="btn btn-primary" type="submit">Login</button>
+
+          <div v-if="loginError" class="alert alert-danger">
+            {{ loginError }}
+          </div>
         </form>
       </div>
     </div>
