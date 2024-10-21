@@ -14,13 +14,12 @@ class GeneralUser extends Controller
         $allApartment = Apartment::with('services')->get();
 
 
-        return $allApartment;
+        return response()->json($allApartment);;
 
     }
 
     public function services(){
-
-        return Service::all();
+        return response()->json(Service::all());
     }
 
 }

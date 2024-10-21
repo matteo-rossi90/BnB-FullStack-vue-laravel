@@ -76,7 +76,7 @@ export default {
         store.center = [addressObj.position.lon, addressObj.position.lat];
         findZone(addressObj.position.lon, addressObj.position.lat);
         this.searchQuery = "";
-        console.log(store.filtredApartment);
+
         this.$router.push({
           name: "apartmentsMap",
           params: { id: urlString },
@@ -141,7 +141,10 @@ export default {
           id="firstRow"
         >
           <div class="col">
-            <router-link class="contLogo d-flex align-items-center" :to="{ name: 'home' }">
+            <router-link
+              class="contLogo d-flex align-items-center"
+              :to="{ name: 'home' }"
+            >
               <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
               <span><strong>BoolBnb</strong></span>
             </router-link>
@@ -275,19 +278,17 @@ header {
       }
     }
     a.contLogo {
-        color:#FF5757;
+      color: #ff5757;
 
       img.logo {
         height: 50px;
         width: 50px;
       }
 
-      strong{
+      strong {
         font-size: 20px;
       }
-
     }
-
   }
 }
 

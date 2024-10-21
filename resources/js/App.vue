@@ -17,9 +17,13 @@ export default {
 
       //   all apartment
       axios
-        .get("api/home")
+        .get("api/home", {
+          headers: {
+            Accept: "application/json",
+          },
+        })
         .then((res) => {
-          console.log("app- all apartment:ok");
+          console.log("app- all apartment:ok", res.data);
           store.allApartments = res.data;
         })
         .catch((err) => {
@@ -56,6 +60,10 @@ export default {
   },
   mounted() {
     this.fillData();
+
+    // window.addEventListener("load", function () {
+    //   this.fillData();
+    // });
     // window.addEventListener("load", () => {
     //   // get a data of user
     //   //   axios
