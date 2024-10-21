@@ -32,7 +32,7 @@ export default {
       });
 
       //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
-      this.apartments.forEach((apartment) => {
+      this.filtredApartment.forEach((apartment) => {
         const lat = apartment.lat; //valore della latitudine di ogni appartamento
         const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
 
@@ -57,12 +57,12 @@ export default {
         marker.addTo(map);
       });
 
-      const bounds = [
-        [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-        [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-      ];
+      //   const bounds = [
+      //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+      //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+      //   ];
 
-      map.setMaxBounds(bounds);
+      //   map.setMaxBounds(bounds);
 
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
@@ -112,7 +112,7 @@ export default {
       this.activeFilter();
     });
 
-    // this.getMap();
+    this.getMap();
     //   all apartment
     //   all apartment
     //   all apartment
@@ -145,6 +145,7 @@ export default {
     "$route.params.id": function (newId, oldId) {
       // Quando il parametro 'id' cambia, esegui la funzione che aggiorna i dati
       this.activeFilter();
+      this.getMap();
     },
   },
 };

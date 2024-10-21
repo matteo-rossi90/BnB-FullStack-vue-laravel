@@ -39,7 +39,9 @@ export default {
             .then((response) => {
               store.user = response.data;
               localStorage.setItem("userName", response.data.name);
-              store.userName = localStorage.getItem("userName");
+              store.userName = localStorage.getItem("userName")
+                ? "Profilo"
+                : localStorage.getItem("userName");
             })
             .catch((err) => {
               localStorage.setItem("userName", "Accedi");
@@ -72,11 +74,12 @@ export default {
     validateName() {
       if (!this.user.name) {
         this.errors.name = "";
-      } else if(!/^[a-zA-Z]+$/.test(this.user.name)) {
+      } else if (!/^[a-zA-Z]+$/.test(this.user.name)) {
         this.errors.name = "Il nome deve contenere solo lettere";
-      } else if(this.user.name.length < 4){
-        this.errors.name = "il nome non può avere una lunghezza inferiore di 4 caratteri"
-      }else{
+      } else if (this.user.name.length < 4) {
+        this.errors.name =
+          "il nome non può avere una lunghezza inferiore di 4 caratteri";
+      } else {
         this.errors.name = "";
       }
     },
@@ -84,11 +87,12 @@ export default {
     validateSurname() {
       if (!this.user.surname) {
         this.errors.surname = "";
-      }else if(!/^[a-zA-Z]+$/.test(this.user.surname)){
+      } else if (!/^[a-zA-Z]+$/.test(this.user.surname)) {
         this.errors.surname = "Il cognome deve contenere solo lettere";
-      }else if(this.user.surname.length < 4){
-        this.errors.surname = "Il cognome non può avere una lunghezza inferiore di 4 caratteri"
-      }else{
+      } else if (this.user.surname.length < 4) {
+        this.errors.surname =
+          "Il cognome non può avere una lunghezza inferiore di 4 caratteri";
+      } else {
         this.errors.surname = "";
       }
     },
@@ -118,7 +122,8 @@ export default {
       if (!this.user.email) {
         this.errors.email = "L'email è obbligatoria.";
       } else if (!emailRegex.test(this.user.email)) {
-        this.errors.email = "Inserisci una email valida, ad esempio: nome.cognome@mail.com";
+        this.errors.email =
+          "Inserisci una email valida, ad esempio: nome.cognome@mail.com";
       } else {
         this.errors.email = "";
       }
