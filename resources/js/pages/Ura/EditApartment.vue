@@ -60,10 +60,23 @@ export default {
               this.apartment
             )
             .then((res) => {
-              this.$router.push({ name: "apartments" });
+            this.$router.push({
+                name: "apartments",
+                query: {
+                    toastMessage: `Appartamento ${this.apartment.title}  modificato con successo`,
+                    toastType:"success"
+                }
+             });
             })
             .catch((err) => {
               console.log(err);
+              this.$router.push({
+                name: "apartments",
+                query: {
+                    toastMessage: `Errore durante la modifica dell'appartamento ${this.apartment.title}`,
+                    toastType: "error"
+                }
+              })
             });
         })
         .catch((error) => {
@@ -80,9 +93,9 @@ export default {
 
 <template>
   <div class="container">
-    <h1>Modifica di {{ apartment.title }}</h1>
+    <h1 class="my-5">Modifica di {{ apartment.title }}</h1>
 
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" class="mb-4">
       <label for="title" class="form-label">Titolo</label>
       <input
         type="text"

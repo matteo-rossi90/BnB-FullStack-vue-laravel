@@ -100,6 +100,17 @@ export default {
       .catch((err) => {
         console.log(err);
       });
+
+        if (this.$route.query.toastMessage) {
+            this.showToast(this.$route.query.toastMessage, this.$route.query.toastType || "success");
+        }
+
+        //evita che al refresh della pagina continui ad apparire la notifica toast
+        this.$router.replace({
+            name: this.$route.name,
+            params: this.$route.params,
+            query: {}
+        });
   },
 };
 </script>
