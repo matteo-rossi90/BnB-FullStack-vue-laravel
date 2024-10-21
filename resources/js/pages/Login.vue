@@ -55,10 +55,10 @@ export default {
             .get("/api/user")
             .then((response) => {
               store.user = response.data;
+
               localStorage.setItem("userName", response.data.name);
-              store.userName = localStorage.getItem("userName")
-                ? "Profilo"
-                : localStorage.getItem("userName");
+
+              store.userName = localStorage.getItem("userName");
             })
             .catch((err) => {
               store.userName = localStorage.setItem("userName", "Accedi");

@@ -30,7 +30,8 @@ export default {
         axios
           .post("/api/logout")
           .then((response) => {
-            store.userName = "Accedi";
+            localStorage.setItem("userName", "Accedi");
+            store.userName = localStorage.getItem("userName");
             this.$router.push({ name: "home" });
           })
           .catch((err) => {
@@ -156,7 +157,9 @@ export default {
               <div
                 class="profile d-flex justify-content-between align-items-center gap-1 m-0"
               >
-                <p class="nameUser">{{ userName }}</p>
+                <p class="nameUser">
+                  {{ userName !== "null" ? userName : "Profilo" }}
+                </p>
 
                 <font-awesome-icon :icon="['fas', 'caret-down']" />
               </div>
@@ -200,7 +203,6 @@ export default {
                     >
                       <p class="link" @click="sendAdress(addressObj)">
                         {{ addressObj.address.streetName }}
-
                         {{ addressObj.address.municipality }}
                         {{ addressObj.address.postalCode }}
                         {{ addressObj.address.neighbourhood }}
