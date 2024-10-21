@@ -91,7 +91,7 @@ export default {
         //     this.$route.params.id,
         //     this.sliderValue
         //   );
-        }
+        // }
       } else {
         this.filtredApartment = store.filtredApartment;
       }
