@@ -51,17 +51,24 @@ class ApartmentController extends Controller
 
         // }
 
+        // Gestione dell'immagine caricata
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            // Ottieni l'immagine
+            $image = $request->file('image');
+
+            // Crea un nome unico per l'immagine
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            // Sposta l'immagine nella cartella public/images
+            $image->move(public_path('img'), $imageName);
+
+            // Salva il percorso dell'immagine
+            $imagePath = 'img/' . $imageName;
+        }
+
+
         $apartment = Apartment::create($data);
-
-        // // gestione img
-        // if(array_key_exists('image', $data)){
-        //     $image = Storage::put('uploads', $data['image']);
-        //     // $original_name= $request->file('cover_img')->getClientOriginalName();
-        //     $data['image'] = $image;
-        //     // $data['original_img_name'] = $original_name;
-        // }
-
-
 
         // Se non ci sono errori, restituisci i dati codificati come JSON
         return $apartment;
