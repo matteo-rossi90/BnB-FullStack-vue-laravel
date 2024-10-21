@@ -64,7 +64,6 @@ export default {
   },
 
   mounted() {
-    this.findApartment();
     // nextTick fa in modo che il DOM sia completamente pronto
     // this.$nextTick(() => {
     //   this.getMap();
