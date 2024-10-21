@@ -93,9 +93,9 @@ export default {
 
 <template>
   <div class="container">
-    <h1>Modifica di {{ apartment.title }}</h1>
+    <h1 class="my-5">Modifica di {{ apartment.title }}</h1>
 
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" class="mb-4">
       <label for="title" class="form-label">Titolo</label>
       <input
         type="text"
