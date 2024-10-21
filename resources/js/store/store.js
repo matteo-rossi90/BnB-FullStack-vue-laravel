@@ -70,7 +70,7 @@ const findZone = (lon, lat, distance = 20) =>{
 const filterApartment = (apartments) => {
 
 
-    if(apartments.length ){
+    if(apartments.length){
 
         // apartment filtred near the center of map
         store.filtredApartment = apartments.filter(apartment =>{
@@ -85,28 +85,43 @@ const filterApartment = (apartments) => {
 }
 
 const componeUrlString = (objAdress) =>{
-    let arrElement = []
-    for (let key in objAdress.address) {
-        arrElement.push(objAdress.address[key])
-      }
-    //   only data object
-      arrElement = arrElement.slice(0, 5)
-    //   at the 6 and 7 position we have cordinate
-      arrElement.push(objAdress.position.lon)
-      arrElement.push(objAdress.position.lat)
-
-    // lo ciclo per formare una stringa con dei trattini in mezzo
-      let UrlString = arrElement.join(' ').split(' ').join('-')
 
 
+        let arrElement = []
+        for (let key in objAdress.address) {
+            arrElement.push(objAdress.address[key])
+          }
+        //   only data object
+          arrElement = arrElement.slice(0, 5)
+        //   at the 6 and 7 position we have cordinate
+          arrElement.push(objAdress.position.lon)
+          arrElement.push(objAdress.position.lat)
+          arrElement.push(20)
 
-    return UrlString
+        // lo ciclo per formare una stringa con dei trattini in mezzo
+          let UrlString = arrElement.join(' ').split(' ').join('-')
+
+
+
+        return UrlString
+
 
 }
 
-// const createPageWithUrl = (urlCripted) =>{
+const updateUrl = (stringUrl, distance) =>{
+    let arr = stringUrl.split('-').slice(0, -1)
+    arr.push(distance)
+    let newUrlString = arr.join('-')
+    return newUrlString
+}
+const createPageWithUrl = (urlCripted, distance) =>{
+    const stringUrl = urlCripted
+    const arrUrl = urlCripted.split('-').slice(-3);
 
-// }
+    findZone(arrUrl[0], arrUrl[1], distance)
+    return updateUrl(stringUrl, distance)
+}
 
 
-export {store, checkAdress, findZone, filterApartment, componeUrlString};
+
+export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl};

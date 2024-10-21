@@ -2,6 +2,7 @@
 import { store } from "../store/store";
 import { filterApartment } from "../store/store";
 import { findZone } from "../store/store";
+import { createPageWithUrl } from "../store/store";
 
 export default {
   name: "Apartments",
@@ -85,8 +86,11 @@ export default {
             (apartment) => apartment.square_meters >= this.square_meters
           );
         }
-        if (this.sliderValue !== 20) {
-          //   trova una nuova zona
+        // if (this.sliderValue !== 20) {
+        //   this.$router.push() = createPageWithUrl(
+        //     this.$route.params.id,
+        //     this.sliderValue
+        //   );
         }
       } else {
         this.filtredApartment = store.filtredApartment;

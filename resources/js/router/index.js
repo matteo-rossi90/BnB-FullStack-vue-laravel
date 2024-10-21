@@ -69,7 +69,7 @@ const router = createRouter({
                 component: EditApartment
             },
             {
-                path: '/appartamenti-ricerca/:id',
+                path: '/appartamenti-ricerca/:id?',
                 name: 'apartmentsMap',
                 component: Apartments //route temporanea per visualizzare gli appartamenti + mappa
             },
