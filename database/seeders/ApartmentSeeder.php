@@ -25,7 +25,7 @@ class ApartmentSeeder extends Seeder
         $latitudes = config('citySeader.lat');
         $longitudes = config('citySeader.long');
 
-        for ($i=0; $i < 25; $i++) {
+        for ($i=0; $i < count($streets) - 1; $i++) {
             $new_apartment = new Apartment();
 
             // Assegna l'appartamento a un utente in modo ciclico
@@ -33,7 +33,7 @@ class ApartmentSeeder extends Seeder
             $new_apartment->user_id = $user->id;
             $new_apartment->image = 'path';
             $new_apartment->original_name = 'alt foto';
-            $new_apartment->title = "Apartment Title numero $i";
+            $new_apartment->title = "Apartment di $streets[$i]";
             $new_apartment->slug = Helper::generateSlug($new_apartment->title, Apartment::class) ;
             $new_apartment->number_rooms = rand(1, 7);
             $new_apartment->number_beds = rand(1, 5);

@@ -68,54 +68,83 @@ export default {
       map.addControl(new tt.NavigationControl());
     },
     activeFilter() {
-      this.isFill =
-        this.number_rooms || this.number_bathrooms || this.square_meters;
-      if (this.isFill || this.sliderValue !== 20) {
-        if (this.number_rooms) {
-          this.filtredApartment = this.filtredApartment.filter(
-            (apartment) => apartment.number_rooms >= this.number_rooms
-          );
-        }
-        if (this.number_beds) {
-          this.filtredApartment = this.filtredApartment.filter(
-            (apartment) => apartment.number_beds >= this.number_beds
-          );
-        }
-        if (this.square_meters) {
-          this.filtredApartment = this.filtredApartment.filter(
-            (apartment) => apartment.square_meters >= this.square_meters
-          );
-        }
-        if (this.sliderValue !== 20) {
-          let newUrl = createPageWithUrl(
-            this.$route.params.id,
-            this.sliderValue
-          );
-          this.$router.push({ params: { id: newUrl } });
-        }
-      } else {
-        this.filtredApartment = store.filtredApartment;
+      this.isFill = this.number_rooms || this.number_beds || this.square_meters;
+      this.filtredApartment = store.filtredApartment;
+
+      if (this.number_rooms) {
+        this.filtredApartment = this.filtredApartment.filter(
+          (apartment) => apartment.number_rooms >= this.number_rooms
+        );
       }
+      if (this.number_beds) {
+        this.filtredApartment = this.filtredApartment.filter(
+          (apartment) => apartment.number_beds >= this.number_beds
+        );
+      }
+      if (this.square_meters) {
+        this.filtredApartment = this.filtredApartment.filter(
+          (apartment) => apartment.square_meters >= this.square_meters
+        );
+      }
+      if (this.sliderValue !== 20) {
+        let newUrl = createPageWithUrl(this.$route.params.id, this.sliderValue);
+        this.filtredApartment = store.filtredApartment;
+        this.$router.push({ params: { id: newUrl } });
+        localStorage.setItem(
+          "routeParams",
+          JSON.stringify(this.$route.params.id)
+        );
+      }
+
       //   store.filtredApartment = console.log("rotta", this.$route.params.id);
     },
   },
   mounted() {
-    axios
-      .get("api/services")
-      .then((response) => {
-        this.services = response.data;
-        //   console.log(this.services[0]);
-      })
-      .catch((error) => {
-        console.error("Errore durante il caricamento dei dati:", error);
-      });
+    localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
+    window.addEventListener("load", () => {
+      const routeParams = JSON.parse(localStorage.getItem("routeParams"));
+      createPageWithUrl(routeParams, this.sliderValue);
+
+      // Sovrascrivi i dati con quelli filtrati
+      this.filtredApartment = store.filtredApartment;
+
+      // Attiva automaticamente il filtro
+      this.activeFilter();
+    });
+
     // this.getMap();
     //   all apartment
     //   all apartment
+    //   all apartment
+    // axios
+    //   .get("/api/home", {
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Cache-Control": "no-cache", // Disabilita il caching
+    //     },
+    //     params: {
+    //       t: Date.now(), // Aggiungi un timestamp per evitare il caching
+    //     },
+    //   })
+    //   .then((res) => {
+    //     console.log("apartment- all apartment:ok", res);
+    //     store.allApartments = res.data;
+    //   })
+    //   .catch((err) => {
+    //     console.log("app- all apartment: ", err.message);
+    //   });
   },
+
   computed: {
     apartmensFiltred() {
       return this.filtredApartment;
+    },
+  },
+  watch: {
+    // Osserva i cambiamenti nei parametri della rotta
+    "$route.params.id": function (newId, oldId) {
+      // Quando il parametro 'id' cambia, esegui la funzione che aggiorna i dati
+      this.activeFilter();
     },
   },
 };
@@ -177,15 +206,15 @@ export default {
                   <p class="card-text">
                     Descrizione: Appartamento con
                     {{
-                      apartment.number_beds > 1
-                        ? `${apartment.number_beds} letti`
-                        : `${apartment.number_beds} letto`
+                      apartment.number_rooms > 1
+                        ? `${apartment.number_rooms} camere`
+                        : `${apartment.number_rooms} camera`
                     }}
                     e
                     {{
-                      apartment.number_bathrooms > 1
-                        ? `${apartment.number_bathrooms} bagni`
-                        : `${apartment.number_bathrooms} bagno`
+                      apartment.number_beds > 1
+                        ? `${apartment.number_beds} letti`
+                        : `${apartment.number_beds} letto`
                     }}
                     .
                   </p>
