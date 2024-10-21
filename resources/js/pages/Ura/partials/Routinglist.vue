@@ -51,16 +51,6 @@ export default {
           ></router-link
         >
       </li>
-      <!-- questa route è solo temporanea, poi verrà spostata (Matteo) -->
-      <li class="py-3 d-flex align-items-center">
-        <router-link
-          class="link d-flex align-items-center gap-2"
-          :to="{ name: 'apartmentsMap' }"
-        >
-          <i class="fa-solid fa-money-check"></i>
-          <span class="d-none d-xl-inline d-lg-inline">Test</span></router-link
-        >
-      </li>
     </ul>
   </div>
 </template>
