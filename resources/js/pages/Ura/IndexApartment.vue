@@ -67,6 +67,10 @@ export default {
            this.showToast(`Errore durante l'eliminazione dell'appartamento "${apartment.title}"`, "error");
          });
      },
+
+     imageUrl(path) {
+      return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+    }
   },
   //   detailApartment(id) {},
 
@@ -149,7 +153,7 @@ export default {
                     <td class="img-container" scope="row">
                       <img
                         class="img-fluid"
-                        src="../../../../public/img/bed_and_breakfast_image.jpg"
+                        :src="imageUrl(apartment.image)"
                         alt=""
                       />
                     </td>
