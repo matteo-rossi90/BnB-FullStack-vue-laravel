@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('title', 500);#
             $table->string('slug', 550);
             $table->string('image', 500)->nullable();
-            $table->string('original_name', 500);
+            $table->string('original_name', 500)->nullable();
             $table->unsignedSmallInteger('number_rooms');
             $table->unsignedSmallInteger('number_beds');
             $table->unsignedSmallInteger('number_bathrooms');

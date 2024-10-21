@@ -86,12 +86,13 @@ export default {
             (apartment) => apartment.square_meters >= this.square_meters
           );
         }
-        // if (this.sliderValue !== 20) {
-        //   this.$router.push() = createPageWithUrl(
-        //     this.$route.params.id,
-        //     this.sliderValue
-        //   );
-        // }
+        if (this.sliderValue !== 20) {
+          let newUrl = createPageWithUrl(
+            this.$route.params.id,
+            this.sliderValue
+          );
+          this.$router.push({ params: { id: newUrl } });
+        }
       } else {
         this.filtredApartment = store.filtredApartment;
       }

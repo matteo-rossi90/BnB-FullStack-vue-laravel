@@ -37,6 +37,6 @@ class Apartment extends Model
         'address',
         'lat',
         'lon',
-        'is_visible'
+        'original_name'
     ];
 }

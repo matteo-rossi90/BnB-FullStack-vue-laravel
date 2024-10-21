@@ -35,6 +35,7 @@ class ApartmentController extends Controller
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
 
+
         // if (array_key_exists('image', $data) && $data['image']) {
         //     $image = Storage::put('uploads', $data['image']);
         //     $original_name = $request->file('image')->getClientOriginalName();
@@ -67,11 +68,12 @@ class ApartmentController extends Controller
             $imagePath = 'img/' . $imageName;
         }
 
-
         $apartment = Apartment::create($data);
+        $apartment->save();
 
         // Se non ci sono errori, restituisci i dati codificati come JSON
-        return $apartment;
+
+        return response()->json($apartment);
 
     }
 
