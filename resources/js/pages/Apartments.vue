@@ -1,11 +1,20 @@
 <script>
 import { store } from "../store/store";
 import { filterApartment } from "../store/store";
+import { findZone } from "../store/store";
 
 export default {
   name: "Apartments",
   data() {
-    return {};
+    return {
+      filtredApartment: store.filtredApartment,
+      number_rooms: "",
+      number_beds: "",
+      square_meters: "",
+      isFill: false,
+      sliderValue: 20,
+      services: "",
+    };
   },
   methods: {
     getMap() {
@@ -57,14 +66,51 @@ export default {
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
     },
+    activeFilter() {
+      this.isFill =
+        this.number_rooms || this.number_bathrooms || this.square_meters;
+      if (this.isFill || this.sliderValue !== 20) {
+        if (this.number_rooms) {
+          this.filtredApartment = this.filtredApartment.filter(
+            (apartment) => apartment.number_rooms >= this.number_rooms
+          );
+        }
+        if (this.number_beds) {
+          this.filtredApartment = this.filtredApartment.filter(
+            (apartment) => apartment.number_beds >= this.number_beds
+          );
+        }
+        if (this.square_meters) {
+          this.filtredApartment = this.filtredApartment.filter(
+            (apartment) => apartment.square_meters >= this.square_meters
+          );
+        }
+        if (this.sliderValue !== 20) {
+          //   trova una nuova zona
+        }
+      } else {
+        this.filtredApartment = store.filtredApartment;
+      }
+      //   store.filtredApartment = console.log("rotta", this.$route.params.id);
+    },
   },
   mounted() {
-    console.log(this.$route.params.id);
+    axios
+      .get("api/services")
+      .then((response) => {
+        this.services = response.data;
+        //   console.log(this.services[0]);
+      })
+      .catch((error) => {
+        console.error("Errore durante il caricamento dei dati:", error);
+      });
     // this.getMap();
+    //   all apartment
+    //   all apartment
   },
   computed: {
     apartmensFiltred() {
-      return store.filtredApartment;
+      return this.filtredApartment;
     },
   },
 };
@@ -72,6 +118,35 @@ export default {
 
 <template>
   <div class="container">
+    <div class="row">
+      <label for="number_rooms">number_rooms</label>
+      <input
+        type="number"
+        placeholder="inserisci numero"
+        id="number_rooms"
+        v-model="number_rooms"
+      />
+      <label for="number_beds">number_beds</label>
+      <input
+        type="number"
+        placeholder="inserisci numero"
+        id="number_beds"
+        v-model="number_beds"
+      />
+      <label for="square_meters">Metri quadri</label>
+      <input
+        type="number"
+        placeholder="inserisci numero"
+        id="square_meters"
+        v-model="square_meters"
+      />
+      <input type="range" min="1" max="200" value="20" v-model="sliderValue" />
+      <span>{{ sliderValue }} km dal punto scelto</span>
+      <span v-for="(service, index) in services" :key="index">{{
+        service.name
+      }}</span>
+      <button @click="activeFilter">Filtra</button>
+    </div>
     <div class="row py-3">
       <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>
       <small>Appartamenti trovati: {{ apartmensFiltred.length }} </small>
@@ -96,8 +171,18 @@ export default {
                   <p class="card-text">{{ apartment.address }}</p>
                   <p class="card-text">
                     Descrizione: Appartamento con
-                    {{ apartment.number_beds }} camere da letto e
-                    {{ apartment.number_bathrooms }} bagno.
+                    {{
+                      apartment.number_beds > 1
+                        ? `${apartment.number_beds} letti`
+                        : `${apartment.number_beds} letto`
+                    }}
+                    e
+                    {{
+                      apartment.number_bathrooms > 1
+                        ? `${apartment.number_bathrooms} bagni`
+                        : `${apartment.number_bathrooms} bagno`
+                    }}
+                    .
                   </p>
                   <p>{{ apartment.square_meters }} M²</p>
                   <p>nome user</p>

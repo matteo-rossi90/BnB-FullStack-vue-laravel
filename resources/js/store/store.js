@@ -25,7 +25,7 @@ const store = reactive({
     minLong: '',
     maxLong: '',
 
-    filtredApartment: [],
+
 })
 
 const checkAdress = (adress) =>{
@@ -69,7 +69,8 @@ const findZone = (lon, lat, distance = 20) =>{
 
 const filterApartment = (apartments) => {
 
-    if(apartments.length){
+
+    if(apartments.length ){
 
         // apartment filtred near the center of map
         store.filtredApartment = apartments.filter(apartment =>{
@@ -88,16 +89,24 @@ const componeUrlString = (objAdress) =>{
     for (let key in objAdress.address) {
         arrElement.push(objAdress.address[key])
       }
-      console.log(objAdress)
+    //   only data object
+      arrElement = arrElement.slice(0, 5)
+    //   at the 6 and 7 position we have cordinate
+      arrElement.push(objAdress.position.lon)
+      arrElement.push(objAdress.position.lat)
 
     // lo ciclo per formare una stringa con dei trattini in mezzo
-      let UrlString = arrElement.slice(0, 5).join(' ').split(' ').join('-')
+      let UrlString = arrElement.join(' ').split(' ').join('-')
 
 
 
     return UrlString
 
 }
+
+// const createPageWithUrl = (urlCripted) =>{
+
+// }
 
 
 export {store, checkAdress, findZone, filterApartment, componeUrlString};
