@@ -58,7 +58,10 @@ export default {
       map.addControl(new tt.NavigationControl());
     },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.$route.params.id);
+    // this.getMap();
+  },
   computed: {
     apartmensFiltred() {
       return store.filtredApartment;
@@ -92,8 +95,12 @@ export default {
                   <h5 class="card-title">{{ apartment.title }}</h5>
                   <p class="card-text">{{ apartment.address }}</p>
                   <p class="card-text">
-                    Descrizione: Appartamento con 2 camere da letto e 1 bagno.
+                    Descrizione: Appartamento con
+                    {{ apartment.number_beds }} camere da letto e
+                    {{ apartment.number_bathrooms }} bagno.
                   </p>
+                  <p>{{ apartment.square_meters }} M²</p>
+                  <p>nome user</p>
                 </div>
               </div>
             </router-link>
