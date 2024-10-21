@@ -10,15 +10,15 @@ export default {
     return {
       //
       apartment: {
-        title: "",
-        address: "",
+        title: "prova",
+        address: "via lago di misurina 36 pomezia roma",
         lat: "",
         lon: "",
-        number_rooms: "",
-        number_beds: "",
-        number_bathrooms: "",
+        number_rooms: "1",
+        number_beds: "1",
+        number_bathrooms: "1",
         image: null,
-        square_meters: "",
+        square_meters: "1",
         // services:[]
       },
       services: [],
@@ -30,38 +30,37 @@ export default {
   },
   methods: {
     savePhoto(event) {
-    //   this.apartment.image = event.target.files[0];
+      //   this.apartment.image = event.target.files[0];
 
-    //   let reader = new FileReader();
-    //   reader.addEventListener(
-    //     "load",
-    //     function () {
-    //       this.imagePreview = reader.result;
-    //     }.bind(this),
-    //     false
-    //   );
+      //   let reader = new FileReader();
+      //   reader.addEventListener(
+      //     "load",
+      //     function () {
+      //       this.imagePreview = reader.result;
+      //     }.bind(this),
+      //     false
+      //   );
 
-    //   if (this.apartment.image) {
-    //     if (/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
-    //       reader.readAsDataURL(this.apartment.image);
-    //     }
-    //   }
+      //   if (this.apartment.image) {
+      //     if (/\.(jpe?g|png|gif)$/i.test(this.apartment.image.name)) {
+      //       reader.readAsDataURL(this.apartment.image);
+      //     }
+      //   }
 
-    const file = event.target.files[0]; // Salva il file caricato
+      const file = event.target.files[0]; // Salva il file caricato
 
-    if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
+      if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
         this.apartment.image = file; // Assegna il file a apartment.image
 
         let reader = new FileReader();
         reader.onload = (e) => {
-            this.imagePreview = e.target.result; // Carica l'anteprima dell'immagine
+          this.imagePreview = e.target.result; // Carica l'anteprima dell'immagine
         };
         reader.readAsDataURL(file); // Converte il file immagine per l'anteprima
-    } else {
+      } else {
         this.apartment.image = null;
         this.imagePreview = "";
-    }
-
+      }
     },
 
     submit() {
@@ -75,43 +74,41 @@ export default {
           this.apartment.lat = response.data.results[0].position.lat;
           this.apartment.lon = response.data.results[0].position.lon;
 
-        //   axios
-        //     .post("api/user/utente/dashboard", this.apartment)
-        //     .then((res) => {
-        //       this.$router.push({ name: "apartments" });
-        //     })
-        //     .catch((err) => {
-        //       console.log(err);
-        //     });
+          //   axios
+          //     .post("api/user/utente/dashboard", this.apartment)
+          //     .then((res) => {
+          //       this.$router.push({ name: "apartments" });
+          //     })
+          //     .catch((err) => {
+          //       console.log(err);
+          //     });
 
           // Creiamo FormData per inviare dati inclusi i file
           let formData = new FormData();
-
           // Aggiungi i dati dell'appartamento
           for (let key in this.apartment) {
             formData.append(key, this.apartment[key]);
           }
-
-          // Aggiungi i servizi selezionati
-          this.services.forEach((service) => {
-            if (service.selected) {
-              formData.append("services[]", service.id); // Supponendo che "id" sia il campo identificativo
-            }
-          });
+          if (this.services) {
+            // Aggiungi i servizi selezionati
+            this.services.forEach((service) => {
+              if (service.selected) {
+                formData.append("services[]", service.id); // Supponendo che "id" sia il campo identificativo
+              }
+            });
+          }
+          console.log(formData);
 
           // Invio dei dati tramite POST con FormData
           axios
-            .post("api/user/utente/dashboard", formData, {
-              headers: { "Content-Type": "multipart/form-data" },
-            })
+            .post("api/user/utente/dashboard", formData)
             .then((res) => {
               this.$router.push({ name: "apartments" });
             })
             .catch((err) => {
-              console.error(err);
+              console.error(err.message);
             });
         })
-
 
         .catch((error) => {
           console.error("Errore:", error.response || error.message);
@@ -243,34 +240,38 @@ export default {
                 <label class="input-group-text" for="image">carica</label>
               </div>
 
-               <!-- Anteprima immagine caricata -->
-               <div v-if="imagePreview">
-                <img :src="imagePreview" alt="Anteprima immagine" class="img-fluid mb-3" />
+              <!-- Anteprima immagine caricata -->
+              <div v-if="imagePreview">
+                <img
+                  :src="imagePreview"
+                  alt="Anteprima immagine"
+                  class="img-fluid mb-3"
+                />
               </div>
 
-
-
-                            <div class="input-group mb-3 d-flex justify-content-between">
-                             <div  v-for="item in services" :key="item.id">
-                                <input  type="checkbox" class="btn-check" :id="item.id" autocomplete="off" >
-                                <label class="btn btn-outline-dark" :for="item.id"  >{{ item.name }} </label>
-                             </div>
-
-                            </div>
-
-                        <button type="submit"  class="btn btn-dark">inserisci appartamento</button>
-
-            </form>
-                  </div>
+              <div class="input-group mb-3 d-flex justify-content-between">
+                <div v-for="item in services" :key="item.id">
+                  <input
+                    type="checkbox"
+                    class="btn-check"
+                    :id="item.id"
+                    autocomplete="off"
+                  />
+                  <label class="btn btn-outline-dark" :for="item.id"
+                    >{{ item.name }}
+                  </label>
                 </div>
+              </div>
 
-      </div>
-
+              <button type="submit" class="btn btn-dark">
+                inserisci appartamento
+              </button>
+            </form>
           </div>
         </div>
-
-
-
+      </div>
+    </div>
+  </div>
 </template>
 <style lang='scss' scoped>
 img {

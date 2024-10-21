@@ -2,6 +2,7 @@
 import { store } from "../store/store";
 import { filterApartment } from "../store/store";
 import { findZone } from "../store/store";
+import { createPageWithUrl } from "../store/store";
 
 export default {
   name: "Apartments",
@@ -86,7 +87,11 @@ export default {
           );
         }
         if (this.sliderValue !== 20) {
-          //   trova una nuova zona
+          let newUrl = createPageWithUrl(
+            this.$route.params.id,
+            this.sliderValue
+          );
+          this.$router.push({ params: { id: newUrl } });
         }
       } else {
         this.filtredApartment = store.filtredApartment;
