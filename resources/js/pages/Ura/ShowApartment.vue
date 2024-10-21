@@ -87,6 +87,10 @@ export default {
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
     },
+
+    imageUrl(path) {
+      return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+    }
   },
 
   mounted() {
@@ -134,14 +138,14 @@ export default {
         <div class="col-12 text-center">
           <div v-if="apartment.image" class="image-container mb-4">
             <img
-              :src="apartment.image"
+              :src="imageUrl(apartment.image)"
               alt="Immagine dell'appartamento"
               class="img-fluid rounded shadow-sm"
             />
           </div>
           <div v-else class="image-container mb-4">
             <img
-              src="https://app-assets.outeast.com/assets/modules/Shared/placeholder_house-b1447eab513e59327c82175ec088599a3c16f80a51501f59d8b89bd60cb00112.png"
+              src="img/no-image.png"
               alt="Placeholder"
               class="img-fluid rounded shadow-sm"
             />

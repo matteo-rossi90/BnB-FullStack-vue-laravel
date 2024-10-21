@@ -4,6 +4,12 @@ export default {
   props: {
     apartment: Object,
   },
+
+  methods: {
+    imageUrl(path) {
+      return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+    }
+  }
 };
 </script>
 
@@ -20,7 +26,7 @@ export default {
 
   <div class="card shadow-sm border-0 rounded">
     <img
-      :src="'https://via.placeholder.com/150'"
+      :src="imageUrl(apartment.image)"
       class="card-img-top"
       alt="Appart-Img"
     />
