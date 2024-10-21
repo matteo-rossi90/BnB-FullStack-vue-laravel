@@ -12,10 +12,37 @@ export default {
         email: "",
         password: "",
       },
-      loginError:""
+      toastMessage:"",
+      toastType:""
     };
   },
   methods: {
+    showToast(message, type = 'error') {//metodo che permette di mostrare il toast nel Login
+
+        this.toastMessage = message;
+
+        this.toastType = type;
+
+        const toastEl = this.$refs.liveToast;
+
+        const toast = new bootstrap.Toast(toastEl);
+
+        toast.show();
+
+        setTimeout(() => {
+            toast.hide();
+        }, 5000);
+
+    },
+    hideToast() {//metodo che permette di nascondere il toast
+
+        const toastEl = this.$refs.liveToast;
+
+        const toast = new bootstrap.Toast(toastEl);
+
+        toast.hide();
+    },
+
     submit() {
       axios
         .post("/api/login", this.user)
@@ -45,7 +72,8 @@ export default {
             this.loginError = "Email o password errati.";
           } else {
             console.log("Errore durante il login:", err);
-            this.loginError = "Si è verificato un errore durante il login.";
+            //this.loginError = "Si è verificato un errore durante il login. L'email o la password sono errati";
+            this.showToast(`Errore nel login. L'email o la password sono errati`, "error");
           }
         });
     },
@@ -87,49 +115,71 @@ export default {
 
 
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-8 mt-5">
-        <h2>Effettua il login</h2>
-        <form class="mx-auto" @submit.prevent="submitLogin">
-          <div class="input-container">
-            <label class="form-label" for="email">Email*</label>
-            <input
-              class="form-control"
-              type="email"
-              id="email"
-              name="email"
-              v-model="user.email"
-              @input="validateEmail"
-            />
-            <small v-if="errors.email" class="error-message">{{
-              errors.email
-            }}</small>
-          </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8 mt-5">
+                <h2>Effettua il login</h2>
+                <form class="mx-auto" @submit.prevent="submitLogin">
+                <div class="input-container">
+                    <label class="form-label" for="email">Email*</label>
+                    <input
+                    class="form-control"
+                    type="email"
+                    id="email"
+                    name="email"
+                    v-model="user.email"
+                    @input="validateEmail"
+                    />
+                    <small v-if="errors.email" class="error-message">{{
+                    errors.email
+                    }}</small>
+                </div>
 
-          <div class="input-container">
-            <label class="form-label" for="password">Password*</label>
-            <input
-              class="form-control"
-              type="password"
-              id="password"
-              name="password"
-              v-model="user.password"
-              @input="validatePassword"
-            />
-            <small v-if="errors.password" class="error-message">{{
-              errors.password
-            }}</small>
-          </div>
-          <button class="btn btn-primary" type="submit">Login</button>
+                <div class="input-container">
+                    <label class="form-label" for="password">Password*</label>
+                    <input
+                    class="form-control"
+                    type="password"
+                    id="password"
+                    name="password"
+                    v-model="user.password"
+                    @input="validatePassword"
+                    />
+                    <small v-if="errors.password" class="error-message">{{
+                    errors.password
+                    }}</small>
+                </div>
+                <button class="btn btn-primary mt-3" type="submit">Login</button>
 
-          <div v-if="loginError" class="alert alert-danger">
-            {{ loginError }}
-          </div>
-        </form>
-      </div>
+                <!-- <div v-if="loginError" class="text-danger mt-4"> -->
+                    <!-- {{ loginError }} -->
+                <!-- </div> -->
+                </form>
+            </div>
+        </div>
+
+        <!-- codice del toast -->
+        <div
+            ref="liveToast"
+            class="toast align-items-center text-bg-danger position-fixed bottom-0 end-0 p-2 m-3"
+            role="alert"
+            aria-live="assertive"
+            aria-atomic="true"
+            style="z-index: 1050;"
+            >
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ toastMessage }}
+                </div>
+                <button
+                type="button"
+                class="btn-close btn-close-white me-2 m-auto"
+                @click="hideToast"
+                aria-label="Close"
+                ></button>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 
@@ -147,4 +197,12 @@ export default {
 label {
   display: block;
 }
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
+}
+
 </style>
