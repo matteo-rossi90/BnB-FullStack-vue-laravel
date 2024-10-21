@@ -58,13 +58,16 @@ export default {
   <!-- card -->
   <div class="container">
     <div class="row pt-5">
-      <div
+      <router-link
         class="col-lg-3 col-md-4 col-sm-6 mb-4"
+        :to="{ name: 'showApartment', params: { id: index } }"
         v-for="(apartment, index) in store.allApartments"
         :key="index"
       >
-        <ApartmentCard :apartment="apartment" />
-      </div>
+        <div>
+          <ApartmentCard :apartment="apartment" />
+        </div>
+      </router-link>
     </div>
   </div>
 </template>
