@@ -92,12 +92,12 @@ export default {
             formData.append(key, this.apartment[key]);
           }
 
-        //   // Aggiungi i servizi selezionati
-        //   this.services.forEach((service) => {
-        //     if (service.selected) {
-        //       formData.append("services[]", service.id); // Supponendo che "id" sia il campo identificativo
-        //     }
-        //   });
+          // Aggiungi i servizi selezionati
+          this.services.forEach((service) => {
+            if (service.selected) {
+              formData.append("services[]", service.id); // Supponendo che "id" sia il campo identificativo
+            }
+          });
 
           // Invio dei dati tramite POST con FormData
           axios
@@ -248,7 +248,7 @@ export default {
                 <img :src="imagePreview" alt="Anteprima immagine" class="img-fluid mb-3" />
               </div>
 
-<!--
+
 
                             <div class="input-group mb-3 d-flex justify-content-between">
                              <div  v-for="item in services" :key="item.id">
@@ -256,7 +256,7 @@ export default {
                                 <label class="btn btn-outline-dark" :for="item.id" >{{ item.name }} </label>
                              </div>
 
-                            </div>-->
+                            </div>
 
                         <button type="submit"  class="btn btn-dark">inserisci appartamento</button>
 
