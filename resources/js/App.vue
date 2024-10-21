@@ -17,9 +17,13 @@ export default {
 
       //   all apartment
       axios
-        .get("api/home", {
+        .get("/api/home", {
           headers: {
             Accept: "application/json",
+            "Cache-Control": "no-cache", // Disabilita il caching
+          },
+          params: {
+            t: Date.now(), // Aggiungi un timestamp per evitare il caching
           },
         })
         .then((res) => {

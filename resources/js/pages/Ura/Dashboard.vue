@@ -22,6 +22,7 @@ export default {
   methods: {},
 
   mounted() {
+    this.apartments = store.userApartment;
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {

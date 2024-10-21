@@ -41,7 +41,7 @@ let stringRequest = adress
 
 // })
 // .join("").toUpperCase();
-let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(stringRequest)}.json?key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI`;
+let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(stringRequest)}italia.json?key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI`;
 
 return urlRequest
 //   array
@@ -49,20 +49,14 @@ return urlRequest
 
 // find a square point zone in the center of map
 const findZone = (lon, lat, distance = 20) =>{
-     // Il raggio in chilometri, in questo caso 20 km
-     const earthRadiusKm = 6371; // Raggio della Terra in km
 
-     // Delta della latitudine (1 grado di latitudine ≈ 111.32 km)
-     const deltaLat = distance / 111.32;
-
-     // Delta della longitudine (corretto per la latitudine)
-     const deltaLong = distance / (111.32 * Math.cos(lat * Math.PI / 180));
+    let totalGradius = distance * 0.00899
 
      // Limiti dell'area rettangolare
-     store.minLat = lat - deltaLat;
-     store.maxLat = lat + deltaLat;
-     store.minLong = lon - deltaLong;
-     store.maxLong = lon + deltaLong;
+     store.minLat = Number(lat) - totalGradius;
+     store.maxLat = Number(lat) + totalGradius;
+     store.minLong = Number(lon) - totalGradius;
+     store.maxLong = Number(lon) + totalGradius;
 
      filterApartment(store.allApartments)
 }
@@ -71,13 +65,13 @@ const filterApartment = (apartments) => {
 
 
     if(apartments.length){
-
         // apartment filtred near the center of map
         store.filtredApartment = apartments.filter(apartment =>{
+
             return apartment.lon >= store.minLong && apartment.lon <= store.maxLong && apartment.lat >= store.minLat &&  apartment.lat <= store.maxLat
+
         })
     }
-
 
 
 
@@ -117,7 +111,7 @@ const updateUrl = (stringUrl, distance) =>{
 const createPageWithUrl = (urlCripted, distance) =>{
     const stringUrl = urlCripted
     const arrUrl = urlCripted.split('-').slice(-3);
-
+    console.log(arrUrl)
     findZone(arrUrl[0], arrUrl[1], distance)
     return updateUrl(stringUrl, distance)
 }

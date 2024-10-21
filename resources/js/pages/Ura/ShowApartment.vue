@@ -125,7 +125,7 @@ export default {
       <!-- Titolo riepilogativo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-center">
-          <h1 class="apartment-title">{{ apartment.title }}</h1>
+          <h1 class="apartment-title">titolo: {{ apartment.title }}</h1>
         </div>
       </div>
 
