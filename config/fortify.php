@@ -129,7 +129,7 @@ return [
     | especially true if you're writing a custom single-page application.
     |
     */
-
+    ##'views' => false,
     'views' => false,
 
     /*
@@ -142,7 +142,7 @@ return [
     | these features or you can even remove all of these if you need to.
     |
     */
-
+    ##tutto commentato tranne Features::registration(),
     'features' => [
         Features::registration(),
 
