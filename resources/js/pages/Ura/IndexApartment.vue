@@ -12,20 +12,38 @@ export default {
     return {
       name: "",
       apartments: store.userApartment,
+      toastMessage: ""
     };
   },
   methods: {
-    // // mostra toast
-    // showToast() {
-    //   const toastEl = this.$refs.liveToast; // Riferimento al toast
-    //   const toast = new bootstrap.Toast(toastEl); // Creazione dell'istanza Toast di Bootstrap
-    //   toast.show(); // Mostra il toast
-    // },
-    // hideToast() {
-    //   const toastEl = this.$refs.liveToast;
-    //   const toast = new bootstrap.Toast(toastEl);
-    //   toast.hide();
-    // },
+    showToast(message, type = "success") {//metodo che permette di mostrare il toast
+
+        this.toastMessage = message;
+        const toastEl = this.$refs.liveToast;
+
+        toastEl.classList.remove("text-bg-success", "text-bg-danger");
+
+        if (type === "success") {
+            toastEl.classList.add("text-bg-success");
+        } else {
+            toastEl.classList.add("text-bg-danger");
+        }
+        const toast = new bootstrap.Toast(toastEl);
+
+        toast.show();
+
+        setTimeout(() => {
+        toast.hide();
+        }, 5000);
+    },
+    hideToast() {//metodo che permette di nascondere il toast
+
+        const toastEl = this.$refs.liveToast;
+
+        const toast = new bootstrap.Toast(toastEl);
+
+        toast.hide();
+    },
     deleteApartment(apartment) {
        axios
          .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
@@ -42,13 +60,11 @@ export default {
              "apartments",
              JSON.stringify(store.userApartment)
            );
-           this.message = `Appartamento "${apartment.title}" eliminato con successo`;
-           this.messageType = "success";
+           this.showToast(`Appartamento "${apartment.title}" eliminato con successo`, "success");
          })
          .catch((err) => {
            console.error(err);
-           this.message = `Errore durante l'eliminazione dell'appartamento "${apartment.title}"`;
-           this.messageType = "error";
+           this.showToast(`Errore durante l'eliminazione dell'appartamento "${apartment.title}"`, "error");
          });
      },
   },
@@ -100,15 +116,6 @@ export default {
 
             <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4>
 
-            <div
-              v-if="message"
-              :class="[
-                'alert',
-                messageType === 'success' ? 'alert-success' : 'alert-danger',
-              ]"
-            >
-              {{ message }}
-            </div>
 
             <div class="table-responsive">
               <table class="table">
@@ -242,6 +249,29 @@ export default {
         </div>
       </div>
     </div>
+
+    <!-- codice del toast -->
+    <div
+        ref="liveToast"
+        class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        style="z-index: 1050;"
+        >
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ toastMessage }}
+            </div>
+            <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            @click="hideToast"
+            aria-label="Close"
+            ></button>
+        </div>
+    </div>
+
   </div>
 </template>
 <style lang='scss' scoped>
@@ -258,6 +288,13 @@ td {
 
 .btn {
   margin-right: 10px;
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
 }
 
 // @use 'path' as *;
