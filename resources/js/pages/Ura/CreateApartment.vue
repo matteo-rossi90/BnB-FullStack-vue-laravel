@@ -196,12 +196,10 @@ export default {
                 <label class="input-group-text" for="image">carica</label>
               </div>
 
-
-
                             <div class="input-group mb-3 d-flex justify-content-between">
                              <div  v-for="item in services" :key="item.id">
-                                <input  type="checkbox" class="btn-check" v-model="item.name" autocomplete="off" value="item.id">
-                                <label class="btn btn-outline-dark" :for="item.id" >{{ item.name }} </label>
+                                <input  type="checkbox" class="btn-check" :id="item.id" autocomplete="off" >
+                                <label class="btn btn-outline-dark" :for="item.id"  >{{ item.name }} </label>
                              </div>
 
                             </div>
