@@ -19,34 +19,39 @@ export default {
       axios
         .get("api/home")
         .then((res) => {
-          console.log("app- all apartment");
+          console.log("app- all apartment:ok");
           store.allApartments = res.data;
         })
         .catch((err) => {
-          console.log(err);
+          console.log("app- all apartment: ", err.message);
         });
 
       //   name and data of user logged
       axios
         .get("/api/user")
         .then((response) => {
+          store.is_logged = true;
           store.user = response.data;
           store.userName = response.data.name;
-          console.log("app- user e user name");
+          console.log("app- user e user name: ok");
         })
         .catch((err) => {
-          console.log(err);
+          store.is_logged = false;
+          console.log("app- user e user name:", err.message);
         });
-      // userApartment
-      axios
-        .get("api/user/utente/dashboard")
-        .then((response) => {
-          store.userApartment = response.data;
-          console.log("app- user apartment");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+
+      if (store.is_logged) {
+        // userApartment
+        axios
+          .get("api/user/utente/dashboard")
+          .then((response) => {
+            store.userApartment = response.data;
+            console.log("app- user apartment");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     },
   },
   mounted() {
@@ -77,9 +82,9 @@ main {
   padding-top: 6.5rem;
 }
 
-@media screen and (max-width:632px) {
-    main{
-        padding-top: 5.5rem;
-    }
+@media screen and (max-width: 632px) {
+  main {
+    padding-top: 5.5rem;
+  }
 }
 </style>

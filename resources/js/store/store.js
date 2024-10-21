@@ -88,6 +88,7 @@ const componeUrlString = (objAdress) =>{
     for (let key in objAdress.address) {
         arrElement.push(objAdress.address[key])
       }
+      console.log(objAdress)
 
     // lo ciclo per formare una stringa con dei trattini in mezzo
       let UrlString = arrElement.slice(0, 5).join(' ').split(' ').join('-')
