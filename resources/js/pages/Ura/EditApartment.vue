@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       apartment: {},
+      errors:{}
     };
   },
   methods: {
@@ -43,7 +44,38 @@ export default {
       this.apartment.is_visible = !this.apartment.is_visible;
     },
 
+    validate() {
+        this.errors = {};
+
+        if (!this.apartment.title) {
+            this.errors.title = "Il titolo è obbligatorio.";
+        }
+        if (!this.apartment.number_rooms || isNaN(this.apartment.number_rooms) || this.apartment.number_rooms <= 0) {
+            this.errors.number_rooms = "Inserisci un numero di stanze valido.";
+        }
+        if (!this.apartment.number_beds || isNaN(this.apartment.number_beds) || this.apartment.number_beds <= 0) {
+            this.errors.number_beds = "Inserisci un numero di letti valido.";
+        }
+        if (!this.apartment.number_bathrooms || isNaN(this.apartment.number_bathrooms) || this.apartment.number_bathrooms <= 0) {
+            this.errors.number_bathrooms = "Inserisci un numero di bagni valido.";
+        }
+        if (!this.apartment.address) {
+            this.errors.address = "L'indirizzo è obbligatorio.";
+        }
+        if (!this.apartment.square_meters || isNaN(this.apartment.square_meters) || this.apartment.square_meters <= 0) {
+            this.errors.square_meters = "Inserisci un valore di metri quadri valido.";
+        }
+
+        return Object.keys(this.errors).length === 0;
+    },
+
     submit() {
+
+        if (!this.validate()) {
+        console.log("Errore di validazione", this.errors);
+        return;
+        }
+
       let urlRequest = checkAdress(this.apartment.address);
 
       axios
@@ -104,6 +136,11 @@ export default {
         id="title"
         name="title"
       />
+      <div v-if="errors.title" class="text-error">
+            <small>
+            {{ errors.title }}
+            </small>
+        </div>
 
       <label for="" class="form-label">Numero di stanze</label>
       <input
@@ -113,6 +150,11 @@ export default {
         id="number_rooms"
         name="number_rooms"
       />
+      <div v-if="errors.number_rooms" class="text-error">
+            <small>
+                {{ errors.number_rooms }}
+            </small>
+        </div>
 
       <label for="" class="form-label">Numero di letti</label>
       <input
@@ -122,6 +164,11 @@ export default {
         id="number_beds"
         name="number_beds"
       />
+      <div v-if="errors.number_beds" class="text-error">
+            <small>
+                {{ errors.number_beds }}
+            </small>
+        </div>
 
       <label for="" class="form-label">Numero di bagni</label>
       <input
@@ -131,6 +178,11 @@ export default {
         id="number_bathrooms"
         name="number_bathrooms"
       />
+      <div v-if="errors.number_bathrooms" class="text-error">
+            <small>
+                {{ errors.number_bathrooms }}
+            </small>
+        </div>
 
       <label for="" class="form-label">Indirizzo</label>
       <input
@@ -140,6 +192,11 @@ export default {
         id="address"
         name="address"
       />
+      <div v-if="errors.address" class="text-error">
+        <small>
+             {{ errors.address }}
+        </small>
+        </div>
 
       <label for="" class="form-label">Metri quadri</label>
       <input
@@ -149,6 +206,11 @@ export default {
         id="square_meters"
         name="square_meters"
       />
+      <div v-if="errors.square_meters" class="text-error">
+        <small>
+            {{ errors.square_meters }}
+        </small>
+    </div>
 
       <!-- <label for="" class="form-label">Immagine</label>
       <input
@@ -185,5 +247,9 @@ label {
 }
 button {
   margin-top: 30px;
+}
+
+.text-error{
+    color: red;
 }
 </style>

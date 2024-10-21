@@ -10,15 +10,15 @@ export default {
     return {
       //
       apartment: {
-        title: "prova",
-        address: "via lago di misurina 36 pomezia roma",
+        title: "",
+        address: "",
         lat: "",
         lon: "",
-        number_rooms: "1",
-        number_beds: "1",
-        number_bathrooms: "1",
+        number_rooms: "",
+        number_beds: "",
+        number_bathrooms: "",
         image: null,
-        square_meters: "1",
+        square_meters: "",
         // services:[]
       },
       services: [],
@@ -51,6 +51,8 @@ export default {
 
       if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
         this.apartment.image = file; // Assegna il file a apartment.image
+        console.log(this.apartment.image);
+
 
         let reader = new FileReader();
         reader.onload = (e) => {
