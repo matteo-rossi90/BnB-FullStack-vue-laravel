@@ -25,6 +25,8 @@ const store = reactive({
     minLong: '',
     maxLong: '',
 
+    inputValue: 'ciao'
+
 
 })
 
@@ -69,30 +71,44 @@ const filterApartment = (apartments) => {
 
 }
 
-const componeUrlString = (objAdress) =>{
+const componeUrlString = (objAdress, inputUser) =>{
 
 
-        let arrElement = []
-        for (let key in objAdress.address) {
-            arrElement.push(objAdress.address[key])
-          }
-        //   only data object
-          arrElement = arrElement.slice(0, 5)
-        //   at the 6 and 7 position we have cordinate
-          arrElement.push(objAdress.position.lon)
-          arrElement.push(objAdress.position.lat)
-          arrElement.push(20)
-
-        // lo ciclo per formare una stringa con dei trattini in mezzo
-          let UrlString = arrElement.join(' ').split(' ').join('-')
-
-
-
-        return UrlString
-
-
+    let obj ={
+        'input': inputUser,
+        'lon': objAdress.position.lon,
+        'lat': objAdress.position.lat,
+        'room': 0,
+        'bed': 0,
+        'square': 0,
+        'distance': 20
+    }
+    let stringUrl = "";
+    let string = '';
+    obj['input'] = obj['input'].split(' ').join('%')
+    for(let key in obj){
+        string = `${key}=${obj[key]}&`
+        stringUrl += string
+    }
+        return stringUrl
 }
 
+const createDataUrl = (stringUrl) =>{
+    let arr = stringUrl.split('&')
+    let objData = {}
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i]) {  // Controlla che la stringa non sia vuota
+            let arrAll = arr[i].split('=');
+            if (arrAll.length === 2) {
+                objData[arrAll[0]] = arrAll[1];
+            }
+        }
+    }
+
+    objData['input'] = objData['input'].split('%').join(' ')
+    return objData
+
+}
 const updateUrl = (stringUrl, distance) =>{
     let arr = stringUrl.split('-').slice(0, -1)
     arr.push(distance)
@@ -109,4 +125,4 @@ const createPageWithUrl = (urlCripted, distance) =>{
 
 
 
-export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl};
+export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl, createDataUrl};

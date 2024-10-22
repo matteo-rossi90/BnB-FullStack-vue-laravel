@@ -3,6 +3,8 @@ import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
 import { componeUrlString } from "../store/store";
 import { findZone } from "../store/store";
+import { createDataUrl } from "../store/store";
+import { createPage } from "../store/store";
 // import { throttle } from "lodash";
 
 export default {
@@ -12,7 +14,7 @@ export default {
       //   // name user
       //   name: store.user.name,
       //   auto compiled v model input
-      searchQuery: "",
+      searchQuery: store.inputValue,
       //   data of all adress
       address: [],
       //   timeout for bettere request after user write
@@ -33,8 +35,6 @@ export default {
             localStorage.setItem("userName", "Accedi");
             store.userName = localStorage.getItem("userName");
             this.$router.push({ name: "home" });
-
-
           })
           .catch((err) => {
             console.log("Errore nel logout:", err);
@@ -72,13 +72,11 @@ export default {
         });
     },
     sendAdress(addressObj) {
-      let urlString = componeUrlString(addressObj);
-
+      let urlString = componeUrlString(addressObj, this.searchQuery);
+      let objData = createDataUrl(urlString);
+      createPage(objData);
       if (urlString) {
         this.isClose = false;
-        store.center = [addressObj.position.lon, addressObj.position.lat];
-        findZone(addressObj.position.lon, addressObj.position.lat);
-        this.searchQuery = "";
 
         this.$router.push({
           name: "apartmentsMap",
@@ -169,16 +167,22 @@ export default {
                 <router-link class="link" :to="{ name: 'home' }"
                   >Home</router-link
                 >
-                <router-link v-if="!isLogged" class="link" :to="{ name: 'login' }"
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'login' }"
                   >Login</router-link
                 >
-                <router-link  v-if="!isLogged" class="link" :to="{ name: 'register' }"
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'register' }"
                   >Register</router-link
                 >
                 <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <p  v-if="isLogged" class="link" @click="logout">Logout</p>
+                <p v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>

@@ -1,11 +1,11 @@
 <script>
 import axios from "axios";
-import Routinglist from "./partials/Routinglist.vue";
+import MessagesList from "./partials/MessagesList.vue";
 
 export default {
   name: "Messages",
   components: {
-    Routinglist,
+    MessagesList,
   },
   data() {
     return {
@@ -16,7 +16,7 @@ export default {
     axios
       .get("api/user/utente/messaggi")
       .then((res) => {
-        
+
         this.messages = res.data;
       })
       .catch((err) => {
@@ -29,7 +29,7 @@ export default {
 <template>
   <div class="wrapper d-flex">
     <aside>
-      <Routinglist />
+      <MessagesList />
     </aside>
     <div class="dashboard-box">
       <div class="container-fluid my-3">
