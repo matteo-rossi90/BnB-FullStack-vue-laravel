@@ -6,73 +6,69 @@ export default {
   data() {
     return {
       apartment: "",
+      src:"",
+      alt:""
+
     };
   },
+    methods: {
+    // imageUrl(path) {
+    //   return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+    // },
+        getMap() {
+        const tt = window.tt; //accesso alla libreria TomTom
+        let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
+        let size = 50; //dimensioni del popup
 
-  methods: {
-    imageUrl(path) {
-      return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+        const map = tt.map({
+            key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+            center: center,
+            container: "map",
+            zoom: 12,
+        });
+
+        //accesso alle coordinate nel JSON generato dall'API
+
+        const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
+        const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
+
+        if (!lat || !lon) {
+            console.error("Coordinate non valide per l'appartamento");
+            return;
+        }
+
+        let boxContent = document.createElement("div");
+        boxContent.innerHTML = `
+                <div class="card-body">
+                    <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
+                    <p class="title-popup">${this.apartment.address}</p>
+                    <small>8000 euro</small>
+                </div>`;
+
+        let popup = new tt.Popup({
+            closeButton: true, //permettere la chiusura il popup
+            closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+            offset: size,
+            // anchor: 'none'
+        }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+
+        //creare il marker per l'appartamento
+        let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+
+        marker.addTo(map);
+
+        const bounds = [
+            [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+            [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+        ];
+
+        map.setMaxBounds(bounds);
+
+        map.addControl(new tt.FullscreenControl());
+        map.addControl(new tt.NavigationControl());
+
     },
-  },
-  //   getMap() {
-  //     const tt = window.tt; //accesso alla libreria TomTom
-  //     let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
-  //     let size = 50; //dimensioni del popup
 
-  //     const map = tt.map({
-  //       key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
-  //       center: center,
-  //       container: "map",
-  //       zoom: 12,
-  //     });
-
-  //     //accesso alle coordinate nel JSON generato dall'API
-
-  //     const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
-  //     const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
-
-  //     if (!lat || !lon) {
-  //       console.error("Coordinate non valide per l'appartamento");
-  //       return;
-  //     }
-
-  //     let boxContent = document.createElement("div");
-  //     boxContent.innerHTML = `
-  //             <div class="card-body">
-  //                 <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
-  //                 <p class="title-popup">${this.apartment.address}</p>
-  //                 <small>8000 euro</small>
-  //             </div>`;
-
-  //     let popup = new tt.Popup({
-  //       closeButton: true, //permettere la chiusura il popup
-  //       closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-  //       offset: size,
-  //       // anchor: 'none'
-  //     }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
-
-  //     //creare il marker per l'appartamento
-  //     let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
-
-  //     marker.addTo(map);
-
-  //     const bounds = [
-  //       [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-  //       [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-  //     ];
-
-  //     map.setMaxBounds(bounds);
-
-  //     map.addControl(new tt.FullscreenControl());
-  //     map.addControl(new tt.NavigationControl());
-
-  // },
-
-  mounted() {
-    // nextTick fa in modo che il DOM sia completamente pronto
-    // this.$nextTick(() => {
-    //   this.getMap();
-    // });
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -90,9 +86,15 @@ export default {
   },
   computed: {
     exist() {
-      return true;
+      return !!this.apartment;
     },
   },
+  mounted() {
+  // nextTick fa in modo che il DOM sia completamente pronto
+  this.$nextTick(() => {
+      this.getMap();
+   });
+},
 };
 </script>
 
@@ -126,8 +128,8 @@ export default {
         <div class="col-12 text-center">
           <div v-if="apartment.image" class="image-container mb-4">
             <img
-              :src="imageUrl(apartment.image)"
-              alt="Immagine dell'appartamento"
+              :src="apartment.image"
+              :alt="apartment.name"
               class="img-fluid rounded shadow-sm"
             />
           </div>

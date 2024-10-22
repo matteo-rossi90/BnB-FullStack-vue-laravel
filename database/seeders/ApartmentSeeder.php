@@ -24,6 +24,8 @@ class ApartmentSeeder extends Seeder
         $streets = config('citySeader.rome_streets');
         $latitudes = config('citySeader.lat');
         $longitudes = config('citySeader.long');
+        $path=['https://st3.idealista.it/news/archivie/styles/fullwidth_xl/public/2018-07/dl_a01034305.jpg?VersionId=xXq_fgAvfyggiimzBYqkMgObtAYnM8bq&itok=KHkn1er3', 'https://cdn.cosedicasa.com/wp-content/uploads/2020/06/soggiorno-e-cucina.jpg','https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUg8sHtUzF_eLr11HqWAmHKk0z4S71G_ZGsA&s','https://www.residenzadellasamaritana.it/img/appartamenti/moderni/2.jpg','https://www.appartamentipinidiroma.it/wp-content/uploads/2023/03/IMG_75471.jpg','https://www.nardiinterni.it/wp-content/uploads/2021/08/nardiinterni-casa04-120mq-totale-2000x1209.jpg','https://living.corriere.it/wp-content/uploads/2021/07/strato-appartamento-roma-foto-serena-eller-0247.jpg'];
+
 
         for ($i=0; $i < count($streets) - 1; $i++) {
             $new_apartment = new Apartment();
@@ -31,7 +33,7 @@ class ApartmentSeeder extends Seeder
             // Assegna l'appartamento a un utente in modo ciclico
             $user = $users[$i % $totalUsers];
             $new_apartment->user_id = $user->id;
-            $new_apartment->image = 'https://st3.idealista.it/news/archivie/styles/fullwidth_xl/public/2018-07/dl_a01034305.jpg?VersionId=xXq_fgAvfyggiimzBYqkMgObtAYnM8bq&itok=KHkn1er3';
+            $new_apartment->image = $path[array_rand($path)];;
             $new_apartment->original_name = 'alt foto';
             $new_apartment->title = "Apartment di $streets[$i]";
             $new_apartment->slug = Helper::generateSlug($new_apartment->title, Apartment::class) ;
