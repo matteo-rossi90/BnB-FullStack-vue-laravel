@@ -165,9 +165,9 @@ export default {
                         class="badge text-bg-success"
                         v-if="apartment.is_visible === 1"
                       >
-                        Disponibile
+                        Visibile
                       </p>
-                      <p class="badge text-bg-danger" v-else>Occupato</p>
+                      <p class="badge text-bg-danger" v-else>Non visibile</p>
                     </td>
                     <td scope="row" class="align-middle">
                       <i class="fa-solid fa-envelope"></i>
@@ -231,7 +231,7 @@ export default {
                                 ></button>
                               </div>
                               <div class="modal-body">
-                                In questo modo {{ apartment.title }} non sarà
+                                In questo modo <strong>{{ apartment.title }}</strong> non sarà
                                 più disponibile
                               </div>
                               <div class="modal-footer">

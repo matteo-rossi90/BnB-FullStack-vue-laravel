@@ -219,7 +219,7 @@ export default {
         /> -->
 
       <label class="form-check-label" for="flexSwitchCheckDefault"
-        >Disponibilità</label
+        >Visibilità</label
       >
       <div class="form-check form-switch">
         <input
@@ -230,8 +230,8 @@ export default {
           :checked="!apartment.is_visible"
         />
 
-        <span v-if="apartment.is_visible">Appartamento disponibile</span>
-        <span v-else>Appartamento occupato</span>
+        <span v-if="apartment.is_visible">Appartamento visibile</span>
+        <span v-else>Appartamento non visibile</span>
       </div>
 
       <button type="submit" class="btn btn-primary">Invia</button>
