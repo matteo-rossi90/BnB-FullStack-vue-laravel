@@ -11,6 +11,7 @@ export default {
       filtredApartment: store.filtredApartment,
       number_rooms: "",
       number_beds: "",
+      src:"",
       square_meters: "",
       isFill: false,
       sliderValue: 20,
@@ -197,7 +198,7 @@ export default {
             >
               <div class="card shadow-sm border-0 rounded">
                 <img
-                  src="https://via.placeholder.com/150"
+                  :src="apartmensFiltred.image"
                   class="apartment-image card-img-top"
                   alt="Appart-Img"
                 />

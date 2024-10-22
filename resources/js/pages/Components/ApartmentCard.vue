@@ -6,9 +6,9 @@ export default {
   },
 
   methods: {
-    imageUrl(path) {
-      return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
-    }
+    // imageUrl(path) {
+    //   return `${image}`; // URL completo dell'immagine
+    // }
   }
 };
 </script>
@@ -26,7 +26,7 @@ export default {
 
   <div class="card shadow-sm border-0 rounded">
     <img
-      :src="imageUrl(apartment.image)"
+      :src="apartment.image"
       class="card-img-top"
       alt="Appart-Img"
     />

@@ -31,7 +31,7 @@ class ApartmentSeeder extends Seeder
             // Assegna l'appartamento a un utente in modo ciclico
             $user = $users[$i % $totalUsers];
             $new_apartment->user_id = $user->id;
-            $new_apartment->image = 'path';
+            $new_apartment->image = 'https://st3.idealista.it/news/archivie/styles/fullwidth_xl/public/2018-07/dl_a01034305.jpg?VersionId=xXq_fgAvfyggiimzBYqkMgObtAYnM8bq&itok=KHkn1er3';
             $new_apartment->original_name = 'alt foto';
             $new_apartment->title = "Apartment di $streets[$i]";
             $new_apartment->slug = Helper::generateSlug($new_apartment->title, Apartment::class) ;
