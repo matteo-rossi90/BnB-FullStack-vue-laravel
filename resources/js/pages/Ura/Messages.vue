@@ -29,11 +29,24 @@ export default {
 <template>
   <div class="wrapper d-flex">
     <aside>
-      <MessagesList />
+        <div class="container">
+            <div class="d-flex justify-content-center my-4">
+                <h4>Tutti i messaggi</h4>
+            </div>
+
+            <div class="d-flex">
+                <input type="search" class="form-control" id="box-search">
+                <button type="submit" class="search-button">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+
+            <MessagesList />
+        </div>
+
     </aside>
     <div class="dashboard-box">
       <div class="container-fluid my-3">
-        <h1>Messaggi</h1>
 
         <!-- lista già implementata dei messaggi -->
         <!-- <ul v-for="(message, index) in messages" :key="index"> -->
@@ -49,5 +62,19 @@ export default {
 
 <style lang="scss" scoped>
 @use "../../../scss/variables" as *;
-@use "../../../scss/dashboard" as *;
+@use "../../../scss/message" as *;
+
+input{
+    border-radius: 50px;
+}
+
+#box-search{
+    position:relative;
+}
+
+.search-button{
+    position:absolute;
+    background-color: transparent;
+    border: none;
+}
 </style>
