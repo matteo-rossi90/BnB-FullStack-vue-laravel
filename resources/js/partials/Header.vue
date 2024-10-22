@@ -167,10 +167,10 @@ export default {
                 <router-link class="link" :to="{ name: 'home' }"
                   >Home</router-link
                 >
-                <router-link class="link" :to="{ name: 'login' }"
+                <router-link v-if="!isLogged" class="link" :to="{ name: 'login' }"
                   >Login</router-link
                 >
-                <router-link class="link" :to="{ name: 'register' }"
+                <router-link  v-if="!isLogged" class="link" :to="{ name: 'register' }"
                   >Register</router-link
                 >
                 <router-link class="link" :to="{ name: 'dashboard' }"
