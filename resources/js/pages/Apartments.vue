@@ -101,6 +101,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$route.params.id);
     localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
     window.addEventListener("load", () => {
       const routeParams = JSON.parse(localStorage.getItem("routeParams"));
