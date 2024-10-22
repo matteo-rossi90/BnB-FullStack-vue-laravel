@@ -33,8 +33,6 @@ export default {
             localStorage.setItem("userName", "Accedi");
             store.userName = localStorage.getItem("userName");
             this.$router.push({ name: "home" });
-
-
           })
           .catch((err) => {
             console.log("Errore nel logout:", err);
@@ -72,7 +70,7 @@ export default {
         });
     },
     sendAdress(addressObj) {
-      let urlString = componeUrlString(addressObj);
+      let urlString = componeUrlString(addressObj, this.searchQuery);
 
       if (urlString) {
         this.isClose = false;
@@ -169,16 +167,22 @@ export default {
                 <router-link class="link" :to="{ name: 'home' }"
                   >Home</router-link
                 >
-                <router-link v-if="!isLogged" class="link" :to="{ name: 'login' }"
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'login' }"
                   >Login</router-link
                 >
-                <router-link  v-if="!isLogged" class="link" :to="{ name: 'register' }"
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'register' }"
                   >Register</router-link
                 >
                 <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <p  v-if="isLogged" class="link" @click="logout">Logout</p>
+                <p v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>
