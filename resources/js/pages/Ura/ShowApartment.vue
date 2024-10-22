@@ -7,7 +7,8 @@ export default {
     return {
       apartment: "",
       src:"",
-      alt:""
+      alt:"",
+      name:""
 
     };
   },
@@ -260,7 +261,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  max-width: 900px;
+  max-width: 80%;
 }
 
 h1,
