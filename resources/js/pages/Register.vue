@@ -1,4 +1,5 @@
 <script>
+// import { max } from "lodash";
 import { store } from "../store/store.js";
 export default {
   name: "Register",
@@ -162,6 +163,15 @@ export default {
       this.submit();
     },
   },
+
+  computed: {
+    maxDate() {
+      const today = new Date();
+      const maxDate = new Date(today.setFullYear(today.getFullYear() - 18));
+      // Converti la data in formato 'YYYY-MM-DD' per l'attributo 'max', T serve per splittare le stringhe
+      return maxDate.toISOString().split('T')[0];
+    }
+  }
 };
 // validazioni che fa fortify
 // Validator::make($input, [
@@ -238,6 +248,7 @@ export default {
               type="date"
               id="date_of_birth"
               name="date_of_birth"
+              :max="maxDate"
               v-model="user.date_of_birth"
             />
             <small v-if="errors.date_of_birth" class="error-message">{{
