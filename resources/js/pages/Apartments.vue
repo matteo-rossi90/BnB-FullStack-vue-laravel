@@ -6,17 +6,19 @@ import { createPageWithUrl } from "../store/store";
 
 export default {
   name: "Apartments",
+
   data() {
     return {
       filtredApartment: store.filtredApartment,
       number_rooms: "",
       number_beds: "",
-      src:"",
       square_meters: "",
       isFill: false,
       sliderValue: 20,
       services: "",
+      src:""
     };
+
   },
   methods: {
     getMap() {
@@ -128,7 +130,8 @@ export default {
     //     },
     //   })
     //   .then((res) => {
-    //     console.log("apartment- all apartment:ok", res);
+    //     console.
+    ("apartment- all apartment:ok", res);
     //     store.allApartments = res.data;
     //   })
     //   .catch((err) => {
@@ -198,7 +201,7 @@ export default {
             >
               <div class="card shadow-sm border-0 rounded">
                 <img
-                  :src="apartmensFiltred.image"
+                   :src="apartment.image"
                   class="apartment-image card-img-top"
                   alt="Appart-Img"
                 />

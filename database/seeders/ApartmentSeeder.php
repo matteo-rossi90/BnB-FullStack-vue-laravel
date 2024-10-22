@@ -25,6 +25,7 @@ class ApartmentSeeder extends Seeder
         $latitudes = config('citySeader.lat');
         $longitudes = config('citySeader.long');
 
+
         for ($i=0; $i < count($streets) - 1; $i++) {
             $new_apartment = new Apartment();
 
