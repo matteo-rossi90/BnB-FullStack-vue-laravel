@@ -6,13 +6,16 @@ export default {
   data() {
     return {
       apartment: "",
+      src:"",
+      alt:""
+
     };
   },
 
   methods: {
-    imageUrl(path) {
-      return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
-    },
+    // imageUrl(path) {
+    //   return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+    // },
   },
   //   getMap() {
   //     const tt = window.tt; //accesso alla libreria TomTom
@@ -126,8 +129,8 @@ export default {
         <div class="col-12 text-center">
           <div v-if="apartment.image" class="image-container mb-4">
             <img
-              :src="imageUrl(apartment.image)"
-              alt="Immagine dell'appartamento"
+              :src="apartment.image"
+              :alt="apartment.name"
               class="img-fluid rounded shadow-sm"
             />
           </div>
