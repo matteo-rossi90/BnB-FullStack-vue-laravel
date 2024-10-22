@@ -205,23 +205,9 @@ export default {
                 <div class="card-body">
                   <h5 class="card-title">{{ apartment.title }}</h5>
                   <p class="card-text">{{ apartment.address }}</p>
-                  <p class="card-text">
-                    Descrizione: Appartamento con
-                    {{
-                      apartment.number_rooms > 1
-                        ? `${apartment.number_rooms} camere`
-                        : `${apartment.number_rooms} camera`
-                    }}
-                    e
-                    {{
-                      apartment.number_beds > 1
-                        ? `${apartment.number_beds} letti`
-                        : `${apartment.number_beds} letto`
-                    }}
-                    .
-                  </p>
-                  <p>{{ apartment.square_meters }} M²</p>
-                  <p>nome user</p>
+                  <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
+                    <p class="card-text">Letti: {{ apartment.number_beds }}</p>
+                  <p class="card-text">Superficie: {{ apartment.square_meters }} m²</p>
                 </div>
               </div>
             </router-link>
