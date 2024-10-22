@@ -25,8 +25,14 @@ const store = reactive({
     minLong: '',
     maxLong: '',
 
-    inputValue: 'ciao'
-
+    inputValue: '',
+    room:'',
+    bed:'',
+    square:'',
+    distance:'',
+    lon:'',
+    lat:'',
+    distance: ''
 
 })
 
@@ -94,6 +100,7 @@ const componeUrlString = (objAdress, inputUser) =>{
 }
 
 const createDataUrl = (stringUrl) =>{
+    console.log('stringa url', stringUrl)
     let arr = stringUrl.split('&')
     let objData = {}
     for (let i = 0; i < arr.length; i++) {
@@ -108,21 +115,76 @@ const createDataUrl = (stringUrl) =>{
     objData['input'] = objData['input'].split('%').join(' ')
     return objData
 
+};
+const createPage = (objData) => {
+    // object arive
+    // let obj ={
+    // 'input': ,
+    // 'lon': ,
+    // 'lat': ,
+    // 'room': ,
+    // 'bed': ,
+    // 'square': ,
+    // 'distance':
+    store.inputValue = objData["input"];
+    store.center = [objData["lon"], objData["lat"]];
+    store.room = objData["room"];
+    store.bed = objData["bed"];
+    store.square = objData["square"];
+    store.distance = objData["distance"];
+    store.lon = objData['lon'],
+    store.lat = objData['lat'],
+    store.distance = objData['distance']
+    findZone(objData["lon"], objData["lat"], objData["distance"]);
+  }
+const updateUrl = (oldUrl) =>{
+    let newData = {
+        'bed': store.bed ? store.bed : 0,
+        'distance': store.distance ? store.distance : 0,
+        'input': store.inputValue ? store.inputValue : '',
+        'lon': store.lon,
+        'lat': store.lat,
+        'room': store.room ? store.room : 0,
+        'square': store.square ? store.square : 0
+    }
+    let objUpdate = createDataUrl(oldUrl)
+    for (const key in newData) {
+        // update data
+        objUpdate[key] = newData[key]
+    }
+    // change data in url string
+    let stringUrl = "";
+    let string = '';
+    objUpdate['input'] = objUpdate['input'].split(' ').join('%')
+    for(let key in objUpdate){
+        string = `${key}=${objUpdate[key]}&`
+        stringUrl += string
+    }
+
+    // let objData = createDataUrl(stringUrl)
+    // createPage(objData);
+
+    return {stringUrl, objUpdate}
 }
-const updateUrl = (stringUrl, distance) =>{
-    let arr = stringUrl.split('-').slice(0, -1)
-    arr.push(distance)
-    let newUrlString = arr.join('-')
-    return newUrlString
+
+const filterUserApartment = (filtredApartment, objData) =>{
+
+
+        store.filtredApartment = filtredApartment.filter(apartment =>{
+            return apartment.number_rooms >= objData['room'] || apartment.number_beds >= objData['bed'] || apartment.square_meters >= objData['square']
+        })
+
+
 }
-const createPageWithUrl = (urlCripted, distance) =>{
-    const stringUrl = urlCripted
-    const arrUrl = urlCripted.split('-').slice(-3);
-    console.log(arrUrl)
-    findZone(arrUrl[0], arrUrl[1], distance)
-    return updateUrl(stringUrl, distance)
-}
+
+// const createPageWithUrl = (urlCripted, distance) =>{
+//     const stringUrl = urlCripted
+//     const arrUrl = urlCripted.split('-').slice(-3);
+
+//     findZone(arrUrl[0], arrUrl[1], distance)
+//     return updateUrl(stringUrl, distance)
+// }
 
 
 
-export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl, createDataUrl};
+export {store, checkAdress, findZone, filterApartment, componeUrlString, createDataUrl, updateUrl, createPage, filterUserApartment};

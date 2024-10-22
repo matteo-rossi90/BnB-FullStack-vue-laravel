@@ -2,8 +2,10 @@
 import { store } from "../store/store";
 import { filterApartment } from "../store/store";
 import { findZone } from "../store/store";
-import { createPageWithUrl } from "../store/store";
 import { createDataUrl } from "../store/store";
+import { updateUrl } from "../store/store";
+import { createPage } from "../store/store";
+import { filterUserApartment } from "../store/store";
 
 export default {
   name: "Apartments",
@@ -11,11 +13,11 @@ export default {
   data() {
     return {
       filtredApartment: store.filtredApartment,
-      number_rooms: "",
-      number_beds: "",
-      square_meters: "",
+      number_rooms: store.room,
+      number_beds: store.bed,
+      square_meters: store.square,
+      sliderValue: store.distance,
       isFill: false,
-      sliderValue: 20,
       services: "",
       src: "",
     };
@@ -24,21 +26,17 @@ export default {
     // getMap() {
     //   const tt = window.tt; //accesso alla libreria TomTom
     //   let center = store.center; //centro della mappa
-
     //   let size = 50; //dimensioni del popup
-
     //   const map = tt.map({
     //     key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
     //     center: center,
     //     container: "map",
     //     zoom: 10,
     //   });
-
     //   //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
     //   this.filtredApartment.forEach((apartment) => {
     //     const lat = apartment.lat; //valore della latitudine di ogni appartamento
     //     const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
-
     //     let boxContent = document.createElement("div");
     //     boxContent.innerHTML = `
     //             <div class="card-body">
@@ -46,134 +44,110 @@ export default {
     //                 <p class="title-popup">${apartment.address}</p>
     //                 <small>8000 euro</small>
     //             </div>`;
-
     //     let popup = new tt.Popup({
     //       closeButton: true, //permettere la chiusura il popup
     //       closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
     //       offset: size,
     //       // anchor: 'none'
     //     }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
-
     //     //creare il marker per l'appartamento
     //     let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
-
     //     marker.addTo(map);
     //   });
-
     //   //   const bounds = [
     //   //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
     //   //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
     //   //   ];
-
     //   //   map.setMaxBounds(bounds);
-
     //   map.addControl(new tt.FullscreenControl());
     //   map.addControl(new tt.NavigationControl());
     // },
     activeFilter() {
-      this.isFill = this.number_rooms || this.number_beds || this.square_meters;
-      this.filtredApartment = store.filtredApartment;
+      store.room = this.number_rooms;
+      store.bed = this.number_beds;
+      store.square = this.square_meters;
+      store.distance = this.sliderValue;
+      let objStringUrl = updateUrl(this.$route.params.id);
+      console.log(objStringUrl);
+      let objData = createDataUrl(objStringUrl.stringUrl);
+      createPage(objData);
+      filterUserApartment(store.filtredApartment, objStringUrl.objUpdate);
+      this.$router.push({ params: { id: objStringUrl.stringUrl } });
+      this.$forceUpdate();
 
-      if (this.number_rooms) {
-        this.filtredApartment = this.filtredApartment.filter(
-          (apartment) => apartment.number_rooms >= this.number_rooms
-        );
-      }
-      if (this.number_beds) {
-        this.filtredApartment = this.filtredApartment.filter(
-          (apartment) => apartment.number_beds >= this.number_beds
-        );
-      }
-      if (this.square_meters) {
-        this.filtredApartment = this.filtredApartment.filter(
-          (apartment) => apartment.square_meters >= this.square_meters
-        );
-      }
-      if (this.sliderValue !== 20) {
-        let newUrl = createPageWithUrl(this.$route.params.id, this.sliderValue);
-        this.filtredApartment = store.filtredApartment;
-        this.$router.push({ params: { id: newUrl } });
-        localStorage.setItem(
-          "routeParams",
-          JSON.stringify(this.$route.params.id)
-        );
-      }
-
+      //   if (this.number_rooms) {
+      //     this.filtredApartment = this.filtredApartment.filter(
+      //       (apartment) => apartment.number_rooms >= this.number_rooms
+      //     );
+      //   }
+      //   if (this.number_beds) {
+      //     this.filtredApartment = this.filtredApartment.filter(
+      //       (apartment) => apartment.number_beds >= this.number_beds
+      //     );
+      //   }
+      //   if (this.square_meters) {
+      //     this.filtredApartment = this.filtredApartment.filter(
+      //       (apartment) => apartment.square_meters >= this.square_meters
+      //     );
+      //   }
+      //   if (this.sliderValue !== 20) {
+      //     let newUrl = createPageWithUrl(this.$route.params.id, this.sliderValue);
+      //     this.filtredApartment = store.filtredApartment;
+      //     ;
+      //     localStorage.setItem(
+      //       "routeParams",
+      //       JSON.stringify(this.$route.params.id)
+      //     );
+      //   }
       //   store.filtredApartment = console.log("rotta", this.$route.params.id);
     },
     // },
-    createPage(objData) {
-      // object arive
-      // let obj ={
-      // 'input': ,
-      // 'lon': ,
-      // 'lat': ,
-      // 'room': ,
-      // 'bed': ,
-      // 'square': ,
-      // 'distance':
-      store.inputValue = objData["input"];
-      store.center = [objData["lon"], objData["lat"]];
-      this.number_rooms = objData["room"];
-      this.number_beds = objData["bed"];
-      this.square_meters = objData["square"];
-      this.sliderValue = objData["distance"];
-
-      findZone(objData["lon"], objData["lat"], objData["distance"]);
-    },
   },
-  mounted() {
-    this.createPage(createDataUrl(this.$route.params.id));
 
-    localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
-    window.addEventListener("load", () => {
-      const routeParams = JSON.parse(localStorage.getItem("routeParams"));
-      createPageWithUrl(routeParams, this.sliderValue);
+  //   mounted() {
+  //     localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
+  //     window.addEventListener("load", () => {
+  //       const routeParams = JSON.parse(localStorage.getItem("routeParams"));
+  //       createPageWithUrl(routeParams, this.sliderValue);
 
-      // Sovrascrivi i dati con quelli filtrati
-      this.filtredApartment = store.filtredApartment;
+  //       // Sovrascrivi i dati con quelli filtrati
+  //       this.filtredApartment = store.filtredApartment;
 
-      // Attiva automaticamente il filtro
-      this.activeFilter();
-    });
-    console.log(this.$route.params.id);
+  //       // Attiva automaticamente il filtro
+  //       this.activeFilter();
+  //     });
 
-    // this.getMap();
-    //   all apartment
-    //   all apartment
-    //   all apartment
-    // axios
-    //   .get("/api/home", {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Cache-Control": "no-cache", // Disabilita il caching
-    //     },
-    //     params: {
-    //       t: Date.now(), // Aggiungi un timestamp per evitare il caching
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.
-    // "apartment- all apartment:ok", res;
-    //     store.allApartments = res.data;
-    //   })
-    //   .catch((err) => {
-    //     console.log("app- all apartment: ", err.message);
-    //   });
-  },
+  // this.getMap();
+  //   all apartment
+  //   all apartment
+  //   all apartment
+  // axios
+  //   .get("/api/home", {
+  //     headers: {
+  //       Accept: "application/json",
+  //       "Cache-Control": "no-cache", // Disabilita il caching
+  //     },
+  //     params: {
+  //       t: Date.now(), // Aggiungi un timestamp per evitare il caching
+  //     },
+  //   })
+  //   .then((res) => {
+  //     console.
+  // "apartment- all apartment:ok", res;
+  //     store.allApartments = res.data;
+  //   })
+  //   .catch((err) => {
+  //     console.log("app- all apartment: ", err.message);
+  //   });
+  //   },
 
   computed: {
     apartmensFiltred() {
-      return this.filtredApartment;
+      return store.filtredApartment;
     },
   },
   watch: {
-    // Osserva i cambiamenti nei parametri della rotta
-    "$route.params.id": function (newId, oldId) {
-      // Quando il parametro 'id' cambia, esegui la funzione che aggiorna i dati
-      this.activeFilter();
-      //   this.getMap();
-    },
+    "$store.filtredApartment": function () {},
   },
 };
 </script>
@@ -186,23 +160,29 @@ export default {
         type="number"
         placeholder="inserisci numero"
         id="number_rooms"
-        v-model="number_rooms"
+        v-model.trim="number_rooms"
       />
       <label for="number_beds">number_beds</label>
       <input
         type="number"
         placeholder="inserisci numero"
         id="number_beds"
-        v-model="number_beds"
+        v-model.trim="number_beds"
       />
       <label for="square_meters">Metri quadri</label>
       <input
         type="number"
         placeholder="inserisci numero"
         id="square_meters"
-        v-model="square_meters"
+        v-model.trim="square_meters"
       />
-      <input type="range" min="1" max="200" value="20" v-model="sliderValue" />
+      <input
+        type="range"
+        min="1"
+        max="200"
+        value="20"
+        v-model.trim="sliderValue"
+      />
       <span>{{ sliderValue }} km dal punto scelto</span>
       <span v-for="(service, index) in services" :key="index">{{
         service.name
