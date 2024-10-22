@@ -176,7 +176,7 @@ export default {
                 <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <p class="link" @click="logout">Logout</p>
+                <p  v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>
