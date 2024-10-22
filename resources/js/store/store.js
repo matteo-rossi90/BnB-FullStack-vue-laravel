@@ -25,6 +25,7 @@ const store = reactive({
     minLong: '',
     maxLong: '',
 
+// data for create page apartment and for filter
     inputValue: '',
     room:'',
     bed:'',
@@ -32,7 +33,8 @@ const store = reactive({
     distance:'',
     lon:'',
     lat:'',
-    distance: ''
+    distance: '',
+    isReloded: true,
 
 })
 
@@ -161,9 +163,6 @@ const updateUrl = (oldUrl) =>{
         stringUrl += string
     }
 
-    // let objData = createDataUrl(stringUrl)
-    // createPage(objData);
-
     return {stringUrl, objUpdate}
 }
 
@@ -171,7 +170,7 @@ const filterUserApartment = (filtredApartment, objData) =>{
 
 
         store.filtredApartment = filtredApartment.filter(apartment =>{
-            return apartment.number_rooms >= objData['room'] || apartment.number_beds >= objData['bed'] || apartment.square_meters >= objData['square']
+            return apartment.number_rooms >= objData['room'] && apartment.number_beds >= objData['bed'] && apartment.square_meters >= objData['square']
         })
 
 
@@ -187,4 +186,4 @@ const filterUserApartment = (filtredApartment, objData) =>{
 
 
 
-export {store, checkAdress, findZone, filterApartment, componeUrlString, createDataUrl, updateUrl, createPage, filterUserApartment};
+export {store, checkAdress,findZone, componeUrlString, createDataUrl, updateUrl, createPage, filterUserApartment};

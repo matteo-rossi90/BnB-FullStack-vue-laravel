@@ -77,7 +77,7 @@ export default {
       createPage(objData);
       if (urlString) {
         this.isClose = false;
-
+        store.isReloded = false;
         this.$router.push({
           name: "apartmentsMap",
           params: { id: urlString },

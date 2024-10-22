@@ -1,7 +1,5 @@
 <script>
 import { store } from "../store/store";
-import { filterApartment } from "../store/store";
-import { findZone } from "../store/store";
 import { createDataUrl } from "../store/store";
 import { updateUrl } from "../store/store";
 import { createPage } from "../store/store";
@@ -23,45 +21,45 @@ export default {
     };
   },
   methods: {
-    // getMap() {
-    //   const tt = window.tt; //accesso alla libreria TomTom
-    //   let center = store.center; //centro della mappa
-    //   let size = 50; //dimensioni del popup
-    //   const map = tt.map({
-    //     key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
-    //     center: center,
-    //     container: "map",
-    //     zoom: 10,
-    //   });
-    //   //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
-    //   this.filtredApartment.forEach((apartment) => {
-    //     const lat = apartment.lat; //valore della latitudine di ogni appartamento
-    //     const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
-    //     let boxContent = document.createElement("div");
-    //     boxContent.innerHTML = `
-    //             <div class="card-body">
-    //                 <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
-    //                 <p class="title-popup">${apartment.address}</p>
-    //                 <small>8000 euro</small>
-    //             </div>`;
-    //     let popup = new tt.Popup({
-    //       closeButton: true, //permettere la chiusura il popup
-    //       closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-    //       offset: size,
-    //       // anchor: 'none'
-    //     }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
-    //     //creare il marker per l'appartamento
-    //     let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
-    //     marker.addTo(map);
-    //   });
-    //   //   const bounds = [
-    //   //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-    //   //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-    //   //   ];
-    //   //   map.setMaxBounds(bounds);
-    //   map.addControl(new tt.FullscreenControl());
-    //   map.addControl(new tt.NavigationControl());
-    // },
+    getMap() {
+      const tt = window.tt; //accesso alla libreria TomTom
+      let center = store.center; //centro della mappa
+      let size = 50; //dimensioni del popup
+      const map = tt.map({
+        key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+        center: center,
+        container: "map",
+        zoom: 10,
+      });
+      //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
+      this.filtredApartment.forEach((apartment) => {
+        const lat = apartment.lat; //valore della latitudine di ogni appartamento
+        const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
+        let boxContent = document.createElement("div");
+        boxContent.innerHTML = `
+                <div class="card-body">
+                    <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
+                    <p class="title-popup">${apartment.address}</p>
+                    <small>8000 euro</small>
+                </div>`;
+        let popup = new tt.Popup({
+          closeButton: true, //permettere la chiusura il popup
+          closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+          offset: size,
+          // anchor: 'none'
+        }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+        //creare il marker per l'appartamento
+        let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+        marker.addTo(map);
+      });
+      //   const bounds = [
+      //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+      //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+      //   ];
+      //   map.setMaxBounds(bounds);
+      map.addControl(new tt.FullscreenControl());
+      map.addControl(new tt.NavigationControl());
+    },
     activeFilter() {
       store.room = this.number_rooms;
       store.bed = this.number_beds;
@@ -101,53 +99,20 @@ export default {
       //   }
       //   store.filtredApartment = console.log("rotta", this.$route.params.id);
     },
-    // },
   },
-
-  //   mounted() {
-  //     localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
-  //     window.addEventListener("load", () => {
-  //       const routeParams = JSON.parse(localStorage.getItem("routeParams"));
-  //       createPageWithUrl(routeParams, this.sliderValue);
-
-  //       // Sovrascrivi i dati con quelli filtrati
-  //       this.filtredApartment = store.filtredApartment;
-
-  //       // Attiva automaticamente il filtro
-  //       this.activeFilter();
-  //     });
-
-  // this.getMap();
-  //   all apartment
-  //   all apartment
-  //   all apartment
-  // axios
-  //   .get("/api/home", {
-  //     headers: {
-  //       Accept: "application/json",
-  //       "Cache-Control": "no-cache", // Disabilita il caching
-  //     },
-  //     params: {
-  //       t: Date.now(), // Aggiungi un timestamp per evitare il caching
-  //     },
-  //   })
-  //   .then((res) => {
-  //     console.
-  // "apartment- all apartment:ok", res;
-  //     store.allApartments = res.data;
-  //   })
-  //   .catch((err) => {
-  //     console.log("app- all apartment: ", err.message);
-  //   });
-  //   },
+  mounted() {
+    window.addEventListener("load", function () {
+      console.log("function of reloded page");
+      console.log(this.$router);
+      const objData = createDataUrl(this.$route.params.id);
+      createPage(objData);
+    });
+  },
 
   computed: {
     apartmensFiltred() {
       return store.filtredApartment;
     },
-  },
-  watch: {
-    "$store.filtredApartment": function () {},
   },
 };
 </script>
