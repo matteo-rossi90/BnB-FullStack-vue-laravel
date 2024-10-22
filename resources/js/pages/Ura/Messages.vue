@@ -24,6 +24,7 @@ export default {
         "https://picsum.photos/seed/profile9/80/80",
         "https://picsum.photos/seed/profile10/80/80",
       ],
+      searchQuery:""
     };
   },
   methods:{
@@ -39,6 +40,14 @@ export default {
       this.selectedMessage = message;
       this.selectedImage = this.getImage(index)
     },
+  },
+  computed:{
+    filteredUser(){
+        const query = this.searchQuery.toLowerCase();
+            return this.messages.filter(contact =>{
+            return contact.name.toLowerCase().includes(query) || contact.surname.toLowerCase().includes(query)
+        })
+    }
   },
   mounted() {
     axios
@@ -63,14 +72,14 @@ export default {
         </div>
 
         <div class="d-flex mx-4">
-          <input type="search" class="form-control" id="box-search">
+          <input type="search" class="form-control" id="box-search" placeholder="Cerca un contatto" v-model="searchQuery">
           <button type="submit" class="search-button">
             <i class="fa-solid fa-search"></i>
           </button>
         </div>
 
         <div class="message-list mt-4">
-          <MessagesList :messages="messages" @selectMessage="selectMessage" />
+          <MessagesList :messages="filteredUser" @selectMessage="selectMessage" />
         </div>
 
       </div>
