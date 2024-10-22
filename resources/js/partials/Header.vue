@@ -33,6 +33,8 @@ export default {
             localStorage.setItem("userName", "Accedi");
             store.userName = localStorage.getItem("userName");
             this.$router.push({ name: "home" });
+
+
           })
           .catch((err) => {
             console.log("Errore nel logout:", err);
