@@ -3,6 +3,7 @@ import { store } from "../store/store";
 import { filterApartment } from "../store/store";
 import { findZone } from "../store/store";
 import { createPageWithUrl } from "../store/store";
+import { createDataUrl } from "../store/store";
 
 export default {
   name: "Apartments",
@@ -12,7 +13,6 @@ export default {
       filtredApartment: store.filtredApartment,
       number_rooms: "",
       number_beds: "",
-      src: "",
       square_meters: "",
       isFill: false,
       sliderValue: 20,
@@ -101,9 +101,30 @@ export default {
 
       //   store.filtredApartment = console.log("rotta", this.$route.params.id);
     },
+    // },
+    createPage(objData) {
+      // object arive
+      // let obj ={
+      // 'input': ,
+      // 'lon': ,
+      // 'lat': ,
+      // 'room': ,
+      // 'bed': ,
+      // 'square': ,
+      // 'distance':
+      store.inputValue = objData["input"];
+      store.center = [objData["lon"], objData["lat"]];
+      this.number_rooms = objData["room"];
+      this.number_beds = objData["bed"];
+      this.square_meters = objData["square"];
+      this.sliderValue = objData["distance"];
+
+      findZone(objData["lon"], objData["lat"], objData["distance"]);
+    },
   },
   mounted() {
-    console.log(this.$route.params.id);
+    this.createPage(createDataUrl(this.$route.params.id));
+
     localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
     window.addEventListener("load", () => {
       const routeParams = JSON.parse(localStorage.getItem("routeParams"));

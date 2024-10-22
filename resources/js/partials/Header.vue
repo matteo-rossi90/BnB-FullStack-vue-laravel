@@ -12,7 +12,7 @@ export default {
       //   // name user
       //   name: store.user.name,
       //   auto compiled v model input
-      searchQuery: "",
+      searchQuery: store.inputValue,
       //   data of all adress
       address: [],
       //   timeout for bettere request after user write

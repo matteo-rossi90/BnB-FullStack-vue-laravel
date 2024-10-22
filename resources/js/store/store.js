@@ -25,6 +25,8 @@ const store = reactive({
     minLong: '',
     maxLong: '',
 
+    inputValue: 'ciao'
+
 
 })
 
@@ -91,6 +93,22 @@ const componeUrlString = (objAdress, inputUser) =>{
         return stringUrl
 }
 
+const createDataUrl = (stringUrl) =>{
+    let arr = stringUrl.split('&')
+    let objData = {}
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i]) {  // Controlla che la stringa non sia vuota
+            let arrAll = arr[i].split('=');
+            if (arrAll.length === 2) {
+                objData[arrAll[0]] = arrAll[1];
+            }
+        }
+    }
+
+    objData['input'] = objData['input'].split('%').join(' ')
+    return objData
+
+}
 const updateUrl = (stringUrl, distance) =>{
     let arr = stringUrl.split('-').slice(0, -1)
     arr.push(distance)
@@ -107,4 +125,4 @@ const createPageWithUrl = (urlCripted, distance) =>{
 
 
 
-export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl};
+export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl, createDataUrl};
