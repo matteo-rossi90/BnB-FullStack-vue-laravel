@@ -12,64 +12,64 @@ export default {
       filtredApartment: store.filtredApartment,
       number_rooms: "",
       number_beds: "",
+      src: "",
       square_meters: "",
       isFill: false,
       sliderValue: 20,
       services: "",
-      src:""
+      src: "",
     };
-
   },
   methods: {
-    getMap() {
-      const tt = window.tt; //accesso alla libreria TomTom
-      let center = store.center; //centro della mappa
+    // getMap() {
+    //   const tt = window.tt; //accesso alla libreria TomTom
+    //   let center = store.center; //centro della mappa
 
-      let size = 50; //dimensioni del popup
+    //   let size = 50; //dimensioni del popup
 
-      const map = tt.map({
-        key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
-        center: center,
-        container: "map",
-        zoom: 10,
-      });
+    //   const map = tt.map({
+    //     key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+    //     center: center,
+    //     container: "map",
+    //     zoom: 10,
+    //   });
 
-      //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
-      this.filtredApartment.forEach((apartment) => {
-        const lat = apartment.lat; //valore della latitudine di ogni appartamento
-        const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
+    //   //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
+    //   this.filtredApartment.forEach((apartment) => {
+    //     const lat = apartment.lat; //valore della latitudine di ogni appartamento
+    //     const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
 
-        let boxContent = document.createElement("div");
-        boxContent.innerHTML = `
-                <div class="card-body">
-                    <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
-                    <p class="title-popup">${apartment.address}</p>
-                    <small>8000 euro</small>
-                </div>`;
+    //     let boxContent = document.createElement("div");
+    //     boxContent.innerHTML = `
+    //             <div class="card-body">
+    //                 <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
+    //                 <p class="title-popup">${apartment.address}</p>
+    //                 <small>8000 euro</small>
+    //             </div>`;
 
-        let popup = new tt.Popup({
-          closeButton: true, //permettere la chiusura il popup
-          closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-          offset: size,
-          // anchor: 'none'
-        }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+    //     let popup = new tt.Popup({
+    //       closeButton: true, //permettere la chiusura il popup
+    //       closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+    //       offset: size,
+    //       // anchor: 'none'
+    //     }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
 
-        //creare il marker per l'appartamento
-        let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+    //     //creare il marker per l'appartamento
+    //     let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
 
-        marker.addTo(map);
-      });
+    //     marker.addTo(map);
+    //   });
 
-      //   const bounds = [
-      //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-      //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-      //   ];
+    //   //   const bounds = [
+    //   //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+    //   //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+    //   //   ];
 
-      //   map.setMaxBounds(bounds);
+    //   //   map.setMaxBounds(bounds);
 
-      map.addControl(new tt.FullscreenControl());
-      map.addControl(new tt.NavigationControl());
-    },
+    //   map.addControl(new tt.FullscreenControl());
+    //   map.addControl(new tt.NavigationControl());
+    // },
     activeFilter() {
       this.isFill = this.number_rooms || this.number_beds || this.square_meters;
       this.filtredApartment = store.filtredApartment;
@@ -103,6 +103,7 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$route.params.id);
     localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
     window.addEventListener("load", () => {
       const routeParams = JSON.parse(localStorage.getItem("routeParams"));
@@ -114,8 +115,9 @@ export default {
       // Attiva automaticamente il filtro
       this.activeFilter();
     });
+    console.log(this.$route.params.id);
 
-    this.getMap();
+    // this.getMap();
     //   all apartment
     //   all apartment
     //   all apartment
@@ -131,7 +133,7 @@ export default {
     //   })
     //   .then((res) => {
     //     console.
-    ("apartment- all apartment:ok", res);
+    // "apartment- all apartment:ok", res;
     //     store.allApartments = res.data;
     //   })
     //   .catch((err) => {
@@ -149,7 +151,7 @@ export default {
     "$route.params.id": function (newId, oldId) {
       // Quando il parametro 'id' cambia, esegui la funzione che aggiorna i dati
       this.activeFilter();
-      this.getMap();
+      //   this.getMap();
     },
   },
 };
@@ -201,7 +203,7 @@ export default {
             >
               <div class="card shadow-sm border-0 rounded">
                 <img
-                   :src="apartment.image"
+                  :src="apartment.image"
                   class="apartment-image card-img-top"
                   alt="Appart-Img"
                 />
@@ -209,8 +211,10 @@ export default {
                   <h5 class="card-title">{{ apartment.title }}</h5>
                   <p class="card-text">{{ apartment.address }}</p>
                   <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
-                    <p class="card-text">Letti: {{ apartment.number_beds }}</p>
-                  <p class="card-text">Superficie: {{ apartment.square_meters }} m²</p>
+                  <p class="card-text">Letti: {{ apartment.number_beds }}</p>
+                  <p class="card-text">
+                    Superficie: {{ apartment.square_meters }} m²
+                  </p>
                 </div>
               </div>
             </router-link>
