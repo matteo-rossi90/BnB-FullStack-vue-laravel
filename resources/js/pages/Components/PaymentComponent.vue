@@ -6,31 +6,8 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    payment(price) {
-      axios
-        .post("api/order/make/payment", {
-          token: "fake-valid-nonce",
-          amount: price,
-        })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-  mounted() {
-    axios
-      .get("api/order/generate")
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
+  methods: {},
+  mounted() {},
 };
 </script>
 <template>
@@ -42,7 +19,9 @@ export default {
           <li>24h di sponsorizzazione</li>
           <li>2.99</li>
         </ul>
-        <button @click="payment(2.99)">Sponsorizza</button>
+        <router-link :to="{ name: 'checkout', params: { sponsor: 1 } }"
+          >sponsorizza</router-link
+        >
       </div>
       <div class="col">
         <h3>Piano di pagamento medio</h3>
@@ -50,7 +29,9 @@ export default {
           <li>72h di sponsorizzazione</li>
           <li>5.99</li>
         </ul>
-        <button @click="payment(5.99)">Sponsorizza</button>
+        <router-link :to="{ name: 'checkout', params: { sponsor: 2 } }"
+          >sponsorizza</router-link
+        >
       </div>
       <div class="col">
         <h3>Piano di pagamento ricco</h3>
@@ -58,7 +39,9 @@ export default {
           <li>144h di sponsorizzazione</li>
           <li>9.99</li>
         </ul>
-        <button @click="payment(9.99)">Sponsorizza</button>
+        <router-link :to="{ name: 'checkout', params: { sponsor: 3 } }"
+          >sponsorizza</router-link
+        >
       </div>
     </div>
   </div>

@@ -10,6 +10,7 @@ import '../scss/_dashboard.scss';
 
 import router from './router/index';
 import App from './App.vue'
+// import vueBraintree from 'vue-braintree'
 
 
 // Importa i core di FontAwesome
@@ -27,6 +28,7 @@ library.add(faCaretDown);
 
 import { createApp } from 'vue';
 const app = createApp(App)
+// app.use(vueBraintree);
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)
 app.mount('#app')

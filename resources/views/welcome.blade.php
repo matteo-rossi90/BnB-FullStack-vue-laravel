@@ -33,7 +33,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 {{-- payment cdn --}}
 <script src="https://js.braintreegateway.com/web/dropin/1.43.0/js/dropin.min.js"></script>
-
+{{-- plugin braintree --}}
+{{-- <script src="https://unpkg.com/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-braintree/dist/vue-braintree.umd.min.js"></script> --}}
+<script src="https://js.braintreegateway.com/web/dropin/1.43.0/js/dropin.min.js"></script>
 </head>
 
 <body>
