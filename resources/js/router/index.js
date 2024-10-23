@@ -13,6 +13,7 @@ import Sponsor from "../pages/Ura/Sponsor.vue";
 import ShowApartment from "../pages/Ura/ShowApartment.vue";
 import EditApartment from "../pages/Ura/EditApartment.vue";
 import Apartments from "../pages/Apartments.vue";
+import PaymentComponent from "../pages/components/PaymentComponent.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -72,6 +73,11 @@ const router = createRouter({
                 path: '/appartamenti-ricerca',
                 name: 'apartmentsMap',
                 component: Apartments //route temporanea per visualizzare gli appartamenti + mappa
+            },
+            {
+                path: '/payment',
+                name: 'payment',
+                component: PaymentComponent //route temporanea per visualizzare gli appartamenti + mappa
             },
             {
                 path: '/:pathMatch(.*)*',
