@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\Ura\ApartmentController;
 use App\Http\Controllers\Auth\Ura\MessageController;
+use App\Http\Controllers\Auth\Ura\OrderController;
 use App\Http\Controllers\GeneralUser;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
@@ -33,6 +34,12 @@ Route::middleware('auth:sanctum')
         Route::resource('/utente/dashboard', ApartmentController::class);
         Route::resource('/utente/messaggi', MessageController::class);
 });
+
+// payment
+Route::get('/order/generate', [OrderController::class, 'generate']);
+Route::post('/order/make/payment', [OrderController::class, 'makePayment']);
+
+
 
 Route::get('/home', [GeneralUser::class, 'allApartment']);
 Route::get('/services',[GeneralUser::class, 'services']);

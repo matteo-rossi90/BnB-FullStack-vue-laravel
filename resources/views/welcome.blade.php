@@ -31,7 +31,8 @@
 
 <!-- Bootstrap Bundle JS (includes Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-
+{{-- payment cdn --}}
+<script src="https://js.braintreegateway.com/web/dropin/1.43.0/js/dropin.min.js"></script>
 
 </head>
 
