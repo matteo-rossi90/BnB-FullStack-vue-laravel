@@ -1,10 +1,6 @@
 <script>
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
-// import { componeUrlString } from "../store/store";
-// import { findZone } from "../store/store";
-// import { createDataUrl } from "../store/store";
-// import { createPage } from "../store/store";
 // import { throttle } from "lodash";
 
 export default {
@@ -22,6 +18,8 @@ export default {
 
       isThrottled: false,
       isClose: false,
+      previousScrollPosition: window.scrollY,
+      isScrollingDown: false,
     };
   },
   methods: {
@@ -88,23 +86,20 @@ export default {
         this.isClose = false;
       }
     });
-    // window.addEventListener("scroll", () => {
-    //   if (!this.isThrottled) {
-    //     let firstRow = document.getElementById("firstRow");
-    //     let scrollAmount = window.scrollY;
+    window.addEventListener("scroll", () => {
+      const currentScrollPosition = window.scrollY;
+      let firstRow = document.getElementById("firstRow");
 
-    //     if (scrollAmount > 20) {
-    //       firstRow.classList.add("hidden");
-    //     } else {
-    //       firstRow.classList.remove("hidden");
-    //     }
+      firstRow.style.transition = "all 0.5s";
+      if (currentScrollPosition > this.previousScrollPosition) {
+        firstRow.classList.add("hidden");
+      } else {
+        firstRow.classList.remove("hidden");
+      }
 
-    //     this.isThrottled = true;
-    //     setTimeout(() => {
-    //       this.isThrottled = false;
-    //     }, 100); // 100ms di pausa tra un evento scroll e il successivo
-    //   }
-    // });
+      // Aggiorniamo la posizione precedente per il prossimo confronto
+      this.previousScrollPosition = currentScrollPosition;
+    });
   },
   computed: {
     isLogged() {
@@ -422,5 +417,9 @@ p,
   .button {
     display: block;
   }
+}
+.hidden {
+  height: 0;
+  transition: all 0.3s;
 }
 </style>
