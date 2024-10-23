@@ -8,69 +8,96 @@ export default {
       apartment: "",
       src:"",
       alt:"",
-      name:""
+      name:"",
+
+     //   dati messaggio
+     name:'',
+     surname:'',
+     email:'',
+     message:''
 
     };
   },
     methods: {
-    // imageUrl(path) {
-    //   return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
-    // },
+        // imageUrl(path) {
+        //   return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+        // },
         getMap() {
-        const tt = window.tt; //accesso alla libreria TomTom
-        let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
-        let size = 50; //dimensioni del popup
+            const tt = window.tt; //accesso alla libreria TomTom
+            let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
+            let size = 50; //dimensioni del popup
 
-        const map = tt.map({
-            key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
-            center: center,
-            container: "map",
-            zoom: 12,
-        });
+            const map = tt.map({
+                key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+                center: center,
+                container: "map",
+                zoom: 12,
+            });
 
-        //accesso alle coordinate nel JSON generato dall'API
+            //accesso alle coordinate nel JSON generato dall'API
 
-        const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
-        const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
+            const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
+            const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
 
-        if (!lat || !lon) {
-            console.error("Coordinate non valide per l'appartamento");
-            return;
+            if (!lat || !lon) {
+                console.error("Coordinate non valide per l'appartamento");
+                return;
+            }
+
+            let boxContent = document.createElement("div");
+            boxContent.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
+                        <p class="title-popup">${this.apartment.address}</p>
+                        <small>8000 euro</small>
+                    </div>`;
+
+            let popup = new tt.Popup({
+                closeButton: true, //permettere la chiusura il popup
+                closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+                offset: size,
+                // anchor: 'none'
+            }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+
+            //creare il marker per l'appartamento
+            let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+
+            marker.addTo(map);
+
+            const bounds = [
+                [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+                [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+            ];
+
+            map.setMaxBounds(bounds);
+
+            map.addControl(new tt.FullscreenControl());
+            map.addControl(new tt.NavigationControl());
+
+        },
+
+        submitMessage(){
+        const messageData = {
+            name: this.name,
+            surname: this.surname,
+            email: this.email,
+            message: this.message
         }
 
-        let boxContent = document.createElement("div");
-        boxContent.innerHTML = `
-                <div class="card-body">
-                    <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
-                    <p class="title-popup">${this.apartment.address}</p>
-                    <small>8000 euro</small>
-                </div>`;
+        axios.post('api/send-message', messageData)
+            .then(res=>{
+                console.log(res.data);
 
-        let popup = new tt.Popup({
-            closeButton: true, //permettere la chiusura il popup
-            closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-            offset: size,
-            // anchor: 'none'
-        }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+            })
+            .catch(er=>{
+                console.log(er.message);
 
-        //creare il marker per l'appartamento
-        let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+            })
+        console.log(messageData);
 
-        marker.addTo(map);
-
-        const bounds = [
-            [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-            [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-        ];
-
-        map.setMaxBounds(bounds);
-
-        map.addControl(new tt.FullscreenControl());
-        map.addControl(new tt.NavigationControl());
+    }
 
     },
-
-  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 'vm' è l'istanza del componente
@@ -210,7 +237,27 @@ export default {
             </div>
 
             <div class="col-12 col-md-10 mx-auto">
-              <form class="message-form p-4 shadow-sm rounded">
+              <form class="message-form p-4 shadow-sm rounded" @submit.prevent="submitMessage">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Il tuo nome</label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    placeholder="Inserisci il tuo nome"
+                    v-model="name"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="surname" class="form-label">Il tuo cognome</label>
+                  <input
+                    type="text"
+                    id="surname"
+                    class="form-control"
+                    placeholder="Inserisci il tuo cognome"
+                    v-model="surname"
+                  />
+                </div>
                 <!-- Campo per l'email -->
                 <div class="mb-3">
                   <label for="email" class="form-label">La tua email</label>
@@ -219,6 +266,7 @@ export default {
                     id="email"
                     class="form-control"
                     placeholder="Inserisci la tua email"
+                    v-model="email"
                     required
                   />
                 </div>
@@ -234,6 +282,7 @@ export default {
                     rows="5"
                     placeholder="Scrivi il tuo messaggio..."
                     required
+                    v-model="message"
                   ></textarea>
                 </div>
 

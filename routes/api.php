@@ -42,6 +42,9 @@ Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionControlle
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class , 'store']);
 
+// rotta per invio messaggi
+Route::post('/send-message', [MessageController::class, 'store']);
+
 
 
 
