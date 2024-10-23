@@ -62,7 +62,7 @@ class ApartmentController extends Controller
             $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             // Sposta l'immagine nella cartella public/images
-            $image->move(public_path('img'), $imageName);
+            $image->move(public_path('storage/uploads'), $imageName);
 
             // Salva il percorso dell'immagine nella variabile $data
             $data['image'] = 'img/' . $imageName; // Percorso relativo da salvare nel database
