@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\Ura\MessageController;
 use App\Http\Controllers\GeneralUser;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
+use App\Http\Controllers\NewMessageController; //controller per nuovi messaggi
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -43,7 +44,7 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class , 'store']);
 
 // rotta per invio messaggi
-Route::post('/send-message', [MessageController::class, 'store']);
+Route::post('/send-message', [NewMessageController::class, 'store']);
 
 
 

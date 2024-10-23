@@ -11,10 +11,10 @@ export default {
       name:"",
 
      //   dati messaggio
-     name:'',
-     surname:'',
-     email:'',
-     message:''
+     name:'pippo',
+     surname:'franco',
+     email:'pippo@franco.com',
+     message:'sono pippo franco'
 
     };
   },
@@ -84,7 +84,7 @@ export default {
             message: this.message
         }
 
-        axios.post('api/send-message', messageData)
+        axios.post('http://127.0.0.1:8000/api/send-message', messageData)
             .then(res=>{
                 console.log(res.data);
 
