@@ -70,10 +70,6 @@ export default {
         });
     },
     sendAdress(addressObj) {
-      //   let urlString = componeUrlString(addressObj, this.searchQuery);
-      //   let objData = createDataUrl(urlString);
-      //   createPage(objData);
-      console.log(addressObj.position);
       this.isClose = false;
       store.inputValue = this.searchQuery;
       this.$router.push({
@@ -88,7 +84,9 @@ export default {
   },
   mounted() {
     window.addEventListener("click", () => {
-      store.is_open = false;
+      if (this.isClose) {
+        this.isClose = false;
+      }
     });
     // window.addEventListener("scroll", () => {
     //   if (!this.isThrottled) {
@@ -193,25 +191,33 @@ export default {
               <div class="contInput d-flex">
                 <input
                   type="text"
-                  class="form-control"
+                  class="inputCustom"
                   placeholder="Cerca appartamenti per indirizzo..."
                   v-model="searchQuery"
                   @input="debouncedSearch"
                 />
                 <span class="button">invia</span>
 
-                <div class="suggest" v-if="isClose">
-                  <ul>
+                <div class="contSuggest" v-if="isClose">
+                  <ul class="suggest">
                     <li
                       v-for="(addressObj, index) in suggestAdress"
                       :key="index"
                     >
-                      <p class="link" @click="sendAdress(addressObj)">
-                        {{ addressObj.address.streetName }}
-                        {{ addressObj.address.municipality }}
-                        {{ addressObj.address.postalCode }}
-                        {{ addressObj.address.neighbourhood }}
-                      </p>
+                      <div class="link" @click="sendAdress(addressObj)">
+                        <span class="street"
+                          >{{ addressObj.address.streetName }} <span> </span>
+                        </span>
+                        <span class="city"
+                          >{{ addressObj.address.municipality }}
+                        </span>
+                        <span class="city"
+                          >{{ addressObj.address.postalCode }}
+                        </span>
+                        <span class="city">
+                          {{ addressObj.address.neighbourhood }}</span
+                        >
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -312,9 +318,9 @@ p,
 //#inputAdress
 .contInput {
   width: 70%;
+  height: 4.5rem;
   padding: 0.5rem;
   border-radius: 20px;
-  border: 1px solid black;
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -340,23 +346,62 @@ p,
     color: white;
   }
 }
-.suggest {
-  position: absolute;
-  width: 100%;
-  top: 100%;
-  background-color: rgb(237, 237, 237);
-  border-radius: 20px;
-  font-size: 0.75rem;
-  z-index: 10;
+.contSuggest {
+  .suggest {
+    position: absolute;
+    width: 90%;
+    top: 89%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 0.75rem;
+    box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+    padding: 0;
+    z-index: 10;
 
-  li {
-    padding: 0.3rem 0.5rem;
-    border-radius: 20px;
-    margin-bottom: 0.1rem;
-    &:hover {
-      background-color: rgb(217, 217, 217);
-      cursor: pointer;
+    li {
+      width: 100%;
+
+      .link {
+        width: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        &:hover {
+          background-color: rgba($color: rgb(255, 171, 171), $alpha: 0.1);
+        }
+        // &::before {
+        //   content: "";
+        //   background-image: url("/public/img/point.svg");
+        //   background-size: contain;
+        //   background-repeat: no-repeat;
+        // }
+        .street {
+          font-size: 0.9rem;
+        }
+        .city {
+          font-size: 0.75rem;
+        }
+      }
     }
+  }
+}
+.inputCustom {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: none;
+  padding: 0.3rem;
+  caret-color: black; // Cambia il colore del caret
+  font-size: 1.2rem; // Aumenta la dimensione del testo, e di conseguenza la lunghezza del caret
+  line-height: 1.5; // Modifica la linea del testo per allungare il caret
+  box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+  &:focus {
+    border: none;
+    outline: none;
   }
 }
 @media all and (max-width: 623px) {

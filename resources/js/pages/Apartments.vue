@@ -15,6 +15,7 @@ export default {
         latCenter: "",
         lonCenter: "",
       },
+      input: store.inputValue,
       filtredApartment: "",
       services: "",
       src: "",
@@ -23,7 +24,7 @@ export default {
   methods: {
     getMap() {
       const tt = window.tt; //accesso alla libreria TomTom
-      let center = store.center; //centro della mappa
+      let center = [this.filter.lonCenter, this.filter.latCenter]; //centro della mappa
       let size = 50; //dimensioni del popup
       const map = tt.map({
         key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
@@ -32,7 +33,7 @@ export default {
         zoom: 10,
       });
       //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
-      this.filtredApartment.forEach((apartment) => {
+      this.apartmensFiltred.forEach((apartment) => {
         const lat = apartment.lat; //valore della latitudine di ogni appartamento
         const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
         let boxContent = document.createElement("div");
@@ -73,16 +74,29 @@ export default {
         },
       });
     },
+    createPage() {
+      const urlParams = new URLSearchParams(this.$route.query);
+      store.inputValue = urlParams.get("input");
+      this.filter.latCenter = urlParams.get("lat");
+      this.filter.lonCenter = urlParams.get("lon");
+      this.filter.number_rooms = urlParams.get("number_rooms") || "";
+      this.filter.number_beds = urlParams.get("number_beds") || "";
+      this.filter.square_meters = urlParams.get("square_meters") || "";
+      this.filter.distance = urlParams.get("distance") || 20;
+
+      this.getMap();
+    },
   },
   mounted() {
-    const urlParams = new URLSearchParams(this.$route.query);
-    store.inputValue = urlParams.get("input");
-    this.filter.latCenter = urlParams.get("lat");
-    this.filter.lonCenter = urlParams.get("lon");
-    this.filter.number_rooms = urlParams.get("number_rooms") || "";
-    this.filter.number_beds = urlParams.get("number_beds") || "";
-    this.filter.square_meters = urlParams.get("square_meters") || "";
-    this.filter.distance = urlParams.get("distance") || 20;
+    this.createPage();
+  },
+  watch: {
+    "$route.query": {
+      handler(newQuery, oldQuery) {
+        this.createPage();
+      },
+      immediate: false,
+    },
   },
 
   computed: {

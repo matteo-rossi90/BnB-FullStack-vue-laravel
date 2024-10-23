@@ -37,7 +37,7 @@ const isCloser = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =
     Number(lonCenter)
     Number(latLocation)
     Number(lonLocation)
-    console.log(latCenter, lonCenter, latLocation, lonLocation, maxDistance)
+
     const distance = distancePoint(latCenter, lonCenter, latLocation, lonLocation);
 
     // Confronta la distanza calcolata con la distanza massima specificata dall'utente
