@@ -1,6 +1,7 @@
 <script>
 import { store } from "../store/store";
 import { isCloser } from "../store/store";
+import { distanceOfCenter } from "../store/store";
 
 export default {
   name: "Apartments",
@@ -19,6 +20,7 @@ export default {
       filtredApartment: "",
       services: "",
       src: "",
+      endCalculateCenter: false,
     };
   },
   methods: {
@@ -83,12 +85,29 @@ export default {
       this.filter.number_beds = urlParams.get("number_beds") || "";
       this.filter.square_meters = urlParams.get("square_meters") || "";
       this.filter.distance = urlParams.get("distance") || 20;
+    },
+    distanceOfCenter() {
+      const urlParams = new URLSearchParams(this.$route.query);
 
-      this.getMap();
+      store.allApartments.forEach((apartment) => {
+        apartment["distanceOfCenter"] = distanceOfCenter(
+          urlParams.get("lat"),
+          urlParams.get("lon"),
+          apartment.lat,
+          apartment.lon,
+          urlParams.get("distance") || 20
+        );
+      });
+      this.endCalculateCenter = true;
     },
   },
+  created() {},
+
   mounted() {
+    this.distanceOfCenter();
     this.createPage();
+    this.getMap();
+    console.log(store.allApartments);
   },
   //   watch: {
   //     "$route.query": {
@@ -101,19 +120,27 @@ export default {
 
   computed: {
     apartmensFiltred() {
-      return store.allApartments.filter((apartment) => {
-        const distance = isCloser(
-          this.filter.latCenter,
-          this.filter.lonCenter,
-          apartment.lat,
-          apartment.lon,
-          this.filter.distance
-        );
-        const room = apartment.number_rooms >= this.filter.number_rooms;
-        const bed = apartment.number_beds >= this.filter.number_beds;
-        const square = apartment.square_meters >= this.filter.square_meters;
-        return distance && room && bed && square;
-      });
+      // Verifica se il calcolo delle distanze è terminato
+      if (!this.endCalculateCenter) {
+        return []; // Ritorna un array vuoto fino al completamento del calcolo
+      }
+      return store.allApartments
+        .filter((apartment) => {
+          const distance = isCloser(
+            this.filter.latCenter,
+            this.filter.lonCenter,
+            apartment.lat,
+            apartment.lon,
+            this.filter.distance
+          );
+          const room = apartment.number_rooms >= this.filter.number_rooms;
+          const bed = apartment.number_beds >= this.filter.number_beds;
+          const square = apartment.square_meters >= this.filter.square_meters;
+          return distance && room && bed && square;
+        })
+        .sort((a, b) => {
+          return a.distanceOfCenter - b.distanceOfCenter;
+        });
     },
   },
 };
@@ -186,7 +213,15 @@ export default {
                   <p class="card-text">
                     Superficie: {{ apartment.square_meters }} m²
                   </p>
-                  <p>Distanza dal centro:</p>
+                  <p class="card-text">
+                    Distanza:
+                    {{
+                      apartment.distanceOfCenter
+                        ? apartment.distanceOfCenter.toFixed(2)
+                        : 0
+                    }}
+                    Km
+                  </p>
                 </div>
               </div>
             </router-link>

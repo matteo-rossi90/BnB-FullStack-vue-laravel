@@ -39,7 +39,7 @@ const isCloser = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =
     Number(lonLocation)
 
     const distance = distancePoint(latCenter, lonCenter, latLocation, lonLocation);
-    let result = distance - maxDistance
+
 
     // Confronta la distanza calcolata con la distanza massima specificata dall'utente
     if (distance <= maxDistance) {
@@ -51,7 +51,17 @@ const isCloser = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =
 
 
 }
+const distanceOfCenter = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =>{
+    Number(latCenter)
+    Number(lonCenter)
+    Number(latLocation)
+    Number(lonLocation)
 
+    const distance = distancePoint(latCenter, lonCenter, latLocation, lonLocation);
+    return distance
+
+
+}
 function distancePoint(lat1, lon1, lat2, lon2) {
     const R = 6371; // Raggio della Terra in km
 
@@ -81,4 +91,4 @@ function distancePoint(lat1, lon1, lat2, lon2) {
 
 
 
-export {store, checkAdress, isCloser};
+export {store, checkAdress, isCloser, distanceOfCenter};
