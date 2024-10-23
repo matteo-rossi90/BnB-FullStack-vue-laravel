@@ -90,14 +90,14 @@ export default {
   mounted() {
     this.createPage();
   },
-  watch: {
-    "$route.query": {
-      handler(newQuery, oldQuery) {
-        this.createPage();
-      },
-      immediate: false,
-    },
-  },
+  //   watch: {
+  //     "$route.query": {
+  //       handler(newQuery, oldQuery) {
+  //         this.createPage();
+  //       },
+  //       immediate: false,
+  //     },
+  //   },
 
   computed: {
     apartmensFiltred() {
@@ -186,6 +186,7 @@ export default {
                   <p class="card-text">
                     Superficie: {{ apartment.square_meters }} m²
                   </p>
+                  <p>Distanza dal centro:</p>
                 </div>
               </div>
             </router-link>
