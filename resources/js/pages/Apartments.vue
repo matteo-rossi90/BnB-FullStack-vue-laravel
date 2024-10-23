@@ -1,21 +1,21 @@
 <script>
 import { store } from "../store/store";
-import { createDataUrl } from "../store/store";
-import { updateUrl } from "../store/store";
-import { createPage } from "../store/store";
-import { filterUserApartment } from "../store/store";
+import { isCloser } from "../store/store";
 
 export default {
   name: "Apartments",
 
   data() {
     return {
-      filtredApartment: store.filtredApartment,
-      number_rooms: store.room,
-      number_beds: store.bed,
-      square_meters: store.square,
-      sliderValue: store.distance,
-      isFill: false,
+      filter: {
+        number_rooms: "",
+        number_beds: "",
+        square_meters: "",
+        distance: "",
+        latCenter: "",
+        lonCenter: "",
+      },
+      filtredApartment: "",
       services: "",
       src: "",
     };
@@ -60,58 +60,46 @@ export default {
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
     },
-    activeFilter() {
-      store.room = this.number_rooms;
-      store.bed = this.number_beds;
-      store.square = this.square_meters;
-      store.distance = this.sliderValue;
-      let objStringUrl = updateUrl(this.$route.params.id);
-      console.log(objStringUrl);
-      let objData = createDataUrl(objStringUrl.stringUrl);
-      createPage(objData);
-      filterUserApartment(store.filtredApartment, objStringUrl.objUpdate);
-      this.$router.push({ params: { id: objStringUrl.stringUrl } });
-      this.$forceUpdate();
-
-      //   if (this.number_rooms) {
-      //     this.filtredApartment = this.filtredApartment.filter(
-      //       (apartment) => apartment.number_rooms >= this.number_rooms
-      //     );
-      //   }
-      //   if (this.number_beds) {
-      //     this.filtredApartment = this.filtredApartment.filter(
-      //       (apartment) => apartment.number_beds >= this.number_beds
-      //     );
-      //   }
-      //   if (this.square_meters) {
-      //     this.filtredApartment = this.filtredApartment.filter(
-      //       (apartment) => apartment.square_meters >= this.square_meters
-      //     );
-      //   }
-      //   if (this.sliderValue !== 20) {
-      //     let newUrl = createPageWithUrl(this.$route.params.id, this.sliderValue);
-      //     this.filtredApartment = store.filtredApartment;
-      //     ;
-      //     localStorage.setItem(
-      //       "routeParams",
-      //       JSON.stringify(this.$route.params.id)
-      //     );
-      //   }
-      //   store.filtredApartment = console.log("rotta", this.$route.params.id);
+    updateFilter() {
+      this.$router.push({
+        query: {
+          input: store.inputValue,
+          lat: this.filter.latCenter,
+          lon: this.filter.lonCenter,
+          number_rooms: this.filter.number_rooms || undefined,
+          number_beds: this.filter.number_beds || undefined,
+          square_meters: this.filter.square_meters || undefined,
+          distance: this.filter.distance || undefined,
+        },
+      });
     },
   },
   mounted() {
-    window.addEventListener("load", function () {
-      console.log("function of reloded page");
-      console.log(this.$router);
-      const objData = createDataUrl(this.$route.params.id);
-      createPage(objData);
-    });
+    const urlParams = new URLSearchParams(this.$route.query);
+    store.inputValue = urlParams.get("input");
+    this.filter.latCenter = urlParams.get("lat");
+    this.filter.lonCenter = urlParams.get("lon");
+    this.filter.number_rooms = urlParams.get("number_rooms") || "";
+    this.filter.number_beds = urlParams.get("number_beds") || "";
+    this.filter.square_meters = urlParams.get("square_meters") || "";
+    this.filter.distance = urlParams.get("distance") || 20;
   },
 
   computed: {
     apartmensFiltred() {
-      return store.filtredApartment;
+      return store.allApartments.filter((apartment) => {
+        const distance = isCloser(
+          this.filter.latCenter,
+          this.filter.lonCenter,
+          apartment.lat,
+          apartment.lon,
+          this.filter.distance
+        );
+        const room = apartment.number_rooms >= this.filter.number_rooms;
+        const bed = apartment.number_beds >= this.filter.number_beds;
+        const square = apartment.square_meters >= this.filter.square_meters;
+        return distance && room && bed && square;
+      });
     },
   },
 };
@@ -125,34 +113,37 @@ export default {
         type="number"
         placeholder="inserisci numero"
         id="number_rooms"
-        v-model.trim="number_rooms"
+        v-model.trim="filter.number_rooms"
+        @input="updateFilter"
       />
       <label for="number_beds">number_beds</label>
       <input
         type="number"
         placeholder="inserisci numero"
         id="number_beds"
-        v-model.trim="number_beds"
+        v-model.trim="filter.number_beds"
+        @input="updateFilter"
       />
       <label for="square_meters">Metri quadri</label>
       <input
         type="number"
         placeholder="inserisci numero"
         id="square_meters"
-        v-model.trim="square_meters"
+        v-model.trim="filter.square_meters"
+        @input="updateFilter"
       />
       <input
         type="range"
         min="1"
         max="200"
         value="20"
-        v-model.trim="sliderValue"
+        v-model.trim="filter.distance"
+        @input="updateFilter"
       />
-      <span>{{ sliderValue }} km dal punto scelto</span>
+      <span>{{ filter.distance }} km dal punto scelto</span>
       <span v-for="(service, index) in services" :key="index">{{
         service.name
       }}</span>
-      <button @click="activeFilter">Filtra</button>
     </div>
     <div class="row py-3">
       <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>

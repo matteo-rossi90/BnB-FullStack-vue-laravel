@@ -1,10 +1,10 @@
 <script>
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
-import { componeUrlString } from "../store/store";
-import { findZone } from "../store/store";
-import { createDataUrl } from "../store/store";
-import { createPage } from "../store/store";
+// import { componeUrlString } from "../store/store";
+// import { findZone } from "../store/store";
+// import { createDataUrl } from "../store/store";
+// import { createPage } from "../store/store";
 // import { throttle } from "lodash";
 
 export default {
@@ -14,13 +14,12 @@ export default {
       //   // name user
       //   name: store.user.name,
       //   auto compiled v model input
-      searchQuery: store.inputValue,
+      searchQuery: "",
       //   data of all adress
       address: [],
       //   timeout for bettere request after user write
       debounceTimeout: null,
-      //   query url with simbol - when start event send this data in params
-      urlSearchQuery: "",
+
       isThrottled: false,
       isClose: false,
     };
@@ -65,26 +64,26 @@ export default {
         })
         .then((response) => {
           this.address = response.data.results;
-          this.urlSearchQuery = this.searchQuery;
         })
         .catch((err) => {
           console.log(err);
         });
     },
     sendAdress(addressObj) {
-      let urlString = componeUrlString(addressObj, this.searchQuery);
-      let objData = createDataUrl(urlString);
-      createPage(objData);
-      if (urlString) {
-        this.isClose = false;
-        store.isReloded = false;
-        this.$router.push({
-          name: "apartmentsMap",
-          params: { id: urlString },
-        });
-      } else {
-        console.warn("Stringa indirizzo vuota, non reindirizzo");
-      }
+      //   let urlString = componeUrlString(addressObj, this.searchQuery);
+      //   let objData = createDataUrl(urlString);
+      //   createPage(objData);
+      console.log(addressObj.position);
+      this.isClose = false;
+      store.inputValue = this.searchQuery;
+      this.$router.push({
+        name: "apartmentsMap",
+        query: {
+          input: this.searchQuery,
+          lon: addressObj.position.lon,
+          lat: addressObj.position.lat,
+        },
+      });
     },
   },
   mounted() {
