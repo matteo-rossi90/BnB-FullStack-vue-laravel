@@ -11,7 +11,6 @@ export default {
   data() {
     return {
         message:"",
-        currentIndex: 0,
         selectedImage: null,
         images: [
             "https://picsum.photos/seed/profile1/80/80",
@@ -31,7 +30,6 @@ export default {
   methods:{
     showMessage(message, index){
         this.message = message;
-        this.currentIndex = index;
         this.selectedImage = index;
     },
     formatDate(dateStr){
@@ -93,7 +91,7 @@ export default {
         <!-- lista messaggi -->
         <div class="message-list mt-4" v-if="filteredApartment">
            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex align-items-center" :class="{active : index === currentIndex}"
+                <li class="list-group-item d-flex align-items-center"
                 v-for="(message, index) in filteredMessages" :key="index" @click="showMessage(message, index)">
                     <div class="image me-3">
                         <img :src="getImage(index)" alt="utente">
