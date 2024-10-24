@@ -84,7 +84,7 @@ export default {
   //   detailApartment(id) {},
 
   mounted() {
-    console.log("user apartment", store.userApartment[0].sponsors[0].category);
+    // console.log("user apartment", store.userApartment[0].sponsors[0].category);
     axios
       .get("/api/user")
       .then((res) => {
@@ -355,8 +355,6 @@ a {
 }
 .sponsor.bronzo {
   background-color: rgb(192, 192, 192);
-}
-.sponsor.bronzo {
 }
 
 // @use 'path' as *;
