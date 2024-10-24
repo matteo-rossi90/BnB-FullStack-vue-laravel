@@ -17,6 +17,30 @@ export default {
     };
   },
   methods: {
+    getMessages(apartmentId) {
+    const apartment = this.apartments.find((ap) => ap.id === apartmentId);
+    if (apartment) {
+
+      apartment.unreadMessages = 0;
+
+      const readMessages = JSON.parse(localStorage.getItem('readMessages')) || {};
+
+      readMessages[apartmentId] = apartment.messages.map(msg => msg.id);
+
+      localStorage.setItem('readMessages', JSON.stringify(readMessages));
+
+      apartment.messages.forEach((message) => {
+        message.read = true;
+      });
+    }
+     },
+
+    getUnreadMessages(apartment) {
+        const readMessages = JSON.parse(localStorage.getItem('readMessages')) || {};
+        const readMessageIds = readMessages[apartment.id] || [];
+
+        return apartment.messages.filter((msg) => !readMessageIds.includes(msg.id)).length;
+    },
     showToast(message, type = "success") {
       //metodo che permette di mostrare il toast
 
@@ -108,7 +132,10 @@ export default {
       .get("api/user/utente/dashboard")
       .then((response) => {
         console.log("user", response.data);
-        store.userApartment = response.data;
+        store.userApartment = response.data.map((apartment) => ({
+            ...apartment,
+            unreadMessages: apartment.messages.filter((m) => !m.read).length
+        }))
         this.apartments = store.userApartment;
       })
       .catch((err) => {
@@ -187,6 +214,7 @@ export default {
                       </p>
                       <p class="badge text-bg-danger" v-else>Non visibile</p>
                     </td>
+
                     <td scope="row" class="align-middle">
                       <router-link
                         :to="{
@@ -195,8 +223,16 @@ export default {
                             id: apartment.id,
                           },
                         }"
-                      >
-                        <i class="fa-solid fa-envelope"></i>
+                        @click="getMessages(apartment.id)">
+                        <span class="position-relative">
+                            <span v-if="getUnreadMessages(apartment) > 0"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {{ getUnreadMessages(apartment) }}
+                            </span>
+                            <i class="fa-solid fa-envelope">
+                            </i>
+                        </span>
+
                       </router-link>
                     </td>
                     <td scope="row" class="align-middle">
@@ -357,5 +393,9 @@ a {
   background-color: rgb(192, 192, 192);
 }
 
+.fa-envelope,
+.fa-chart-simple{
+    font-size: 25px;
+}
 // @use 'path' as *;
 </style>

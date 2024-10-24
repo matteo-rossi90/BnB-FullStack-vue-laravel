@@ -11,6 +11,7 @@ export default {
   data() {
     return {
         message:"",
+        currentIndex: 0,
         selectedImage: null,
         images: [
             "https://picsum.photos/seed/profile1/80/80",
@@ -30,6 +31,7 @@ export default {
   methods:{
     showMessage(message, index){
         this.message = message;
+        this.currentIndex = index;
         this.selectedImage = index;
     },
     formatDate(dateStr){
@@ -43,8 +45,8 @@ export default {
         return date.toLocaleDateString('it-IT', options);
     },
     getImage(index) {
-       return this.images[index % this.images.length];
-     }
+       return this.images[index % this.images.length] || null;
+     },
   },
   computed:{
 
@@ -91,7 +93,7 @@ export default {
         <!-- lista messaggi -->
         <div class="message-list mt-4" v-if="filteredApartment">
            <ul class="list-group list-group-flush">
-                <li class="list-group-item d-flex align-items-center"
+                <li class="list-group-item d-flex align-items-center" :class="{active : index === currentIndex}"
                 v-for="(message, index) in filteredMessages" :key="index" @click="showMessage(message, index)">
                     <div class="image me-3">
                         <img :src="getImage(index)" alt="utente">
@@ -175,6 +177,15 @@ export default {
 <style lang="scss" scoped>
 @use "../../../scss/variables" as *;
 @use "../../../scss/message" as *;
+
+li:hover {
+    background-color:#f1f1f1;
+}
+
+.active{
+    background-color:#e0e0e0;
+    color: black;
+}
 
 input {
   border-radius: 50px;
