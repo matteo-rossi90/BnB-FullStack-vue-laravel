@@ -31,11 +31,12 @@ Route::middleware('auth:sanctum')
     ->name('admin.')
     ->group(function(){
         Route::resource('/utente/dashboard', ApartmentController::class);
-        Route::resource('/utente/messaggi', MessageController::class);
+        // Route::resource('/utente/messaggi', MessageController::class);
 });
 
 Route::get('/home', [GeneralUser::class, 'allApartment']);
 Route::get('/services',[GeneralUser::class, 'services']);
+Route::get('/messages', [GeneralUser::class, 'messages']);
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 

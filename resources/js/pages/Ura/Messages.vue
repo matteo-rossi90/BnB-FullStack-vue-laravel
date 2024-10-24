@@ -1,6 +1,7 @@
 <script>
 import axios from "axios";
 import MessagesList from "./partials/MessagesList.vue";
+import { store } from "../../store/store";
 
 export default {
   name: "Messages",
@@ -9,10 +10,9 @@ export default {
   },
   data() {
     return {
-      messages: [],
-      selectedMessage: null,
-      selectedImage: null,
-      images: [
+        message:"",
+        selectedImage: null,
+        images: [
         "https://picsum.photos/seed/profile1/80/80",
         "https://picsum.photos/seed/profile2/80/80",
         "https://picsum.photos/seed/profile3/80/80",
@@ -23,41 +23,44 @@ export default {
         "https://picsum.photos/seed/profile8/80/80",
         "https://picsum.photos/seed/profile9/80/80",
         "https://picsum.photos/seed/profile10/80/80",
-      ],
-      searchQuery:""
+        ],
+    //   searchQuery:""
     };
   },
   methods:{
+    showMessage(message){
+        this.message = message;
+        this.selectedImage = index;
+    },
     formatDate(dateStr){
-      const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('it-IT', options);
+       const options = { year: 'numeric', month: 'long', day: 'numeric' };
+       const date = new Date(dateStr);
+       return date.toLocaleDateString('it-IT', options);
+     },
+     formatDateTime(dateStr){
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('it-IT', options);
     },
     getImage(index) {
-      return this.images[index % this.images.length];
-    },
-    selectMessage(message) {
-      this.selectedMessage = message;
-      this.selectedImage = this.getImage(index)
-    },
+       return this.images[index % this.images.length];
+     }
   },
   computed:{
-    filteredUser(){
-        const query = this.searchQuery.toLowerCase();
-            return this.messages.filter(contact =>{
-            return contact.name.toLowerCase().includes(query) || contact.surname.toLowerCase().includes(query)
-        })
+
+        filteredApartment() {
+
+            return store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0]
+
     }
+
   },
   mounted() {
-    axios
-      .get("api/user/utente/messaggi")
-      .then((res) => {
-        this.messages = res.data;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    console.log(store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0])
+
+
+
   },
 };
 </script>
@@ -78,43 +81,88 @@ export default {
           </button>
         </div>
 
-        <div class="message-list mt-4">
-          <MessagesList :messages="filteredUser" @selectMessage="selectMessage" />
+        <!-- lista messaggi -->
+        <div class="message-list mt-4" v-if="filteredApartment">
+           <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex align-items-center"
+                v-for="(message, index) in filteredApartment.messages" :key="index" @click="showMessage(message)">
+                    <div class="image me-3">
+                        <img :src="getImage(index)" alt="utente">
+                    </div>
+                    <div class="text-box my-2">
+                        <div class="d-flex justify-content-between">
+                            <h6>{{ message.name }} {{ message.surname }}</h6>
+                            <small>{{ formatDate(message.created_at) }}</small>
+                        </div>
+                        <small>{{ message.email }}</small>
+                        <small class="message-email">{{ message.message }}</small>
+                    </div>
+                </li>
+           </ul>
         </div>
 
       </div>
 
     </aside>
 
+    <!-- dettaglio messaggio -->
     <div class="dashboard-box">
-      <div class="container py-4">
+      <div class="container-fluid py-4">
 
-        <div v-if="selectedMessage">
-          <h5>{{ selectedMessage.name }}</h5>
+        <div class="row" v-if="message">
+            <div class="col">
+                <div class="d-flex align-items-center mx-5">
+                    <div class="main-image me-3">
+                        <img :src="getImage(selectedImage)" alt="utente">
+                    </div>
+                    <div class="text-box my-3">
+                        <div class="d-flex flex-column">
+                            <h6>{{ message.name }} {{ message.surname }}</h6>
+                            <small>{{ formatDateTime(message.created_at) }}</small>
+                        </div>
+                        <small>{{ message.email }}</small>
+                    </div>
+                </div>
+                <div class="m-5">
+                    <p>{{ message.message }}</p>
+                </div>
 
-          <div class="d-flex align-items-center">
-            <div class="image mx-3">
-              <img :src="selectedImage" alt="utente">
+                <!-- <div v-if="selectedMessage">
+                    <div v-for="(message, index) in selectedMessage.messages" :key="index">
+                        <h5>{{ message.name }}</h5>
+
+                <div class="d-flex align-items-center mx-5">
+                    <div class="main-image me-3">
+                    <img :src="selectedImage" alt="utente">
+                    </div>
+
+                    <div class="text-box my-3">
+                        <div class="d-flex flex-column">
+                            <h6>{{ message.name }} {{ message.surname }}</h6>
+                            <small>{{ formatDate(message.created_at) }}</small>
+                        </div>
+                        <small>{{ message.email }}</small>
+                    </div>
+
+                </div>
+
+                <div class="m-5">
+                    <p>{{ message.message }}</p>
+                </div>
+
+                    </div> -->
+
             </div>
-
-            <div class="text-box my-3">
-              <h6>{{ selectedMessage.name }} {{ selectedMessage.surname }}</h6>
-              <small>{{ formatDate(selectedMessage.created_at) }}</small>
-              <small>{{ selectedMessage.email }}</small>
-              <p>{{ selectedMessage.message }}</p>
-            </div>
-
-          </div>
-
         </div>
 
         <div v-else>
           <p>Seleziona un messaggio dalla lista</p>
         </div>
 
-      </div>
+            </div>
+        </div>
+
     </div>
-  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -132,7 +180,7 @@ input {
 .search-button {
   position: absolute;
   right: 2.5rem;
-  padding: 5px;
+  padding: 6px;
   background-color: transparent;
   border: none;
 }
@@ -163,5 +211,9 @@ input {
 
   scrollbar-width: thin;
   scrollbar-color: #888 #f1f1f1;
+}
+
+small{
+    color:#555;
 }
 </style>

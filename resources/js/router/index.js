@@ -44,7 +44,7 @@ const router = createRouter({
                 component: IndexApartment
             },
             {
-                path: '/lista-messaggi',
+                path: '/lista-messaggi/:id/messaggi',
                 name: 'messages',
                 component: Messages
             },

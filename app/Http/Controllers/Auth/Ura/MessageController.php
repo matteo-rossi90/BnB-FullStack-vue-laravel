@@ -11,12 +11,17 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
+        $apartmentId = $request->query('apartment_id');
 
-        $messages = Message::whereHas('apartment', function ($query) use ($user) {
+        $messages = Message::whereHas('apartment', function ($query) use ($user, $apartmentId) {
             $query->where('user_id', $user->id);
+
+            if ($apartmentId) {
+                $query->where('id', $apartmentId);
+            }
         })->orderBy('id', 'desc')->get();
 
         return response()->json($messages);
