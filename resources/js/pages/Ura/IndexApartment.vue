@@ -97,7 +97,7 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        console.log(response.data);
+        console.log('user', response.data);
         store.userApartment = response.data;
         this.apartments = store.userApartment;
       })
@@ -170,7 +170,14 @@ export default {
                       <p class="badge text-bg-danger" v-else>Non visibile</p>
                     </td>
                     <td scope="row" class="align-middle">
-                      <i class="fa-solid fa-envelope"></i>
+                        <router-link
+                        :to="{
+                            name: 'messages',
+                            params: {
+                                id: apartment.id}
+                        }">
+                            <i class="fa-solid fa-envelope"></i>
+                        </router-link>
                     </td>
                     <td scope="row" class="align-middle">
                       <i class="fa-solid fa-chart-simple"></i>
@@ -179,7 +186,7 @@ export default {
                       <router-link
                         :to="{
                           name: 'showApartment',
-                          params: { id: apartment.id },
+                          params: { slug: apartment.slug, id:apartment.id },
                         }"
                       >
                         <div class="btn btn-primary">
@@ -310,6 +317,10 @@ td {
   bottom: 0;
   right: 0;
   z-index: 1050;
+}
+
+a{
+    color:black;
 }
 
 // @use 'path' as *;

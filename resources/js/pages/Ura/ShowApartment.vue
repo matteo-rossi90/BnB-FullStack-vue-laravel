@@ -8,74 +8,212 @@ export default {
       apartment: "",
       src:"",
       alt:"",
-      name:""
+      name:"",
+
+     //   dati messaggio
+     name:'',
+     surname:'',
+     email:'',
+     message:'',
+
+     errors: {
+        name: "",
+        surname: "",
+        email: "",
+        message:""
+      },
+
+      toastMessage:''
 
     };
+
+
   },
     methods: {
-    // imageUrl(path) {
-    //   return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
-    // },
+        // imageUrl(path) {
+        //   return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
+        // },
         getMap() {
-        const tt = window.tt; //accesso alla libreria TomTom
-        let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
-        let size = 50; //dimensioni del popup
+            const tt = window.tt; //accesso alla libreria TomTom
+            let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
+            let size = 50; //dimensioni del popup
 
-        const map = tt.map({
-            key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
-            center: center,
-            container: "map",
-            zoom: 12,
-        });
+            const map = tt.map({
+                key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+                center: center,
+                container: "map",
+                zoom: 12,
+            });
 
-        //accesso alle coordinate nel JSON generato dall'API
+            //accesso alle coordinate nel JSON generato dall'API
 
-        const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
-        const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
+            const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
+            const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
 
-        if (!lat || !lon) {
-            console.error("Coordinate non valide per l'appartamento");
-            return;
+            if (!lat || !lon) {
+                console.error("Coordinate non valide per l'appartamento");
+                return;
+            }
+
+            let boxContent = document.createElement("div");
+            boxContent.innerHTML = `
+                    <div class="card-body">
+                        <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
+                        <p class="title-popup">${this.apartment.address}</p>
+                        <small>8000 euro</small>
+                    </div>`;
+
+            let popup = new tt.Popup({
+                closeButton: true, //permettere la chiusura il popup
+                closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+                offset: size,
+                // anchor: 'none'
+            }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+
+            //creare il marker per l'appartamento
+            let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+
+            marker.addTo(map);
+
+            const bounds = [
+                [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+                [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+            ];
+
+            map.setMaxBounds(bounds);
+
+            map.addControl(new tt.FullscreenControl());
+            map.addControl(new tt.NavigationControl());
+
+        },
+
+        validateName() {
+            if (!this.name) {
+                this.errors.name = "";
+            } else if (!/^[a-zA-Z]+$/.test(this.name)) {
+                this.errors.name = "Il nome deve contenere solo lettere";
+            } else if (this.name.length < 4) {
+                this.errors.name =
+                "il nome non può avere una lunghezza inferiore di 4 caratteri";
+            } else {
+                this.errors.name = "";
+            }
+        },
+
+        validateSurname() {
+            if (!this.surname) {
+                this.errors.surname = "";
+            } else if (!/^[a-zA-Z]+$/.test(this.surname)) {
+                this.errors.surname = "Il cognome deve contenere solo lettere";
+            } else if (this.surname.length < 4) {
+                this.errors.surname =
+                "Il cognome non può avere una lunghezza inferiore di 4 caratteri";
+            } else {
+                this.errors.surname = "";
+            }
+        },
+
+        validateEmail() {
+            const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!this.email) {
+                this.errors.email = "L'email è obbligatoria.";
+            } else if (!emailRegex.test(this.email)) {
+                this.errors.email =
+                "Inserisci una email valida, ad esempio: nome.cognome@mail.com";
+            } else {
+                this.errors.email = "";
+            }
+        },
+
+        validateMessage() {
+            if (!this.message) {
+                this.errors.message = "";
+            } else if (this.message.length < 10) {
+                this.errors.message =
+                "Il messaggio non può avere una lunghezza inferiore a 10 caratteri";
+            } else {
+                this.errors.message = "";
+            }
+        },
+
+        showToast(text, type = "success") {//metodo che permette di mostrare il toast
+
+            this.toastMessage = text;
+            const toastEl = this.$refs.liveToast;
+
+            toastEl.classList.remove("text-bg-success", "text-bg-danger");
+
+            if (type === "success") {
+                toastEl.classList.add("text-bg-success");
+            } else {
+                toastEl.classList.add("text-bg-danger");
+            }
+            const toast = new bootstrap.Toast(toastEl);
+
+            toast.show();
+
+            setTimeout(() => {
+            toast.hide();
+            }, 5000);
+        },
+
+        hideToast() {//metodo che permette di nascondere il toast
+
+            const toastEl = this.$refs.liveToast;
+
+            const toast = new bootstrap.Toast(toastEl);
+
+            toast.hide();
+        },
+
+        submitMessage(){
+            const messageData = {
+                name: this.name,
+                surname: this.surname,
+                email: this.email,
+                message: this.message
+            }
+
+            axios.post(`http://127.0.0.1:8000/api/apartments/${this.apartment.id}/send-message`, messageData)
+                .then(res=>{
+                    console.log(res.data);
+                    if(res.data.success){
+                        this.showToast('Messaggio inviato correttamente', 'success');
+                        this.errors = {
+                            name:'',
+                            surname:'',
+                            email:'',
+                            message:''
+                        };
+                    }else{
+                        this.showToast("Errore durante l'invio del messaggio", 'error');
+                        this.errors = res.data.errors;
+                    }
+                })
+                .catch(er=>{
+                    console.log(er.message);
+                    this.showToast("Errore durante l'invio del messaggio", 'error');
+                })
+            console.log(messageData);
+
+        },
+
+        submitForm(){
+            this.validateName();
+            this.validateSurname();
+            this.validateEmail();
+            this.validateMessage();
+
+            this.submitMessage();
         }
 
-        let boxContent = document.createElement("div");
-        boxContent.innerHTML = `
-                <div class="card-body">
-                    <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
-                    <p class="title-popup">${this.apartment.address}</p>
-                    <small>8000 euro</small>
-                </div>`;
-
-        let popup = new tt.Popup({
-            closeButton: true, //permettere la chiusura il popup
-            closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-            offset: size,
-            // anchor: 'none'
-        }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
-
-        //creare il marker per l'appartamento
-        let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
-
-        marker.addTo(map);
-
-        const bounds = [
-            [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-            [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-        ];
-
-        map.setMaxBounds(bounds);
-
-        map.addControl(new tt.FullscreenControl());
-        map.addControl(new tt.NavigationControl());
-
     },
-
-  },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
       // 'vm' è l'istanza del componente
       if (from.name === "home") {
-        vm.apartment = store.allApartments[to.params.id];
+        vm.apartment = store.allApartments[--to.params.id];
       }
       if (from.name === "apartmentsMap") {
         vm.apartment = store.allApartments[--to.params.id];
@@ -99,20 +237,6 @@ export default {
 };
 </script>
 
-<!-- <template>
-  <div>
-    <p>{{ apartment.title }}</p>
-    <p>titolo: {{ apartment.title }}</p>
-    <p>immagine se vuota è path: {{ apartment.image }}</p>
-    <p>numero di camere: {{ apartment.number_rooms }}</p>
-    <p>numero di letti: {{ apartment.number_beds }}</p>
-    <p>numero di bagni: {{ apartment.number_bathrooms }}</p>
-    <p>metri quadri: {{ apartment.square_meters }}</p>
-    <p>indirizzo {{ apartment.address }}</p>
-    <p>latitudine {{ apartment.lat }}</p>
-    <p>longitudine: {{ apartment.lon }}</p>
-  </div>
-</template> -->
 
 <template>
   <div v-if="exist">
@@ -210,7 +334,31 @@ export default {
             </div>
 
             <div class="col-12 col-md-10 mx-auto">
-              <form class="message-form p-4 shadow-sm rounded">
+              <form class="message-form p-4 shadow-sm rounded" @submit.prevent="submitForm">
+                <div class="mb-3">
+                  <label for="name" class="form-label">Il tuo nome</label>
+                  <input
+                    type="text"
+                    id="name"
+                    class="form-control"
+                    placeholder="Inserisci il tuo nome"
+                    v-model="name"
+                    @input="validateName"
+                  />
+                  <small v-if="errors.name" class="error-message">{{errors.name}}</small>
+                </div>
+                <div class="mb-3">
+                  <label for="surname" class="form-label">Il tuo cognome</label>
+                  <input
+                    type="text"
+                    id="surname"
+                    class="form-control"
+                    placeholder="Inserisci il tuo cognome"
+                    v-model="surname"
+                    @input="validateSurname"
+                  />
+                  <small v-if="errors.surname" class="error-message">{{errors.surname}}</small>
+                </div>
                 <!-- Campo per l'email -->
                 <div class="mb-3">
                   <label for="email" class="form-label">La tua email</label>
@@ -219,8 +367,10 @@ export default {
                     id="email"
                     class="form-control"
                     placeholder="Inserisci la tua email"
-                    required
+                    v-model="email"
+                    @input="validateEmail"
                   />
+                  <small v-if="errors.email" class="error-message">{{errors.email}}</small>
                 </div>
 
                 <!-- Campo per il messaggio -->
@@ -233,8 +383,10 @@ export default {
                     class="form-control"
                     rows="5"
                     placeholder="Scrivi il tuo messaggio..."
-                    required
+                    v-model="message"
+                    @input="validateMessage"
                   ></textarea>
+                  <small v-if="errors.message" class="error-message">{{errors.message}}</small>
                 </div>
 
                 <!-- Bottone invia -->
@@ -255,6 +407,28 @@ export default {
     </div>
   </div>
   <div v-else>Appartamento non trovato</div>
+
+  <!-- codice del toast -->
+  <div
+        ref="liveToast"
+        class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        style="z-index: 1050;"
+        >
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ toastMessage }}
+            </div>
+            <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            @click="hideToast"
+            aria-label="Close"
+            ></button>
+        </div>
+    </div>
 </template>
 
 
@@ -340,5 +514,17 @@ p {
   width: 100%;
   height: 500px;
   border-radius: 10px;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
 }
 </style>

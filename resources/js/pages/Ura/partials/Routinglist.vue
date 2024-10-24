@@ -29,17 +29,17 @@ export default {
           ></router-link
         >
       </li>
-      <li class="py-3 d-flex align-items-center">
-        <router-link
-          class="link d-flex align-items-center gap-2"
-          :to="{ name: 'messages' }"
-        >
-          <i class="fa-solid fa-envelope"></i>
-          <span class="d-none d-xl-inline d-lg-inline"
-            >Messaggi</span
-          ></router-link
-        >
-      </li>
+      <!-- <li class="py-3 d-flex align-items-center"> -->
+        <!-- <router-link -->
+          <!-- class="link d-flex align-items-center gap-2" -->
+          <!-- :to="{ name: 'messages' }" -->
+        <!-- > -->
+          <!-- <i class="fa-solid fa-envelope"></i> -->
+          <!-- <span class="d-none d-xl-inline d-lg-inline" -->
+            <!-- >Messaggi</span -->
+          <!-- ></router-link -->
+        <!-- > -->
+      <!-- </li> -->
       <li class="py-3 d-flex align-items-center">
         <router-link
           class="link d-flex align-items-center gap-2"

@@ -197,7 +197,7 @@ export default {
             :key="index"
           >
             <router-link
-              :to="{ name: 'showApartment', params: { id: apartment.id } }"
+              :to="{ name: 'showApartment', params: { slug: apartment.slug, id:apartment.id } }"
             >
               <div class="card shadow-sm border-0 rounded">
                 <img
