@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth\Ura;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Orders\OrderRequest;
+use App\Models\Apartment;
 use App\Models\Sponsor;
 use Braintree\Gateway;
 use Illuminate\Http\Request;
@@ -35,6 +36,9 @@ class OrderController extends Controller
                 'success' => true,
                 'message' => 'Transazione eseguita con successo'
             ];
+            $apartment = Apartment::find($request->apartment);
+            $sponsor = Sponsor::find($request->sponsor);
+            $apartment->sponsors()->attach($sponsor->id);
             return response()->json($data, 200);
 
         }else{

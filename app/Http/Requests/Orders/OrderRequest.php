@@ -28,7 +28,8 @@ class OrderRequest extends FormRequest
             [
                 'required',
                 new ValideProduct()
-            ]
+            ],
+            'apartment' => 'required'
         ];
     }
 

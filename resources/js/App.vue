@@ -48,18 +48,18 @@ export default {
           console.log("app- user e user name:", err.message);
         });
 
-      if (store.is_logged) {
-        // userApartment
-        axios
-          .get("api/user/utente/dashboard")
-          .then((response) => {
-            store.userApartment = response.data;
-            console.log("app- user apartment");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
+      //   if (store.is_logged) {
+      // userApartment
+      axios
+        .get("api/user/utente/dashboard")
+        .then((response) => {
+          store.userApartment = response.data;
+          console.log("app- user apartment", response.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      //   }
     },
   },
   mounted() {
