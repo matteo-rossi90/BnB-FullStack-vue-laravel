@@ -42,14 +42,16 @@ class NewMessageController extends Controller
             $success = false;
             $errors = $validator->errors();
             return response()->json(compact('success', 'errors'));
+        } else {
+
+            $new_message = new Message();
+            $new_message->fill($data);
+            $new_message->apartment_id = $apartment->id;
+            $new_message->save();
+
+
+            return response()->json(compact('success'));
         }
 
-        $new_message = new Message();
-        $new_message->fill($data);
-        $new_message->apartment_id = $apartment->id;
-        $new_message->save();
-
-
-        return response()->json(compact('success'));
     }
 }

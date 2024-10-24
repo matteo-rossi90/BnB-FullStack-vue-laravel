@@ -23,6 +23,8 @@ export default {
         message:""
       },
 
+      toastMessage:''
+
     };
 
 
@@ -135,6 +137,36 @@ export default {
             }
         },
 
+        showToast(text, type = "success") {//metodo che permette di mostrare il toast
+
+            this.toastMessage = text;
+            const toastEl = this.$refs.liveToast;
+
+            toastEl.classList.remove("text-bg-success", "text-bg-danger");
+
+            if (type === "success") {
+                toastEl.classList.add("text-bg-success");
+            } else {
+                toastEl.classList.add("text-bg-danger");
+            }
+            const toast = new bootstrap.Toast(toastEl);
+
+            toast.show();
+
+            setTimeout(() => {
+            toast.hide();
+            }, 5000);
+        },
+
+        hideToast() {//metodo che permette di nascondere il toast
+
+            const toastEl = this.$refs.liveToast;
+
+            const toast = new bootstrap.Toast(toastEl);
+
+            toast.hide();
+        },
+
         submitMessage(){
             const messageData = {
                 name: this.name,
@@ -146,11 +178,15 @@ export default {
             axios.post(`http://127.0.0.1:8000/api/apartments/${this.apartment.id}/send-message`, messageData)
                 .then(res=>{
                     console.log(res.data);
-
+                    if(res.data.success){
+                        this.showToast('Messaggio inviato correttamente', 'success');
+                    }else{
+                        this.showToast("Errore durante l'invio del messaggio", 'error');
+                    }
                 })
                 .catch(er=>{
                     console.log(er.message);
-
+                    this.showToast("Errore durante l'invio del messaggio", 'error');
                 })
             console.log(messageData);
 
@@ -364,6 +400,28 @@ export default {
     </div>
   </div>
   <div v-else>Appartamento non trovato</div>
+
+  <!-- codice del toast -->
+  <div
+        ref="liveToast"
+        class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+        style="z-index: 1050;"
+        >
+        <div class="d-flex">
+            <div class="toast-body">
+                {{ toastMessage }}
+            </div>
+            <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            @click="hideToast"
+            aria-label="Close"
+            ></button>
+        </div>
+    </div>
 </template>
 
 
@@ -454,5 +512,12 @@ p {
 .error-message {
     color: red;
     font-size: 0.9em;
-  }
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
+}
 </style>
