@@ -75,7 +75,7 @@ export default {
     next((vm) => {
       // 'vm' è l'istanza del componente
       if (from.name === "home") {
-        vm.apartment = store.allApartments[to.params.id];
+        vm.apartment = store.allApartments[--to.params.id];
       }
       if (from.name === "apartmentsMap") {
         vm.apartment = store.allApartments[--to.params.id];

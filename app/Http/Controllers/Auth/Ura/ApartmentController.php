@@ -23,7 +23,7 @@ class ApartmentController extends Controller
         return $apartment;
     }
 
-#tommy riga 26
+    #tommy riga 26
     /**
      * Store a newly created resource in storage.
      */
@@ -76,7 +76,6 @@ class ApartmentController extends Controller
         // Se non ci sono errori, restituisci i dati codificati come JSON
 
         return response()->json($apartment);
-
     }
 
 
@@ -166,6 +165,4 @@ class ApartmentController extends Controller
 
         return response()->json(['message' => 'Appartamento non trovato'], 404);
     }
-
-
 }

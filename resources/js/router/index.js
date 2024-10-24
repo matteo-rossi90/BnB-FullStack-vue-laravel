@@ -60,7 +60,7 @@ const router = createRouter({
             },
             {
                 // path: '/dettaglio-appartamento',
-                path: '/appartamento-singolo/:id',
+                path: '/appartamento-singolo/:slug/:id',
                 name: 'showApartment',
                 component: ShowApartment
             },{
