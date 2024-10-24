@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Auth\Ura\ApartmentController;
-use App\Http\Controllers\Auth\Ura\MessageController;
 use App\Http\Controllers\GeneralUser;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
@@ -32,7 +31,6 @@ Route::middleware('auth:sanctum')
     ->name('admin.')
     ->group(function(){
         Route::resource('/utente/dashboard', ApartmentController::class);
-        Route::resource('/utente/messaggi', MessageController::class);
 });
 
 Route::get('/home', [GeneralUser::class, 'allApartment']);
@@ -44,7 +42,9 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class , 'store']);
 
 // rotta per invio messaggi
-Route::post('/send-message', [NewMessageController::class, 'store']);
+// Route::post('/send-message', [NewMessageController::class, 'store']);
+Route::post('/apartments/{apartment}/send-message', [NewMessageController::class, 'store']);
+
 
 
 

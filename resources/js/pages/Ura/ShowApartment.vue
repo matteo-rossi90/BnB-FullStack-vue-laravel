@@ -84,7 +84,7 @@ export default {
             message: this.message
         }
 
-        axios.post('http://127.0.0.1:8000/api/send-message', messageData)
+        axios.post(`http://127.0.0.1:8000/api/apartments/${this.apartment.id}/send-message`, messageData)
             .then(res=>{
                 console.log(res.data);
 
