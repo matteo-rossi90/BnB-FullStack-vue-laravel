@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\Auth\Ura\ApartmentController;
-use App\Http\Controllers\Auth\Ura\MessageController;
 use App\Http\Controllers\GeneralUser;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
+use App\Http\Controllers\NewMessageController; //controller per nuovi messaggi
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -41,4 +41,15 @@ Route::get('/messages', [GeneralUser::class, 'messages']);
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 Route::post('register', [RegisteredUserController::class, 'store']);
-Route::post('login', [AuthenticatedSessionController::class, 'store']);
+Route::post('login', [AuthenticatedSessionController::class , 'store']);
+
+// rotta per invio messaggi
+// Route::post('/send-message', [NewMessageController::class, 'store']);
+Route::post('/apartments/{apartment}/send-message', [NewMessageController::class, 'store']);
+
+
+
+
+
+
+
