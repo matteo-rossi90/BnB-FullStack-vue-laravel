@@ -12,6 +12,7 @@ export default {
       form: {
         token: "",
         sponsor: "",
+        apartment: this.$route.params.id,
       },
       isLoad: false,
       successPayment: false,
