@@ -33,11 +33,11 @@ Route::middleware('auth:sanctum')
     ->group(function(){
         Route::resource('/utente/dashboard', ApartmentController::class);
         Route::resource('/utente/messaggi', MessageController::class);
-});
+    });
 
-// payment
-Route::get('/order/generate', [OrderController::class, 'generate']);
-Route::post('/order/make/payment', [OrderController::class, 'makePayment']);
+    // payment
+    Route::get('/order/generate', [OrderController::class, 'generate']);
+    Route::post('/order/make/payment', [OrderController::class, 'makePayment']);
 
 
 

@@ -36,7 +36,7 @@
 {{-- plugin braintree --}}
 {{-- <script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://unpkg.com/vue-braintree/dist/vue-braintree.umd.min.js"></script> --}}
-<script src="https://js.braintreegateway.com/web/dropin/1.43.0/js/dropin.min.js"></script>
+{{-- <script src="https://js.braintreegateway.com/web/dropin/1.43.0/js/dropin.min.js"></script> --}}
 </head>
 
 <body>
