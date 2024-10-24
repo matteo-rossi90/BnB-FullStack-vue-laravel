@@ -68,7 +68,6 @@ export default {
   <div v-if="error">
     <p>{{ error }}</p>
   </div>
-  componente
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;

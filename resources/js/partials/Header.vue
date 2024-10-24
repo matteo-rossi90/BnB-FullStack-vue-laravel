@@ -141,9 +141,6 @@ export default {
               <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
               <span><strong>BoolBnb</strong></span>
             </router-link>
-            <router-link :to="{ name: 'payment', params: { id: 1 } }"
-              >payment</router-link
-            >
           </div>
 
           <div class="col d-flex gap-2 justify-content-end">
