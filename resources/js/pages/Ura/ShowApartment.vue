@@ -11,12 +11,21 @@ export default {
       name:"",
 
      //   dati messaggio
-     name:'pippo',
-     surname:'franco',
-     email:'pippo@franco.com',
-     message:'sono pippo franco'
+     name:'',
+     surname:'',
+     email:'',
+     message:'',
+
+     errors: {
+        name: "",
+        surname: "",
+        email: "",
+        message:""
+      },
 
     };
+
+
   },
     methods: {
         // imageUrl(path) {
@@ -76,26 +85,85 @@ export default {
 
         },
 
+        validateName() {
+            if (!this.name) {
+                this.errors.name = "";
+            } else if (!/^[a-zA-Z]+$/.test(this.name)) {
+                this.errors.name = "Il nome deve contenere solo lettere";
+            } else if (this.name.length < 4) {
+                this.errors.name =
+                "il nome non può avere una lunghezza inferiore di 4 caratteri";
+            } else {
+                this.errors.name = "";
+            }
+        },
+
+        validateSurname() {
+            if (!this.surname) {
+                this.errors.surname = "";
+            } else if (!/^[a-zA-Z]+$/.test(this.surname)) {
+                this.errors.surname = "Il cognome deve contenere solo lettere";
+            } else if (this.surname.length < 4) {
+                this.errors.surname =
+                "Il cognome non può avere una lunghezza inferiore di 4 caratteri";
+            } else {
+                this.errors.surname = "";
+            }
+        },
+
+        validateEmail() {
+            const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+            if (!this.email) {
+                this.errors.email = "L'email è obbligatoria.";
+            } else if (!emailRegex.test(this.email)) {
+                this.errors.email =
+                "Inserisci una email valida, ad esempio: nome.cognome@mail.com";
+            } else {
+                this.errors.email = "";
+            }
+        },
+
+        validateMessage() {
+            if (!this.message) {
+                this.errors.message = "";
+            } else if (this.message.length < 10) {
+                this.errors.message =
+                "Il messaggio non può avere una lunghezza inferiore a 10 caratteri";
+            } else {
+                this.errors.message = "";
+            }
+        },
+
         submitMessage(){
-        const messageData = {
-            name: this.name,
-            surname: this.surname,
-            email: this.email,
-            message: this.message
+            const messageData = {
+                name: this.name,
+                surname: this.surname,
+                email: this.email,
+                message: this.message
+            }
+
+            axios.post(`http://127.0.0.1:8000/api/apartments/${this.apartment.id}/send-message`, messageData)
+                .then(res=>{
+                    console.log(res.data);
+
+                })
+                .catch(er=>{
+                    console.log(er.message);
+
+                })
+            console.log(messageData);
+
+        },
+
+        submitForm(){
+            this.validateName();
+            this.validateSurname();
+            this.validateEmail();
+            this.validateMessage();
+
+            this.submitMessage();
         }
-
-        axios.post(`http://127.0.0.1:8000/api/apartments/${this.apartment.id}/send-message`, messageData)
-            .then(res=>{
-                console.log(res.data);
-
-            })
-            .catch(er=>{
-                console.log(er.message);
-
-            })
-        console.log(messageData);
-
-    }
 
     },
   beforeRouteEnter(to, from, next) {
@@ -126,20 +194,6 @@ export default {
 };
 </script>
 
-<!-- <template>
-  <div>
-    <p>{{ apartment.title }}</p>
-    <p>titolo: {{ apartment.title }}</p>
-    <p>immagine se vuota è path: {{ apartment.image }}</p>
-    <p>numero di camere: {{ apartment.number_rooms }}</p>
-    <p>numero di letti: {{ apartment.number_beds }}</p>
-    <p>numero di bagni: {{ apartment.number_bathrooms }}</p>
-    <p>metri quadri: {{ apartment.square_meters }}</p>
-    <p>indirizzo {{ apartment.address }}</p>
-    <p>latitudine {{ apartment.lat }}</p>
-    <p>longitudine: {{ apartment.lon }}</p>
-  </div>
-</template> -->
 
 <template>
   <div v-if="exist">
@@ -237,7 +291,7 @@ export default {
             </div>
 
             <div class="col-12 col-md-10 mx-auto">
-              <form class="message-form p-4 shadow-sm rounded" @submit.prevent="submitMessage">
+              <form class="message-form p-4 shadow-sm rounded" @submit.prevent="submitForm">
                 <div class="mb-3">
                   <label for="name" class="form-label">Il tuo nome</label>
                   <input
@@ -246,7 +300,9 @@ export default {
                     class="form-control"
                     placeholder="Inserisci il tuo nome"
                     v-model="name"
+                    @input="validateName"
                   />
+                  <small v-if="errors.name" class="error-message">{{errors.name}}</small>
                 </div>
                 <div class="mb-3">
                   <label for="surname" class="form-label">Il tuo cognome</label>
@@ -256,7 +312,9 @@ export default {
                     class="form-control"
                     placeholder="Inserisci il tuo cognome"
                     v-model="surname"
+                    @input="validateSurname"
                   />
+                  <small v-if="errors.surname" class="error-message">{{errors.surname}}</small>
                 </div>
                 <!-- Campo per l'email -->
                 <div class="mb-3">
@@ -267,8 +325,9 @@ export default {
                     class="form-control"
                     placeholder="Inserisci la tua email"
                     v-model="email"
-                    required
+                    @input="validateEmail"
                   />
+                  <small v-if="errors.email" class="error-message">{{errors.email}}</small>
                 </div>
 
                 <!-- Campo per il messaggio -->
@@ -283,7 +342,9 @@ export default {
                     placeholder="Scrivi il tuo messaggio..."
                     required
                     v-model="message"
+                    @input="validateMessage"
                   ></textarea>
+                  <small v-if="errors.message" class="error-message">{{errors.message}}</small>
                 </div>
 
                 <!-- Bottone invia -->
@@ -390,4 +451,9 @@ p {
   height: 500px;
   border-radius: 10px;
 }
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+  }
 </style>
