@@ -78,11 +78,11 @@ export default {
       <div class="container">
 
         <div class="d-flex justify-content-center my-4">
-          <h4>Tutti i messaggi</h4>
+          <h4>Messaggi ricevuti</h4>
         </div>
 
         <div class="d-flex mx-4">
-          <input type="search" class="form-control" id="box-search" placeholder="Cerca un contatto" v-model="searchQuery">
+          <input type="search" class="form-control" id="box-search" placeholder="Cerca un messaggio" v-model="searchQuery">
           <button type="submit" class="search-button">
             <i class="fa-solid fa-search"></i>
           </button>
@@ -127,7 +127,7 @@ export default {
                             <h6>{{ message.name }} {{ message.surname }}</h6>
                             <small>{{ formatDateTime(message.created_at) }}</small>
                         </div>
-                        <small>{{ message.email }}</small>
+                        <small><a :href="'mailto:' + message.email">{{ message.email }}</a></small>
                     </div>
                 </div>
                 <div class="m-5">
