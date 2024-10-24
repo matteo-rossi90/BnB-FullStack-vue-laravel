@@ -340,7 +340,6 @@ export default {
                     class="form-control"
                     rows="5"
                     placeholder="Scrivi il tuo messaggio..."
-                    required
                     v-model="message"
                     @input="validateMessage"
                   ></textarea>
