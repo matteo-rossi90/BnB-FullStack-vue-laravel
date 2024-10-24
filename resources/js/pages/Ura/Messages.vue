@@ -28,7 +28,7 @@ export default {
     };
   },
   methods:{
-    showMessage(message){
+    showMessage(message, index){
         this.message = message;
         this.selectedImage = index;
     },
@@ -85,7 +85,7 @@ export default {
         <div class="message-list mt-4" v-if="filteredApartment">
            <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex align-items-center"
-                v-for="(message, index) in filteredApartment.messages" :key="index" @click="showMessage(message)">
+                v-for="(message, index) in filteredApartment.messages" :key="index" @click="showMessage(message, index)">
                     <div class="image me-3">
                         <img :src="getImage(index)" alt="utente">
                     </div>
