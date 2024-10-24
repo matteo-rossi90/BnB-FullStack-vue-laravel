@@ -13,18 +13,18 @@ export default {
         message:"",
         selectedImage: null,
         images: [
-        "https://picsum.photos/seed/profile1/80/80",
-        "https://picsum.photos/seed/profile2/80/80",
-        "https://picsum.photos/seed/profile3/80/80",
-        "https://picsum.photos/seed/profile4/80/80",
-        "https://picsum.photos/seed/profile5/80/80",
-        "https://picsum.photos/seed/profile6/80/80",
-        "https://picsum.photos/seed/profile7/80/80",
-        "https://picsum.photos/seed/profile8/80/80",
-        "https://picsum.photos/seed/profile9/80/80",
-        "https://picsum.photos/seed/profile10/80/80",
+            "https://picsum.photos/seed/profile1/80/80",
+            "https://picsum.photos/seed/profile2/80/80",
+            "https://picsum.photos/seed/profile3/80/80",
+            "https://picsum.photos/seed/profile4/80/80",
+            "https://picsum.photos/seed/profile5/80/80",
+            "https://picsum.photos/seed/profile6/80/80",
+            "https://picsum.photos/seed/profile7/80/80",
+            "https://picsum.photos/seed/profile8/80/80",
+            "https://picsum.photos/seed/profile9/80/80",
+            "https://picsum.photos/seed/profile10/80/80",
         ],
-    //   searchQuery:""
+        searchQuery:""
     };
   },
   methods:{
@@ -52,7 +52,14 @@ export default {
 
             return store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0]
 
-    }
+        },
+        filteredMessages(){
+
+            return this.filteredApartment.messages.filter((message) =>{
+                const name =`${message.name} ${message.surname}`.toLowerCase();
+                return name.includes(this.searchQuery.toLowerCase())
+            })
+        }
 
   },
   mounted() {
@@ -85,7 +92,7 @@ export default {
         <div class="message-list mt-4" v-if="filteredApartment">
            <ul class="list-group list-group-flush">
                 <li class="list-group-item d-flex align-items-center"
-                v-for="(message, index) in filteredApartment.messages" :key="index" @click="showMessage(message, index)">
+                v-for="(message, index) in filteredMessages" :key="index" @click="showMessage(message, index)">
                     <div class="image me-3">
                         <img :src="getImage(index)" alt="utente">
                     </div>
