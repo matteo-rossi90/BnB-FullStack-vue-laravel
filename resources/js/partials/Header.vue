@@ -1,8 +1,6 @@
 <script>
 import { store } from "../store/store.js";
 import { checkAdress } from "../store/store";
-import { componeUrlString } from "../store/store";
-import { findZone } from "../store/store";
 // import { throttle } from "lodash";
 
 export default {
@@ -17,10 +15,11 @@ export default {
       address: [],
       //   timeout for bettere request after user write
       debounceTimeout: null,
-      //   query url with simbol - when start event send this data in params
-      urlSearchQuery: "",
+
       isThrottled: false,
       isClose: false,
+      previousScrollPosition: window.scrollY,
+      isScrollingDown: false,
     };
   },
   methods: {
@@ -33,8 +32,6 @@ export default {
             localStorage.setItem("userName", "Accedi");
             store.userName = localStorage.getItem("userName");
             this.$router.push({ name: "home" });
-
-
           })
           .catch((err) => {
             console.log("Errore nel logout:", err);
@@ -65,51 +62,44 @@ export default {
         })
         .then((response) => {
           this.address = response.data.results;
-          this.urlSearchQuery = this.searchQuery;
         })
         .catch((err) => {
           console.log(err);
         });
     },
     sendAdress(addressObj) {
-      let urlString = componeUrlString(addressObj);
-
-      if (urlString) {
-        this.isClose = false;
-        store.center = [addressObj.position.lon, addressObj.position.lat];
-        findZone(addressObj.position.lon, addressObj.position.lat);
-        this.searchQuery = "";
-
-        this.$router.push({
-          name: "apartmentsMap",
-          params: { id: urlString },
-        });
-      } else {
-        console.warn("Stringa indirizzo vuota, non reindirizzo");
-      }
+      this.isClose = false;
+      store.inputValue = this.searchQuery;
+      this.$router.push({
+        name: "apartmentsMap",
+        query: {
+          input: this.searchQuery,
+          lon: addressObj.position.lon,
+          lat: addressObj.position.lat,
+        },
+      });
     },
   },
   mounted() {
     window.addEventListener("click", () => {
-      store.is_open = false;
+      if (this.isClose) {
+        this.isClose = false;
+      }
     });
-    // window.addEventListener("scroll", () => {
-    //   if (!this.isThrottled) {
-    //     let firstRow = document.getElementById("firstRow");
-    //     let scrollAmount = window.scrollY;
+    window.addEventListener("scroll", () => {
+      const currentScrollPosition = window.scrollY;
+      let firstRow = document.getElementById("firstRow");
 
-    //     if (scrollAmount > 20) {
-    //       firstRow.classList.add("hidden");
-    //     } else {
-    //       firstRow.classList.remove("hidden");
-    //     }
+      firstRow.style.transition = "all 0.5s";
+      if (currentScrollPosition > this.previousScrollPosition) {
+        firstRow.classList.add("hidden");
+      } else {
+        firstRow.classList.remove("hidden");
+      }
 
-    //     this.isThrottled = true;
-    //     setTimeout(() => {
-    //       this.isThrottled = false;
-    //     }, 100); // 100ms di pausa tra un evento scroll e il successivo
-    //   }
-    // });
+      // Aggiorniamo la posizione precedente per il prossimo confronto
+      this.previousScrollPosition = currentScrollPosition;
+    });
   },
   computed: {
     isLogged() {
@@ -169,16 +159,22 @@ export default {
                 <router-link class="link" :to="{ name: 'home' }"
                   >Home</router-link
                 >
-                <router-link v-if="!isLogged" class="link" :to="{ name: 'login' }"
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'login' }"
                   >Login</router-link
                 >
-                <router-link  v-if="!isLogged" class="link" :to="{ name: 'register' }"
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'register' }"
                   >Register</router-link
                 >
                 <router-link class="link" :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
-                <p  v-if="isLogged" class="link" @click="logout">Logout</p>
+                <p v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>
@@ -190,25 +186,33 @@ export default {
               <div class="contInput d-flex">
                 <input
                   type="text"
-                  class="form-control"
+                  class="inputCustom"
                   placeholder="Cerca appartamenti per indirizzo..."
                   v-model="searchQuery"
                   @input="debouncedSearch"
                 />
                 <span class="button">invia</span>
 
-                <div class="suggest" v-if="isClose">
-                  <ul>
+                <div class="contSuggest" v-if="isClose">
+                  <ul class="suggest">
                     <li
                       v-for="(addressObj, index) in suggestAdress"
                       :key="index"
                     >
-                      <p class="link" @click="sendAdress(addressObj)">
-                        {{ addressObj.address.streetName }}
-                        {{ addressObj.address.municipality }}
-                        {{ addressObj.address.postalCode }}
-                        {{ addressObj.address.neighbourhood }}
-                      </p>
+                      <div class="link" @click="sendAdress(addressObj)">
+                        <span class="street"
+                          >{{ addressObj.address.streetName }} <span> </span>
+                        </span>
+                        <span class="city"
+                          >{{ addressObj.address.municipality }}
+                        </span>
+                        <span class="city"
+                          >{{ addressObj.address.postalCode }}
+                        </span>
+                        <span class="city">
+                          {{ addressObj.address.neighbourhood }}</span
+                        >
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -309,9 +313,9 @@ p,
 //#inputAdress
 .contInput {
   width: 70%;
+  height: 4.5rem;
   padding: 0.5rem;
   border-radius: 20px;
-  border: 1px solid black;
   position: relative;
   left: 50%;
   transform: translate(-50%);
@@ -337,23 +341,62 @@ p,
     color: white;
   }
 }
-.suggest {
-  position: absolute;
-  width: 100%;
-  top: 100%;
-  background-color: rgb(237, 237, 237);
-  border-radius: 20px;
-  font-size: 0.75rem;
-  z-index: 10;
+.contSuggest {
+  .suggest {
+    position: absolute;
+    width: 90%;
+    top: 89%;
+    left: 50%;
+    transform: translate(-50%);
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    font-size: 0.75rem;
+    box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+    padding: 0;
+    z-index: 10;
 
-  li {
-    padding: 0.3rem 0.5rem;
-    border-radius: 20px;
-    margin-bottom: 0.1rem;
-    &:hover {
-      background-color: rgb(217, 217, 217);
-      cursor: pointer;
+    li {
+      width: 100%;
+
+      .link {
+        width: 100%;
+        cursor: pointer;
+        text-decoration: none;
+        &:hover {
+          background-color: rgba($color: rgb(255, 171, 171), $alpha: 0.1);
+        }
+        // &::before {
+        //   content: "";
+        //   background-image: url("/public/img/point.svg");
+        //   background-size: contain;
+        //   background-repeat: no-repeat;
+        // }
+        .street {
+          font-size: 0.9rem;
+        }
+        .city {
+          font-size: 0.75rem;
+        }
+      }
     }
+  }
+}
+.inputCustom {
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: none;
+  padding: 0.3rem;
+  caret-color: black; // Cambia il colore del caret
+  font-size: 1.2rem; // Aumenta la dimensione del testo, e di conseguenza la lunghezza del caret
+  line-height: 1.5; // Modifica la linea del testo per allungare il caret
+  box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+  &:focus {
+    border: none;
+    outline: none;
   }
 }
 @media all and (max-width: 623px) {
@@ -374,5 +417,9 @@ p,
   .button {
     display: block;
   }
+}
+.hidden {
+  height: 0;
+  transition: all 0.3s;
 }
 </style>

@@ -29,7 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('auth:sanctum')
     ->prefix('user')
     ->name('admin.')
-    ->group(function(){
+    ->group(function () {
         Route::resource('/utente/dashboard', ApartmentController::class);
         // Route::resource('/utente/messaggi', MessageController::class);
 });
@@ -41,10 +41,4 @@ Route::get('/messages', [GeneralUser::class, 'messages']);
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 
 Route::post('register', [RegisteredUserController::class, 'store']);
-Route::post('login', [AuthenticatedSessionController::class , 'store']);
-
-
-
-
-
-
+Route::post('login', [AuthenticatedSessionController::class, 'store']);

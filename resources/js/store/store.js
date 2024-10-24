@@ -16,16 +16,9 @@ const store = reactive({
     // apartment of singol user
     userApartment: [],
 
-    center: [],
-    // filtred apartment near of the center of map
-    filtredApartment: [],
-
-    minLat: '',
-    maxLat: '',
-    minLong: '',
-    maxLong: '',
-
-
+    // center: [],
+    // // filtred apartment near of the center of map
+    // filtredApartment: [],
 })
 
 const checkAdress = (adress) =>{
@@ -39,74 +32,63 @@ return urlRequest
 }
 
 // find a square point zone in the center of map
-const findZone = (lon, lat, distance = 20) =>{
+const isCloser = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =>{
+    Number(latCenter)
+    Number(lonCenter)
+    Number(latLocation)
+    Number(lonLocation)
 
-    let totalGradius = distance * 0.00899
-
-     // Limiti dell'area rettangolare
-     store.minLat = Number(lat) - totalGradius;
-     store.maxLat = Number(lat) + totalGradius;
-     store.minLong = Number(lon) - totalGradius;
-     store.maxLong = Number(lon) + totalGradius;
-
-     filterApartment(store.allApartments)
-}
-
-const filterApartment = (apartments) => {
+    const distance = distancePoint(latCenter, lonCenter, latLocation, lonLocation);
 
 
-    if(apartments.length){
-        // apartment filtred near the center of map
-        store.filtredApartment = apartments.filter(apartment =>{
-
-            return apartment.lon >= store.minLong && apartment.lon <= store.maxLong && apartment.lat >= store.minLat &&  apartment.lat <= store.maxLat
-
-        })
+    // Confronta la distanza calcolata con la distanza massima specificata dall'utente
+    if (distance <= maxDistance) {
+        console.log(distance, maxDistance)
+        return true;
+    } else {
+        return false;
     }
 
 
+}
+const distanceOfCenter = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =>{
+    Number(latCenter)
+    Number(lonCenter)
+    Number(latLocation)
+    Number(lonLocation)
+
+    const distance = distancePoint(latCenter, lonCenter, latLocation, lonLocation);
+    return distance
 
 
 }
+function distancePoint(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Raggio della Terra in km
 
-const componeUrlString = (objAdress) =>{
+    // Converti le latitudini e longitudini da gradi a radianti
+    const toRadians = (degree) => degree * (Math.PI / 180);
 
+    lat1 = toRadians(lat1);
+    lon1 = toRadians(lon1);
+    lat2 = toRadians(lat2);
+    lon2 = toRadians(lon2);
 
-        let arrElement = []
-        for (let key in objAdress.address) {
-            arrElement.push(objAdress.address[key])
-          }
-        //   only data object
-          arrElement = arrElement.slice(0, 5)
-        //   at the 6 and 7 position we have cordinate
-          arrElement.push(objAdress.position.lon)
-          arrElement.push(objAdress.position.lat)
-          arrElement.push(20)
+    // Differenze delle coordinate
+    const dlat = lat2 - lat1;
+    const dlon = lon2 - lon1;
 
-        // lo ciclo per formare una stringa con dei trattini in mezzo
-          let UrlString = arrElement.join(' ').split(' ').join('-')
+    // Formula dell'Haversine
+    const a = Math.sin(dlat / 2) ** 2 +
+              Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-
-
-        return UrlString
-
-
-}
-
-const updateUrl = (stringUrl, distance) =>{
-    let arr = stringUrl.split('-').slice(0, -1)
-    arr.push(distance)
-    let newUrlString = arr.join('-')
-    return newUrlString
-}
-const createPageWithUrl = (urlCripted, distance) =>{
-    const stringUrl = urlCripted
-    const arrUrl = urlCripted.split('-').slice(-3);
-    console.log(arrUrl)
-    findZone(arrUrl[0], arrUrl[1], distance)
-    return updateUrl(stringUrl, distance)
+    // Distanza in km
+    const distance = R * c;
+    return distance;
 }
 
 
 
-export {store, checkAdress, findZone, filterApartment, componeUrlString, createPageWithUrl};
+
+
+export {store, checkAdress, isCloser, distanceOfCenter};

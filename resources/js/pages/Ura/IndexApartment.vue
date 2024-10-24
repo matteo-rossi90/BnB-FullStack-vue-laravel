@@ -186,7 +186,7 @@ export default {
                       <router-link
                         :to="{
                           name: 'showApartment',
-                          params: { id: apartment.id },
+                          params: { slug: apartment.slug, id:apartment.id },
                         }"
                       >
                         <div class="btn btn-primary">

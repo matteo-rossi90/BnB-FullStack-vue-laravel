@@ -1,44 +1,43 @@
 <script>
 import { store } from "../store/store";
-import { filterApartment } from "../store/store";
-import { findZone } from "../store/store";
-import { createPageWithUrl } from "../store/store";
+import { isCloser } from "../store/store";
+import { distanceOfCenter } from "../store/store";
 
 export default {
   name: "Apartments",
 
   data() {
     return {
-      filtredApartment: store.filtredApartment,
-      number_rooms: "",
-      number_beds: "",
-      square_meters: "",
-      isFill: false,
-      sliderValue: 20,
+      filter: {
+        number_rooms: "",
+        number_beds: "",
+        square_meters: "",
+        distance: "",
+        latCenter: "",
+        lonCenter: "",
+      },
+      input: store.inputValue,
+      filtredApartment: "",
       services: "",
-      src:""
+      src: "",
+      endCalculateCenter: false,
     };
-
   },
   methods: {
     getMap() {
       const tt = window.tt; //accesso alla libreria TomTom
-      let center = store.center; //centro della mappa
-
+      let center = [this.filter.lonCenter, this.filter.latCenter]; //centro della mappa
       let size = 50; //dimensioni del popup
-
       const map = tt.map({
         key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
         center: center,
         container: "map",
         zoom: 10,
       });
-
       //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
-      this.filtredApartment.forEach((apartment) => {
+      this.apartmensFiltred.forEach((apartment) => {
         const lat = apartment.lat; //valore della latitudine di ogni appartamento
         const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
-
         let boxContent = document.createElement("div");
         boxContent.innerHTML = `
                 <div class="card-body">
@@ -46,110 +45,102 @@ export default {
                     <p class="title-popup">${apartment.address}</p>
                     <small>8000 euro</small>
                 </div>`;
-
         let popup = new tt.Popup({
           closeButton: true, //permettere la chiusura il popup
           closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
           offset: size,
           // anchor: 'none'
         }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
-
         //creare il marker per l'appartamento
         let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
-
         marker.addTo(map);
       });
-
       //   const bounds = [
       //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
       //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
       //   ];
-
       //   map.setMaxBounds(bounds);
-
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
     },
-    activeFilter() {
-      this.isFill = this.number_rooms || this.number_beds || this.square_meters;
-      this.filtredApartment = store.filtredApartment;
+    updateFilter() {
+      this.$router.push({
+        query: {
+          input: store.inputValue,
+          lat: this.filter.latCenter,
+          lon: this.filter.lonCenter,
+          number_rooms: this.filter.number_rooms || undefined,
+          number_beds: this.filter.number_beds || undefined,
+          square_meters: this.filter.square_meters || undefined,
+          distance: this.filter.distance || undefined,
+        },
+      });
+    },
+    createPage() {
+      const urlParams = new URLSearchParams(this.$route.query);
+      store.inputValue = urlParams.get("input");
+      this.filter.latCenter = urlParams.get("lat");
+      this.filter.lonCenter = urlParams.get("lon");
+      this.filter.number_rooms = urlParams.get("number_rooms") || "";
+      this.filter.number_beds = urlParams.get("number_beds") || "";
+      this.filter.square_meters = urlParams.get("square_meters") || "";
+      this.filter.distance = urlParams.get("distance") || 20;
+    },
+    distanceOfCenter() {
+      const urlParams = new URLSearchParams(this.$route.query);
 
-      if (this.number_rooms) {
-        this.filtredApartment = this.filtredApartment.filter(
-          (apartment) => apartment.number_rooms >= this.number_rooms
+      store.allApartments.forEach((apartment) => {
+        apartment["distanceOfCenter"] = distanceOfCenter(
+          urlParams.get("lat"),
+          urlParams.get("lon"),
+          apartment.lat,
+          apartment.lon,
+          urlParams.get("distance") || 20
         );
-      }
-      if (this.number_beds) {
-        this.filtredApartment = this.filtredApartment.filter(
-          (apartment) => apartment.number_beds >= this.number_beds
-        );
-      }
-      if (this.square_meters) {
-        this.filtredApartment = this.filtredApartment.filter(
-          (apartment) => apartment.square_meters >= this.square_meters
-        );
-      }
-      if (this.sliderValue !== 20) {
-        let newUrl = createPageWithUrl(this.$route.params.id, this.sliderValue);
-        this.filtredApartment = store.filtredApartment;
-        this.$router.push({ params: { id: newUrl } });
-        localStorage.setItem(
-          "routeParams",
-          JSON.stringify(this.$route.params.id)
-        );
-      }
-
-      //   store.filtredApartment = console.log("rotta", this.$route.params.id);
+      });
+      this.endCalculateCenter = true;
     },
   },
+  created() {},
+
   mounted() {
-    localStorage.setItem("routeParams", JSON.stringify(this.$route.params.id));
-    window.addEventListener("load", () => {
-      const routeParams = JSON.parse(localStorage.getItem("routeParams"));
-      createPageWithUrl(routeParams, this.sliderValue);
-
-      // Sovrascrivi i dati con quelli filtrati
-      this.filtredApartment = store.filtredApartment;
-
-      // Attiva automaticamente il filtro
-      this.activeFilter();
-    });
-
+    this.distanceOfCenter();
+    this.createPage();
     this.getMap();
-    //   all apartment
-    //   all apartment
-    //   all apartment
-    // axios
-    //   .get("/api/home", {
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Cache-Control": "no-cache", // Disabilita il caching
-    //     },
-    //     params: {
-    //       t: Date.now(), // Aggiungi un timestamp per evitare il caching
-    //     },
-    //   })
-    //   .then((res) => {
-    //     console.
-    ("apartment- all apartment:ok", res);
-    //     store.allApartments = res.data;
-    //   })
-    //   .catch((err) => {
-    //     console.log("app- all apartment: ", err.message);
-    //   });
+    console.log(store.allApartments);
   },
+  //   watch: {
+  //     "$route.query": {
+  //       handler(newQuery, oldQuery) {
+  //         this.createPage();
+  //       },
+  //       immediate: false,
+  //     },
+  //   },
 
   computed: {
     apartmensFiltred() {
-      return this.filtredApartment;
-    },
-  },
-  watch: {
-    // Osserva i cambiamenti nei parametri della rotta
-    "$route.params.id": function (newId, oldId) {
-      // Quando il parametro 'id' cambia, esegui la funzione che aggiorna i dati
-      this.activeFilter();
-      this.getMap();
+      // Verifica se il calcolo delle distanze è terminato
+      if (!this.endCalculateCenter) {
+        return []; // Ritorna un array vuoto fino al completamento del calcolo
+      }
+      return store.allApartments
+        .filter((apartment) => {
+          const distance = isCloser(
+            this.filter.latCenter,
+            this.filter.lonCenter,
+            apartment.lat,
+            apartment.lon,
+            this.filter.distance
+          );
+          const room = apartment.number_rooms >= this.filter.number_rooms;
+          const bed = apartment.number_beds >= this.filter.number_beds;
+          const square = apartment.square_meters >= this.filter.square_meters;
+          return distance && room && bed && square;
+        })
+        .sort((a, b) => {
+          return a.distanceOfCenter - b.distanceOfCenter;
+        });
     },
   },
 };
@@ -163,28 +154,37 @@ export default {
         type="number"
         placeholder="inserisci numero"
         id="number_rooms"
-        v-model="number_rooms"
+        v-model.trim="filter.number_rooms"
+        @input="updateFilter"
       />
       <label for="number_beds">number_beds</label>
       <input
         type="number"
         placeholder="inserisci numero"
         id="number_beds"
-        v-model="number_beds"
+        v-model.trim="filter.number_beds"
+        @input="updateFilter"
       />
       <label for="square_meters">Metri quadri</label>
       <input
         type="number"
         placeholder="inserisci numero"
         id="square_meters"
-        v-model="square_meters"
+        v-model.trim="filter.square_meters"
+        @input="updateFilter"
       />
-      <input type="range" min="1" max="200" value="20" v-model="sliderValue" />
-      <span>{{ sliderValue }} km dal punto scelto</span>
+      <input
+        type="range"
+        min="1"
+        max="200"
+        value="20"
+        v-model.trim="filter.distance"
+        @input="updateFilter"
+      />
+      <span>{{ filter.distance }} km dal punto scelto</span>
       <span v-for="(service, index) in services" :key="index">{{
         service.name
       }}</span>
-      <button @click="activeFilter">Filtra</button>
     </div>
     <div class="row py-3">
       <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>
@@ -197,11 +197,11 @@ export default {
             :key="index"
           >
             <router-link
-              :to="{ name: 'showApartment', params: { id: apartment.id } }"
+              :to="{ name: 'showApartment', params: { slug: apartment.slug, id:apartment.id } }"
             >
               <div class="card shadow-sm border-0 rounded">
                 <img
-                   :src="apartment.image"
+                  :src="apartment.image"
                   class="apartment-image card-img-top"
                   alt="Appart-Img"
                 />
@@ -209,8 +209,19 @@ export default {
                   <h5 class="card-title">{{ apartment.title }}</h5>
                   <p class="card-text">{{ apartment.address }}</p>
                   <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
-                    <p class="card-text">Letti: {{ apartment.number_beds }}</p>
-                  <p class="card-text">Superficie: {{ apartment.square_meters }} m²</p>
+                  <p class="card-text">Letti: {{ apartment.number_beds }}</p>
+                  <p class="card-text">
+                    Superficie: {{ apartment.square_meters }} m²
+                  </p>
+                  <p class="card-text">
+                    Distanza:
+                    {{
+                      apartment.distanceOfCenter
+                        ? apartment.distanceOfCenter.toFixed(2)
+                        : 0
+                    }}
+                    Km
+                  </p>
                 </div>
               </div>
             </router-link>

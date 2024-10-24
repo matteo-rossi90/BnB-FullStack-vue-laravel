@@ -7,7 +7,8 @@ export default {
     return {
       apartment: "",
       src:"",
-      alt:""
+      alt:"",
+      name:""
 
     };
   },
@@ -74,7 +75,7 @@ export default {
     next((vm) => {
       // 'vm' è l'istanza del componente
       if (from.name === "home") {
-        vm.apartment = store.allApartments[to.params.id];
+        vm.apartment = store.allApartments[--to.params.id];
       }
       if (from.name === "apartmentsMap") {
         vm.apartment = store.allApartments[--to.params.id];
@@ -259,7 +260,7 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  max-width: 900px;
+  max-width: 80%;
 }
 
 h1,
