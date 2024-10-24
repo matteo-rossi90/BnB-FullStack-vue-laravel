@@ -13,6 +13,7 @@ export default {
       name: "",
       apartments: store.userApartment,
       toastMessage: "",
+      sponsorType: "nulla",
     };
   },
   methods: {
@@ -83,6 +84,7 @@ export default {
   //   detailApartment(id) {},
 
   mounted() {
+    console.log("user apartment", store.userApartment[0].sponsors[0].category);
     axios
       .get("/api/user")
       .then((res) => {
@@ -172,6 +174,9 @@ export default {
                         :to="{ name: 'payment', params: { id: apartment.id } }"
                         >{{ apartment.title }}</router-link
                       >
+                      <span class="sponsor" v-if="apartment?.sponsors[0]">{{
+                        apartment.sponsors[0].category
+                      }}</span>
                     </td>
                     <td scope="row" class="align-middle">
                       <p
@@ -336,6 +341,22 @@ td {
 
 a {
   color: black;
+}
+.sponsor {
+  height: 0.3rem;
+  width: 0.3rem;
+  padding: 0.2rem;
+  border-radius: 20px;
+  margin-left: 0.5rem;
+  background-color: rgb(255, 215, 0);
+}
+.sponsor.bronzo {
+  background-color: rgb(205, 127, 50);
+}
+.sponsor.bronzo {
+  background-color: rgb(192, 192, 192);
+}
+.sponsor.bronzo {
 }
 
 // @use 'path' as *;

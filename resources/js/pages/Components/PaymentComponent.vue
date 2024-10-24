@@ -12,7 +12,7 @@ export default {
   <div class="container">
     <div class="row justify-content-center p-3">
       <div class="col">
-        <h3>Piano di pagamento barboni</h3>
+        <h3>Piano di pagamento bronzo</h3>
         <ul>
           <li>24h di sponsorizzazione</li>
           <li>2.99</li>
@@ -22,7 +22,7 @@ export default {
         >
       </div>
       <div class="col">
-        <h3>Piano di pagamento medio</h3>
+        <h3>Piano di pagamento argento</h3>
         <ul>
           <li>72h di sponsorizzazione</li>
           <li>5.99</li>
@@ -32,7 +32,7 @@ export default {
         >
       </div>
       <div class="col">
-        <h3>Piano di pagamento ricco</h3>
+        <h3>Piano di pagamento oro</h3>
         <ul>
           <li>144h di sponsorizzazione</li>
           <li>9.99</li>

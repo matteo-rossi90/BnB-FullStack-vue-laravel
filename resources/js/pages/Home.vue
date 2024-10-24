@@ -14,6 +14,7 @@ export default {
   },
   methods: {},
   mounted() {
+    console.log(store.userApartment);
     // Chiamata per l'utente autenticato
     // axios
     //   .get("/api/user")
@@ -60,7 +61,10 @@ export default {
     <div class="row pt-5">
       <router-link
         class="col-lg-3 col-md-4 col-sm-6 mb-4"
-        :to="{ name: 'showApartment', params: { slug: apartment.slug, id:apartment.id } }"
+        :to="{
+          name: 'showApartment',
+          params: { slug: apartment.slug, id: apartment.id },
+        }"
         v-for="(apartment, index) in store.allApartments"
         :key="index"
       >

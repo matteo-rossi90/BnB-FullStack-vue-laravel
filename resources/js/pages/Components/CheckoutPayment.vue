@@ -120,8 +120,6 @@ export default {
 };
 </script>
 <template>
-  {{ form }}
-
   <div class="container">
     <p>
       Pagamento per {{ userApartment.title }} sponsor
