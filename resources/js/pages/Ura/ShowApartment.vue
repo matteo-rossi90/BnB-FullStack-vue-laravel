@@ -180,8 +180,15 @@ export default {
                     console.log(res.data);
                     if(res.data.success){
                         this.showToast('Messaggio inviato correttamente', 'success');
+                        this.errors = {
+                            name:'',
+                            surname:'',
+                            email:'',
+                            message:''
+                        };
                     }else{
                         this.showToast("Errore durante l'invio del messaggio", 'error');
+                        this.errors = res.data.errors;
                     }
                 })
                 .catch(er=>{
