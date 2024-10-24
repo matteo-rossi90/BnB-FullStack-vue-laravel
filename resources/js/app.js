@@ -32,3 +32,4 @@ app.use(BraintreePlugin);
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.use(router)
 app.mount('#app')
+

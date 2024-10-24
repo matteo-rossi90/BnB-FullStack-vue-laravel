@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie', '/proxy-tomtom', '127.0.0.1:8000'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', '/proxy-tomtom'],
 
     'allowed_methods' => ['*'],
 
