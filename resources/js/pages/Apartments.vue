@@ -43,7 +43,6 @@ export default {
                 <div class="card-body">
                     <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
                     <p class="title-popup">${apartment.address}</p>
-                    <small>8000 euro</small>
                 </div>`;
         let popup = new tt.Popup({
           closeButton: true, //permettere la chiusura il popup

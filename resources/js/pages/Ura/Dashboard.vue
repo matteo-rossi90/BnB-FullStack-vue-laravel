@@ -42,7 +42,7 @@ export default {
     </aside>
     <div class="dashboard-box">
       <div class="container-fluid my-5">
-        <h1>Dashboard di {{ name }}</h1>
+        <h1>Dashboard {{ name }}</h1>
         <h4 class="my-5">
           Al momento hai registrato {{ apartments.length }} appartmanenti su
           BoolBnb
