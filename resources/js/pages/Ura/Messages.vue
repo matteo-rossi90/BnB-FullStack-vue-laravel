@@ -55,10 +55,12 @@ export default {
         },
         filteredMessages(){
 
-            return this.filteredApartment.messages.filter((message) =>{
+            return this.filteredApartment.messages
+            .filter((message) =>{
                 const name =`${message.name} ${message.surname}`.toLowerCase();
                 return name.includes(this.searchQuery.toLowerCase())
             })
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Ordina dal più recente, crea oggetti data in base a created at e li sottrae per vedere il più recente
         }
 
   },
@@ -96,7 +98,7 @@ export default {
                     <div class="image me-3">
                         <img :src="getImage(index)" alt="utente">
                     </div>
-                    <div class="text-box my-2">
+                    <div class="text-box my-2 w-100" >
                         <div class="d-flex justify-content-between">
                             <h6>{{ message.name }} {{ message.surname }}</h6>
                             <small>{{ formatDate(message.created_at) }}</small>
