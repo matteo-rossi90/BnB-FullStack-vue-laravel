@@ -58,19 +58,22 @@ export default {
         (apartment) => apartment.id == this.$route.params.id
       )[0];
     },
+    filteredNameAp() {
+      return store.userApartment.filter(
+        (apartment) => apartment.title == this.$route.params.id
+      )[0];
+    },
     filteredMessages() {
-      return this.filteredApartment.messages.filter((message) => {
-        const name = `${message.name} ${message.surname}`.toLowerCase();
-        return name.includes(this.searchQuery.toLowerCase());
-      });
+      return this.filteredApartment.messages
+        .filter((message) => {
+          const name = `${message.name} ${message.surname}`.toLowerCase();
+          return name.includes(this.searchQuery.toLowerCase());
+        })
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); // Ordina dal più recente, crea oggetti data in base a created at e li sottrae per vedere il più recente
     },
   },
   mounted() {
-    console.log(
-      store.userApartment.filter(
-        (apartment) => apartment.id == this.$route.params.id
-      )[0]
-    );
+    //console.log(store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0])
   },
 };
 </script>
@@ -79,11 +82,11 @@ export default {
   <div class="wrapper d-flex">
     <aside>
       <div class="container">
-        <div class="d-flex justify-content-center my-4">
-          <h4>Messaggi ricevuti</h4>
+        <div class="d-flex justify-content-center mx-4 my-3">
+          <h5>{{ filteredApartment.title }}</h5>
         </div>
 
-        <div class="d-flex mx-4">
+        <div class="d-flex mx-4 mt-3">
           <input
             type="search"
             class="form-control"
@@ -108,7 +111,7 @@ export default {
               <div class="image me-3">
                 <img :src="getImage(index)" alt="utente" />
               </div>
-              <div class="text-box my-2">
+              <div class="text-box my-2 w-100">
                 <div class="d-flex justify-content-between">
                   <h6>{{ message.name }} {{ message.surname }}</h6>
                   <small>{{ formatDate(message.created_at) }}</small>
