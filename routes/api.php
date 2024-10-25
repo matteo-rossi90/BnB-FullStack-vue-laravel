@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')
 Route::get('/home', [GeneralUser::class, 'allApartment']);
 Route::get('/services',[GeneralUser::class, 'services']);
 Route::get('/messages', [GeneralUser::class, 'messages']);
+Route::get('/filtred-apartment', [GeneralUser::class, 'filtredApartment']);
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 

@@ -51,8 +51,6 @@ export default {
 
       if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
         this.apartment.image = file; // Assegna il file a apartment.image
-        console.log(this.apartment.image);
-
 
         let reader = new FileReader();
         reader.onload = (e) => {
@@ -99,7 +97,6 @@ export default {
               }
             });
           }
-          console.log(formData);
 
           // Invio dei dati tramite POST con FormData
           axios
@@ -122,7 +119,6 @@ export default {
       .get("api/services")
       .then((response) => {
         this.services = response.data;
-        //   console.log(this.services[0]);
       })
       .catch((error) => {
         console.error("Errore durante il caricamento dei dati:", error);

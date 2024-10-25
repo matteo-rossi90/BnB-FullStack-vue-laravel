@@ -76,6 +76,7 @@ export default {
           input: this.searchQuery,
           lon: addressObj.position.lon,
           lat: addressObj.position.lat,
+          distance: 20,
         },
       });
     },
