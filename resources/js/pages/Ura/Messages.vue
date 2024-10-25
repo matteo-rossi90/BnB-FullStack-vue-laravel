@@ -53,6 +53,9 @@ export default {
             return store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0]
 
         },
+        filteredNameAp(){
+            return store.userApartment.filter(apartment => apartment.title == this.$route.params.id)[0]
+        },
         filteredMessages(){
 
             return this.filteredApartment.messages.filter((message) =>{
@@ -64,7 +67,7 @@ export default {
   },
   mounted() {
 
-    console.log(store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0])
+    //console.log(store.userApartment.filter(apartment => apartment.id == this.$route.params.id)[0])
 
 
 
@@ -77,11 +80,11 @@ export default {
     <aside>
       <div class="container">
 
-        <div class="d-flex justify-content-center my-4">
-          <h4>Messaggi ricevuti</h4>
+        <div class="d-flex justify-content-center mx-4 my-3">
+          <h5>{{ filteredApartment.title }}</h5>
         </div>
 
-        <div class="d-flex mx-4">
+        <div class="d-flex mx-4 mt-3">
           <input type="search" class="form-control" id="box-search" placeholder="Cerca un messaggio" v-model="searchQuery">
           <button type="submit" class="search-button">
             <i class="fa-solid fa-search"></i>
