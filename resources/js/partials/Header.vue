@@ -80,6 +80,10 @@ export default {
         },
       });
     },
+    toggleFilter() {
+      store.isFilterClose = !store.isFilterClose;
+      console.log(store.isFilterClose);
+    },
   },
   mounted() {
     window.addEventListener("click", () => {
@@ -184,7 +188,8 @@ export default {
           <div class="col-sm-10 col-lg-8">
             <!-- search input for adress -->
             <div class="input-group stylish-input-group">
-              <div class="contInput d-flex">
+              <div></div>
+              <div class="contInput d-flex align-items-center gap-3">
                 <input
                   type="text"
                   class="inputCustom"
@@ -192,7 +197,11 @@ export default {
                   v-model="searchQuery"
                   @input="debouncedSearch"
                 />
-                <span class="button">invia</span>
+                <font-awesome-icon
+                  class="iconFilter"
+                  :icon="['fas', 'sliders']"
+                  @click="toggleFilter"
+                />
 
                 <div class="contSuggest" v-if="isClose">
                   <ul class="suggest">
@@ -422,5 +431,10 @@ p,
 .hidden {
   height: 0;
   transition: all 0.3s;
+}
+.iconFilter {
+  font-size: 2rem;
+  color: rgba($color: red, $alpha: 0.7);
+  cursor: pointer;
 }
 </style>

@@ -50,16 +50,16 @@ export default {
 
       //   if (store.is_logged) {
       // userApartment
-      axios
-        .get("api/user/utente/dashboard")
-        .then((response) => {
-          store.userApartment = response.data;
-          console.log("app- user apartment", response.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      //   }
+      //   axios
+      //     .get("api/user/utente/dashboard")
+      //     .then((response) => {
+      //       store.userApartment = response.data;
+      //       console.log("app- user apartment", response.data);
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      //   //   }
     },
   },
   mounted() {

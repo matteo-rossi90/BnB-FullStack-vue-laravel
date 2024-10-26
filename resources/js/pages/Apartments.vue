@@ -19,52 +19,55 @@ export default {
       input: store.inputValue,
       filtredApartment: "",
       services: "",
+      activeItems: [],
+      isReady: false,
       src: "",
-      endCalculateCenter: false,
+
       isLoading: true,
     };
   },
   methods: {
-    // getMap() {
-    //   const tt = window.tt; //accesso alla libreria TomTom
-    //   let center = [this.filter.lonCenter, this.filter.latCenter]; //centro della mappa
-    //   let size = 50; //dimensioni del popup
-    //   const map = tt.map({
-    //     key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
-    //     center: center,
-    //     container: "map",
-    //     zoom: 10,
-    //   });
-    //   //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
-    //   this.apartmensFiltred.forEach((apartment) => {
-    //     const lat = apartment.lat; //valore della latitudine di ogni appartamento
-    //     const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
-    //     let boxContent = document.createElement("div");
-    //     boxContent.innerHTML = `
-    //             <div class="card-body">
-    //                 <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
-    //                 <p class="title-popup">${apartment.address}</p>
-    //             </div>`;
-    //     let popup = new tt.Popup({
-    //       closeButton: true, //permettere la chiusura il popup
-    //       closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
-    //       offset: size,
-    //       // anchor: 'none'
-    //     }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
-    //     //creare il marker per l'appartamento
-    //     let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
-    //     marker.addTo(map);
-    //   });
-    //   //   const bounds = [
-    //   //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-    //   //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-    //   //   ];
-    //   //   map.setMaxBounds(bounds);
-    //   map.addControl(new tt.FullscreenControl());
-    //   map.addControl(new tt.NavigationControl());
-    // },
+    getMap() {
+      const tt = window.tt; //accesso alla libreria TomTom
+      let center = [this.filter.lonCenter, this.filter.latCenter]; //centro della mappa
+      let size = 50; //dimensioni del popup
+      const map = tt.map({
+        key: "qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI",
+        center: center,
+        container: "map",
+        zoom: 10,
+      });
+      //estrapolazione delle proprietà che si riferiscono a "position" nel JSON generato dall'API
+      this.filtredApartment.forEach((apartment) => {
+        const lat = apartment.lat; //valore della latitudine di ogni appartamento
+        const lon = apartment.lon; //valore dalla longitudine di ogni appartamento
+        let boxContent = document.createElement("div");
+        boxContent.innerHTML = `
+                <div class="card-body">
+                    <h5 class="title-popup"><strong>${apartment.title}</strong></h5>
+                    <p class="title-popup">${apartment.address}</p>
+                </div>`;
+        let popup = new tt.Popup({
+          closeButton: true, //permettere la chiusura il popup
+          closeOnClick: true, //chiudere il popup al click su un'altra parte della mappa
+          offset: size,
+          // anchor: 'none'
+        }).setDOMContent(boxContent); //contenuto dinamico del popup in base alle cards degli appartamenti
+        //creare il marker per l'appartamento
+        let marker = new tt.Marker().setLngLat([lon, lat]).setPopup(popup); //collegare il popup al marker
+        marker.addTo(map);
+      });
+      //   const bounds = [
+      //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+      //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+      //   ];
+      //   map.setMaxBounds(bounds);
+      map.addControl(new tt.FullscreenControl());
+      map.addControl(new tt.NavigationControl());
+    },
     updateFilter() {
       this.isLoading = true;
+
       this.$router.push({
         query: {
           input: store.inputValue,
@@ -74,11 +77,14 @@ export default {
           number_beds: this.filter.number_beds || undefined,
           square_meters: this.filter.square_meters || undefined,
           distance: this.filter.distance || undefined,
+          services: this.activeItems,
         },
       });
 
+      // Chiamata alla funzione di filtro con i nuovi parametri
       this.filterApartment(this.$route.query);
     },
+
     createFilterData() {
       const urlParams = new URLSearchParams(this.$route.query);
       store.inputValue = urlParams.get("input");
@@ -88,6 +94,11 @@ export default {
       this.filter.number_beds = urlParams.get("number_beds") || "";
       this.filter.square_meters = urlParams.get("square_meters") || "";
       this.filter.distance = urlParams.get("distance") || 20;
+      this.activeItems = urlParams.get("services")
+        ? urlParams.get("services").split(",")
+        : [];
+
+      this.isReady = true;
     },
     createDistanceData() {
       this.filtredApartment.forEach((apartment) => {
@@ -111,16 +122,34 @@ export default {
           this.createFilterData();
           this.createDistanceData();
           this.isLoading = false;
+          // wait of dom after is loading
+          this.$nextTick(() => {
+            this.getMap();
+          });
         })
         .catch((err) => console.log(err.message));
     },
+    toggleActive(i) {
+      let id = String(i);
+      if (this.activeItems.includes(id)) {
+        // Se l'elemento è già attivo, rimuovilo
+        this.activeItems = this.activeItems.filter((i) => i !== id);
+      } else {
+        // Se l'elemento non è attivo, aggiungilo
+        this.activeItems.push(id);
+      }
+    },
+    isActive(id) {
+      return this.activeItems.includes(String(id));
+    },
   },
-  created() {},
 
   mounted() {
     axios
       .get("api/services")
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        this.services = res.data;
+      })
       .catch((err) => console.log(err.message));
 
     this.filterApartment(this.$route.query);
@@ -132,47 +161,61 @@ export default {
         return a.distanceOfCenter - b.distanceOfCenter;
       });
     },
+    isOpenFilter() {
+      return store.isFilterClose;
+    },
   },
 };
 </script>
 
 <template>
   <div class="container">
-    <div class="row">
-      <label for="number_rooms">number_rooms</label>
-      <input
-        type="number"
-        placeholder="inserisci numero"
-        id="number_rooms"
-        v-model.trim="filter.number_rooms"
-      />
-      <label for="number_beds">number_beds</label>
-      <input
-        type="number"
-        placeholder="inserisci numero"
-        id="number_beds"
-        v-model.trim="filter.number_beds"
-      />
-      <label for="square_meters">Metri quadri</label>
-      <input
-        type="number"
-        placeholder="inserisci numero"
-        id="square_meters"
-        v-model.trim="filter.square_meters"
-      />
-      <input
-        type="range"
-        min="1"
-        max="200"
-        value="20"
-        v-model.trim="filter.distance"
-      />
-      <span>{{ filter.distance }} km dal punto scelto</span>
-      <span v-for="(service, index) in services" :key="index">{{
-        service.name
-      }}</span>
-      <button @click="updateFilter" class="btn btn-primary">FIltra</button>
+    <div class="row position-relative">
+      <div class="filterClass" :class="{ open: isOpenFilter }">
+        <label for="number_rooms">number_rooms</label>
+        <input
+          type="number"
+          placeholder="inserisci numero"
+          id="number_rooms"
+          v-model.trim="filter.number_rooms"
+        />
+        <label for="number_beds">number_beds</label>
+        <input
+          type="number"
+          placeholder="inserisci numero"
+          id="number_beds"
+          v-model.trim="filter.number_beds"
+        />
+        <label for="square_meters">Metri quadri</label>
+        <input
+          type="number"
+          placeholder="inserisci numero"
+          id="square_meters"
+          v-model.trim="filter.square_meters"
+        />
+        <input
+          type="range"
+          min="1"
+          max="200"
+          value="20"
+          v-model.trim="filter.distance"
+        />
+        <span>{{ filter.distance }} km dal punto scelto</span>
+        <div class="contServices" v-if="isReady">
+          <span
+            class="service"
+            v-for="(service, index) in services"
+            :key="index"
+            :class="{ active: isActive(service.id) }"
+            @click="toggleActive(service.id)"
+            >{{ service.name }}</span
+          >
+        </div>
+
+        <button @click="updateFilter" class="btn btn-primary">FIltra</button>
+      </div>
     </div>
+
     <div class="row py-3" v-if="!isLoading">
       <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>
       <small>Appartamenti trovati: {{ apartmensFiltred.length }} </small>
@@ -320,5 +363,43 @@ a {
   to {
     transform: rotate(1turn);
   }
+}
+.contServices {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  .service {
+    padding: 0.3rem 0.6rem;
+    border: 1px solid red;
+    cursor: pointer;
+    &:hover {
+      background: rgba($color: red, $alpha: 0.5);
+      color: white;
+    }
+  }
+  .service.active {
+    background: rgba($color: red, $alpha: 0.8);
+    color: white;
+  }
+}
+.filterClass {
+  display: none;
+}
+.filterClass.open {
+  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 50%;
+  margin: auto;
+  position: absolute;
+  background-color: white;
+  z-index: 10;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 2rem;
+  border-radius: 20px;
+  box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
 }
 </style>

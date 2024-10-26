@@ -69,6 +69,22 @@ class FilterApartmentRequest extends FormRequest
         if ($this->filled('query.square_meters')) {
             $query->where('square_meters', '>=', $this->input('query.square_meters'));
         }
+        if ($this->filled('query.services')) {
+            // Recupera l'array dei servizi dalla query e forza a essere un array
+            $serviceArray = $this->input('query.services');
+
+            // Se services è una stringa singola, la trasformiamo in un array
+            if (is_string($serviceArray)) {
+                $serviceArray = explode(',', $serviceArray);  // Converte '1,2,3' in ['1', '2', '3']
+            }
+
+            // Filtra gli appartamenti che hanno tutti i servizi specificati
+            $query->whereHas('services', function($q) use ($serviceArray) {
+                $q->whereIn('service_id', $serviceArray)  // Usare whereIn con servizi trattati come stringhe
+                  ->groupBy('apartment_id')               // Raggruppa per appartamento
+                  ->havingRaw('COUNT(service_id) = ?', [count($serviceArray)]); // Assicurati che l'appartamento abbia tutti i servizi
+            });
+        }
 
 
 
