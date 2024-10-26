@@ -89,6 +89,16 @@ export default {
       this.filter.square_meters = urlParams.get("square_meters") || "";
       this.filter.distance = urlParams.get("distance") || 20;
     },
+    createDistanceData() {
+      this.filtredApartment.forEach((apartment) => {
+        apartment["distanceOfCenter"] = distanceOfCenter(
+          this.filter.latCenter,
+          this.filter.lonCenter,
+          apartment.lat,
+          apartment.lon
+        );
+      });
+    },
     async filterApartment(query) {
       await axios
         .get("api/filtred-apartment", {
@@ -98,7 +108,8 @@ export default {
         })
         .then((res) => {
           this.filtredApartment = res.data;
-          this.distanceOfCenter();
+          this.createFilterData();
+          this.createDistanceData();
           this.isLoading = false;
         })
         .catch((err) => console.log(err.message));
@@ -107,16 +118,16 @@ export default {
   created() {},
 
   mounted() {
+    axios
+      .get("api/services")
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err.message));
+
     this.filterApartment(this.$route.query);
-    this.createFilterData();
   },
 
   computed: {
     apartmensFiltred() {
-      // Verifica se il calcolo delle distanze è terminato
-      if (!this.endCalculateCenter) {
-        return []; // Ritorna un array vuoto fino al completamento del calcolo
-      }
       return this.filtredApartment.sort((a, b) => {
         return a.distanceOfCenter - b.distanceOfCenter;
       });
