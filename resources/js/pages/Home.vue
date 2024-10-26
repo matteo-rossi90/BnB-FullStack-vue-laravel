@@ -1,6 +1,5 @@
 <script>
-import ApartmentCard from "./components/ApartmentCard.vue";
-import axios from "axios";
+import ApartmentCard from "./Components/ApartmentCard.vue";
 import { store } from "../store/store";
 export default {
   name: "Home",
