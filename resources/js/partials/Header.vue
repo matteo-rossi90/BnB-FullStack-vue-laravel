@@ -106,6 +106,22 @@ export default {
       this.previousScrollPosition = currentScrollPosition;
     });
   },
+  watch: {
+    // Monitora i cambiamenti di rotta
+    $route(to, from) {
+      if (to.name === "apartmentsMap") {
+        store.inApartmentPage = true;
+        this.searchQuery = this.$route.query.input;
+      } else {
+        store.inApartmentPage = false;
+        this.searchQuery = "";
+      }
+
+      // Puoi aggiungere altre azioni qui, ad esempio:
+      // - Eseguire una richiesta dati
+      // - Aggiornare lo stato dell'app
+    },
+  },
   computed: {
     isLogged() {
       //   boolean login control for show right link
@@ -126,6 +142,9 @@ export default {
     },
     urlRequest() {
       return this.urlSearchQuery;
+    },
+    inApartmentPage() {
+      return store.inApartmentPage;
     },
   },
 };
@@ -201,6 +220,7 @@ export default {
                   class="iconFilter"
                   :icon="['fas', 'sliders']"
                   @click="toggleFilter"
+                  v-if="inApartmentPage"
                 />
 
                 <div class="contSuggest" v-if="isClose">

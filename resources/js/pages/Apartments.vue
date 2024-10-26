@@ -154,7 +154,16 @@ export default {
 
     this.filterApartment(this.$route.query);
   },
-
+  watch: {
+    "$route.query.input": {
+      handler(newQuery, oldQuery) {
+        if (newQuery) {
+          this.isLoading = true;
+          this.filterApartment(this.$route.query);
+        }
+      },
+    },
+  },
   computed: {
     apartmensFiltred() {
       return this.filtredApartment.sort((a, b) => {

@@ -17,6 +17,7 @@ const store = reactive({
     userApartment: [],
 
     filtredApartment:[],
+    inApartmentPage: false,
     isFilterClose: false,
     // center: [],
     // // filtred apartment near of the center of map
