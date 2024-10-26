@@ -158,6 +158,13 @@ export default {
   computed: {
     apartmensFiltred() {
       return this.filtredApartment.sort((a, b) => {
+        if (a.sponsors.length > 0 && b.sponsors.length === 0) {
+          return -1;
+        }
+        if (a.sponsors.length === 0 && b.sponsors.length > 0) {
+          return 1;
+        }
+
         return a.distanceOfCenter - b.distanceOfCenter;
       });
     },
@@ -223,6 +230,7 @@ export default {
         <div class="row" v-if="apartmensFiltred.length">
           <div
             class="col-lg-6 col-md-6 col-sm-12 mb-4"
+            :class="{ sponsorCard: apartment.sponsors.length }"
             v-for="(apartment, index) in apartmensFiltred"
             :key="index"
           >

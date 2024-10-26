@@ -54,8 +54,9 @@ class FilterApartmentRequest extends FormRequest
         $longitudineMinima = $lon - $deltaLongitudine;
 
         // Query di base per la zona
-        $query = Apartment::whereBetween('lat', [$latitudineMinima, $latitudineMassima])
-                          ->whereBetween('lon', [$longitudineMinima, $longitudineMassima]);
+        $query = Apartment::with('sponsors')
+                      ->whereBetween('lat', [$latitudineMinima, $latitudineMassima])
+                      ->whereBetween('lon', [$longitudineMinima, $longitudineMassima]);
 
         // Applicazione dei filtri opzionali, verificando se sono presenti nella query
         if ($this->filled('query.number_rooms')) {
