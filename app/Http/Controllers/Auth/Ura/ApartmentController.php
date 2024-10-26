@@ -73,9 +73,11 @@ class ApartmentController extends Controller
         $apartment = Apartment::create($data);
         $apartment->save();
 
+
+
         // Se non ci sono errori, restituisci i dati codificati come JSON
 
-        return response()->json($apartment);
+        return response()->json($apartment, 200);
     }
 
 
