@@ -23,7 +23,9 @@ export default {
         message:""
       },
 
-      toastMessage:''
+      toastMessage:'',
+
+      disableCheck: false
 
     };
 
@@ -103,7 +105,7 @@ export default {
         validateSurname() {
             if (!this.surname) {
                 this.errors.surname = "";
-            } else if (!/^[a-zA-Z]+$/.test(this.surname)) {
+            } else if (!/^[a-zA-Z\s]+$/.test(this.surname)) {
                 this.errors.surname = "Il cognome deve contenere solo lettere";
             } else if (this.surname.length < 4) {
                 this.errors.surname =
@@ -167,6 +169,10 @@ export default {
             toast.hide();
         },
 
+        changeDisable(){
+            this.disableCheck = !this.disableCheck;
+        },
+
         submitMessage(){
             const messageData = {
                 name: this.name,
@@ -186,6 +192,8 @@ export default {
                             email:'',
                             message:''
                         };
+
+                        this.changeDisable();
                     }else{
                         this.showToast("Errore durante l'invio del messaggio", 'error');
                         this.errors = res.data.errors;
@@ -344,6 +352,7 @@ export default {
                     placeholder="Inserisci il tuo nome"
                     v-model="name"
                     @input="validateName"
+                    :disabled="disableCheck"
                   />
                   <small v-if="errors.name" class="error-message">{{errors.name}}</small>
                 </div>
@@ -356,6 +365,7 @@ export default {
                     placeholder="Inserisci il tuo cognome"
                     v-model="surname"
                     @input="validateSurname"
+                    :disabled="disableCheck"
                   />
                   <small v-if="errors.surname" class="error-message">{{errors.surname}}</small>
                 </div>
@@ -369,6 +379,7 @@ export default {
                     placeholder="Inserisci la tua email"
                     v-model="email"
                     @input="validateEmail"
+                    :disabled="disableCheck"
                   />
                   <small v-if="errors.email" class="error-message">{{errors.email}}</small>
                 </div>
@@ -385,12 +396,13 @@ export default {
                     placeholder="Scrivi il tuo messaggio..."
                     v-model="message"
                     @input="validateMessage"
+                    :disabled="disableCheck"
                   ></textarea>
                   <small v-if="errors.message" class="error-message">{{errors.message}}</small>
                 </div>
 
                 <!-- Bottone invia -->
-                <button type="submit" class="btn btn-primary btn-lg w-100">
+                <button type="submit" class="btn btn-primary btn-lg w-100" :disabled="disableCheck">
                   Invia il messaggio
                 </button>
               </form>

@@ -33,7 +33,6 @@ export default {
         });
     },
     paymentOnSuccess(nonce) {
-      console.log("nonce token", nonce);
       this.form.token = nonce;
       this.buy();
     },
@@ -77,7 +76,6 @@ export default {
     axios
       .get("http://localhost:8000/api/order/generate")
       .then((res) => {
-        console.log(res.data.token);
         this.tokenApi = res.data.token;
         this.form.token = res.data.token;
         this.isLoad = this.form.token;

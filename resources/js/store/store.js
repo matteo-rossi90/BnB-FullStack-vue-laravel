@@ -16,6 +16,7 @@ const store = reactive({
     // apartment of singol user
     userApartment: [],
 
+    filtredApartment:[]
     // center: [],
     // // filtred apartment near of the center of map
     // filtredApartment: [],
@@ -51,12 +52,12 @@ const isCloser = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =
 
 
 }
-const distanceOfCenter = (latCenter, lonCenter, latLocation, lonLocation, maxDistance) =>{
+const distanceOfCenter = (latCenter, lonCenter, latLocation, lonLocation) =>{
     Number(latCenter)
     Number(lonCenter)
     Number(latLocation)
     Number(lonLocation)
-
+    console.log(latCenter, lonCenter, latLocation, lonLocation)
     const distance = distancePoint(latCenter, lonCenter, latLocation, lonLocation);
     return distance
 

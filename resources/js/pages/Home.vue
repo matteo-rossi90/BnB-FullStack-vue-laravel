@@ -13,8 +13,7 @@ export default {
   },
   methods: {},
   mounted() {
-    console.log(store.userApartment);
-    // Chiamata per l'utente autenticato
+    // // Chiamata per l'utente autenticato
     // axios
     //   .get("/api/user")
     //   .then((response) => {

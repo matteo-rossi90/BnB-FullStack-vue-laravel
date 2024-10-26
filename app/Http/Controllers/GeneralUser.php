@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterApartmentRequest;
 use App\Models\Apartment;
 use App\Models\Message;
 use App\Models\Service;
@@ -27,5 +28,17 @@ class GeneralUser extends Controller
     {
         return response()->json(Message::all());
     }
+
+    public function filtredApartment(FilterApartmentRequest $request)
+    {
+
+        $apartments = $request->filtredApartment();
+
+        return response()->json($apartments);
+    }
+
+
+
+
 
 }

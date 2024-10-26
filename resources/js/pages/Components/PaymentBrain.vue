@@ -15,7 +15,6 @@ export default {
   },
   methods: {
     onSuccess(payload) {
-      console.log("paylod", payload);
       let token = payload.nonce;
       this.$emit("onSuccess", token);
       // Do something great with the nonce...
