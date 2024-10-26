@@ -7,6 +7,7 @@ use App\Http\Requests\Orders\OrderRequest;
 use App\Models\Apartment;
 use App\Models\Sponsor;
 use Braintree\Gateway;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -32,13 +33,29 @@ class OrderController extends Controller
         ]);
 
         if($result->success){
+            switch ($request->sponsor) {
+                case 1:
+                    $endDate = Carbon::now()->addHours(24);  // 24 ore
+                    break;
+                case 2:
+                    $endDate = Carbon::now()->addHours(72);  // 72 ore
+                    break;
+                case 3:
+                    $endDate = Carbon::now()->addHours(144); // 144 ore
+                    break;
+
+            };
+
+
+            $apartment = Apartment::find($request->apartment);
+            $sponsor = Sponsor::find($request->sponsor);
+            $apartment->sponsors()->attach($sponsor->id, ['end_at' => $endDate]);
+
             $data = [
                 'success' => true,
                 'message' => 'Transazione eseguita con successo'
+
             ];
-            $apartment = Apartment::find($request->apartment);
-            $sponsor = Sponsor::find($request->sponsor);
-            $apartment->sponsors()->attach($sponsor->id);
             return response()->json($data, 200);
 
         }else{

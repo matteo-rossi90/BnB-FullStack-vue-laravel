@@ -18,28 +18,31 @@ export default {
   },
   methods: {
     getMessages(apartmentId) {
-    const apartment = this.apartments.find((ap) => ap.id === apartmentId);
-    if (apartment) {
+      const apartment = this.apartments.find((ap) => ap.id === apartmentId);
+      if (apartment) {
+        apartment.unreadMessages = 0;
 
-      apartment.unreadMessages = 0;
+        const readMessages =
+          JSON.parse(localStorage.getItem("readMessages")) || {};
 
-      const readMessages = JSON.parse(localStorage.getItem('readMessages')) || {};
+        readMessages[apartmentId] = apartment.messages.map((msg) => msg.id);
 
-      readMessages[apartmentId] = apartment.messages.map(msg => msg.id);
+        localStorage.setItem("readMessages", JSON.stringify(readMessages));
 
-      localStorage.setItem('readMessages', JSON.stringify(readMessages));
-
-      apartment.messages.forEach((message) => {
-        message.read = true;
-      });
-    }
-     },
+        apartment.messages.forEach((message) => {
+          message.read = true;
+        });
+      }
+    },
 
     getUnreadMessages(apartment) {
-        const readMessages = JSON.parse(localStorage.getItem('readMessages')) || {};
-        const readMessageIds = readMessages[apartment.id] || [];
+      const readMessages =
+        JSON.parse(localStorage.getItem("readMessages")) || {};
+      const readMessageIds = readMessages[apartment.id] || [];
 
-        return apartment.messages.filter((msg) => !readMessageIds.includes(msg.id)).length;
+      return apartment.messages.filter(
+        (msg) => !readMessageIds.includes(msg.id)
+      ).length;
     },
     showToast(message, type = "success") {
       //metodo che permette di mostrare il toast
@@ -104,6 +107,12 @@ export default {
     imageUrl(path) {
       return `http://127.0.0.1:8000/${path}`; // URL completo dell'immagine
     },
+    formatDate(dateCarbon) {
+      let date = dateCarbon.split(" ")[0].split("-").reverse().join("/");
+      let hour = dateCarbon.split(" ")[1].split(":").slice(0, -1).join(":");
+      let string = date + " " + hour;
+      return string;
+    },
   },
   //   detailApartment(id) {},
 
@@ -133,9 +142,9 @@ export default {
       .then((response) => {
         console.log("user", response.data);
         store.userApartment = response.data.map((apartment) => ({
-            ...apartment,
-            unreadMessages: apartment.messages.filter((m) => !m.read).length
-        }))
+          ...apartment,
+          unreadMessages: apartment.messages.filter((m) => !m.read).length,
+        }));
         this.apartments = store.userApartment;
       })
       .catch((err) => {
@@ -156,9 +165,17 @@ export default {
       query: {},
     });
   },
+  computed: {
+    isPremium() {
+      return store.userApartment.filter(
+        (apartment) => apartment.sponsors.length > 0
+      ).length;
+    },
+  },
 };
 </script>
 <template>
+  {{ isPremium }}
   <div class="wrapper d-flex">
     <aside>
       <Routinglist />
@@ -197,12 +214,14 @@ export default {
                       />
                     </td>
                     <td scope="row" class="align-middle">
+                      {{ apartment.title }}
                       <router-link
+                        :class="{ disable: isPremium }"
                         :to="{ name: 'payment', params: { id: apartment.id } }"
-                        >{{ apartment.title }}</router-link
+                        >Premium tasto</router-link
                       >
                       <span class="sponsor" v-if="apartment?.sponsors[0]">{{
-                        apartment.sponsors[0].category
+                        formatDate(apartment.sponsors[0].pivot.end_at)
                       }}</span>
                     </td>
                     <td scope="row" class="align-middle">
@@ -223,16 +242,17 @@ export default {
                             id: apartment.id,
                           },
                         }"
-                        @click="getMessages(apartment.id)">
+                        @click="getMessages(apartment.id)"
+                      >
                         <span class="position-relative">
-                            <span v-if="getUnreadMessages(apartment) > 0"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {{ getUnreadMessages(apartment) }}
-                            </span>
-                            <i class="fa-solid fa-envelope">
-                            </i>
+                          <span
+                            v-if="getUnreadMessages(apartment) > 0"
+                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                          >
+                            {{ getUnreadMessages(apartment) }}
+                          </span>
+                          <i class="fa-solid fa-envelope"> </i>
                         </span>
-
                       </router-link>
                     </td>
                     <td scope="row" class="align-middle">
@@ -394,8 +414,11 @@ a {
 }
 
 .fa-envelope,
-.fa-chart-simple{
-    font-size: 25px;
+.fa-chart-simple {
+  font-size: 25px;
+}
+.disable {
+  display: none;
 }
 // @use 'path' as *;
 </style>
