@@ -13,7 +13,7 @@ class GeneralUser extends Controller
 {
     public function allApartment(){
 
-        $allApartment = Apartment::with('services', 'messages')->get();
+        $allApartment = Apartment::with('services', 'messages', 'sponsors')->get();
 
 
         return response()->json($allApartment);

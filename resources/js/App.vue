@@ -15,25 +15,6 @@ export default {
     fillData() {
       // fill data userApartment, allApartments, user, userName
 
-      //   all apartment
-      axios
-        .get("/api/home", {
-          headers: {
-            Accept: "application/json",
-            "Cache-Control": "no-cache", // Disabilita il caching
-          },
-          params: {
-            t: Date.now(), // Aggiungi un timestamp per evitare il caching
-          },
-        })
-        .then((res) => {
-          console.log("app- all apartment:ok", res.data);
-          store.allApartments = res.data;
-        })
-        .catch((err) => {
-          console.log("app- all apartment: ", err.message);
-        });
-
       //   name and data of user logged
       axios
         .get("/api/user")

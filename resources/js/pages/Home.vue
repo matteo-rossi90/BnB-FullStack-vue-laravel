@@ -13,36 +13,41 @@ export default {
   },
   methods: {},
   mounted() {
-    // // Chiamata per l'utente autenticato
-    // axios
-    //   .get("/api/user")
-    //   .then((response) => {
-    //     store.user = response.data;
-    //     // axios
-    //     //   .get("api/user/utente/dashboard")
-    //     //   .then((response) => {
-    //     //       store.allApartment = response.data;
-    //     //
-    //     //   })
-    //     //   .catch((err) => {
-    //     //     console.log(err);
-    //     //   });
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    //   all apartment
+    axios
+      .get("/api/home", {
+        headers: {
+          Accept: "application/json",
+          "Cache-Control": "no-cache", // Disabilita il caching
+        },
+        params: {
+          t: Date.now(), // Aggiungi un timestamp per evitare il caching
+        },
+      })
+      .then((res) => {
+        console.log("app- all apartment:ok", res.data);
+        store.allApartments = res.data;
+      })
+      .catch((err) => {
+        console.log("app- all apartment: ", err.message);
+      });
   },
   computed: {
-    allApartmentsComputed() {},
+    sortedApartment() {
+      return this.store.allApartments.sort((a, b) => {
+        // Se l'appartamento A ha sponsor e B no, A viene prima
+        if (a.sponsors.length > 0 && b.sponsors.length === 0) {
+          return -1;
+        }
+        // Se l'appartamento B ha sponsor e A no, B viene prima
+        if (a.sponsors.length === 0 && b.sponsors.length > 0) {
+          return 1;
+        }
+        // Se entrambi hanno o non hanno sponsor, mantieni il loro ordine
+        return 0;
+      });
+    },
   },
-  //   beforeRouteEnter(to, from, next) {
-  //     // Questo viene eseguito ogni volta che si accede a questa pagina tramite il router
-  //     next((vm) => {
-  //       // Puoi accedere al componente 'vm' e chiamare metodi o eseguire logica
-  //       console.log("Entered the HomePage route");
-  //       vm.fillAllApartment(); // Esegui una funzione che desideri
-  //     });
-  //   },
 };
 </script>
 <template>
@@ -59,11 +64,12 @@ export default {
     <div class="row pt-5">
       <router-link
         class="col-lg-3 col-md-4 col-sm-6 mb-4"
+        :class="{ sponsor: apartment.sponsors.length }"
         :to="{
           name: 'showApartment',
           params: { slug: apartment.slug, id: apartment.id },
         }"
-        v-for="(apartment, index) in store.allApartments"
+        v-for="(apartment, index) in sortedApartment"
         :key="index"
       >
         <div>
@@ -78,5 +84,9 @@ export default {
 .card {
   max-width: 100%;
   margin: 10px auto;
+}
+
+.sponsor {
+  border: 3px solid rgb(205, 127, 50);
 }
 </style>
