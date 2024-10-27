@@ -224,12 +224,6 @@ export default {
                   :to="{ name: 'createApartment' }"
                   >Affitta</router-link
                 >
-                <router-link
-                  v-if="!isPremium"
-                  class="sponsor"
-                  :to="{ name: 'payment', params: { id: 18 } }"
-                  >Sponsorizza</router-link
-                >
 
                 <p v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
