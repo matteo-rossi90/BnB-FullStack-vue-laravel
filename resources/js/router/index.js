@@ -16,6 +16,7 @@ import Apartments from "../pages/Apartments.vue";
 import PaymentComponent from "../pages/components/PaymentComponent.vue";
 import CheckoutPayment from "../pages/components/CheckoutPayment.vue";
 import PageProfile from "../pages/Ur/PageProfile.vue";
+import PageMessage from "../pages/Ur/PageMessage.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -90,6 +91,11 @@ const router = createRouter({
                 path: '/payment/:id/sponsor/:sponsor',
                 name: 'checkout',
                 component: CheckoutPayment //route temporanea per visualizzare gli appartamenti + mappa
+            },
+            {
+                path: '/messaggi-utente',
+                name: 'messagePageUr',
+                component: PageMessage //route temporanea per visualizzare gli appartamenti + mappa
             },
 
             {

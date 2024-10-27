@@ -125,7 +125,10 @@ export default {
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-8 mt-5">
-        <h2>Effettua il login</h2>
+        <h2>
+          Effettua il login o
+          <router-link :to="{ name: 'register' }">Registrati</router-link>
+        </h2>
         <form class="mx-auto" @submit.prevent="submitLogin">
           <div class="input-container">
             <label class="form-label" for="email">Email*</label>

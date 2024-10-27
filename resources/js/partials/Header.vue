@@ -100,20 +100,28 @@ export default {
       console.log(store.isFilterClose);
     },
     profilePush() {
-      axios
-        .get("/api/user")
-        .then((response) => {
-          store.user = response.data;
-          if (response.data.length) {
-            this.$router.push({ name: "dashboard" });
-          } else {
-            this.$router.push({ name: "pageHome" });
-          }
-        })
-        .catch((err) => {
-          store.is_logged = false;
-          this.$router.push({ name: "register" });
-        });
+      if (store.is_logged) {
+        if (store.user.apartments.length) {
+          this.$router.push({ name: "dashboard" });
+        } else {
+          this.$router.push({ name: "pageHome" });
+        }
+      } else {
+        this.$router.push({ name: "register" });
+      }
+    },
+    messagePush() {
+      if (store.is_logged) {
+        if (store.user.apartments.length) {
+          this.$router.push({
+            name: "apartments",
+          });
+        } else {
+          this.$router.push({ name: "messagePageUr" });
+        }
+      } else {
+        this.$router.push({ name: "register" });
+      }
     },
   },
   mounted() {
@@ -319,7 +327,7 @@ export default {
       <font-awesome-icon :icon="['fas', 'plane-departure']" />
       <p>Viaggia</p>
     </div>
-    <div class="contIcon">
+    <div class="contIcon" @click="messagePush">
       <font-awesome-icon :icon="['far', 'message']" />
       <p>Messaggi</p>
     </div>
