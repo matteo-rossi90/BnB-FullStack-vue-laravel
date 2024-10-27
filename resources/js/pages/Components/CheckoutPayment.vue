@@ -118,13 +118,10 @@ export default {
 };
 </script>
 <template>
-  <div class="container">
-    <p>
-      Pagamento per {{ userApartment.title }} sponsor
-      {{ this.$route.params.sponsor }}
-    </p>
-    <p>Tipo di piano abbonamento scelto: {{ sponsorSelect }}</p>
-    <p>Totale: {{ price }}</p>
+  <div
+    class="container pb-4 d-flex flex-column justify-content-center align-items-center"
+  >
+    <h2>Totale: {{ price }} €</h2>
   </div>
   <div
     class="container pb-4 d-flex flex-column justify-content-center align-items-center"
@@ -136,8 +133,12 @@ export default {
         @onSuccess="paymentOnSuccess"
         @onError="paymentOnError"
       />
-      <button @click="procediAlPagamento" v-if="!successPayment">
-        procedi con il pagamento
+      <button
+        class="btn btn-primary"
+        @click="procediAlPagamento"
+        v-if="!successPayment"
+      >
+        Procedi al pagamento
       </button>
     </div>
     <div class="loader" v-else></div>
