@@ -20,6 +20,7 @@ export default {
       isClose: false,
       previousScrollPosition: window.scrollY,
       isScrollingDown: false,
+      //   inScrollPage: true,
     };
   },
   methods: {
@@ -105,20 +106,30 @@ export default {
         this.isClose = false;
       }
     });
-    window.addEventListener("scroll", () => {
-      const currentScrollPosition = window.scrollY;
-      let firstRow = document.getElementById("firstRow");
+    // window.addEventListener("scroll", () => {
+    //   if (this.inScrollPage) {
+    //     const currentScrollPosition = window.scrollY;
+    //     let firstRow = document.getElementById("firstRow");
 
-      firstRow.style.transition = "all 0.5s";
-      if (currentScrollPosition > this.previousScrollPosition) {
-        firstRow.classList.add("hidden");
-      } else {
-        firstRow.classList.remove("hidden");
-      }
+    //     firstRow.style.transition = "all 0.5s";
+    //     if (currentScrollPosition > this.previousScrollPosition) {
+    //       firstRow.classList.add("hidden");
+    //     } else {
+    //       firstRow.classList.remove("hidden");
+    //     }
 
-      // Aggiorniamo la posizione precedente per il prossimo confronto
-      this.previousScrollPosition = currentScrollPosition;
-    });
+    //     // Aggiorniamo la posizione precedente per il prossimo confronto
+    //     this.previousScrollPosition = currentScrollPosition;
+    //   } else {
+    //     const currentScrollPosition = window.scrollY;
+    //     let firstRow = document.getElementById("firstRow");
+
+    //     firstRow.classList.add("hidden");
+
+    //     // Aggiorniamo la posizione precedente per il prossimo confronto
+    //     this.previousScrollPosition = currentScrollPosition;
+    //   }
+    // });
   },
   watch: {
     // Monitora i cambiamenti di rotta
@@ -130,6 +141,12 @@ export default {
         store.inApartmentPage = false;
         this.searchQuery = "";
       }
+      //   console.log(to.name);
+      //   if (to.name === "apartmentsMap" || to.name === "home") {
+      //     this.inScrollPage = true;
+      //   } else {
+      //     this.inScrollPage = false;
+      //   }
 
       // Puoi aggiungere altre azioni qui, ad esempio:
       // - Eseguire una richiesta dati
@@ -183,54 +200,6 @@ export default {
               <span><strong>BoolBnb</strong></span>
             </router-link>
           </div>
-
-          <div class="col d-flex gap-2 justify-content-end">
-            <!-- user click dropdown class -->
-            <div class="contDropDown" @click.stop="openDrop()">
-              <div
-                class="profile d-flex justify-content-between align-items-center gap-1 m-0"
-              >
-                <p class="nameUser">
-                  {{ userName !== "null" ? userName : "Profilo" }}
-                </p>
-
-                <font-awesome-icon :icon="['fas', 'caret-down']" />
-              </div>
-              <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
-                <router-link class="link" :to="{ name: 'home' }"
-                  >Home</router-link
-                >
-                <router-link
-                  v-if="!isLogged"
-                  class="link"
-                  :to="{ name: 'login' }"
-                  >Login</router-link
-                >
-                <router-link
-                  v-if="!isLogged"
-                  class="link"
-                  :to="{ name: 'register' }"
-                  >Register</router-link
-                >
-                <router-link
-                  class="link"
-                  v-if="isLogged && haveApartment"
-                  :to="{ name: 'dashboard' }"
-                  >Dashboard</router-link
-                >
-                <router-link
-                  class="link"
-                  v-else
-                  :to="{ name: 'createApartment' }"
-                  >Affitta</router-link
-                >
-
-                <p v-if="isLogged" class="link" @click="logout">Logout</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center align-items-center">
           <div class="col-sm-10 col-lg-8">
             <!-- search input for adress -->
             <div class="input-group stylish-input-group">
@@ -273,6 +242,51 @@ export default {
                     </li>
                   </ul>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div class="col d-flex gap-2 justify-content-end">
+            <!-- user click dropdown class -->
+            <div class="contDropDown" @click.stop="openDrop()">
+              <div
+                class="profile d-flex justify-content-between align-items-center gap-1 m-0"
+              >
+                <p class="nameUser">
+                  {{ userName !== "null" ? userName : "Profilo" }}
+                </p>
+
+                <font-awesome-icon :icon="['fas', 'caret-down']" />
+              </div>
+              <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
+                <router-link class="link" :to="{ name: 'home' }"
+                  >Home</router-link
+                >
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'login' }"
+                  >Login</router-link
+                >
+                <router-link
+                  v-if="!isLogged"
+                  class="link"
+                  :to="{ name: 'register' }"
+                  >Register</router-link
+                >
+                <router-link
+                  class="link"
+                  v-if="isLogged && haveApartment"
+                  :to="{ name: 'dashboard' }"
+                  >Dashboard</router-link
+                >
+                <router-link
+                  class="link"
+                  v-else
+                  :to="{ name: 'createApartment' }"
+                  >Affitta</router-link
+                >
+
+                <p v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
             </div>
           </div>

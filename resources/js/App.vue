@@ -78,7 +78,7 @@ export default {
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
 main {
-  padding-top: 9rem;
+  padding-top: 4rem;
 }
 
 @media screen and (max-width: 632px) {
