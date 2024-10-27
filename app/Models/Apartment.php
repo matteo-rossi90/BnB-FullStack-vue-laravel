@@ -26,7 +26,12 @@ class Apartment extends Model
                     ->withPivot('end_at');
     }
 
-
+    public function views(){
+        return $this->hasMany(View::class);
+    }
+    public function user()  {
+        return $this->belongsTo(User::class);
+    }
 
     protected $fillable =
     [

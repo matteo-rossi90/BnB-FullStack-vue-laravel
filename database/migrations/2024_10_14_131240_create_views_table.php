@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('apartment_id');
             $table->foreign('apartment_id')->references('id')->on('apartments')->cascadeOnDelete();
-            $table->string('IP_address', 255)->nullable();
+            $table->string('IP_address');
             $table->dateTime('date_view');
             $table->timestamps();
         });

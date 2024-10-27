@@ -6,9 +6,10 @@ use App\Http\Controllers\Auth\Ura\OrderController;
 use App\Http\Controllers\GeneralUser;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
-use App\Http\Controllers\NewMessageController; //controller per nuovi messaggi
+use App\Http\Controllers\NewMessageController;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
@@ -46,6 +47,14 @@ Route::get('/home', [GeneralUser::class, 'allApartment']);
 Route::get('/services',[GeneralUser::class, 'services']);
 Route::get('/messages', [GeneralUser::class, 'messages']);
 Route::get('/filtred-apartment', [GeneralUser::class, 'filtredApartment']);
+Route::post('/view', [GeneralUser::class, 'view']);
+// Route::get('/get-public-ip', function () {
+//     // Fai la richiesta al servizio ipify
+//     $response = Http::get('https://api.ipify.org?format=json');
+
+//     // Restituisci il risultato della richiesta
+//     return $response->json();
+// });
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 

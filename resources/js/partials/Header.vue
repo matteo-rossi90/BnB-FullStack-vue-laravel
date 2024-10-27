@@ -123,6 +123,25 @@ export default {
         this.$router.push({ name: "register" });
       }
     },
+    countView() {
+      //   axios
+      //     .get("/api/get-public-ip")
+      //     .then((response) => {
+      //       let value = response.data.ip;
+      let id = 1;
+      axios
+        .post("api/view", { apartment: id })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      // })
+      // .catch((error) => {
+      //   console.error("Errore nel rilevare l'IP pubblico: ", error);
+      // });
+    },
   },
   mounted() {
     window.addEventListener("click", () => {
@@ -217,7 +236,12 @@ export default {
               class="contLogo d-flex align-items-center"
               :to="{ name: 'home' }"
             >
-              <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
+              <img
+                @click="countView"
+                class="logo"
+                src="Boolnb_circle.png"
+                alt="airbnb photo"
+              />
             </router-link>
           </div>
           <div class="col">
