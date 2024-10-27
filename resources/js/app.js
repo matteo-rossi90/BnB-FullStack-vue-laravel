@@ -20,10 +20,10 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 // Importa specifiche icone (in questo caso la caret-down)
-import { faCaretDown, faSliders   } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faSliders, fas   } from '@fortawesome/free-solid-svg-icons';
 
 // Aggiungi le icone alla libreria di Font Awesome
-library.add(faCaretDown, faSliders );
+library.add(faCaretDown, faSliders, fas );
 
 
 import { createApp } from 'vue';

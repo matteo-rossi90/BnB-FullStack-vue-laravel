@@ -160,6 +160,9 @@ export default {
     inApartmentPage() {
       return store.inApartmentPage;
     },
+    haveApartment() {
+      return store.user.apartments.length;
+    },
   },
 };
 </script>
@@ -211,10 +214,17 @@ export default {
                 >
                 <router-link
                   class="link"
-                  v-if="isLogged"
+                  v-if="isLogged && haveApartment"
                   :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
+                <router-link
+                  class="link"
+                  v-else
+                  :to="{ name: 'createApartment' }"
+                  >Affitta</router-link
+                >
+
                 <p v-if="isLogged" class="link" @click="logout">Logout</p>
               </div>
             </div>

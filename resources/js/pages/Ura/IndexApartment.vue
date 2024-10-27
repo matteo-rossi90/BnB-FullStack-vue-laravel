@@ -175,175 +175,183 @@ export default {
 };
 </script>
 <template>
-  {{ isPremium }}
   <div class="wrapper d-flex">
-    <aside>
-      <Routinglist />
-    </aside>
-    <div class="dashboard-box">
-      <div class="container-fluid my-3">
-        <div class="row">
-          <div class="col-lg-12 col-md-12">
-            <h2 class="my-4">I miei appartamenti</h2>
+    <div class="container-fluid my-3">
+      <router-link :to="{ name: 'dashboard' }">
+        <font-awesome-icon
+          class="ms-2 iconArrow"
+          :icon="['fas', 'circle-arrow-left']"
+        />
+      </router-link>
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <h2 class="my-4">I miei appartamenti</h2>
 
-            <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4>
+          <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4>
 
-            <div class="table-responsive">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#id</th>
-                    <th scope="col">Immagine</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Disponibilità</th>
-                    <th scope="col">Messaggi</th>
-                    <th scope="col">Statistiche</th>
-                    <th scope="col">Azioni</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="apartment in apartments" :key="apartment.id">
-                    <td scope="row" class="align-middle">
-                      {{ apartment.id }}
-                    </td>
-                    <td class="img-container" scope="row">
-                      <img
-                        class="img-fluid"
-                        :src="imageUrl(apartment.image)"
-                        alt=""
-                      />
-                    </td>
-                    <td scope="row" class="align-middle">
-                      {{ apartment.title }}
-                      <router-link
-                        :class="{ disable: isPremium }"
-                        :to="{ name: 'payment', params: { id: apartment.id } }"
-                        >Premium tasto</router-link
-                      >
-                      <span class="sponsor" v-if="apartment?.sponsors[0]">{{
-                        formatDate(apartment.sponsors[0].pivot.end_at)
-                      }}</span>
-                    </td>
-                    <td scope="row" class="align-middle">
-                      <p
-                        class="badge text-bg-success"
-                        v-if="apartment.is_visible === 1"
-                      >
-                        Visibile
-                      </p>
-                      <p class="badge text-bg-danger" v-else>Non visibile</p>
-                    </td>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#id</th>
+                  <th scope="col">Immagine</th>
+                  <th scope="col">Nome</th>
+                  <th scope="col">Sponsor</th>
+                  <th scope="col">Disponibilità</th>
+                  <th scope="col">Messaggi</th>
+                  <th scope="col">Statistiche</th>
+                  <th scope="col">Azioni</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="apartment in apartments" :key="apartment.id">
+                  <td scope="row" class="align-middle">
+                    {{ apartment.id }}
+                  </td>
+                  <td class="img-container" scope="row">
+                    <img
+                      class="img-fluid"
+                      :src="imageUrl(apartment.image)"
+                      alt=""
+                    />
+                  </td>
+                  <td scope="row" class="align-middle">
+                    {{ apartment.title }}
+                    <router-link
+                      :class="{ disable: isPremium }"
+                      :to="{ name: 'payment', params: { id: apartment.id } }"
+                      >Premium tasto</router-link
+                    >
+                  </td>
+                  <td scope="row" class="align-middle">
+                    <router-link
+                      :class="{ disable: isPremium }"
+                      :to="{ name: 'payment', params: { id: apartment.id } }"
+                      >Premium tasto</router-link
+                    >
+                    <span class="sponsor" v-if="apartment?.sponsors[0]">{{
+                      formatDate(apartment.sponsors[0].pivot.end_at)
+                    }}</span>
+                  </td>
+                  <td scope="row" class="align-middle">
+                    <p
+                      class="badge text-bg-success"
+                      v-if="apartment.is_visible === 1"
+                    >
+                      Visibile
+                    </p>
+                    <p class="badge text-bg-danger" v-else>Non visibile</p>
+                  </td>
 
-                    <td scope="row" class="align-middle">
-                      <router-link
-                        :to="{
-                          name: 'messages',
-                          params: {
-                            id: apartment.id,
-                          },
-                        }"
-                        @click="getMessages(apartment.id)"
-                      >
-                        <span class="position-relative">
-                          <span
-                            v-if="getUnreadMessages(apartment) > 0"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                          >
-                            {{ getUnreadMessages(apartment) }}
-                          </span>
-                          <i class="fa-solid fa-envelope"> </i>
+                  <td scope="row" class="align-middle">
+                    <router-link
+                      :to="{
+                        name: 'messages',
+                        params: {
+                          id: apartment.id,
+                        },
+                      }"
+                      @click="getMessages(apartment.id)"
+                    >
+                      <span class="position-relative">
+                        <span
+                          v-if="getUnreadMessages(apartment) > 0"
+                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                        >
+                          {{ getUnreadMessages(apartment) }}
                         </span>
-                      </router-link>
-                    </td>
-                    <td scope="row" class="align-middle">
-                      <i class="fa-solid fa-chart-simple"></i>
-                    </td>
-                    <td scope="row" class="actions align-middle">
-                      <router-link
-                        :to="{
-                          name: 'showApartment',
-                          params: { slug: apartment.slug, id: apartment.id },
-                        }"
-                      >
-                        <div class="btn btn-primary">
-                          <i class="fa-solid fa-eye"></i>
-                        </div>
-                      </router-link>
-                      <router-link
-                        class="link"
-                        :to="{
-                          name: 'EditApartment',
-                          params: { id: apartment.id },
-                        }"
-                      >
-                        <div class="btn btn-warning">
-                          <i class="fa-solid fa-pencil"></i>
-                        </div>
-                      </router-link>
+                        <i class="fa-solid fa-envelope"> </i>
+                      </span>
+                    </router-link>
+                  </td>
+                  <td scope="row" class="align-middle">
+                    <i class="fa-solid fa-chart-simple"></i>
+                  </td>
+                  <td scope="row" class="actions align-middle">
+                    <router-link
+                      :to="{
+                        name: 'showApartment',
+                        params: { slug: apartment.slug, id: apartment.id },
+                      }"
+                    >
+                      <div class="btn btn-primary">
+                        <i class="fa-solid fa-eye"></i>
+                      </div>
+                    </router-link>
+                    <router-link
+                      class="link"
+                      :to="{
+                        name: 'EditApartment',
+                        params: { id: apartment.id },
+                      }"
+                    >
+                      <div class="btn btn-warning">
+                        <i class="fa-solid fa-pencil"></i>
+                      </div>
+                    </router-link>
 
-                      <div class="d-inline-block">
-                        <button
-                          type="button"
-                          class="btn btn-danger"
-                          id="liveToastBtn"
-                          data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
-                        >
-                          <i class="fa-solid fa-trash"></i>
-                        </button>
+                    <div class="d-inline-block">
+                      <button
+                        type="button"
+                        class="btn btn-danger"
+                        id="liveToastBtn"
+                        data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
 
-                        <!-- Modal -->
-                        <div
-                          class="modal fade"
-                          id="exampleModal"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
-                                  Sei sicuro di voler eliminare l'appartamento?
-                                </h5>
-                                <button
-                                  type="button"
-                                  class="btn-close"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
-                              </div>
-                              <div class="modal-body">
-                                In questo modo
-                                <strong>{{ apartment.title }}</strong> non sarà
-                                più disponibile
-                              </div>
-                              <div class="modal-footer">
-                                <button
-                                  type="button"
-                                  class="btn btn-secondary"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Chiudi
-                                </button>
-                                <button
-                                  @click="deleteApartment(apartment)"
-                                  type="button"
-                                  class="btn btn-danger"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Elimina
-                                </button>
-                              </div>
+                      <!-- Modal -->
+                      <div
+                        class="modal fade"
+                        id="exampleModal"
+                        tabindex="-1"
+                        aria-labelledby="exampleModalLabel"
+                        aria-hidden="true"
+                      >
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">
+                                Sei sicuro di voler eliminare l'appartamento?
+                              </h5>
+                              <button
+                                type="button"
+                                class="btn-close"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                              ></button>
+                            </div>
+                            <div class="modal-body">
+                              In questo modo
+                              <strong>{{ apartment.title }}</strong> non sarà
+                              più disponibile
+                            </div>
+                            <div class="modal-footer">
+                              <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-bs-dismiss="modal"
+                              >
+                                Chiudi
+                              </button>
+                              <button
+                                @click="deleteApartment(apartment)"
+                                type="button"
+                                class="btn btn-danger"
+                                data-bs-dismiss="modal"
+                              >
+                                Elimina
+                              </button>
                             </div>
                           </div>
                         </div>
                       </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -419,6 +427,9 @@ a {
 }
 .disable {
   display: none;
+}
+.iconArrow {
+  font-size: 2rem;
 }
 // @use 'path' as *;
 </style>
