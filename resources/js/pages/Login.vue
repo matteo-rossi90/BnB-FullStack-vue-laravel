@@ -48,27 +48,28 @@ export default {
       axios
         .post("/api/login", this.user)
         .then(() => {
-          localStorage.setItem("is_logged", true);
-          store.is_logged = localStorage.getItem("is_logged");
+          store.is_logged = true;
           // get a data of user
           axios
             .get("/api/user")
             .then((response) => {
               store.user = response.data;
-
-              localStorage.setItem("userName", response.data.name);
-
-              store.userName = localStorage.getItem("userName");
+              if (response.data.name) {
+                store.userName = response.data.name;
+              } else {
+                store.userName = "Profilo";
+              }
+              console.log("app- user e user name: ok");
             })
             .catch((err) => {
-              store.userName = localStorage.setItem("userName", "Accedi");
-              console.log(err);
+              store.is_logged = false;
+              store.userName = "Accedi";
+              console.log("app- user e user name:", err.message);
             });
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
-          localStorage.setItem("is_logged", false);
-          store.is_logged = localStorage.getItem("is_logged");
+          store.is_logged = false;
           console.log(err);
 
           if (err.response && err.response.status === 401) {

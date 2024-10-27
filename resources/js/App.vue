@@ -21,11 +21,17 @@ export default {
         .then((response) => {
           store.is_logged = true;
           store.user = response.data;
-          store.userName = response.data.name;
+          console.log("user", store.user);
+          if (response.data.name) {
+            store.userName = response.data.name;
+          } else {
+            store.userName = "Profilo";
+          }
           console.log("app- user e user name: ok");
         })
         .catch((err) => {
           store.is_logged = false;
+          store.userName = "Accedi";
           console.log("app- user e user name:", err.message);
         });
 

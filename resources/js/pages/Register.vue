@@ -31,28 +31,29 @@ export default {
       axios
         .post("/api/register", this.user)
         .then(() => {
-          localStorage.setItem("is_logged", "true");
-          store.is_logged = localStorage.getItem("is_logged") === "true";
+          store.is_logged = true;
 
           // get a data of user
           axios
             .get("/api/user")
             .then((response) => {
               store.user = response.data;
-
-              localStorage.setItem("userName", response.data.name);
-
-              store.userName = localStorage.getItem("userName");
+              if (response.data.name) {
+                store.userName = response.data.name;
+              } else {
+                store.userName = "Profilo";
+              }
+              console.log("app- user e user name: ok");
             })
             .catch((err) => {
-              localStorage.setItem("userName", "Accedi");
-              console.log(err);
+              store.is_logged = false;
+              store.userName = "Accedi";
+              console.log("app- user e user name:", err.message);
             });
           this.$router.push({ name: "home" });
         })
         .catch((err) => {
-          localStorage.setItem("is_logged", "false");
-          store.is_logged = localStorage.getItem("is_logged") === "false";
+          store.is_logged = false;
 
           if (err.response) {
             // Errore con risposta dal server
@@ -169,9 +170,9 @@ export default {
       const today = new Date();
       const maxDate = new Date(today.setFullYear(today.getFullYear() - 18));
       // Converti la data in formato 'YYYY-MM-DD' per l'attributo 'max', T serve per splittare le stringhe
-      return maxDate.toISOString().split('T')[0];
-    }
-  }
+      return maxDate.toISOString().split("T")[0];
+    },
+  },
 };
 // validazioni che fa fortify
 // Validator::make($input, [

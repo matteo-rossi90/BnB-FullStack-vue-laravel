@@ -29,9 +29,23 @@ export default {
         axios
           .post("/api/logout")
           .then((response) => {
-            localStorage.setItem("userName", "Accedi");
-            store.userName = localStorage.getItem("userName");
-            this.$router.push({ name: "home" });
+            axios
+              .get("/api/user")
+              .then((response) => {
+                store.user = response.data;
+                if (response.data.name) {
+                  store.userName = response.data.name;
+                } else {
+                  store.userName = "Profilo";
+                }
+                console.log("app- user e user name: ok");
+              })
+              .catch((err) => {
+                store.is_logged = false;
+                store.userName = "Accedi";
+                console.log("app- user e user name:", err.message);
+              });
+            this.$router.push({ name: "login" });
           })
           .catch((err) => {
             console.log("Errore nel logout:", err);
@@ -195,7 +209,10 @@ export default {
                   :to="{ name: 'register' }"
                   >Register</router-link
                 >
-                <router-link class="link" :to="{ name: 'dashboard' }"
+                <router-link
+                  class="link"
+                  v-if="isLogged"
+                  :to="{ name: 'dashboard' }"
                   >Dashboard</router-link
                 >
                 <p v-if="isLogged" class="link" @click="logout">Logout</p>
