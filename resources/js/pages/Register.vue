@@ -205,10 +205,14 @@ export default {
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-8 mt-5">
-        <h2>Compila il form per registrarti</h2>
+        <h2>
+          Registrati o
+          <router-link :to="{ name: 'login' }">effettua login</router-link>
+        </h2>
         <!-- <ul v-if="errors">
                     <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
                 </ul> -->
+
         <form @submit.prevent="submitForm">
           <div class="input-container">
             <label class="form-label" for="name">Nome</label>

@@ -15,6 +15,7 @@ import EditApartment from "../pages/Ura/EditApartment.vue";
 import Apartments from "../pages/Apartments.vue";
 import PaymentComponent from "../pages/components/PaymentComponent.vue";
 import CheckoutPayment from "../pages/components/CheckoutPayment.vue";
+import PageProfile from "../pages/Ur/PageProfile.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -34,6 +35,11 @@ const router = createRouter({
                 path: '/registrati',
                 name: 'register',
                 component: Register
+            },
+            {
+                path: '/home-page',
+                name: 'pageHome',
+                component: PageProfile
             },
             {
                 path: '/dashboard',
@@ -85,6 +91,7 @@ const router = createRouter({
                 name: 'checkout',
                 component: CheckoutPayment //route temporanea per visualizzare gli appartamenti + mappa
             },
+
             {
                 path: '/:pathMatch(.*)*',
                 name: 'NotFound',

@@ -104,7 +104,11 @@ export default {
         .get("/api/user")
         .then((response) => {
           store.user = response.data;
-          this.$router.push({ name: "dashboard" });
+          if (response.data.length) {
+            this.$router.push({ name: "dashboard" });
+          } else {
+            this.$router.push({ name: "pageHome" });
+          }
         })
         .catch((err) => {
           store.is_logged = false;
