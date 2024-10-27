@@ -1,11 +1,16 @@
 <script>
+import { store } from "../../store/store";
 export default {
   name: "PaymentComponent",
   data() {
     return {};
   },
   methods: {},
-  mounted() {},
+  mounted() {
+    store.isLoading = true;
+    store.paymentError = false;
+    store.successPayment = false;
+  },
 };
 </script>
 <template>

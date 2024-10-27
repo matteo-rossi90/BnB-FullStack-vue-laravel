@@ -1,4 +1,5 @@
 <script>
+import { store } from "../../store/store";
 export default {
   name: "PaymentBrain",
   data() {
@@ -54,6 +55,7 @@ export default {
         this.dropinInstance = dropinInstance;
       })
       .catch((error) => {
+        console.log("non stato creato il template");
         this.onError(error);
       });
   },

@@ -22,6 +22,11 @@ const store = reactive({
     // center: [],
     // // filtred apartment near of the center of map
     // filtredApartment: [],
+
+    // payment variable
+    isLoading: true,
+      paymentError: false,
+      successPayment: false,
 })
 
 const checkAdress = (adress) =>{

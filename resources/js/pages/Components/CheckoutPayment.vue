@@ -14,8 +14,6 @@ export default {
         sponsor: "",
         apartment: this.$route.params.id,
       },
-      isLoad: false,
-      successPayment: false,
     };
   },
   methods: {
@@ -33,10 +31,18 @@ export default {
         });
     },
     paymentOnSuccess(nonce) {
+      store.isLoading = true;
       this.form.token = nonce;
       this.buy();
     },
-    paymentOnError(error) {},
+    paymentOnError(error) {
+      store.isLoading = false;
+      store.paymentError = true;
+      setTimeout(() => {
+        this.$router.push({ name: "apartments" });
+      }, 2500);
+    },
+
     // beforeBuy() {
     //   this.$refs.paymentRef.$refs.paymentBtnRef.click();
     // },
@@ -51,11 +57,19 @@ export default {
             { withCredentials: true }
           )
           .then((res) => {
-            console.log(res);
-            this.successPayment = true;
-            this.$router.push({ name: "apartments" });
+            console.log("pagamento effettuato");
+            store.isLoading = false;
+            store.successPayment = true;
+            setTimeout(() => {
+              this.$router.push({ name: "apartments" });
+            }, 2500);
           })
           .catch((err) => {
+            store.isLoading = false;
+            store.paymentError = true;
+            setTimeout(() => {
+              this.$router.push({ name: "apartments" });
+            }, 2500);
             console.log(err);
           });
       } catch {
@@ -72,15 +86,24 @@ export default {
   },
 
   mounted() {
-    this.isLoad = false;
+    // primo evento token
     axios
       .get("http://localhost:8000/api/order/generate")
       .then((res) => {
         this.tokenApi = res.data.token;
         this.form.token = res.data.token;
-        this.isLoad = this.form.token;
+        setTimeout(() => {
+          store.isLoading = false;
+        }, 1000);
       })
       .catch((err) => {
+        store.paymentError = true;
+        store.isLoading = false;
+        setTimeout(() => {
+          this.$router.push({ name: "apartments" });
+        }, 2500);
+        console.log("1 fallisce il primo token per inizializzare tutto");
+        console.log("fallisce il token per creare la pagina");
         console.log(err);
       });
     this.form.sponsor = this.$route.params.sponsor;
@@ -114,6 +137,15 @@ export default {
           return "9.99";
       }
     },
+    isLoading() {
+      return store.isLoading;
+    },
+    paymentError() {
+      return store.paymentError;
+    },
+    paymentSuccess() {
+      return store.successPayment;
+    },
   },
 };
 </script>
@@ -121,12 +153,8 @@ export default {
   <div
     class="container pb-4 d-flex flex-column justify-content-center align-items-center"
   >
-    <h2>Totale: {{ price }} €</h2>
-  </div>
-  <div
-    class="container pb-4 d-flex flex-column justify-content-center align-items-center"
-  >
-    <div v-if="isLoad">
+    <div v-if="!isLoading && !paymentError && !paymentSuccess">
+      <h2>Totale: {{ price }} €</h2>
       <PaymentBrain
         ref="paymentRef"
         :authorization="token"
@@ -141,36 +169,72 @@ export default {
         Procedi al pagamento
       </button>
     </div>
-    <div class="loader" v-else></div>
+
+    <div class="loader" v-if="isLoading && !paymentError"></div>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-5">
+          <div class="message-box _success" v-if="paymentSuccess">
+            <i class="fa fa-check-circle" aria-hidden="true"></i>
+            <h2>Il tuo pagamento è stato eseguito con successo</h2>
+            <p>
+              Grazie per il tuo pagamento. Ti <br />
+              contatteremo per maggiori dettagli
+            </p>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <div class="row justify-content-center" v-if="paymentError">
+        <div class="col-md-5">
+          <div class="message-box _success _failed">
+            <i class="fa fa-times-circle" aria-hidden="true"></i>
+            <h2>Il tuo pagamento è fallito!!!</h2>
+            <p>Prova più tardi</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
 /* HTML: <div class="loader"></div> */
-.loader {
-  width: 50px;
-  --b: 8px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  padding: 1px;
-  background: conic-gradient(#0000 10%, #f03355) content-box;
-  -webkit-mask: repeating-conic-gradient(
-      #0000 0deg,
-      #000 1deg 20deg,
-      #0000 21deg 36deg
-    ),
-    radial-gradient(
-      farthest-side,
-      #0000 calc(100% - var(--b) - 1px),
-      #000 calc(100% - var(--b))
-    );
-  -webkit-mask-composite: destination-in;
-  mask-composite: intersect;
-  animation: l4 1s infinite steps(10);
+
+._failed {
+  border-bottom: solid 4px red !important;
 }
-@keyframes l4 {
-  to {
-    transform: rotate(1turn);
-  }
+._failed i {
+  color: red !important;
+}
+
+._success {
+  box-shadow: 0 15px 25px #00000019;
+  padding: 45px;
+  width: 100%;
+  text-align: center;
+  margin: 40px auto;
+  border-bottom: solid 4px #28a745;
+}
+
+._success i {
+  font-size: 55px;
+  color: #28a745;
+}
+
+._success h2 {
+  margin-bottom: 12px;
+  font-size: 40px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-top: 10px;
+}
+
+._success p {
+  margin-bottom: 0px;
+  font-size: 18px;
+  color: #495057;
+  font-weight: 500;
 }
 </style>
