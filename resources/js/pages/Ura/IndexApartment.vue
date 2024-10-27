@@ -225,13 +225,15 @@ export default {
                   </td>
                   <td scope="row" class="align-middle">
                     <router-link
-                      :class="{ disable: isPremium }"
+                      v-if="!isPremium"
+                      class="sponsor"
                       :to="{ name: 'payment', params: { id: apartment.id } }"
-                      >Premium tasto</router-link
+                      >Sponsorizza</router-link
                     >
                     <span class="sponsor" v-if="apartment?.sponsors[0]">{{
                       formatDate(apartment.sponsors[0].pivot.end_at)
                     }}</span>
+                    <span v-if="!apartment?.sponsors[0] && isPremium">-</span>
                   </td>
                   <td scope="row" class="align-middle">
                     <p
