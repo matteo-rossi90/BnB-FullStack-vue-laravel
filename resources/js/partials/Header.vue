@@ -99,6 +99,18 @@ export default {
       store.isFilterClose = !store.isFilterClose;
       console.log(store.isFilterClose);
     },
+    profilePush() {
+      axios
+        .get("/api/user")
+        .then((response) => {
+          store.user = response.data;
+          this.$router.push({ name: "dashboard" });
+        })
+        .catch((err) => {
+          store.is_logged = false;
+          this.$router.push({ name: "register" });
+        });
+    },
   },
   mounted() {
     window.addEventListener("click", () => {
@@ -106,30 +118,30 @@ export default {
         this.isClose = false;
       }
     });
-    // window.addEventListener("scroll", () => {
-    //   if (this.inScrollPage) {
-    //     const currentScrollPosition = window.scrollY;
-    //     let firstRow = document.getElementById("firstRow");
+    window.addEventListener("scroll", () => {
+      //   if (this.inScrollPage) {
+      const currentScrollPosition = window.scrollY;
+      let firstRow = document.getElementById("responsiveNavBar");
 
-    //     firstRow.style.transition = "all 0.5s";
-    //     if (currentScrollPosition > this.previousScrollPosition) {
-    //       firstRow.classList.add("hidden");
-    //     } else {
-    //       firstRow.classList.remove("hidden");
-    //     }
+      firstRow.style.transition = "all 0.5s";
+      if (currentScrollPosition > this.previousScrollPosition) {
+        firstRow.classList.add("hidden");
+      } else {
+        firstRow.classList.remove("hidden");
+      }
 
-    //     // Aggiorniamo la posizione precedente per il prossimo confronto
-    //     this.previousScrollPosition = currentScrollPosition;
-    //   } else {
-    //     const currentScrollPosition = window.scrollY;
-    //     let firstRow = document.getElementById("firstRow");
+      // Aggiorniamo la posizione precedente per il prossimo confronto
+      this.previousScrollPosition = currentScrollPosition;
+      //   } else {
+      //     const currentScrollPosition = window.scrollY;
+      //     let firstRow = document.getElementById("firstRow");
 
-    //     firstRow.classList.add("hidden");
+      //     firstRow.classList.add("hidden");
 
-    //     // Aggiorniamo la posizione precedente per il prossimo confronto
-    //     this.previousScrollPosition = currentScrollPosition;
-    //   }
-    // });
+      //     // Aggiorniamo la posizione precedente per il prossimo confronto
+      //     this.previousScrollPosition = currentScrollPosition;
+      //   }
+    });
   },
   watch: {
     // Monitora i cambiamenti di rotta
@@ -187,20 +199,16 @@ export default {
   <header>
     <nav>
       <div class="container-fluid">
-        <div
-          class="row justify-content-between align-items-center"
-          id="firstRow"
-        >
-          <div class="col">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-2" id="imageLogo">
             <router-link
               class="contLogo d-flex align-items-center"
               :to="{ name: 'home' }"
             >
               <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
-              <span><strong>BoolBnb</strong></span>
             </router-link>
           </div>
-          <div class="col-sm-10 col-lg-8">
+          <div class="col">
             <!-- search input for adress -->
             <div class="input-group stylish-input-group">
               <div></div>
@@ -245,48 +253,50 @@ export default {
               </div>
             </div>
           </div>
-          <div class="col d-flex gap-2 justify-content-end">
-            <!-- user click dropdown class -->
-            <div class="contDropDown" @click.stop="openDrop()">
-              <div
-                class="profile d-flex justify-content-between align-items-center gap-1 m-0"
-              >
-                <p class="nameUser">
-                  {{ userName !== "null" ? userName : "Profilo" }}
-                </p>
+          <div class="col-2" id="menuItems">
+            <div class="d-flex gap-2 justify-content-end">
+              <!-- user click dropdown class -->
+              <div class="contDropDown" @click.stop="openDrop()">
+                <div
+                  class="profile d-flex justify-content-between align-items-center gap-1 m-0"
+                >
+                  <p class="nameUser">
+                    {{ userName !== "null" ? userName : "Profilo" }}
+                  </p>
 
-                <font-awesome-icon :icon="['fas', 'caret-down']" />
-              </div>
-              <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
-                <router-link class="link" :to="{ name: 'home' }"
-                  >Home</router-link
-                >
-                <router-link
-                  v-if="!isLogged"
-                  class="link"
-                  :to="{ name: 'login' }"
-                  >Login</router-link
-                >
-                <router-link
-                  v-if="!isLogged"
-                  class="link"
-                  :to="{ name: 'register' }"
-                  >Register</router-link
-                >
-                <router-link
-                  class="link"
-                  v-if="isLogged && haveApartment"
-                  :to="{ name: 'dashboard' }"
-                  >Dashboard</router-link
-                >
-                <router-link
-                  class="link"
-                  v-else
-                  :to="{ name: 'createApartment' }"
-                  >Affitta</router-link
-                >
+                  <font-awesome-icon :icon="['fas', 'caret-down']" />
+                </div>
+                <div class="dropDown" :class="isOpen ? 'active' : 'disactive'">
+                  <router-link class="link" :to="{ name: 'home' }"
+                    >Home</router-link
+                  >
+                  <router-link
+                    v-if="!isLogged"
+                    class="link"
+                    :to="{ name: 'login' }"
+                    >Login</router-link
+                  >
+                  <router-link
+                    v-if="!isLogged"
+                    class="link"
+                    :to="{ name: 'register' }"
+                    >Register</router-link
+                  >
+                  <router-link
+                    class="link"
+                    v-if="isLogged && haveApartment"
+                    :to="{ name: 'dashboard' }"
+                    >Dashboard</router-link
+                  >
+                  <router-link
+                    class="link"
+                    v-else
+                    :to="{ name: 'createApartment' }"
+                    >Affitta</router-link
+                  >
 
-                <p v-if="isLogged" class="link" @click="logout">Logout</p>
+                  <p v-if="isLogged" class="link" @click="logout">Logout</p>
+                </div>
               </div>
             </div>
           </div>
@@ -294,10 +304,30 @@ export default {
       </div>
     </nav>
   </header>
-  <nav class="responsiveNavBar">navbar</nav>
+  <nav id="responsiveNavBar">
+    <div class="contIcon">
+      <router-link class="link" :to="{ name: 'home' }">
+        <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+        <p>Cerca</p>
+      </router-link>
+    </div>
+    <div class="contIcon">
+      <font-awesome-icon :icon="['fas', 'plane-departure']" />
+      <p>Viaggia</p>
+    </div>
+    <div class="contIcon">
+      <font-awesome-icon :icon="['far', 'message']" />
+      <p>Messaggi</p>
+    </div>
+    <div class="contIcon" @click="profilePush">
+      <font-awesome-icon :icon="['far', 'user']" />
+      <p>Profilo</p>
+    </div>
+  </nav>
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
+
 header {
   display: flex;
   gap: 1rem;
@@ -308,6 +338,7 @@ header {
   width: 100%;
   background-color: white;
   padding: 1rem;
+  height: 6rem;
 
   nav {
     width: 100%;
@@ -470,18 +501,49 @@ p,
     outline: none;
   }
 }
+#responsiveNavBar {
+  height: 0;
+  overflow: hidden;
+}
 @media all and (max-width: 623px) {
-  .responsiveNavBar {
+  #responsiveNavBar.hidden {
+    height: 0;
+    overflow: hidden;
+  }
+  #responsiveNavBar {
     height: 4rem;
     width: 100%;
-    background-color: red;
+    background-color: white;
     position: fixed;
     bottom: 0;
     z-index: 100;
+    display: flex;
+    justify-content: space-around;
+    .contIcon {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        color: red;
+      }
+      cursor: pointer;
+      .link {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+          color: red;
+        }
+      }
+    }
   }
-  #firstRow {
+  #imageLogo,
+  #menuItems {
     display: none;
   }
+
   .contInput {
     width: 100%;
   }
