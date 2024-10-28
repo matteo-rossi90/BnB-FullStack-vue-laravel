@@ -137,11 +137,11 @@ export default {
     <div class="content-box" :class="{ 'show-content': showContent }">
       <div class="container-fluid mt-5">
         <div class="row" v-if="message">
-          <div class="col-xm-8 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-8 col-sm-12 col-md-12 col-lg-12">
 
-            <div class="d-flex justify-content-between">
-                <div class="d-flex align-items-center mx-5">
-                    <div class="main-image me-3">
+            <div class="d-flex justify-content-between container container-details">
+                <div class="d-flex align-items-center box-user">
+                    <div class="main-image d-flex align-items-center">
                         <img :src="getImage(selectedImage)" alt="utente" />
                     </div>
                     <div class="text-box my-3">
@@ -164,7 +164,7 @@ export default {
                 </button>
 
             </div>
-            <div class="m-5">
+            <div class="container container-message mt-3 message-details">
               <p>{{ message.message }}</p>
             </div>
 
