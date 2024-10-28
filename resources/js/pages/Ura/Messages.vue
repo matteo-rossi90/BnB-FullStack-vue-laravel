@@ -79,8 +79,8 @@ export default {
 </script>
 
 <template>
-  <div class="wrapper d-flex">
-    <aside>
+  <div class="wrapper-message d-flex">
+    <aside class="sidenav-message">
       <div class="container">
         <div class="d-flex justify-content-center mx-4 my-3">
           <h5>{{ filteredApartment.title }}</h5>
@@ -100,7 +100,7 @@ export default {
         </div>
 
         <!-- lista messaggi -->
-        <div class="message-list mt-4" v-if="filteredApartment">
+        <div class="message-list mt-2" v-if="filteredApartment">
           <ul class="list-group list-group-flush">
             <li
               class="list-group-item d-flex align-items-center"
@@ -127,8 +127,8 @@ export default {
 
     <!-- dettaglio messaggio -->
     <div class="dashboard-box">
-      <div class="container-fluid py-4">
-        <div class="row" v-if="message">
+      <div class="container-fluid">
+        <div class="row mt-5" v-if="message">
           <div class="col">
             <div class="d-flex align-items-center mx-5">
               <div class="main-image me-3">
@@ -215,7 +215,7 @@ input {
 }
 
 .message-list {
-  height: calc(100vh - 300px);
+  height: calc(100vh - 250px);
   padding: 10px;
   width: 100%;
   overflow-y: auto;

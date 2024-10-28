@@ -1,17 +1,18 @@
 @import '../scss/variables';
 
 //parte principale della componente Messaggi
-.wrapper {
-    height: calc(100vh - 154px);
+.wrapper-message {
+    height: 100%;
     width: 100%;
     // overflow: auto;
 }
 
-aside {
+aside.sidenav-message {
     width: 450px;
     position:fixed;
     left:0;
-    height: 100%;
+    top: 6rem;
+    height: calc(100vh - 6rem);
     border-right: 1px solid $color;
 }
 
