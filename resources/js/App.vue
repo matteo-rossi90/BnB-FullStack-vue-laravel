@@ -73,12 +73,12 @@ export default {
     <router-view></router-view>
   </main>
 
-  <!-- <Footer /> -->
+  <Footer />
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
 main {
-  padding-top: 4rem;
+  padding-top: 6rem;
 }
 
 @media screen and (max-width: 632px) {

@@ -188,57 +188,55 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="filterClass" :class="{ open: isOpenFilter }">
-        <label for="number_rooms">number_rooms</label>
-        <input
-          type="number"
-          placeholder="inserisci numero"
-          id="number_rooms"
-          v-model.trim="filter.number_rooms"
-        />
-        <label for="number_beds">number_beds</label>
-        <input
-          type="number"
-          placeholder="inserisci numero"
-          id="number_beds"
-          v-model.trim="filter.number_beds"
-        />
-        <label for="square_meters">Metri quadri</label>
-        <input
-          type="number"
-          placeholder="inserisci numero"
-          id="square_meters"
-          v-model.trim="filter.square_meters"
-        />
-        <input
-          type="range"
-          min="1"
-          max="200"
-          value="20"
-          v-model.trim="filter.distance"
-        />
-        <span>{{ filter.distance }} km dal punto scelto</span>
-        <div class="contServices" v-if="isReady">
-          <span
-            class="service"
-            v-for="(service, index) in services"
-            :key="index"
-            :class="{ active: isActive(service.id) }"
-            @click="toggleActive(service.id)"
-            >{{ service.name }}</span
-          >
-        </div>
-
-        <button @click="updateFilter" class="btn btn-primary">FIltra</button>
-      </div>
+  <div class="filterClass" :class="{ open: isOpenFilter }">
+    <label for="number_rooms">number_rooms</label>
+    <input
+      type="number"
+      placeholder="inserisci numero"
+      id="number_rooms"
+      v-model.trim="filter.number_rooms"
+    />
+    <label for="number_beds">number_beds</label>
+    <input
+      type="number"
+      placeholder="inserisci numero"
+      id="number_beds"
+      v-model.trim="filter.number_beds"
+    />
+    <label for="square_meters">Metri quadri</label>
+    <input
+      type="number"
+      placeholder="inserisci numero"
+      id="square_meters"
+      v-model.trim="filter.square_meters"
+    />
+    <input
+      type="range"
+      min="1"
+      max="200"
+      value="20"
+      v-model.trim="filter.distance"
+    />
+    <span>{{ filter.distance }} km dal punto scelto</span>
+    <div class="contServices" v-if="isReady">
+      <span
+        class="service"
+        v-for="(service, index) in services"
+        :key="index"
+        :class="{ active: isActive(service.id) }"
+        @click="toggleActive(service.id)"
+        >{{ service.name }}</span
+      >
     </div>
 
-    <div class="row py-3" v-if="!isLoading">
-      <h3 class="my-3">Ecco gli appartamenti che soddisfano la tua ricerca</h3>
-      <small>Appartamenti trovati: {{ apartmensFiltred.length }} </small>
-      <div class="my-3 col-sm-12 col-md-12 col-lg-6 scrollable-cards">
+    <button @click="updateFilter" class="btn btn-primary">FIltra</button>
+  </div>
+  <div class="container-fluid">
+    <div id="rowContainer" v-if="!isLoading">
+      <div class="leftCol">
+        <h3>
+          Oltre {{ apartmensFiltred.length }} alloggi in questa località: Roma
+        </h3>
         <div class="row" v-if="apartmensFiltred.length">
           <div
             class="col-lg-6 col-md-6 col-sm-12 mb-4"
@@ -281,7 +279,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="my-3 col">
+      <div id="mapCont">
         <div id="map"></div>
       </div>
     </div>
@@ -347,8 +345,8 @@ img {
 
 #map {
   width: 100%;
-  height: 500px;
-  border-radius: 20px;
+  //   height: auto;
+  height: 100%;
 }
 
 .title-popup {
@@ -358,35 +356,11 @@ img {
 a {
   text-decoration: none;
 }
-.loader {
-  width: 50px;
-  --b: 8px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  padding: 1px;
-  background: conic-gradient(#0000 10%, #f03355) content-box;
-  -webkit-mask: repeating-conic-gradient(
-      #0000 0deg,
-      #000 1deg 20deg,
-      #0000 21deg 36deg
-    ),
-    radial-gradient(
-      farthest-side,
-      #0000 calc(100% - var(--b) - 1px),
-      #000 calc(100% - var(--b))
-    );
-  -webkit-mask-composite: destination-in;
-  mask-composite: intersect;
-  animation: l4 1s infinite steps(10);
-}
-@keyframes l4 {
-  to {
-    transform: rotate(1turn);
-  }
-}
+
 .contServices {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 1rem;
   .service {
     padding: 0.3rem 0.6rem;
@@ -415,11 +389,64 @@ a {
   position: fixed;
   background-color: white;
   z-index: 10;
-  top: 50%;
+  top: 6rem;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%);
   padding: 2rem;
   border-radius: 20px;
   box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+}
+
+#rowContainer {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+.leftCol {
+  width: 50%;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#mapCont {
+  height: calc(100vh - 6rem);
+  width: 50%;
+
+  position: -webkit-sticky;
+  position: sticky;
+  top: 6rem; /* Posiziona la colonna fissa in cima allo schermo */
+  right: 0;
+  overflow-y: auto; /* Permette lo scrolling interno se necessario */
+  background-color: #f8f9fa; /* Facoltativo: Imposta un colore di sfondo */
+}
+@media (max-width: 991px) {
+  #rowContainer {
+    display: flex;
+    flex-direction: column-reverse; /* Le colonne vengono visualizzate in verticale e invertite */
+  }
+  #mapCont {
+    width: 100%;
+    height: 50vh;
+    position: relative;
+    top: 0;
+    left: 0;
+
+    overflow-y: visible; /* Disattiva lo scroll interno */
+  }
+  .leftCol {
+    width: 100%;
+  }
+  .filterClass.open {
+    width: 70%;
+  }
+}
+@media (max-width: 686px) {
+  .filterClass.open {
+    width: 95%;
+    padding: 1rem;
+    overflow: auto;
+  }
 }
 </style>
