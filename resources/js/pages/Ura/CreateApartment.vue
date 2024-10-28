@@ -46,9 +46,8 @@ export default {
         if (!this.city) {
             this.errors.city = "La città è obbligatoria.";
         }
-        if (!this.postalCode) {
-            this.errors.postalCode = "Il codice postale è obbligatorio.";
-        }else if (!/^\d{5}$/.test(this.postalCode)){
+
+        if (!/^\d{5}$/.test(this.postalCode)){
             this.errors.postalCode ="Il codice postale deve essere composto da 5 cifre.";
         }
 
@@ -222,7 +221,7 @@ export default {
             this.$router.push({
             name: "apartments",
             query: {
-                toastMessage: `Errore durante la modifica dell'appartamento ${this.apartment.title}`,
+                toastMessage: `Errore durante l'inserimento dell'appartamento ${this.apartment.title}`,
                 toastType: "error"
                 }
             })
@@ -256,7 +255,7 @@ export default {
           </div>
           <div class="col-md-12 col-lg-12">
             <form @submit.prevent="submit" enctype="multipart/form-data">
-              <div class="mb-3">
+              <div class="mb-3 col-12 col-md-6">
                 <label v-if="isAproveStreet" for="title" class="col-form-label"
                   >Nome appartamento:</label
                 >
@@ -273,7 +272,7 @@ export default {
                 />
                 <span v-if="errors.title" class="text-danger">{{ errors.title }}</span>
               </div>
-              <div v-if="!isAproveStreet" class="mb-3">
+              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
                 <label for="address" class="col-form-label">Via:</label>
                 <input
                   type="text"
@@ -285,7 +284,7 @@ export default {
                 />
                 <span v-if="errors.street" class="text-danger">{{ errors.street }}</span>
               </div>
-              <div v-if="!isAproveStreet" class="mb-3">
+              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
                 <label for="address" class="col-form-label">Numero</label>
                 <input
                   type="number"
@@ -297,7 +296,7 @@ export default {
                 />
                 <span v-if="errors.number" class="text-danger">{{ errors.number }}</span>
               </div>
-              <div v-if="!isAproveStreet" class="mb-3">
+              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
                 <label for="address" class="col-form-label">Citta</label>
                 <input
                   type="text"
@@ -309,7 +308,7 @@ export default {
                 />
                 <span v-if="errors.city" class="text-danger">{{ errors.city }}</span>
               </div>
-              <div v-if="!isAproveStreet" class="mb-3">
+              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
                 <label for="address" class="col-form-label"
                   >Codice Postale</label
                 >
@@ -324,7 +323,7 @@ export default {
                 <span v-if="errors.postalCode" class="text-danger">{{ errors.postalCode }}</span>
               </div>
 
-              <div class="mb-3">
+              <div class="mb-3 col-12 col-md-6">
                 <label
                   v-if="isAproveStreet"
                   for="number_rooms"
@@ -344,7 +343,7 @@ export default {
                 />
                 <span v-if="errors.number_rooms" class="text-danger">{{ errors.number_rooms }}</span>
               </div>
-              <div class="mb-3">
+              <div class="mb-3 col-12 col-md-6">
                 <label
                   v-if="isAproveStreet"
                   for="number_beds"
@@ -364,7 +363,7 @@ export default {
                 />
               </div>
                <span v-if="errors.number_beds" class="text-danger">{{ errors.number_beds }}</span>
-              <div class="mb-3">
+              <div class="mb-3 col-12 col-md-6">
                 <label
                   v-if="isAproveStreet"
                   for="number_bathrooms"
@@ -384,7 +383,7 @@ export default {
                 />
                 <span v-if="errors.number_bathrooms" class="text-danger">{{ errors.number_bathrooms }}</span>
               </div>
-              <div v-if="isAproveStreet" class="mb-3">
+              <div v-if="isAproveStreet" class="mb-3 col-12 col-md-6">
                 <label for="square_meters" class="col-form-label"
                   >metri quadri:</label
                 >
@@ -401,7 +400,7 @@ export default {
                 <span v-if="errors.square_meters" class="text-danger">{{ errors.square_meters }}</span>
 
               </div>
-              <div v-if="isAproveStreet" class="input-group mb-3">
+              <div v-if="isAproveStreet" class="input-group mb-3 col-12 col-md-6">
                 <input
                   type="file"
                   class="form-control"
