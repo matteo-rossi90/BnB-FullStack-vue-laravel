@@ -142,6 +142,13 @@ aside.sidenav-message {
     }
 }
 
+.btn-back{
+
+    @media (min-width: 767px){
+        display: none;
+    }
+}
+
 // @media (max-width:1024px){
 
     // aside {

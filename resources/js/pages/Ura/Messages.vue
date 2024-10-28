@@ -89,10 +89,12 @@ export default {
 <template>
   <div class="wrapper-message d-flex">
     <aside class="sidenav-message" :class="{ 'show-sidenav': showSidenav }">
-        <button v-if="!showSidenav"
-        @click="goBackToMessages"
-        class="d-md-none btn btn-secondary">Indietro</button>
       <div class="container-fluid">
+        <button v-if="!showSidenav"
+            @click="goBackToMessages"
+            class="btn btn-secondary btn-back">
+            Indietro
+        </button>
         <div class="d-flex justify-content-center mx-4 my-3">
           <h5>{{ filteredApartment.title }}</h5>
         </div>
@@ -138,27 +140,34 @@ export default {
 
     <!-- dettaglio messaggio -->
     <div class="content-box" :class="{ 'show-content': showContent }">
-        <button v-if="showContent"
-        @click="goBackToMessages"
-        class="d-md-none btn btn-secondary">Indietro</button>
-      <div class="container-fluid">
-        <div class="row mt-5" v-if="message">
+      <div class="container-fluid mt-5">
+        <div class="row" v-if="message">
           <div class="col">
-            <div class="d-flex align-items-center mx-5">
-              <div class="main-image me-3">
-                <img :src="getImage(selectedImage)" alt="utente" />
-              </div>
-              <div class="text-box my-3">
-                <div class="d-flex flex-column">
-                  <h6>{{ message.name }} {{ message.surname }}</h6>
-                  <small>{{ formatDateTime(message.created_at) }}</small>
+
+            <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center mx-5">
+                    <div class="main-image me-3">
+                        <img :src="getImage(selectedImage)" alt="utente" />
+                    </div>
+                    <div class="text-box my-3">
+                        <div class="d-flex flex-column">
+                            <h6>{{ message.name }} {{ message.surname }}</h6>
+                            <small>{{ formatDateTime(message.created_at) }}</small>
+                        </div>
+                        <small
+                        ><a :href="'mailto:' + message.email">{{
+                            message.email
+                        }}</a>
+                        </small
+                        >
+                    </div>
                 </div>
-                <small
-                  ><a :href="'mailto:' + message.email">{{
-                    message.email
-                  }}</a></small
-                >
-              </div>
+                <button v-if="showContent"
+                    @click="goBackToMessages"
+                    class="btn btn-secondary btn-back me-3">
+                    Indietro
+                </button>
+
             </div>
             <div class="m-5">
               <p>{{ message.message }}</p>
