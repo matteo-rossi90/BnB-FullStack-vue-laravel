@@ -10,7 +10,7 @@ export default {
 <template>
     <div class="container-fluid d-flex justify-content-around  ms_container">
 
-  <h1 class="p-5">footer</h1>
+  <h1 class="p-5 align-content-center ">footer</h1>
 
   <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
   <router-link class="align-content-center" to="/">Home</router-link>
@@ -23,11 +23,13 @@ export default {
 .ms_container{
     margin-top: 2%;
     height: 10%;
-    background-color: black;
+    background-color: rgb(103, 100, 100);
     color: white;
-    a{
+    a, h1{
+
        color: white;
        text-decoration: none;
+       align-items: center;
        &:hover{
         text-decoration: underline;
         color: red;
