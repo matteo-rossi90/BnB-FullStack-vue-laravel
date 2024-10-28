@@ -270,87 +270,187 @@ export default {
                     <i class="fa-solid fa-chart-simple"></i>
                   </td>
 
-
                   <td scope="row" class="actions align-middle">
-                    <router-link
-                      :to="{
-                        name: 'showApartment',
-                        params: { slug: apartment.slug, id: apartment.id },
-                      }"
-                    >
-                      <div class="btn btn-primary">
-                        <i class="fa-solid fa-eye"></i>
-                      </div>
-                    </router-link>
-                    <router-link
-                      class="link"
-                      :to="{
-                        name: 'EditApartment',
-                        params: { id: apartment.id },
-                      }"
-                    >
-                      <div class="btn btn-warning">
-                        <i class="fa-solid fa-pencil"></i>
-                      </div>
-                    </router-link>
+                    <!-- td grandezza normale -->
+                    <div class="d-none d-sm-table-cell">
+                        <router-link
+                          :to="{
+                            name: 'showApartment',
+                            params: { slug: apartment.slug, id: apartment.id },
+                          }"
+                        >
+                          <div class="btn btn-primary">
+                            <i class="fa-solid fa-eye"></i>
+                          </div>
+                        </router-link>
+                        <router-link
+                          class="link"
+                          :to="{
+                            name: 'EditApartment',
+                            params: { id: apartment.id },
+                          }"
+                        >
+                          <div class="btn btn-warning">
+                            <i class="fa-solid fa-pencil"></i>
+                          </div>
+                        </router-link>
 
-                    <div class="d-inline-block">
-                      <button
-                        type="button"
-                        class="btn btn-danger"
-                        id="liveToastBtn"
-                        data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"
-                      >
-                        <i class="fa-solid fa-trash"></i>
-                      </button>
+                        <div class="d-inline-block">
+                          <button
+                            type="button"
+                            class="btn btn-danger"
+                            id="liveToastBtn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#exampleModal"
+                          >
+                            <i class="fa-solid fa-trash"></i>
+                          </button>
 
-                      <!-- Modal -->
-                      <div
-                        class="modal fade"
-                        id="exampleModal"
-                        tabindex="-1"
-                        aria-labelledby="exampleModalLabel"
-                        aria-hidden="true"
-                      >
-                        <div class="modal-dialog">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">
-                                Sei sicuro di voler eliminare l'appartamento?
-                              </h5>
-                              <button
-                                type="button"
-                                class="btn-close"
-                                data-bs-dismiss="modal"
-                                aria-label="Close"
-                              ></button>
-                            </div>
-                            <div class="modal-body">
-                              In questo modo
-                              <strong>{{ apartment.title }}</strong> non sarà
-                              più disponibile
-                            </div>
-                            <div class="modal-footer">
-                              <button
-                                type="button"
-                                class="btn btn-secondary"
-                                data-bs-dismiss="modal"
-                              >
-                                Chiudi
-                              </button>
-                              <button
-                                @click="deleteApartment(apartment)"
-                                type="button"
-                                class="btn btn-danger"
-                                data-bs-dismiss="modal"
-                              >
-                                Elimina
-                              </button>
+                          <!-- Modal -->
+                          <div
+                            class="modal fade"
+                            id="exampleModal"
+                            tabindex="-1"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="exampleModalLabel">
+                                    Sei sicuro di voler eliminare l'appartamento?
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+                                <div class="modal-body">
+                                  In questo modo
+                                  <strong>{{ apartment.title }}</strong> non sarà
+                                  più disponibile
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Chiudi
+                                  </button>
+                                  <button
+                                    @click="deleteApartment(apartment)"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Elimina
+                                  </button>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
+                    </div>
+
+                    <!-- td responsive -->
+                    <div class="d-block d-sm-none">
+                        <div class="btn-group dropup">
+                            <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fa-solid fa-ellipsis-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <router-link
+                                    :to="{
+                                        name: 'showApartment',
+                                        params: { slug: apartment.slug, id: apartment.id },
+                                    }"
+                                    >
+                                        <div class="btn btn-primary m-1">
+                                            <i class="fa-solid fa-eye"></i>
+
+                                        </div>
+                                    </router-link>
+                                </li>
+                                <li>
+                                    <router-link
+                                    class="link"
+                                    :to="{
+                                        name: 'EditApartment',
+                                        params: { id: apartment.id },
+                                    }"
+                                    >
+                                        <div class="btn btn-warning m-1">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </div>
+                                    </router-link>
+                                </li>
+
+                                <li>
+                                    <div class="d-inline-block">
+                                        <button
+                                            type="button"
+                                            class="btn btn-danger m-1"
+                                            id="liveToastBtn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div
+                                            class="modal fade"
+                                            id="exampleModal"
+                                            tabindex="-1"
+                                            aria-labelledby="exampleModalLabel"
+                                            aria-hidden="true"
+                                        >
+                                            <div class="modal-dialog modal-fullscreen-sm-down">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                    Sei sicuro di voler eliminare l'appartamento?
+                                                </h5>
+                                                <button
+                                                    type="button"
+                                                    class="btn-close"
+                                                    data-bs-dismiss="modal"
+                                                    aria-label="Close"
+                                                ></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                In questo modo
+                                                <strong>{{ apartment.title }}</strong> non sarà
+                                                più disponibile
+                                                </div>
+                                                <div class="modal-footer">
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-secondary"
+                                                    data-bs-dismiss="modal"
+                                                >
+                                                    Chiudi
+                                                </button>
+                                                <button
+                                                    @click="deleteApartment(apartment)"
+                                                    type="button"
+                                                    class="btn btn-danger"
+                                                    data-bs-dismiss="modal"
+                                                >
+                                                    Elimina
+                                                </button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                   </td>
                 </tr>
@@ -434,6 +534,10 @@ a {
 }
 .iconArrow {
   font-size: 2rem;
+}
+
+.dropdown-menu {
+    --bs-dropdown-min-width: none;
 }
 // @use 'path' as *;
 </style>
