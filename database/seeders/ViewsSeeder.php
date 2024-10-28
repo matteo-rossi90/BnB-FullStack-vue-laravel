@@ -14,16 +14,26 @@ class ViewsSeeder extends Seeder
      * Run the database seeds.
      */
     public function run(): void
-    {
-        $start = strtotime("2023-01-01 00:00:00");
-        $end = strtotime("2024-10-28 17:45:33");
-        for ($i=0; $i < 100; $i++) {
+{
+    $apartments = Apartment::all(); // Mantieni la collezione completa con un nome chiaro
+    $totalApartment = $apartments->count();
+    $start = strtotime("2023-01-01 00:00:00");
+    $end = strtotime("2024-10-28 17:45:33");
+
+    for ($i = 0; $i < $totalApartment; $i++) { // Itera fino all'ultimo appartamento
+        for ($j = 0; $j < 40; $j++) { // Crea 40 viste per ogni appartamento
             $new_view = new View;
-            $new_view->apartment_id = Apartment::inRandomOrder()->first()->id;
-            $new_view->IP_address = Hash::make('192.168.54.12');
+            $currentApartment = $apartments[$i]; // Usa una variabile temporanea per ogni appartamento
+
+            $new_view->apartment_id = $currentApartment->id;
+
+            // Genera una data casuale nell'intervallo specificato
             $randomTimestamp = rand($start, $end);
-            $new_view->date_view =  date("Y-m-d H:i:s", $randomTimestamp);
+            $new_view->date_view = date("Y-m-d H:i:s", $randomTimestamp);
+
             $new_view->save();
         }
     }
+}
+
 }

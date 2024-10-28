@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\Ura\ApartmentController;
 use App\Http\Controllers\Auth\Ura\MessageController;
 use App\Http\Controllers\Auth\Ura\OrderController;
+use App\Http\Controllers\Auth\Ura\ViewController;
 use App\Http\Controllers\GeneralUser;
 use App\Http\Controllers\UserAlreadyAuth;
 use App\Http\Controllers\UserAlreadyLogged;
@@ -34,6 +35,7 @@ Route::middleware('auth:sanctum')
     ->name('admin.')
     ->group(function () {
         Route::resource('/utente/dashboard', ApartmentController::class);
+        Route::get('/view', [ViewController::class, 'view']);
 
     });
 
