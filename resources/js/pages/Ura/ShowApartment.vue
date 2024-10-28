@@ -259,10 +259,11 @@ export default {
 <template>
   <div v-if="exist">
     <div class="container mt-5">
-      <!-- Titolo dell'appartamento allineato a sinistra -->
+      <!-- Titolo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-start">
           <h1 class="apartment-title">{{ apartment.title }}</h1>
+          <p class="apartment-description">Scopri il comfort e la bellezza di questo appartamento unico.</p>
         </div>
       </div>
 
@@ -270,18 +271,10 @@ export default {
       <div class="row my-4">
         <div class="col-12">
           <div v-if="apartment.image" class="image-container mb-4">
-            <img
-              :src="apartment.image"
-              :alt="apartment.name"
-              class="img-fluid rounded shadow-sm"
-            />
+            <img :src="apartment.image" :alt="apartment.name" class="img-fluid rounded shadow-sm" />
           </div>
           <div v-else class="image-container mb-4">
-            <img
-              src="img/no-image.png"
-              alt="Immagine non disponibile"
-              class="img-fluid rounded shadow-sm"
-            />
+            <img src="img/no-image.png" alt="Immagine non disponibile" class="img-fluid rounded shadow-sm" />
           </div>
         </div>
       </div>
@@ -289,13 +282,8 @@ export default {
       <!-- Indirizzo e Informazioni Aggiuntive -->
       <div class="row mb-4">
         <div class="col-12 text-start">
-          <h3 class="apartment-address">
-            Indirizzo: {{ apartment.address }} <br />
-            <span class="additional-info">
-              {{ apartment.number_beds }} letti &bull;
-              {{ apartment.number_bathrooms }} bagni
-            </span>
-          </h3>
+          <h3 class="apartment-address">Indirizzo: {{ apartment.address }}</h3>
+          <span class="additional-info">{{ apartment.number_beds }} letti &bull; {{ apartment.number_bathrooms }} bagni</span>
         </div>
       </div>
 
@@ -309,14 +297,14 @@ export default {
                   <i :class="defaultIcon"></i> Nessun servizio disponibile
                 </li>
                 <li v-for="(service, index) in apartment.services" :key="index">
-                  <i :class="servicesIcons[service.name] || defaultIcon" style="font-size: 1.5rem; margin-right: 8px;"></i> {{ service.name }}
+                  <i :class="servicesIcons[service.name] || defaultIcon" class="service-icon"></i> {{ service.name }}
                 </li>
               </ul>
             </div>
 
             <!-- Stato di Disponibilità -->
-            <div class="col-12 availability-section   p-3">
-              <h3 class="section-title">Disponibile</h3>
+            <div class="col-12 availability-section p-3">
+              <h3 class="section-title">Disponibilità</h3>
               <p>{{ apartment.is_visible ? "Sì" : "No" }}</p>
             </div>
           </div>
@@ -324,76 +312,30 @@ export default {
 
         <!-- Colonna Destra per il Modulo Messaggi -->
         <div class="col-md-8 d-flex justify-content-end align-items-start">
-          <div class="message-form-container  rounded p-4">
+          <div class="message-form-container rounded p-4">
             <h2 class="form-title text-center">Invia un messaggio al proprietario</h2>
-            <form
-              class="message-form"
-              @submit.prevent="submitForm"
-            >
+            <form class="message-form" @submit.prevent="submitForm">
               <div class="mb-3">
                 <label for="name" class="form-label">Il tuo nome</label>
-                <input
-                  type="text"
-                  id="name"
-                  class="form-control"
-                  placeholder="Inserisci il tuo nome"
-                  v-model="name"
-                  @input="validateName"
-                  :disabled="disableCheck"
-                />
+                <input type="text" id="name" class="form-control" placeholder="Inserisci il tuo nome" v-model="name" @input="validateName" :disabled="disableCheck" />
                 <small v-if="errors.name" class="error-message">{{ errors.name }}</small>
               </div>
               <div class="mb-3">
                 <label for="surname" class="form-label">Il tuo cognome</label>
-                <input
-                  type="text"
-                  id="surname"
-                  class="form-control"
-                  placeholder="Inserisci il tuo cognome"
-                  v-model="surname"
-                  @input="validateSurname"
-                  :disabled="disableCheck"
-                />
+                <input type="text" id="surname" class="form-control" placeholder="Inserisci il tuo cognome" v-model="surname" @input="validateSurname" :disabled="disableCheck" />
                 <small v-if="errors.surname" class="error-message">{{ errors.surname }}</small>
               </div>
-              <!-- Campo Email -->
               <div class="mb-3">
                 <label for="email" class="form-label">La tua email</label>
-                <input
-                  type="email"
-                  id="email"
-                  class="form-control"
-                  placeholder="Inserisci la tua email"
-                  v-model="email"
-                  @input="validateEmail"
-                  :disabled="disableCheck"
-                />
+                <input type="email" id="email" class="form-control" placeholder="Inserisci la tua email" v-model="email" @input="validateEmail" :disabled="disableCheck" />
                 <small v-if="errors.email" class="error-message">{{ errors.email }}</small>
               </div>
-
-              <!-- Campo Messaggio -->
               <div class="mb-3">
                 <label for="message" class="form-label">Il tuo messaggio</label>
-                <textarea
-                  id="message"
-                  class="form-control"
-                  rows="3"
-                  placeholder="Scrivi il tuo messaggio..."
-                  v-model="message"
-                  @input="validateMessage"
-                  :disabled="disableCheck"
-                ></textarea>
+                <textarea id="message" class="form-control" rows="3" placeholder="Scrivi il tuo messaggio..." v-model="message" @input="validateMessage" :disabled="disableCheck"></textarea>
                 <small v-if="errors.message" class="error-message">{{ errors.message }}</small>
               </div>
-
-              <!-- Pulsante di Invio -->
-              <button
-                type="submit"
-                class="btn btn-primary btn-lg w-100"
-                :disabled="disableCheck"
-              >
-                Invia il messaggio
-              </button>
+              <button type="submit" class="btn btn-primary btn-lg w-100" :disabled="disableCheck">Invia il messaggio</button>
             </form>
           </div>
         </div>
@@ -409,32 +351,27 @@ export default {
     </div>
   </div>
   <div v-else>Appartamento non trovato</div>
-    <div
-    ref="liveToast"
-    class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3"
-    role="alert"
-    aria-live="assertive"
-    aria-atomic="true"
-    style="z-index: 1050"
-  >
+
+  <!-- Toast per notifiche -->
+  <div ref="liveToast" class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3" role="alert" aria-live="assertive" aria-atomic="true" style="z-index: 1050">
     <div class="d-flex">
-      <div class="toast-body">
-        {{ toastMessage }}
-      </div>
-      <button
-        type="button"
-        class="btn-close btn-close-white me-2 m-auto"
-        @click="hideToast"
-        aria-label="Close"
-      ></button>
+      <div class="toast-body">{{ toastMessage }}</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" @click="hideToast" aria-label="Close"></button>
     </div>
   </div>
 </template>
 
+
 <style scoped>
 .apartment-title {
-  font-size: 1.75rem;
+  font-size: 2rem;
   font-weight: bold;
+}
+
+.apartment-description {
+  font-size: 1.1rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
 }
 
 .image-container img {
@@ -454,15 +391,15 @@ export default {
   margin-bottom: 0.5rem;
 }
 
-/* .services-section,
-.availability-section {
-  background-color: #f8f9fa;
-  border-radius: 8px;
-} */
+.services-list {
+  list-style-type: none;
+  padding: 0;
+}
 
-.services-list li {
-  font-size: 1rem;
-  color: #555;
+.service-icon {
+  font-size: 1.5rem;
+  margin-right: 8px;
+  color: #656565;
 }
 
 .error-message {
@@ -471,10 +408,12 @@ export default {
 }
 
 .message-form-container {
-  background-color: #fff;
+  background-color: #f8f9fa;
+  border-radius: 8px;
   margin-top: -3rem;
   max-width: 500px;
   border: 1px solid #ddd;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .message-form .btn {
@@ -484,6 +423,8 @@ export default {
 
 #map {
   height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .map-title {
