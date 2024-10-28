@@ -16,6 +16,7 @@
         "@fortawesome/vue-fontawesome": "^3.0.8",
         "bootstrap": "^5.3.3",
         "braintree-web": "^3.111.0",
+        "chart.js": "^4.4.6",
         "lodash": "^4.17.21",
         "sass": "^1.79.5",
         "vite": "^4.5.5",

@@ -79,7 +79,7 @@ export default {
       //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
       //   ];
 
-      map.setMaxBounds(bounds);
+      //   map.setMaxBounds(bounds);
 
       map.addControl(new tt.FullscreenControl());
       map.addControl(new tt.NavigationControl());
@@ -228,29 +228,31 @@ export default {
         this.getMap();
       }, 1500);
     },
-  },
-
-  computed: {
-    apartmentFiltred() {
-      return this.apartment[0];
-    },
     countView(id) {
+      console.log("view");
       axios
-        .post("api/view", { apartment: id })
+        .post("http://127.0.0.1:8000/api/view", { apartment: id })
         .then((res) => {
-          console.log(res);
+          console.log("view ok", res);
         })
         .catch((err) => {
           console.log(err);
         });
     },
   },
-  watch: {
-    $route(to, from) {
-      if (to.name === "showApartment" && from.name !== "apartments") {
-        this.countView(this.$route.params.id);
-      }
+
+  computed: {
+    apartmentFiltred() {
+      return this.apartment[0];
     },
+  },
+  beforeRouteEnter(to, from, next) {
+    next((vm) => {
+      console.log(to.name === "showApartment" && from.name !== "apartments");
+      if (to.name === "showApartment" && from.name !== "apartments") {
+        vm.countView(to.params.id);
+      }
+    });
   },
   mounted() {
     this.findApartment(this.$route.params.id);

@@ -14,7 +14,19 @@ import BraintreePlugin from './plugins/braintree';
 
 // Importazioni core di FontAwesome
 import { library } from '@fortawesome/fontawesome-svg-core';
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    BarController
+  } from 'chart.js';
 
+  // Registra gli elementi necessari di Chart.js globalmente
+  ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale, BarController);
 // Importazioni del componente FontAwesome
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
