@@ -7,6 +7,7 @@ import NotFoundComponent from '../pages/NotFoundComponent.vue'
 import Register from '../pages/Register.vue'
 import Dashboard from '../pages/Ura/Dashboard.vue'
 import CreateApartment from '../pages/Ura/CreateApartment.vue'
+import Statistic from '../pages/Ura/Statistic.vue'
 import IndexApartment from "../pages/Ura/IndexApartment.vue";
 import Messages from "../pages/Ura/Messages.vue";
 import Sponsor from "../pages/Ura/Sponsor.vue";
@@ -51,6 +52,11 @@ const router = createRouter({
                 path: '/appartamenti',
                 name: 'apartments',
                 component: IndexApartment
+            },
+            {
+                path: '/statistiche/:id',
+                name: 'statistic',
+                component: Statistic
             },
             {
                 path: '/lista-messaggi/:id/messaggi',
