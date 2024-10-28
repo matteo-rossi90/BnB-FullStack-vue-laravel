@@ -16,8 +16,9 @@ export default {
       // fill data userApartment, allApartments, user, userName
 
       //   name and data of user logged
+      //   if (!store.user) {
       axios
-        .get("/api/user")
+        .get("http://127.0.0.1:8000/api/user")
         .then((response) => {
           store.is_logged = true;
           store.user = response.data;
@@ -34,36 +35,7 @@ export default {
           store.userName = "Accedi";
           console.log("app- user e user name:", err.message);
         });
-
-      //   if (store.is_logged) {
-      // userApartment
-      //   axios
-      //     .get("api/user/utente/dashboard")
-      //     .then((response) => {
-      //       store.userApartment = response.data;
-      //       console.log("app- user apartment", response.data);
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      //   //   }
-    },
-    countView(id) {
-      axios
-        .post("api/view", { apartment: id })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    },
-  },
-  watch: {
-    $route(to, from) {
-      if (to.name === "showApartment" && from.name !== "apartments") {
-        this.countView(this.$route.params.id);
-      }
+      //   }
     },
   },
   mounted() {

@@ -5,7 +5,7 @@ export default {
 
   data() {
     return {
-      apartment: "",
+      apartment: [],
       src: "",
       alt: "",
       name: "",
@@ -34,7 +34,7 @@ export default {
     // },
     getMap() {
       const tt = window.tt; //accesso alla libreria TomTom
-      let center = [this.apartment.lon, this.apartment.lat]; //centro della mappa in base alle coordinate dell'appartamento
+      let center = [this.apartment[0].lon, this.apartment[0].lat]; //centro della mappa in base alle coordinate dell'appartamento
       let size = 50; //dimensioni del popup
 
       const map = tt.map({
@@ -46,8 +46,8 @@ export default {
 
       //accesso alle coordinate nel JSON generato dall'API
 
-      const lat = this.apartment.lat; //valore della latitudine di ogni appartamento
-      const lon = this.apartment.lon; //valore dalla longitudine di ogni appartamento
+      const lat = this.apartment[0].lat; //valore della latitudine di ogni appartamento
+      const lon = this.apartment[0].lon; //valore dalla longitudine di ogni appartamento
 
       if (!lat || !lon) {
         console.error("Coordinate non valide per l'appartamento");
@@ -57,8 +57,8 @@ export default {
       let boxContent = document.createElement("div");
       boxContent.innerHTML = `
                     <div class="card-body">
-                        <h5 class="title-popup"><strong>${this.apartment.title}</strong></h5>
-                        <p class="title-popup">${this.apartment.address}</p>
+                        <h5 class="title-popup"><strong>${this.apartment[0].title}</strong></h5>
+                        <p class="title-popup">${this.apartment[0].address}</p>
                         <small>8000 euro</small>
                     </div>`;
 
@@ -74,10 +74,10 @@ export default {
 
       marker.addTo(map);
 
-      const bounds = [
-        [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
-        [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
-      ];
+      //   const bounds = [
+      //     [10.501, 40.7994], //estremi sud-ovest (longitudine, latitudine)
+      //     [13.9894, 42.8995], //estremi nord-est (longitudine, latitudine)
+      //   ];
 
       map.setMaxBounds(bounds);
 
@@ -181,7 +181,7 @@ export default {
 
       axios
         .post(
-          `http://127.0.0.1:8000/api/apartments/${this.apartment.id}/send-message`,
+          `http://127.0.0.1:8000/api/apartments/${this.apartment[0].id}/send-message`,
           messageData
         )
         .then((res) => {
@@ -216,53 +216,68 @@ export default {
 
       this.submitMessage();
     },
+    async findApartment(id) {
+      // Filtro gli appartamenti in base all'id
+      this.apartment = store.allApartments.filter(
+        (apartment) => apartment.id == id
+      );
+
+      // Eseguo la funzione getMap dopo il filtro
+      setTimeout(() => {
+        // Avvia la mappa solo se ci sono risultati
+        this.getMap();
+      }, 1500);
+    },
   },
-  beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      // 'vm' è l'istanza del componente
-      if (from.name === "home") {
-        vm.apartment = store.allApartments[--to.params.id];
-      }
-      if (from.name === "apartmentsMap") {
-        vm.apartment = store.allApartments[--to.params.id];
-      }
-      if (from.name === "apartments") {
-        vm.apartment = store.allApartments[--to.params.id];
-      }
-    });
-  },
+
   computed: {
-    exist() {
-      return !!this.apartment;
+    apartmentFiltred() {
+      return this.apartment[0];
+    },
+    countView(id) {
+      axios
+        .post("api/view", { apartment: id })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+  },
+  watch: {
+    $route(to, from) {
+      if (to.name === "showApartment" && from.name !== "apartments") {
+        this.countView(this.$route.params.id);
+      }
     },
   },
   mounted() {
+    this.findApartment(this.$route.params.id);
+    // console.log(store.allApartments[this.$route.params.id - 1]);
     // nextTick fa in modo che il DOM sia completamente pronto
-    this.$nextTick(() => {
-      this.getMap();
-    });
   },
 };
 </script>
 
 
 <template>
-  <div v-if="exist">
+  <div v-if="apartmentFiltred">
     <div class="container mt-5">
       <!-- Titolo riepilogativo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-center">
-          <h1 class="apartment-title">titolo: {{ apartment.title }}</h1>
+          <h1 class="apartment-title">titolo: {{ apartmentFiltred.title }}</h1>
         </div>
       </div>
 
       <!-- Immagini -->
       <div class="row my-4">
         <div class="col-12 text-center">
-          <div v-if="apartment.image" class="image-container mb-4">
+          <div v-if="apartmentFiltred.image" class="image-container mb-4">
             <img
-              :src="apartment.image"
-              :alt="apartment.name"
+              :src="apartmentFiltred.image"
+              :alt="apartmentFiltred.name"
               class="img-fluid rounded shadow-sm"
             />
           </div>
@@ -280,8 +295,9 @@ export default {
       <div class="row mb-4">
         <div class="col-12 text-center">
           <h3 class="apartment-address">
-            Indirizzo: {{ apartment.address }} <br />
-            Latitudine: {{ apartment.lat }}, Longitudine: {{ apartment.lon }}
+            Indirizzo: {{ apartmentFiltred.address }} <br />
+            Latitudine: {{ apartmentFiltred.lat }}, Longitudine:
+            {{ apartmentFiltred.lon }}
           </h3>
         </div>
       </div>
@@ -290,22 +306,22 @@ export default {
       <div class="row text-center info-section">
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-door-closed icon"></i>
-          <p>Camere: {{ apartment.number_rooms }}</p>
+          <p>Camere: {{ apartmentFiltred.number_rooms }}</p>
         </div>
 
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-bed icon"></i>
-          <p>Letti: {{ apartment.number_beds }}</p>
+          <p>Letti: {{ apartmentFiltred.number_beds }}</p>
         </div>
 
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-bath icon"></i>
-          <p>Bagni: {{ apartment.number_bathrooms }}</p>
+          <p>Bagni: {{ apartmentFiltred.number_bathrooms }}</p>
         </div>
 
         <div class="col-6 col-md-3 mb-3">
           <i class="fas fa-ruler-combined icon"></i>
-          <p>Metri quadri: {{ apartment.square_meters }} m²</p>
+          <p>Metri quadri: {{ apartmentFiltred.square_meters }} m²</p>
         </div>
       </div>
 
@@ -318,7 +334,10 @@ export default {
               <h3>Servizi Aggiuntivi</h3>
               <ul>
                 <!-- <li v-for="service in services" :key="service.id">{{ service.name }}</li> -->
-                <li v-for="(service, index) in apartment.services" :key="index">
+                <li
+                  v-for="(service, index) in apartmentFiltred.services"
+                  :key="index"
+                >
                   <!-- <i class="fas fa-wifi icon"></i> -->
                   {{ service.name }}
                 </li>
@@ -327,7 +346,9 @@ export default {
 
             <!-- Stato di Visibilità -->
             <div class="col-12">
-              <h3>Disponibile: {{ apartment.is_visible ? "Sì" : "No" }}</h3>
+              <h3>
+                Disponibile: {{ apartmentFiltred.is_visible ? "Sì" : "No" }}
+              </h3>
             </div>
           </div>
         </div>
@@ -431,7 +452,8 @@ export default {
       </div>
     </div>
   </div>
-  <div v-else>Appartamento non trovato</div>
+  <div v-else class="loading"></div>
+  <!-- <div v-else>Appartamento non trovato</div> -->
 
   <!-- codice del toast -->
   <div
