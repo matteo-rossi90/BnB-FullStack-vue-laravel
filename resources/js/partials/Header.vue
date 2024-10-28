@@ -247,7 +247,6 @@ export default {
           <div class="col">
             <!-- search input for adress -->
             <div class="input-group stylish-input-group">
-              <div></div>
               <div class="contInput d-flex align-items-center gap-3">
                 <input
                   type="text"
@@ -259,7 +258,7 @@ export default {
                 <font-awesome-icon
                   class="iconFilter"
                   :icon="['fas', 'sliders']"
-                  @click="toggleFilter"
+                  @click.stop="toggleFilter"
                   v-if="inApartmentPage"
                 />
 

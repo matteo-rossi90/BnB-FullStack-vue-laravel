@@ -153,6 +153,9 @@ export default {
       .catch((err) => console.log(err.message));
 
     this.filterApartment(this.$route.query);
+    window.addEventListener("click", function () {
+      store.isFilterClose = false;
+    });
   },
   watch: {
     "$route.query.input": {
@@ -186,7 +189,7 @@ export default {
 
 <template>
   <div class="container">
-    <div class="row position-relative">
+    <div class="row">
       <div class="filterClass" :class="{ open: isOpenFilter }">
         <label for="number_rooms">number_rooms</label>
         <input
@@ -409,12 +412,12 @@ a {
   gap: 0.2rem;
   width: 50%;
   margin: auto;
-  position: absolute;
+  position: fixed;
   background-color: white;
   z-index: 10;
-  top: 0;
+  top: 50%;
   left: 50%;
-  transform: translate(-50%);
+  transform: translate(-50%, -50%);
   padding: 2rem;
   border-radius: 20px;
   box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
