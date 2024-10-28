@@ -51,18 +51,6 @@ export default {
             this.errors.postalCode ="Il codice postale deve essere composto da 5 cifre.";
         }
 
-        //validazione delle coordinate lat e lon
-        // if (!this.apartment.lat || isNaN(this.apartment.lat)) {
-            // this.errors.lat = "Latitudine non valida o mancante.";
-        // } else if (this.apartment.lat < -90 || this.apartment.lat > 90) {
-            // this.errors.lat = "La latitudine deve essere tra -90 e 90 gradi.";
-        // }
-        // if (!this.apartment.lon || isNaN(this.apartment.lon)) {
-            // this.errors.lon = "Longitudine non valida o mancante.";
-        // } else if (this.apartment.lon < -180 || this.apartment.lon > 180) {
-            // this.errors.lon = "La longitudine deve essere tra -180 e 180 gradi.";
-        // }
-
         if(this.isAproveStreet){
 
             //validazione dei campi relativi all'appartamento da inserire
@@ -146,7 +134,6 @@ export default {
         })
         .then((response) => {
           this.resultOfSearch = response.data.results;
-
           //   this.apartment.lat = response.data.results[0].position.lat;
           //   this.apartment.lon = response.data.results[0].position.lon;
 
@@ -422,7 +409,7 @@ export default {
 
               <div
                 v-if="isAproveStreet"
-                class="input-group mb-3 d-flex justify-content-between"
+                class="input-group mb-3 d-flex"
               >
                 <div v-for="item in services" :key="item.id">
                   <input
