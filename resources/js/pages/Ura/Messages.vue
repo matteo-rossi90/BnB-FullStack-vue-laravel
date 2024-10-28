@@ -90,11 +90,6 @@ export default {
   <div class="wrapper-message d-flex">
     <aside class="sidenav-message" :class="{ 'show-sidenav': showSidenav }">
       <div class="container-fluid">
-        <button v-if="!showSidenav"
-            @click="goBackToMessages"
-            class="btn btn-secondary btn-back">
-            Indietro
-        </button>
         <div class="d-flex justify-content-center mx-4 my-3">
           <h5>{{ filteredApartment.title }}</h5>
         </div>
@@ -142,7 +137,7 @@ export default {
     <div class="content-box" :class="{ 'show-content': showContent }">
       <div class="container-fluid mt-5">
         <div class="row" v-if="message">
-          <div class="col">
+          <div class="col-xm-8 col-sm-12 col-md-12 col-lg-12">
 
             <div class="d-flex justify-content-between">
                 <div class="d-flex align-items-center mx-5">
@@ -165,7 +160,7 @@ export default {
                 <button v-if="showContent"
                     @click="goBackToMessages"
                     class="btn btn-secondary btn-back me-3">
-                    Indietro
+                    <i class="fa-solid fa-xmark"></i>
                 </button>
 
             </div>
