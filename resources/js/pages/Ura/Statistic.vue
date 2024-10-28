@@ -81,7 +81,6 @@ export default {
       };
     },
     createTable(data) {
-      console.log(data.month);
       const ctx = document.getElementById("myChart").getContext("2d");
       new Chart(ctx, {
         type: "bar",
@@ -89,7 +88,7 @@ export default {
           labels: data.month,
           datasets: [
             {
-              label: "Vendite",
+              label: "Visualizzazioni",
               data: data.view,
               backgroundColor: "rgba(75, 192, 192, 0.2)",
               borderColor: "rgba(75, 192, 192, 1)",
