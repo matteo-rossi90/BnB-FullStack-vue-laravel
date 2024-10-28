@@ -8,8 +8,22 @@ export default {
 };
 </script>
 <template>
-  <h1>footer</h1>
+    <div class="container-fluid d-flex justify-content-around  ms_container">
+
+  <h1 class="p-5">footer</h1>
+
+  <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
+  <router-link class="align-content-center" to="/">Home</router-link>
+
+    </div>
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
+
+.ms_container{
+    height: 10%;
+    background-color: black;
+    color: white;
+
+}
 </style>

@@ -18,6 +18,7 @@ import PaymentComponent from "../pages/components/PaymentComponent.vue";
 import CheckoutPayment from "../pages/components/CheckoutPayment.vue";
 import PageProfile from "../pages/Ur/PageProfile.vue";
 import PageMessage from "../pages/Ur/PageMessage.vue";
+import About from "../pages/About.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -108,6 +109,11 @@ const router = createRouter({
                 path: '/:pathMatch(.*)*',
                 name: 'NotFound',
                 component: NotFoundComponent,
+            },
+            {
+                path: '/chi-siamo',
+                name: 'About',
+                component: About //route footer
             },
         ]
 })
