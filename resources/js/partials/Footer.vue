@@ -33,6 +33,8 @@ export default {
        &:hover{
         text-decoration: underline;
         color: red;
+        transform: scale(1.3);
+        transition: transform 1s cubic-bezier(0.25, 0.1, 0.25, 1);
        }
     }
 
