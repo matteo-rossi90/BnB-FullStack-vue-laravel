@@ -194,10 +194,10 @@ export default {
               <thead>
                 <tr>
                   <th scope="col">#id</th>
-                  <th scope="col">Immagine</th>
+                  <th scope="col" class="d-none d-sm-table-cell">Immagine</th>
                   <th scope="col">Nome</th>
                   <th scope="col">Sponsor</th>
-                  <th scope="col">Disponibilità</th>
+                  <th scope="col" class="d-none d-sm-table-cell">Disponibilità</th>
                   <th scope="col">Messaggi</th>
                   <th scope="col">Statistiche</th>
                   <th scope="col">Azioni</th>
@@ -208,7 +208,7 @@ export default {
                   <td scope="row" class="align-middle">
                     {{ apartment.id }}
                   </td>
-                  <td class="img-container" scope="row">
+                  <td class="img-container d-none d-sm-table-cell" scope="row">
                     <img
                       class="img-fluid"
                       :src="imageUrl(apartment.image)"
@@ -235,7 +235,7 @@ export default {
                     }}</span>
                     <span v-if="!apartment?.sponsors[0] && isPremium">-</span>
                   </td>
-                  <td scope="row" class="align-middle">
+                  <td scope="row" class="align-middle d-none d-sm-table-cell">
                     <p
                       class="badge text-bg-success"
                       v-if="apartment.is_visible === 1"
@@ -269,6 +269,8 @@ export default {
                   <td scope="row" class="align-middle">
                     <i class="fa-solid fa-chart-simple"></i>
                   </td>
+
+
                   <td scope="row" class="actions align-middle">
                     <router-link
                       :to="{
