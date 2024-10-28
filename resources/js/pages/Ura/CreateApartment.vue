@@ -209,9 +209,24 @@ export default {
       axios
         .post("api/user/utente/dashboard", this.apartment)
         .then((res) => {
-          this.$router.push({ name: "apartments" });
+          this.$router.push({
+                name: "apartments",
+                query: {
+                    toastMessage: `Appartamento ${this.apartment.title} inserito con successo`,
+                    toastType:"success"
+                }
+            });
         })
-        .catch((err) => console.log(err.message));
+        .catch((err) => {
+            console.log(err.message)
+            this.$router.push({
+            name: "apartments",
+            query: {
+                toastMessage: `Errore durante la modifica dell'appartamento ${this.apartment.title}`,
+                toastType: "error"
+                }
+            })
+        });
     },
   },
   mounted() {
