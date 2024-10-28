@@ -9,6 +9,7 @@ use App\Http\Requests\StoreApartmentRequest;
 use App\Http\Requests\UpdateApartmentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 
 class ApartmentController extends Controller
@@ -114,10 +115,63 @@ class ApartmentController extends Controller
         $oldApartament = Apartment::find($data['id']);
         $data['user_id'] =  auth()->user()->id;
 
-        if ($data['title'] != $apartment->title) {
+        $validator = Validator::make($data,
+        [
+            'title'=>'required|string|min:5|max:500',
+            'number_rooms'=>'required|integer|min:1|max:7',
+            'number_beds'=>'required|integer|min:1|max:5',
+            'number_bathrooms'=>'required|integer|min:1|max:3',
+            'square_meters'=>'required|integer|min:1|max:300',
+            'address'=>'required|string|min:5|max:500'
+        ],
+        [
+           'title.required' => 'Il titolo è obbligatorio.',
+            'title.string' => 'Il titolo deve essere una stringa.',
+            'title.min' => 'Il titolo deve contenere almeno :min caratteri.',
+            'title.max' => 'Il titolo non può superare i :max caratteri.',
 
-            $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+            'number_rooms.required' => 'Il numero di stanze è obbligatorio.',
+            'number_rooms.integer' => 'Il numero di stanze deve essere un numero intero.',
+            'number_rooms.min' => 'Il numero di stanze deve essere almeno :min.',
+            'number_rooms.max' => 'Il numero di stanze non può superare :max.',
+
+            'number_beds.required' => 'Il numero di letti è obbligatorio.',
+            'number_beds.integer' => 'Il numero di letti deve essere un numero intero.',
+            'number_beds.min' => 'Il numero di letti deve essere almeno :min.',
+            'number_beds.max' => 'Il numero di letti non può superare :max.',
+
+            'number_bathrooms.required' => 'Il numero di bagni è obbligatorio.',
+            'number_bathrooms.integer' => 'Il numero di bagni deve essere un numero intero.',
+            'number_bathrooms.min' => 'Il numero di bagni deve essere almeno :min.',
+            'number_bathrooms.max' => 'Il numero di bagni non può superare :max.',
+
+            'square_meters.required' => 'La metratura è obbligatoria.',
+            'square_meters.integer' => 'La metratura deve essere un numero intero.',
+            'square_meters.min' => 'La metratura deve essere almeno :min metri quadrati.',
+            'square_meters.max' => 'La metratura non può superare i :max metri quadrati.',
+
+            'address.required' => 'L\'indirizzo è obbligatorio.',
+            'address.string' => 'L\'indirizzo deve essere una stringa.',
+            'address.min' => 'L\'indirizzo deve contenere almeno :min caratteri.',
+            'address.max' => 'L\'indirizzo non può superare i :max caratteri.',
+        ]);
+
+        if($validator->fails()){
+            $errors = $validator->errors();
+            return response()->json('errors');
+        } else {
+
+            if ($data['title'] != $apartment->title) {
+
+                $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
+            }
+
+            $oldApartament->update($data);
+
+            return $apartment;
+
         }
+
 
 
         // if ($oldApartament->image === $data['image'] && $oldApartament->original_name !== $data['original_name'] && ) {
@@ -131,9 +185,7 @@ class ApartmentController extends Controller
         // }
 
 
-        $oldApartament->update($data);
 
-        return $apartment;
     }
 
 

@@ -12,6 +12,8 @@ export default {
     return {
       message: "",
       selectedImage: null,
+      showSidenav: true,
+      showContent: false,
       images: [
         "https://picsum.photos/seed/profile1/80/80",
         "https://picsum.photos/seed/profile2/80/80",
@@ -31,6 +33,12 @@ export default {
     showMessage(message, index) {
       this.message = message;
       this.selectedImage = index;
+      this.showSidenav = false;
+      this.showContent = true;
+    },
+    goBackToMessages() {
+      this.showSidenav = true;
+      this.showContent = false;
     },
     formatDate(dateStr) {
       const options = { year: "numeric", month: "long", day: "numeric" };
@@ -79,9 +87,9 @@ export default {
 </script>
 
 <template>
-  <div class="wrapper d-flex">
-    <aside>
-      <div class="container">
+  <div class="wrapper-message d-flex">
+    <aside class="sidenav-message" :class="{ 'show-sidenav': showSidenav }">
+      <div class="container-fluid">
         <div class="d-flex justify-content-center mx-4 my-3">
           <h5>{{ filteredApartment.title }}</h5>
         </div>
@@ -100,10 +108,10 @@ export default {
         </div>
 
         <!-- lista messaggi -->
-        <div class="message-list mt-4" v-if="filteredApartment">
+        <div class="message-list mt-2" v-if="filteredApartment">
           <ul class="list-group list-group-flush">
             <li
-              class="list-group-item d-flex align-items-center"
+              class="list-group-item d-flex align-items-center w-100"
               v-for="(message, index) in filteredMessages"
               :key="index"
               @click="showMessage(message, index)"
@@ -126,54 +134,40 @@ export default {
     </aside>
 
     <!-- dettaglio messaggio -->
-    <div class="dashboard-box">
-      <div class="container-fluid py-4">
+    <div class="content-box" :class="{ 'show-content': showContent }">
+      <div class="container-fluid mt-5">
         <div class="row" v-if="message">
-          <div class="col">
-            <div class="d-flex align-items-center mx-5">
-              <div class="main-image me-3">
-                <img :src="getImage(selectedImage)" alt="utente" />
-              </div>
-              <div class="text-box my-3">
-                <div class="d-flex flex-column">
-                  <h6>{{ message.name }} {{ message.surname }}</h6>
-                  <small>{{ formatDateTime(message.created_at) }}</small>
-                </div>
-                <small
-                  ><a :href="'mailto:' + message.email">{{
-                    message.email
-                  }}</a></small
-                >
-              </div>
-            </div>
-            <div class="m-5">
-              <p>{{ message.message }}</p>
-            </div>
+          <div class="col-xs-8 col-sm-12 col-md-12 col-lg-12">
 
-            <!-- <div v-if="selectedMessage">
-                    <div v-for="(message, index) in selectedMessage.messages" :key="index">
-                        <h5>{{ message.name }}</h5>
-
-                <div class="d-flex align-items-center mx-5">
-                    <div class="main-image me-3">
-                    <img :src="selectedImage" alt="utente">
+            <div class="d-flex justify-content-between container container-details">
+                <div class="d-flex align-items-center box-user">
+                    <div class="main-image d-flex align-items-center">
+                        <img :src="getImage(selectedImage)" alt="utente" />
                     </div>
-
                     <div class="text-box my-3">
                         <div class="d-flex flex-column">
                             <h6>{{ message.name }} {{ message.surname }}</h6>
-                            <small>{{ formatDate(message.created_at) }}</small>
+                            <small>{{ formatDateTime(message.created_at) }}</small>
                         </div>
-                        <small>{{ message.email }}</small>
+                        <small
+                        ><a :href="'mailto:' + message.email">{{
+                            message.email
+                        }}</a>
+                        </small
+                        >
                     </div>
-
                 </div>
+                <button v-if="showContent"
+                    @click="goBackToMessages"
+                    class="btn btn-secondary btn-back me-3">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
 
-                <div class="m-5">
-                    <p>{{ message.message }}</p>
-                </div>
+            </div>
+            <div class="container container-message mt-3 message-details">
+              <p>{{ message.message }}</p>
+            </div>
 
-                    </div> -->
           </div>
         </div>
 
@@ -214,33 +208,6 @@ input {
   border: none;
 }
 
-.message-list {
-  height: calc(100vh - 300px);
-  padding: 10px;
-  width: 100%;
-  overflow-y: auto;
-
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 10px;
-    border: 2px solid #f1f1f1;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }
-
-  scrollbar-width: thin;
-  scrollbar-color: #888 #f1f1f1;
-}
 
 small {
   color: #555;
