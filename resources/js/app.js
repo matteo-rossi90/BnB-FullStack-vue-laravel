@@ -20,10 +20,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 // Importazioni delle icone specifiche
 import { faUser, faMessage } from '@fortawesome/free-regular-svg-icons'; // icone regular
-import { faMagnifyingGlass, faPlaneDeparture, faArrowRightFromBracket, faCaretDown } from '@fortawesome/free-solid-svg-icons'; // icone solid
+import { faMagnifyingGlass, faPlaneDeparture, faArrowRightFromBracket, faCaretDown, fas  } from '@fortawesome/free-solid-svg-icons'; // icone solid
 
 // Aggiungi le icone alla libreria di FontAwesome
-library.add(faUser, faMessage, faMagnifyingGlass, faPlaneDeparture, faArrowRightFromBracket, faCaretDown);
+library.add(faUser, faMessage, faMagnifyingGlass, faPlaneDeparture, faArrowRightFromBracket, faCaretDown, fas);
 
 // Creazione dell'app Vue
 import { createApp } from 'vue';

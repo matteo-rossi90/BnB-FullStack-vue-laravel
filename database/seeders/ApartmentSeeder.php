@@ -33,9 +33,9 @@ class ApartmentSeeder extends Seeder
             // Assegna l'appartamento a un utente in modo ciclico
             $user = $users[$i % $totalUsers];
             $new_apartment->user_id = $user->id;
-            $new_apartment->image = $path[array_rand($path)];;
+            $new_apartment->image = $path[array_rand($path)];
             $new_apartment->original_name = 'alt foto';
-            $new_apartment->title = "Apartment di $streets[$i]";
+            $new_apartment->title = "BnB da $user->name $i";
             $new_apartment->slug = Helper::generateSlug($new_apartment->title, Apartment::class) ;
             $new_apartment->number_rooms = rand(1, 7);
             $new_apartment->number_beds = rand(1, 5);

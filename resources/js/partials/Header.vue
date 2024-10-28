@@ -123,25 +123,6 @@ export default {
         this.$router.push({ name: "register" });
       }
     },
-    countView() {
-      //   axios
-      //     .get("/api/get-public-ip")
-      //     .then((response) => {
-      //       let value = response.data.ip;
-      let id = 1;
-      axios
-        .post("api/view", { apartment: id })
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      // })
-      // .catch((error) => {
-      //   console.error("Errore nel rilevare l'IP pubblico: ", error);
-      // });
-    },
   },
   mounted() {
     window.addEventListener("click", () => {
@@ -236,18 +217,12 @@ export default {
               class="contLogo d-flex align-items-center"
               :to="{ name: 'home' }"
             >
-              <img
-                @click="countView"
-                class="logo"
-                src="Boolnb_circle.png"
-                alt="airbnb photo"
-              />
+              <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
             </router-link>
           </div>
           <div class="col">
             <!-- search input for adress -->
             <div class="input-group stylish-input-group">
-              <div></div>
               <div class="contInput d-flex align-items-center gap-3">
                 <input
                   type="text"
@@ -259,7 +234,7 @@ export default {
                 <font-awesome-icon
                   class="iconFilter"
                   :icon="['fas', 'sliders']"
-                  @click="toggleFilter"
+                  @click.stop="toggleFilter"
                   v-if="inApartmentPage"
                 />
 
