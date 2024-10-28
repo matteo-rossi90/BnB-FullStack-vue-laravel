@@ -110,10 +110,14 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div class="container">
     <canvas id="myChart"></canvas>
   </div>
 </template>
 <style lang='scss' scoped>
+.container{
+    width: 70%;
+    height: 70%;
+}
 // @use 'path' as *;
 </style>
