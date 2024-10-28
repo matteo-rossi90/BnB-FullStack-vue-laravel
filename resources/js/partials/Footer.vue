@@ -21,9 +21,18 @@ export default {
 // @use 'path' as *;
 
 .ms_container{
+    margin-top: 2%;
     height: 10%;
     background-color: black;
     color: white;
+    a{
+       color: white;
+       text-decoration: none;
+       &:hover{
+        text-decoration: underline;
+        color: red;
+       }
+    }
 
 }
 </style>
