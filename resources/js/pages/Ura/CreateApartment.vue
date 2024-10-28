@@ -35,6 +35,63 @@ export default {
     };
   },
   methods: {
+    validateForm() {
+      this.errors = {};
+
+      //validazione delle informazioni geografiche
+        if (!this.street) {
+        this.errors.street = "La via è obbligatoria.";
+        }
+
+        if (!this.city) {
+            this.errors.city = "La città è obbligatoria.";
+        }
+        if (!this.postalCode) {
+            this.errors.postalCode = "Il codice postale è obbligatorio.";
+        }else if (!/^\d{5}$/.test(this.postalCode)){
+            this.errors.postalCode ="Il codice postale deve essere composto da 5 cifre.";
+        }
+
+        //validazione delle coordinate lat e lon
+        // if (!this.apartment.lat || isNaN(this.apartment.lat)) {
+            // this.errors.lat = "Latitudine non valida o mancante.";
+        // } else if (this.apartment.lat < -90 || this.apartment.lat > 90) {
+            // this.errors.lat = "La latitudine deve essere tra -90 e 90 gradi.";
+        // }
+        // if (!this.apartment.lon || isNaN(this.apartment.lon)) {
+            // this.errors.lon = "Longitudine non valida o mancante.";
+        // } else if (this.apartment.lon < -180 || this.apartment.lon > 180) {
+            // this.errors.lon = "La longitudine deve essere tra -180 e 180 gradi.";
+        // }
+
+        if(this.isAproveStreet){
+
+            //validazione dei campi relativi all'appartamento da inserire
+            if (!this.apartment.title) {
+                this.errors.title = "Il nome dell'appartamento è obbligatorio.";
+            }
+
+            if (!this.apartment.number_rooms || this.apartment.number_rooms <= 0) {
+                this.errors.number_rooms = "Il numero di stanze deve essere maggiore di 0.";
+            }
+
+            if (!this.apartment.number_beds || this.apartment.number_beds < 0) {
+                this.errors.number_beds = "Il numero di letti non può essere negativo.";
+            }
+
+            if (!this.apartment.number_bathrooms || this.apartment.number_bathrooms < 0) {
+                this.errors.number_bathrooms = "Il numero di bagni non può essere negativo.";
+            }
+
+            if (!this.apartment.square_meters || this.apartment.square_meters <= 0) {
+                this.errors.square_meters = "I metri quadri devono essere maggiori di 0.";
+            }
+        }
+
+
+      return Object.keys(this.errors).length === 0;
+    },
+
     savePhoto(event) {
       //   this.apartment.image = event.target.files[0];
 
@@ -66,10 +123,14 @@ export default {
       } else {
         this.apartment.image = null;
         this.imagePreview = "";
+        this.errors.image = "Formato immagine non valido (solo JPG, PNG, GIF).";
       }
     },
 
     submit() {
+        if (!this.validateForm()) return;
+
+
       let streetComplete =
         this.street +
         " " +
@@ -143,6 +204,8 @@ export default {
       this.isAproveStreet = true;
     },
     createApartment() {
+        if (!this.validateForm()) return;
+
       axios
         .post("api/user/utente/dashboard", this.apartment)
         .then((res) => {
@@ -176,7 +239,7 @@ export default {
           <div class="col-12">
             <h1>Inserisci un appartamento</h1>
           </div>
-          <div class="col-12 col-sm-6">
+          <div class="col-md-12 col-lg-12">
             <form @submit.prevent="submit" enctype="multipart/form-data">
               <div class="mb-3">
                 <label v-if="isAproveStreet" for="title" class="col-form-label"
@@ -191,8 +254,9 @@ export default {
                   maxlength="500"
                   min="1"
                   v-model="apartment.title"
-                  required
+
                 />
+                <span v-if="errors.title" class="text-danger">{{ errors.title }}</span>
               </div>
               <div v-if="!isAproveStreet" class="mb-3">
                 <label for="address" class="col-form-label">Via:</label>
@@ -202,8 +266,9 @@ export default {
                   id="address"
                   name="address"
                   v-model="street"
-                  required
+
                 />
+                <span v-if="errors.street" class="text-danger">{{ errors.street }}</span>
               </div>
               <div v-if="!isAproveStreet" class="mb-3">
                 <label for="address" class="col-form-label">Numero</label>
@@ -213,8 +278,9 @@ export default {
                   id="address"
                   name="address"
                   v-model="number"
-                  required
+
                 />
+                <span v-if="errors.number" class="text-danger">{{ errors.number }}</span>
               </div>
               <div v-if="!isAproveStreet" class="mb-3">
                 <label for="address" class="col-form-label">Citta</label>
@@ -224,21 +290,23 @@ export default {
                   id="address"
                   name="address"
                   v-model="city"
-                  required
+
                 />
+                <span v-if="errors.city" class="text-danger">{{ errors.city }}</span>
               </div>
               <div v-if="!isAproveStreet" class="mb-3">
                 <label for="address" class="col-form-label"
                   >Codice Postale</label
                 >
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   id="address"
                   name="address"
                   v-model="postalCode"
-                  required
+                  maxlength="5"
                 />
+                <span v-if="errors.postalCode" class="text-danger">{{ errors.postalCode }}</span>
               </div>
 
               <div class="mb-3">
@@ -257,8 +325,9 @@ export default {
                   min="1"
                   max="65535"
                   v-model="apartment.number_rooms"
-                  required
+
                 />
+                <span v-if="errors.number_rooms" class="text-danger">{{ errors.number_rooms }}</span>
               </div>
               <div class="mb-3">
                 <label
@@ -276,9 +345,10 @@ export default {
                   min="0"
                   max="65535"
                   v-model="apartment.number_beds"
-                  required
+
                 />
               </div>
+               <span v-if="errors.number_beds" class="text-danger">{{ errors.number_beds }}</span>
               <div class="mb-3">
                 <label
                   v-if="isAproveStreet"
@@ -295,8 +365,9 @@ export default {
                   min="0"
                   max="65535"
                   v-model="apartment.number_bathrooms"
-                  required
+
                 />
+                <span v-if="errors.number_bathrooms" class="text-danger">{{ errors.number_bathrooms }}</span>
               </div>
               <div v-if="isAproveStreet" class="mb-3">
                 <label for="square_meters" class="col-form-label"
@@ -310,8 +381,10 @@ export default {
                   min="0"
                   max="65535"
                   v-model="apartment.square_meters"
-                  required
+
                 />
+                <span v-if="errors.square_meters" class="text-danger">{{ errors.square_meters }}</span>
+
               </div>
               <div v-if="isAproveStreet" class="input-group mb-3">
                 <input
