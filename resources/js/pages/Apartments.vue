@@ -15,6 +15,7 @@ export default {
         distance: "",
         latCenter: "",
         lonCenter: "",
+        distance: 20,
       },
       input: store.inputValue,
       filtredApartment: "",
@@ -68,36 +69,43 @@ export default {
     updateFilter() {
       this.isLoading = true;
 
-      this.$router.push({
-        query: {
-          input: store.inputValue,
-          lon: this.filter.lonCenter,
-          lat: this.filter.latCenter,
-          number_rooms: this.filter.number_rooms || undefined,
-          number_beds: this.filter.number_beds || undefined,
-          square_meters: this.filter.square_meters || undefined,
-          distance: this.filter.distance || undefined,
-          services: this.activeItems,
-        },
-      });
-
-      // Chiamata alla funzione di filtro con i nuovi parametri
-      this.filterApartment(this.$route.query);
+      this.$router
+        .push({
+          query: {
+            input: store.inputValue,
+            lon: this.filter.lonCenter,
+            lat: this.filter.latCenter,
+            distance: this.filter.distance,
+            number_rooms: this.filter.number_rooms || undefined,
+            number_beds: this.filter.number_beds || undefined,
+            square_meters: this.filter.square_meters || undefined,
+            services: this.activeItems,
+          },
+        })
+        .then(() => {
+          // Chiamata alla funzione di filtro con i nuovi parametri
+          this.filterApartment(this.$route.query);
+        });
     },
 
     createFilterData() {
       const urlParams = new URLSearchParams(this.$route.query);
       store.inputValue = urlParams.get("input");
-      this.filter.latCenter = urlParams.get("lat");
       this.filter.lonCenter = urlParams.get("lon");
+      this.filter.latCenter = urlParams.get("lat");
+      this.filter.distance = urlParams.get("distance");
       this.filter.number_rooms = urlParams.get("number_rooms") || "";
       this.filter.number_beds = urlParams.get("number_beds") || "";
       this.filter.square_meters = urlParams.get("square_meters") || "";
-      this.filter.distance = urlParams.get("distance") || 20;
       this.activeItems = urlParams.get("services")
         ? urlParams.get("services").split(",")
         : [];
-
+      console.log(
+        store.inputValue,
+        this.filter.lonCenter,
+        this.filter.latCenter,
+        this.filter.distance
+      );
       this.isReady = true;
     },
     createDistanceData() {
@@ -110,6 +118,7 @@ export default {
         );
       });
     },
+
     async filterApartment(query) {
       await axios
         .get("api/filtred-apartment", {
@@ -119,6 +128,7 @@ export default {
         })
         .then((res) => {
           this.filtredApartment = res.data;
+          console.log("filtro", this.filtredApartment);
           this.createFilterData();
           this.createDistanceData();
           this.isLoading = false;
@@ -210,13 +220,7 @@ export default {
       id="square_meters"
       v-model.trim="filter.square_meters"
     />
-    <input
-      type="range"
-      min="1"
-      max="200"
-      value="20"
-      v-model.trim="filter.distance"
-    />
+    <input type="range" min="1" max="200" v-model.trim="filter.distance" />
     <span>{{ filter.distance }} km dal punto scelto</span>
     <div class="contServices" v-if="isReady">
       <span
