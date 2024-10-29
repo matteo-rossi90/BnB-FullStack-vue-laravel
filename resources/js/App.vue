@@ -68,6 +68,10 @@ export default {
 /* // @use 'path' as *; */
 main {
   padding-top: 6rem;
+  footer{
+    position: absolute;
+    bottom: 0;
+  }
 }
 
 @media screen and (max-width: 632px) {
