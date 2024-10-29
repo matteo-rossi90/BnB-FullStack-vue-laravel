@@ -2,7 +2,7 @@
 
 //parte principale della componente Messaggi
 .wrapper-message {
-    height: 100vh;
+    height: 100%;
     width: 100%;
     // overflow: auto;
 
@@ -21,7 +21,7 @@ aside.sidenav-message {
     position:fixed;
     left:0;
     top: 6rem;
-    height: calc(100vh - 6rem);
+    // height: calc(100vh - 6rem);
     border-right: 1px solid $color;
 
     @media (max-width: 1024px) {
