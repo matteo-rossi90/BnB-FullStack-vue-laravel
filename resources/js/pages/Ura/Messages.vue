@@ -160,7 +160,7 @@ export default {
               <button
                 v-if="showContent"
                 @click="goBackToMessages"
-                class="btn btn-secondary btn-back me-3"
+                class="btn-close btn-back me-3"
               >
                 <i class="fa-solid fa-xmark"></i>
               </button>
