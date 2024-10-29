@@ -134,10 +134,13 @@ export default {
     addServices(idService) {
       if (this.apartment.services.includes(idService)) {
         // lo tolgo
+        let index = this.apartment.services.indexOf(idService);
+        this.apartment.services.splice(index, 1);
       } else {
         // lo inserisco
         this.apartment.services.push(idService);
       }
+      console.log(this.apartment.services);
     },
     activeForm(index) {
       this.apartment.address =
