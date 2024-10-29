@@ -21,7 +21,7 @@ export default {
 // @use 'path' as *;
 
 .ms_container{
-    margin-top: 2%;
+    // margin-top: 2%;
     height: 10%;
     background-color: rgb(103, 100, 100);
     color: white;
