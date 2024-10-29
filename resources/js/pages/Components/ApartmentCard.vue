@@ -24,7 +24,7 @@ export default {
         </div>
     </div> -->
 
-  <div class="card shadow-sm border-0 rounded">
+  <!-- <div class="card shadow-sm border-0 rounded">
     <img
       :src="apartment.image"
       class="card-img-top"
@@ -35,50 +35,82 @@ export default {
       <p class="card-text">{{ apartment.address }}</p>
       <p class="card-text">Stanze n° {{ apartment.number_beds }}</p>
     </div>
+  </div> -->
+
+  <div class="card-container">
+    <img :src="apartment.image" class="card-image" alt="Appart-Img" />
+    <div class="card-info">
+      <h5 class="card-title">{{ apartment.title }}</h5>
+      <p class="card-text">{{ apartment.address }}</p>
+      <p class="card-text">Stanze n° {{ apartment.number_beds }}</p>
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.card {
-  max-width: 100%;
+.card-container {
+  width: 100%;
+  max-width: 300px;
+  height: 400px;
   margin: 10px 0;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: none;
+  box-shadow: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
+.card-container:hover {
   transform: translateY(-5px);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 15px #e4c4c4;
 }
 
-.card-img-top {
-  border-bottom: 2px solid #e0e0e0;
+.card-image {
+  width: 100%;
+  height: 50%;
+  border-radius: 15px;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.card:hover .card-img-top {
+.card-container:hover .card-image {
   transform: scale(1.05);
 }
 
-.card-body {
-  padding: 20px;
+.card-info {
+  padding: 10px;
+  height: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
 }
 
 .card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #333;
+  margin-bottom: 5px;
 }
 
 .card-text {
   font-size: 0.9rem;
   color: #666;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
+  padding: 2px 0;
 }
 
-.card-text:last-child {
-  margin-bottom: 0;
+/* Query per centrare la card sui dispositivi mobili */
+@media (max-width: 576px) {
+  .card-container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
 }
+
+
 </style>
