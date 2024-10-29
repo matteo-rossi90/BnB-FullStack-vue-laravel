@@ -10,10 +10,10 @@ export default {
 <template>
     <div class="container-fluid d-flex justify-content-around  ms_container">
 
-  <h1 class="p-5 align-content-center ">footer</h1>
+        <h1 class="p-5 align-content-center ">footer</h1>
+        <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
+        <router-link class="align-content-center" to="/">Home</router-link>
 
-  <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
-  <router-link class="align-content-center" to="/">Home</router-link>
 
     </div>
 </template>
@@ -21,8 +21,10 @@ export default {
 // @use 'path' as *;
 
 .ms_container{
-    margin-top: 2%;
-    height: 10%;
+    // position: absolute;
+    // bottom: 0;
+    padding:20px;
+    height: 100px;
     background-color: rgb(103, 100, 100);
     color: white;
     a, h1{
