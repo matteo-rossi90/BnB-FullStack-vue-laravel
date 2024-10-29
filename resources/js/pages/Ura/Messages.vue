@@ -1,12 +1,12 @@
 <script>
 import axios from "axios";
-import MessagesList from "./partials/MessagesList.vue";
+import Avatar from "./partials/Avatar.vue";
 import { store } from "../../store/store";
 
 export default {
   name: "Messages",
   components: {
-    MessagesList,
+    Avatar
   },
   data() {
     return {
@@ -14,18 +14,18 @@ export default {
       selectedImage: null,
       showSidenav: true,
       showContent: false,
-      images: [
-        "https://picsum.photos/seed/profile1/80/80",
-        "https://picsum.photos/seed/profile2/80/80",
-        "https://picsum.photos/seed/profile3/80/80",
-        "https://picsum.photos/seed/profile4/80/80",
-        "https://picsum.photos/seed/profile5/80/80",
-        "https://picsum.photos/seed/profile6/80/80",
-        "https://picsum.photos/seed/profile7/80/80",
-        "https://picsum.photos/seed/profile8/80/80",
-        "https://picsum.photos/seed/profile9/80/80",
-        "https://picsum.photos/seed/profile10/80/80",
-      ],
+    //   images: [
+        // "https://picsum.photos/seed/profile1/80/80",
+        // "https://picsum.photos/seed/profile2/80/80",
+        // "https://picsum.photos/seed/profile3/80/80",
+        // "https://picsum.photos/seed/profile4/80/80",
+        // "https://picsum.photos/seed/profile5/80/80",
+        // "https://picsum.photos/seed/profile6/80/80",
+        // "https://picsum.photos/seed/profile7/80/80",
+        // "https://picsum.photos/seed/profile8/80/80",
+        // "https://picsum.photos/seed/profile9/80/80",
+        // "https://picsum.photos/seed/profile10/80/80",
+    //   ],
       searchQuery: "",
     };
   },
@@ -56,9 +56,9 @@ export default {
       const date = new Date(dateStr);
       return date.toLocaleDateString("it-IT", options);
     },
-    getImage(index) {
-      return this.images[index % this.images.length] || null;
-    },
+    // getImage(index) {
+    //   return this.images[index % this.images.length] || null;
+    // },
   },
   computed: {
     filteredApartment() {
@@ -117,7 +117,7 @@ export default {
               @click="showMessage(message, index)"
             >
               <div class="image me-3">
-                <img :src="getImage(index)" alt="utente" />
+                <Avatar :name="message.name" :surname="message.surname" :index="index" />
               </div>
               <div class="text-box my-2 w-100">
                 <div class="d-flex justify-content-between">
@@ -143,7 +143,7 @@ export default {
             >
               <div class="d-flex align-items-center box-user">
                 <div class="main-image d-flex align-items-center">
-                  <img :src="getImage(selectedImage)" alt="utente" />
+                  <Avatar :name="message.name" :surname="message.surname" :index="selectedImage" />
                 </div>
                 <div class="text-box my-3">
                   <div class="d-flex flex-column">
