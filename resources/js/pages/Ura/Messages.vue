@@ -145,7 +145,7 @@ export default {
                 <div class="main-image d-flex align-items-center">
                   <Avatar :name="message.name" :surname="message.surname" :index="selectedImage" />
                 </div>
-                <div class="text-box my-3">
+                <div class="text-box my-3 ms-2">
                   <div class="d-flex flex-column">
                     <h6>{{ message.name }} {{ message.surname }}</h6>
                     <small>{{ formatDateTime(message.created_at) }}</small>
