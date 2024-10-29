@@ -330,8 +330,10 @@ export default {
       <font-awesome-icon :icon="['far', 'message']" />
       <p>Messaggi</p>
     </div>
-    <div class="contIcon" @click="profilePush">
-      <font-awesome-icon :icon="['far', 'user']" />
+    <div class="contIcon">
+      <router-link :to="{ name: 'dashboard' }">
+        <font-awesome-icon :icon="['far', 'user']" />
+      </router-link>
       <p>Profilo</p>
     </div>
   </nav>
