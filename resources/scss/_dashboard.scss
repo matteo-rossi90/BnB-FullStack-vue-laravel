@@ -1,22 +1,21 @@
 @import '../scss/variables';
 
 .wrapper {
-    height: calc(100vh - auto);
+    min-height: 100vh;
     width: 100%;
     // overflow: auto;
 }
 
 aside {
     width: 350px;
-    position:fixed;
-    left:0;
-    height: 100%;
+    // position:fixed;
+    // left:0;
+    height: 100vh;
     border-right: 1px solid $color;
 }
 
 .dashboard-box {
-    width:100%;
-    margin-left: 350px;
+    width:calc(100% - 300px);
 }
 
 ul {
