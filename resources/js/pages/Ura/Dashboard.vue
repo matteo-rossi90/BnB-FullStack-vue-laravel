@@ -33,18 +33,23 @@ export default {
         console.log(err);
       });
   },
+  computed: {
+    lengthApartment() {
+      return store.userApartment.length;
+    },
+  },
 };
 </script>
 <template>
   <div class="wrapper d-flex">
     <aside>
-      <routinglist />
+      <routinglist :visible="lengthApartment" />
     </aside>
     <div class="dashboard-box">
       <div class="container-fluid my-5">
         <h1>Dashboard {{ name }}</h1>
         <h4 class="my-5">
-          Al momento hai registrato {{ apartments.length }} appartmanenti su
+          Al momento hai registrato {{ lengthApartment }} appartmanenti su
           BoolBnb
         </h4>
       </div>
