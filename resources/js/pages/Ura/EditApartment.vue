@@ -220,11 +220,11 @@ export default {
         </small>
       </div>
 
-      <!-- <label for="" class="form-label">Immagine</label>
+      <label for="" class="form-label">Immagine</label>
       <input
         type="text"
         class="form-control"
-        /> -->
+        />
 
       <label class="form-check-label" for="flexSwitchCheckDefault"
         >Visibilità</label
