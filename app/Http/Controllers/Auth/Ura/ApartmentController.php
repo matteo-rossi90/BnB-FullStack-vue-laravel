@@ -39,21 +39,6 @@ class ApartmentController extends Controller
         $data['user_id'] =  auth()->user()->id;
 
 
-        // if (array_key_exists('image', $data) && $data['image']) {
-        //     $image = Storage::put('uploads', $data['image']);
-        //     $original_name = $request->file('image')->getClientOriginalName();
-        //     $data['image'] = $image;
-        //     $data['original_name'] = $original_name;
-        // }else{
-        //     $data['image'] = 'vuoto';
-        //     $data['original_name'] = 'vuoto';
-        // }
-
-        // if($image = $request->file('file')){
-        //     $path = 'img/';
-        //     $image->move($path);
-
-        // }
 
         // Gestione dell'immagine caricata
         $imagePath = null;
@@ -77,10 +62,10 @@ class ApartmentController extends Controller
 
         $apartment = Apartment::create($data);
         $apartment->save();
+        $apartment->services()->attach($data['services']);
 
 
 
-        // Se non ci sono errori, restituisci i dati codificati come JSON
 
         return response()->json($apartment, 200);
     }

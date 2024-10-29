@@ -132,6 +132,7 @@ export default {
 </script>
 
 <template>
+  {{ apartamentFiltred.services }}
   <div class="container">
     <h1 class="my-5">Modifica di {{ apartamentFiltred.title }}</h1>
 
@@ -220,15 +221,33 @@ export default {
         </small>
       </div>
 
-      <label for="" class="form-label">Immagine</label>
-      <input
-        type="text"
-        class="form-control"
-        />
+      <label for="image" class="col-form-label">Carica un'immagine:</label>
+      <input type="file" class="form-control mb-3" id="image" name="image" />
 
       <label class="form-check-label" for="flexSwitchCheckDefault"
         >Visibilità</label
       >
+      <div v-if="apartment.services">
+        <div
+          v-for="item in apartamentFiltred.services"
+          :key="item.id"
+          class="col-6 col-sm-4 col-md-3 col-lg-3 mb-3"
+        >
+          <input
+            type="checkbox"
+            class="btn-check"
+            :id="item.id"
+            autocomplete="off"
+          />
+          <label
+            class="btn btn-outline-dark w-100"
+            @click="addServices(item.id)"
+            :for="item.id"
+            >{{ item.name }}
+          </label>
+        </div>
+      </div>
+
       <div class="form-check form-switch">
         <input
           @click="changeVisibility"
