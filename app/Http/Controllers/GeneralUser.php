@@ -63,10 +63,9 @@ class GeneralUser extends Controller
 
 
     }
-    public function apartment(Request $request){
+    public function apartment(Request $request) {
         $id = $request->id;
-        $apartment = Apartment::find($id);
-
+        $apartment = Apartment::with('services', 'messages', 'sponsors')->find($id);
 
         return response()->json($apartment);
     }
