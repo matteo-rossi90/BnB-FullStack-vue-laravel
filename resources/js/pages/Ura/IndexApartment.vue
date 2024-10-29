@@ -302,58 +302,34 @@ export default {
                           class="btn btn-danger"
                           id="liveToastBtn"
                           data-bs-toggle="modal"
-                          data-bs-target="#exampleModal"
+                          data-bs-target="#mioModale"
                         >
                           <i class="fa-solid fa-trash"></i>
                         </button>
 
-                        <!-- Modal -->
-                        <div
-                          class="modal fade"
-                          id="exampleModal"
-                          tabindex="-1"
-                          aria-labelledby="exampleModalLabel"
-                          aria-hidden="true"
-                        >
-                          <div class="modal-dialog">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
-                                  Sei sicuro di voler eliminare l'appartamento?
-                                </h5>
-                                <button
-                                  type="button"
-                                  class="btn-close"
-                                  data-bs-dismiss="modal"
-                                  aria-label="Close"
-                                ></button>
-                              </div>
-                              <div class="modal-body">
-                                In questo modo
-                                <strong>{{ apartment.title }}</strong> non sarà
-                                più disponibile
-                              </div>
-                              <div class="modal-footer">
-                                <button
-                                  type="button"
-                                  class="btn btn-secondary"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Chiudi
-                                </button>
-                                <button
-                                  @click="deleteApartment(apartment)"
-                                  type="button"
-                                  class="btn btn-danger"
-                                  data-bs-dismiss="modal"
-                                >
-                                  Elimina
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+
                       </div>
+                    </div>
+                    <!-- Modale -->
+                    <div class="modal fade" id="mioModale" tabindex="-1" aria-labelledby="mioModaleLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="mioModaleLabel"> Sei sicuro di voler eliminare
+                                        l'appartamento?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
+                                </div>
+                                <div class="modal-body">
+                                    In questo modo
+                                    <strong>{{ apartment.title }}</strong> non
+                                    sarà più disponibile
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
+                                    <button type="button" @click="deleteApartment(apartment)" class="btn btn-danger">Elimina</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- td responsive -->
@@ -404,63 +380,11 @@ export default {
                                 class="btn btn-danger m-1"
                                 id="liveToastBtn"
                                 data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
+                             data-bs-target="#mioModale"
                               >
                                 <i class="fa-solid fa-trash"></i>
                               </button>
 
-                              <!-- Modal -->
-                              <div
-                                class="modal fade"
-                                id="exampleModal"
-                                tabindex="-1"
-                                aria-labelledby="exampleModalLabel"
-                                aria-hidden="true"
-                              >
-                                <div
-                                  class="modal-dialog modal-fullscreen-sm-down"
-                                >
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5
-                                        class="modal-title"
-                                        id="exampleModalLabel"
-                                      >
-                                        Sei sicuro di voler eliminare
-                                        l'appartamento?
-                                      </h5>
-                                      <button
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                      ></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      In questo modo
-                                      <strong>{{ apartment.title }}</strong> non
-                                      sarà più disponibile
-                                    </div>
-                                    <div class="modal-footer">
-                                      <button
-                                        type="button"
-                                        class="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                      >
-                                        Chiudi
-                                      </button>
-                                      <button
-                                        @click="deleteApartment(apartment)"
-                                        type="button"
-                                        class="btn btn-danger"
-                                        data-bs-dismiss="modal"
-                                      >
-                                        Elimina
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                             </div>
                           </li>
                         </ul>
@@ -553,5 +477,6 @@ a {
 .dropdown-menu {
   --bs-dropdown-min-width: none;
 }
+
 // @use 'path' as *;
 </style>
