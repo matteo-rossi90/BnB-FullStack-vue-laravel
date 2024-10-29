@@ -10,10 +10,12 @@ export default {
 <template>
     <div class="container-fluid d-flex gap-3  ms_container">
 
-        <!-- <h1 class="p-5 align-content-center ">footer</h1> -->
+        <div class="align-content-center">&copy; BolBnb 2024</div>
         <router-link class="align-content-center" to="/">Home</router-link>
         <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
         <router-link class="align-content-center" to="privacy-policy"> Privacy policy</router-link>
+        <router-link class="align-content-center" to="company"> La nostra azienda</router-link>
+
 
 
 
@@ -25,6 +27,7 @@ export default {
 .ms_container{
     // position: absolute;
     // bottom: 0;
+
     padding:20px;
     height: 100px;
     background-color: rgb(103, 100, 100);

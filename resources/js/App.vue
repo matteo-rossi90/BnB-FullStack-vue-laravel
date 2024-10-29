@@ -71,6 +71,7 @@ main {
   footer{
     position: absolute;
     bottom: 0;
+    z-index: 2000;
   }
 }
 
