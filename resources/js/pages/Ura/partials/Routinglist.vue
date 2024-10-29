@@ -31,13 +31,18 @@ export default {
       });
     },
   },
+  props: {
+    visible: {
+      typeof: Boolean,
+    },
+  },
 };
 </script>
 
 <template>
   <div class="mt-2 container-fluid">
     <ul class="d-flex flex-column justify-content-center">
-      <li class="py-3 d-flex align-items-center">
+      <li class="py-3 d-flex align-items-center" v-if="visible">
         <router-link
           class="link d-flex align-items-center gap-2"
           :to="{ name: 'apartments' }"
