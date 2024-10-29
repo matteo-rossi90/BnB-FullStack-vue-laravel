@@ -148,12 +148,10 @@ export default {
       if (!this.validateForm()) return;
       let formData = new FormData();
       formData.append("image", this.image);
-      data = {
-        apartment: this.apartment,
-        image: formData,
-      };
+      formData.append("apartment", JSON.stringify(this.apartment));
+
       axios
-        .post("api/user/utente/dashboard", data)
+        .post("api/user/utente/dashboard", formData)
         .then((res) => {
           this.$router.push({
             name: "apartments",
