@@ -283,7 +283,10 @@ export default {
       <div class="row mb-4">
         <div class="col-12 text-start">
           <h3 class="apartment-address">Indirizzo: {{ apartment.address }}</h3>
-          <span class="additional-info">{{ apartment.number_beds }} letti &bull; {{ apartment.number_bathrooms }} bagni</span>
+          {{ apartment.number_beds }} letti &bull;
+      {{ apartment.number_bathrooms }} bagni &bull;
+      {{ apartment.number_rooms }} stanze &bull;
+      {{ apartment.square_meters }} m²
         </div>
       </div>
 
