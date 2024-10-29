@@ -235,230 +235,276 @@ export default {
       <Routinglist />
     </aside>
     <div class="dashboard-box">
-      <div class="container-fluid p-5 d-flex justify-content-center gap-2">
-        <div class="row">
-          <div class="col-12">
+      <div class="container-fluid py-3">
+        <div class="row justify-content-center gap-2">
+          <div class="col-sm-12 col-md-10 col-lg-10">
             <h1>Inserisci un appartamento</h1>
           </div>
-          <div class="col-md-12 col-lg-12">
-            <form @submit.prevent="submit" enctype="multipart/form-data">
-              <div class="mb-3 col-12 col-md-6">
-                <label v-if="isAproveStreet" for="title" class="col-form-label"
-                  >Nome appartamento:</label
-                >
-                <input
-                  v-if="isAproveStreet"
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  maxlength="500"
-                  min="1"
-                  v-model="apartment.title"
 
-                />
-                <span v-if="errors.title" class="text-danger">{{ errors.title }}</span>
-              </div>
-              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
-                <label for="address" class="col-form-label">Via:</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  name="address"
-                  v-model="street"
+          <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-10 col-lg-10">
+                    <form @submit.prevent="submit" enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="mb-3 col-12">
+                                <label v-if="isAproveStreet" for="title" class="col-form-label"
+                                >Nome appartamento:</label
+                                >
+                                <input
+                                v-if="isAproveStreet"
+                                type="text"
+                                class="form-control"
+                                id="title"
+                                name="title"
+                                maxlength="500"
+                                min="1"
+                                v-model="apartment.title"
 
-                />
-                <span v-if="errors.street" class="text-danger">{{ errors.street }}</span>
-              </div>
-              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
-                <label for="address" class="col-form-label">Numero</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="address"
-                  name="address"
-                  v-model="number"
+                                />
+                                <span v-if="errors.title" class="text-danger">{{ errors.title }}</span>
+                            </div>
 
-                />
-                <span v-if="errors.number" class="text-danger">{{ errors.number }}</span>
-              </div>
-              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
-                <label for="address" class="col-form-label">Citta</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  name="address"
-                  v-model="city"
+                        </div>
+                        <div class="row">
+                            <div v-if="!isAproveStreet" class="mb-3 col-12">
+                                <label for="address" class="col-form-label">Via:</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                id="address"
+                                name="address"
+                                v-model="street"
 
-                />
-                <span v-if="errors.city" class="text-danger">{{ errors.city }}</span>
-              </div>
-              <div v-if="!isAproveStreet" class="mb-3 col-12 col-md-6">
-                <label for="address" class="col-form-label"
-                  >Codice Postale</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  id="address"
-                  name="address"
-                  v-model="postalCode"
-                  maxlength="5"
-                />
-                <span v-if="errors.postalCode" class="text-danger">{{ errors.postalCode }}</span>
-              </div>
+                                />
+                                <span v-if="errors.street" class="text-danger">{{ errors.street }}</span>
+                            </div>
 
-              <div class="mb-3 col-12 col-md-6">
-                <label
-                  v-if="isAproveStreet"
-                  for="number_rooms"
-                  class="col-form-label"
-                  >numero stanze:</label
-                >
-                <input
-                  v-if="isAproveStreet"
-                  type="number"
-                  class="form-control"
-                  id="number_rooms"
-                  name="number_rooms"
-                  min="1"
-                  max="65535"
-                  v-model="apartment.number_rooms"
+                        </div>
 
-                />
-                <span v-if="errors.number_rooms" class="text-danger">{{ errors.number_rooms }}</span>
-              </div>
-              <div class="mb-3 col-12 col-md-6">
-                <label
-                  v-if="isAproveStreet"
-                  for="number_beds"
-                  class="col-form-label"
-                  >numero letti:</label
-                >
-                <input
-                  v-if="isAproveStreet"
-                  type="number"
-                  class="form-control"
-                  id="number_beds"
-                  name="number_beds"
-                  min="0"
-                  max="65535"
-                  v-model="apartment.number_beds"
+                        <div class="row">
+                            <div v-if="!isAproveStreet" class="mb-3 col-12">
+                                <label for="address" class="col-form-label">Numero</label>
+                                <input
+                                type="number"
+                                class="form-control"
+                                id="address"
+                                name="address"
+                                v-model="number"
 
-                />
-              </div>
-               <span v-if="errors.number_beds" class="text-danger">{{ errors.number_beds }}</span>
-              <div class="mb-3 col-12 col-md-6">
-                <label
-                  v-if="isAproveStreet"
-                  for="number_bathrooms"
-                  class="col-form-label"
-                  >numero bagni:</label
-                >
-                <input
-                  v-if="isAproveStreet"
-                  type="number"
-                  class="form-control"
-                  id="number_bathrooms"
-                  name="number_bathrooms"
-                  min="0"
-                  max="65535"
-                  v-model="apartment.number_bathrooms"
+                                />
+                                <span v-if="errors.number" class="text-danger">{{ errors.number }}</span>
+                            </div>
 
-                />
-                <span v-if="errors.number_bathrooms" class="text-danger">{{ errors.number_bathrooms }}</span>
-              </div>
-              <div v-if="isAproveStreet" class="mb-3 col-12 col-md-6">
-                <label for="square_meters" class="col-form-label"
-                  >metri quadri:</label
-                >
-                <input
-                  type="number"
-                  class="form-control"
-                  id="square_meters"
-                  name="square_meters"
-                  min="0"
-                  max="65535"
-                  v-model="apartment.square_meters"
+                        </div>
 
-                />
-                <span v-if="errors.square_meters" class="text-danger">{{ errors.square_meters }}</span>
+                        <div class="row">
+                            <div v-if="!isAproveStreet" class="mb-3 col-12">
+                                <label for="address" class="col-form-label">Citta</label>
+                                <input
+                                type="text"
+                                class="form-control"
+                                id="address"
+                                name="address"
+                                v-model="city"
 
-              </div>
-              <div v-if="isAproveStreet" class="input-group mb-3 col-12 col-md-6">
-                <input
-                  type="file"
-                  class="form-control"
-                  id="image"
-                  name="image"
-                  @change="savePhoto"
-                />
-                <label class="input-group-text" for="image">carica</label>
-              </div>
+                                />
+                                <span v-if="errors.city" class="text-danger">{{ errors.city }}</span>
+                            </div>
 
-              <!-- Anteprima immagine caricata -->
-              <div v-if="imagePreview && isAproveStreet">
-                <img
-                  :src="imagePreview"
-                  alt="Anteprima immagine"
-                  class="img-fluid mb-3"
-                />
-              </div>
+                        </div>
 
-              <div
-                v-if="isAproveStreet"
-                class="input-group mb-3 d-flex"
-              >
-                <div v-for="item in services" :key="item.id">
-                  <input
-                    type="checkbox"
-                    class="btn-check"
-                    :id="item.id"
-                    autocomplete="off"
-                  />
-                  <label class="btn btn-outline-dark" :for="item.id"
-                    >{{ item.name }}
-                  </label>
-                </div>
-              </div>
-              <div v-if="resultOfSearch && !isAproveStreet">
-                <ul>
-                  <li
-                    v-for="(street, index) in resultOfSearch"
-                    :key="index"
-                    @click="activeForm(index)"
-                  >
-                    {{
-                      street.address.streetName +
-                      " " +
-                      street.address.countrySubdivisionCode +
-                      " " +
-                      street.address.municipality +
-                      " " +
-                      street.address.neighbourhood +
-                      " " +
-                      street.address.postalCode
-                    }}
-                  </li>
-                </ul>
-              </div>
-              <button
-                v-if="!isAproveStreet"
-                @click="submit"
-                class="btn btn-dark"
-              >
-                Approva indirizzo
-              </button>
-              <button
-                v-if="isAproveStreet"
-                class="btn btn-dark"
-                @click="createApartment"
-              >
-                inserisci appartamento
-              </button>
-            </form>
+                        <div class="row">
+                            <div v-if="!isAproveStreet" class="mb-3 col-12">
+                                <label for="address" class="col-form-label"
+                                >Codice Postale</label
+                                >
+                                <input
+                                type="text"
+                                class="form-control"
+                                id="address"
+                                name="address"
+                                v-model="postalCode"
+                                maxlength="5"
+                                />
+                                <span v-if="errors.postalCode" class="text-danger">{{ errors.postalCode }}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-12">
+                                <label
+                                v-if="isAproveStreet"
+                                for="number_rooms"
+                                class="col-form-label"
+                                >numero stanze:</label
+                                >
+                                <input
+                                v-if="isAproveStreet"
+                                type="number"
+                                class="form-control"
+                                id="number_rooms"
+                                name="number_rooms"
+                                min="1"
+                                max="65535"
+                                v-model="apartment.number_rooms"
+
+                                />
+                                <span v-if="errors.number_rooms" class="text-danger">{{ errors.number_rooms }}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-12">
+                                <label
+                                v-if="isAproveStreet"
+                                for="number_beds"
+                                class="col-form-label"
+                                >numero letti:</label
+                                >
+                                <input
+                                v-if="isAproveStreet"
+                                type="number"
+                                class="form-control"
+                                id="number_beds"
+                                name="number_beds"
+                                min="0"
+                                max="65535"
+                                v-model="apartment.number_beds"
+
+                                />
+                                <span v-if="errors.number_beds" class="text-danger">{{ errors.number_beds }}</span>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="mb-3 col-12">
+                                <label
+                                v-if="isAproveStreet"
+                                for="number_bathrooms"
+                                class="col-form-label"
+                                >numero bagni:</label
+                                >
+                                <input
+                                v-if="isAproveStreet"
+                                type="number"
+                                class="form-control"
+                                id="number_bathrooms"
+                                name="number_bathrooms"
+                                min="0"
+                                max="65535"
+                                v-model="apartment.number_bathrooms"
+
+                                />
+                                <span v-if="errors.number_bathrooms" class="text-danger">{{ errors.number_bathrooms }}</span>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div v-if="isAproveStreet" class="mb-3 col-12">
+                                <label for="square_meters" class="col-form-label"
+                                >metri quadri:</label
+                                >
+                                <input
+                                type="number"
+                                class="form-control"
+                                id="square_meters"
+                                name="square_meters"
+                                min="0"
+                                max="65535"
+                                v-model="apartment.square_meters"
+
+                                />
+                                <span v-if="errors.square_meters" class="text-danger">{{ errors.square_meters }}</span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div v-if="isAproveStreet" class="input-group mb-3 col-12">
+                                <input
+                                type="file"
+                                class="form-control"
+                                id="image"
+                                name="image"
+                                @change="savePhoto"
+                                />
+                                <label class="input-group-text" for="image">carica</label>
+                            </div>
+
+                        </div>
+
+                        <!-- Anteprima immagine caricata -->
+                        <div class="row">
+                            <div v-if="imagePreview && isAproveStreet">
+                                <img
+                                :src="imagePreview"
+                                alt="Anteprima immagine"
+                                class="img-fluid mb-3"
+                                />
+                            </div>
+
+                        </div>
+
+                        <div v-if="isAproveStreet">
+                            <div class="row">
+                                <div v-for="item in services" :key="item.id"
+                                class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
+                                    <input
+                                        type="checkbox"
+                                        class="btn-check"
+                                        :id="item.id"
+                                        autocomplete="off"
+                                    />
+                                    <label class="btn btn-outline-dark w-100" :for="item.id"
+                                        >{{ item.name }}
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div v-if="resultOfSearch && !isAproveStreet">
+                            <ul>
+                                <li
+                                    v-for="(street, index) in resultOfSearch"
+                                    :key="index"
+                                    @click="activeForm(index)"
+                                >
+                                    {{
+                                    street.address.streetName +
+                                    " " +
+                                    street.address.countrySubdivisionCode +
+                                    " " +
+                                    street.address.municipality +
+                                    " " +
+                                    street.address.neighbourhood +
+                                    " " +
+                                    street.address.postalCode
+                                    }}
+                                </li>
+                            </ul>
+                        </div>
+                        <button
+                            v-if="!isAproveStreet"
+                            @click="submit"
+                            class="btn btn-dark"
+                        >
+                            Approva indirizzo
+                        </button>
+                        <button
+                            v-if="isAproveStreet"
+                            class="btn btn-dark"
+                            @click="createApartment"
+                        >
+                            inserisci appartamento
+                        </button>
+                </form>
+            </div>
+
           </div>
         </div>
       </div>
