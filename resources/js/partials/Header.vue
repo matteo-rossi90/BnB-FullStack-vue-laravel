@@ -326,8 +326,10 @@ export default {
       <font-awesome-icon :icon="['fas', 'plane-departure']" />
       <p>Viaggia</p>
     </div>
-    <div class="contIcon" @click="messagePush">
-      <font-awesome-icon :icon="['far', 'message']" />
+    <div class="contIcon" v-if="haveApartment">
+      <router-link :to="{ name: 'apartments' }">
+        <font-awesome-icon :icon="['far', 'message']" />
+      </router-link>
       <p>Messaggi</p>
     </div>
     <div class="contIcon">
