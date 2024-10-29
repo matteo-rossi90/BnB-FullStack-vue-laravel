@@ -19,6 +19,7 @@ import CheckoutPayment from "../pages/components/CheckoutPayment.vue";
 import PageProfile from "../pages/Ur/PageProfile.vue";
 import PageMessage from "../pages/Ur/PageMessage.vue";
 import About from "../pages/About.vue";
+import PrivacyPolicy from "../pages/PrivacyPolicy.vue"
 
 const router = createRouter({
     history: createWebHistory(),
@@ -114,6 +115,11 @@ const router = createRouter({
                 path: '/chi-siamo',
                 name: 'About',
                 component: About //route footer
+            },
+            {
+                path: '/privacy-policy',
+                name: 'PrivacyPolicy',
+                component: PrivacyPolicy //route footer
             },
         ]
 })
