@@ -119,12 +119,11 @@ aside.sidenav-message {
     width: 60px;
     flex-shrink: 0;
 
-    img {
-        border-radius: 100%;
-        max-width: 100%;
-        height: 100%;
-        object-fit: cover;
+    @media (max-width: 426px){
+        height: 50px;
+        width: 50px;
     }
+
 }
 
 .message-email {

@@ -124,7 +124,7 @@ export default {
                   <h6>{{ message.name }} {{ message.surname }}</h6>
                   <small>{{ formatDate(message.created_at) }}</small>
                 </div>
-                <small>{{ message.email }}</small>
+                <!-- <small>{{ message.email }}</small> -->
                 <small class="message-email">{{ message.message }}</small>
               </div>
             </li>
