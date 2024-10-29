@@ -24,9 +24,45 @@ export default {
 
         // email_verified_at: "",
       },
+
+      toastMessage:''
     };
   },
   methods: {
+
+    showToast(text, type = "success") {
+      //metodo che permette di mostrare il toast
+
+      this.toastMessage = text;
+      const toastEl = this.$refs.liveToast;
+
+      toastEl.classList.remove("text-bg-success", "text-bg-danger");
+
+      if (type === "success") {
+        toastEl.classList.add("text-bg-success");
+      } else {
+        toastEl.classList.add("text-bg-danger");
+      }
+      const toast = new bootstrap.Toast(toastEl);
+
+      toast.show();
+
+      setTimeout(() => {
+        toast.hide();
+      }, 8000);
+    },
+
+    hideToast() {
+      //metodo che permette di nascondere il toast
+
+      const toastEl = this.$refs.liveToast;
+
+      const toast = new bootstrap.Toast(toastEl);
+
+      toast.hide();
+    },
+
+
     submit() {
       axios
         .post("/api/register", this.user)
@@ -43,6 +79,14 @@ export default {
               } else {
                 store.userName = "Profilo";
               }
+            //   toast success per home
+              this.$router.push({
+                name: "home",
+                query: {
+                    toastMessage: `Registrazione avvenuta con successo`,
+                    toastType:"success"
+                }
+             });
               console.log("app- user e user name: ok");
             })
             .catch((err) => {
@@ -55,9 +99,15 @@ export default {
         .catch((err) => {
           store.is_logged = false;
 
+          this.showToast("Errore durante la registrazione", "error");
+
           if (err.response) {
             // Errore con risposta dal server
             console.log("Errore:", err.response.data);
+            // errore se mail già nel db
+            if (err.response.data.message === 'The email has already been taken.'){
+                this.showToast("L'email è già associata ad un altro account", "error");
+            }
             console.log("Stato HTTP:", err.response.status);
             console.log("Headers:", err.response.headers);
           } else if (err.request) {
@@ -313,6 +363,28 @@ export default {
       </div>
     </div>
   </div>
+
+  <!-- codice del toast per errore -->
+  <div
+    ref="liveToast"
+    class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    style="z-index: 1050"
+  >
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        @click="hideToast"
+        aria-label="Close"
+      ></button>
+    </div>
+  </div>
 </template>
 
 
@@ -329,5 +401,12 @@ export default {
 
 label {
   display: block;
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
 }
 </style>

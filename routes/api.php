@@ -50,6 +50,7 @@ Route::get('/services',[GeneralUser::class, 'services']);
 Route::get('/messages', [GeneralUser::class, 'messages']);
 Route::get('/filtred-apartment', [GeneralUser::class, 'filtredApartment']);
 Route::post('/view', [GeneralUser::class, 'view']);
+Route::get('/show-apartment', [GeneralUser::class, 'apartment']);
 // Route::get('/get-public-ip', function () {
 //     // Fai la richiesta al servizio ipify
 //     $response = Http::get('https://api.ipify.org?format=json');

@@ -138,36 +138,36 @@ export default {
       <div class="container-fluid mt-5">
         <div class="row" v-if="message">
           <div class="col-xs-8 col-sm-12 col-md-12 col-lg-12">
-
-            <div class="d-flex justify-content-between container container-details">
-                <div class="d-flex align-items-center box-user">
-                    <div class="main-image d-flex align-items-center">
-                        <img :src="getImage(selectedImage)" alt="utente" />
-                    </div>
-                    <div class="text-box my-3">
-                        <div class="d-flex flex-column">
-                            <h6>{{ message.name }} {{ message.surname }}</h6>
-                            <small>{{ formatDateTime(message.created_at) }}</small>
-                        </div>
-                        <small
-                        ><a :href="'mailto:' + message.email">{{
-                            message.email
-                        }}</a>
-                        </small
-                        >
-                    </div>
+            <div
+              class="d-flex justify-content-between container container-details"
+            >
+              <div class="d-flex align-items-center box-user">
+                <div class="main-image d-flex align-items-center">
+                  <img :src="getImage(selectedImage)" alt="utente" />
                 </div>
-                <button v-if="showContent"
-                    @click="goBackToMessages"
-                    class="btn btn-secondary btn-back me-3">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-
+                <div class="text-box my-3">
+                  <div class="d-flex flex-column">
+                    <h6>{{ message.name }} {{ message.surname }}</h6>
+                    <small>{{ formatDateTime(message.created_at) }}</small>
+                  </div>
+                  <small
+                    ><a :href="'mailto:' + message.email">{{
+                      message.email
+                    }}</a>
+                  </small>
+                </div>
+              </div>
+              <button
+                v-if="showContent"
+                @click="goBackToMessages"
+                class="btn btn-secondary btn-back me-3"
+              >
+                <i class="fa-solid fa-xmark"></i>
+              </button>
             </div>
             <div class="container container-message mt-3 message-details">
               <p>{{ message.message }}</p>
             </div>
-
           </div>
         </div>
 
@@ -207,7 +207,6 @@ input {
   background-color: transparent;
   border: none;
 }
-
 
 small {
   color: #555;

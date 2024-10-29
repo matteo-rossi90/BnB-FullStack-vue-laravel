@@ -31,7 +31,9 @@ class ApartmentController extends Controller
     public function store(StoreApartmentRequest $request)
     {
 
-        $data = $request->all();
+        // $data = $request->all();
+        $data = json_decode($request->input('apartment'), true);
+
 
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
@@ -59,6 +61,8 @@ class ApartmentController extends Controller
             // Ottieni l'immagine
             $image = $request->file('image');
 
+
+
             // Crea un nome unico per l'immagine
             $imageName = time() . '.' . $image->getClientOriginalExtension();
 
@@ -66,7 +70,7 @@ class ApartmentController extends Controller
             $image->move(public_path('storage/uploads'), $imageName);
 
             // Salva il percorso dell'immagine nella variabile $data
-            $data['image'] = 'img/' . $imageName; // Percorso relativo da salvare nel database
+            $data['image'] = "storage/uploads/$imageName"; // Percorso relativo da salvare nel database
         } else {
             $data['image'] = 'img/no-image.jpg';
         }

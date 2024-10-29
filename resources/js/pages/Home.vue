@@ -9,9 +9,42 @@ export default {
   data() {
     return {
       store: store,
+
+      toastMessage:''
     };
   },
-  methods: {},
+  methods: {
+    showToast(message, type = "success") {
+      //metodo che permette di mostrare il toast
+
+      this.toastMessage = message;
+      const toastEl = this.$refs.liveToast;
+
+      toastEl.classList.remove("text-bg-success", "text-bg-danger");
+
+      if (type === "success") {
+        toastEl.classList.add("text-bg-success");
+      } else {
+        toastEl.classList.add("text-bg-danger");
+      }
+      const toast = new bootstrap.Toast(toastEl);
+
+      toast.show();
+
+      setTimeout(() => {
+        toast.hide();
+      }, 5000);
+    },
+    hideToast() {
+      //metodo che permette di nascondere il toast
+
+      const toastEl = this.$refs.liveToast;
+
+      const toast = new bootstrap.Toast(toastEl);
+
+      toast.hide();
+    },
+  },
   mounted() {
     //   all apartment
     axios
@@ -27,10 +60,28 @@ export default {
       .then((res) => {
         console.log("app- all apartment:ok", res.data);
         store.allApartments = res.data;
+        console.log(this.$route.query.toastMessage);
+
+        if (this.$route.query.toastMessage) {
+            this.showToast(
+                this.$route.query.toastMessage,
+                this.$route.query.toastType || "success"
+            );
+        };
+        //evita che al refresh della pagina continui ad apparire la notifica toast
+        this.$router.replace({
+            name: this.$route.name,
+            params: this.$route.params,
+            query: {},
+
+        });
+
       })
       .catch((err) => {
         console.log("app- all apartment: ", err.message);
       });
+
+
   },
   computed: {
     sortedApartment() {
@@ -77,11 +128,40 @@ export default {
       </router-link>
     </div>
   </div>
+
+   <!-- codice del toast per registrazione a buon fine -->
+   <div
+      ref="liveToast"
+      class="toast align-items-center text-bg-success position-fixed bottom-0 end-0 p-2 m-3"
+      role="alert"
+      aria-live="assertive"
+      aria-atomic="true"
+      style="z-index: 1050"
+    >
+      <div class="d-flex">
+        <div class="toast-body">
+          {{ toastMessage }}
+        </div>
+        <button
+          type="button"
+          class="btn-close btn-close-white me-2 m-auto"
+          @click="hideToast"
+          aria-label="Close"
+        ></button>
+      </div>
+    </div>
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
 .card {
   max-width: 100%;
   margin: 10px auto;
+}
+
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1050;
 }
 </style>

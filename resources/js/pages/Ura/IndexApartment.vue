@@ -219,11 +219,6 @@ export default {
                   </td>
                   <td scope="row" class="align-middle">
                     {{ apartment.title }}
-                    <router-link
-                      :class="{ disable: isPremium }"
-                      :to="{ name: 'payment', params: { id: apartment.id } }"
-                      >Premium tasto</router-link
-                    >
                   </td>
                   <td scope="row" class="align-middle">
                     <router-link

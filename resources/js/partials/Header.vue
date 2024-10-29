@@ -202,7 +202,7 @@ export default {
       return store.inApartmentPage;
     },
     haveApartment() {
-      return store.user.apartments.length;
+      return store.user.apartments?.length ?? false;
     },
   },
 };
@@ -326,12 +326,16 @@ export default {
       <font-awesome-icon :icon="['fas', 'plane-departure']" />
       <p>Viaggia</p>
     </div>
-    <div class="contIcon" @click="messagePush">
-      <font-awesome-icon :icon="['far', 'message']" />
+    <div class="contIcon" v-if="haveApartment">
+      <router-link :to="{ name: 'apartments' }">
+        <font-awesome-icon :icon="['far', 'message']" />
+      </router-link>
       <p>Messaggi</p>
     </div>
-    <div class="contIcon" @click="profilePush">
-      <font-awesome-icon :icon="['far', 'user']" />
+    <div class="contIcon">
+      <router-link :to="{ name: 'dashboard' }">
+        <font-awesome-icon :icon="['far', 'user']" />
+      </router-link>
       <p>Profilo</p>
     </div>
   </nav>
