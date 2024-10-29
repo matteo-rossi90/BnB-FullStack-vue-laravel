@@ -20,6 +20,7 @@ import PageProfile from "../pages/Ur/PageProfile.vue";
 import PageMessage from "../pages/Ur/PageMessage.vue";
 import About from "../pages/About.vue";
 import PrivacyPolicy from "../pages/PrivacyPolicy.vue"
+import Company from "../pages/Company.vue";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -120,6 +121,11 @@ const router = createRouter({
                 path: '/privacy-policy',
                 name: 'PrivacyPolicy',
                 component: PrivacyPolicy //route footer
+            },
+            {
+                path: '/company',
+                name: 'Company',
+                component: Company //route footer
             },
         ]
 })

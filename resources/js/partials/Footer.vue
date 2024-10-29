@@ -14,6 +14,8 @@ export default {
         <router-link class="align-content-center" to="/">Home</router-link>
         <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
         <router-link class="align-content-center" to="privacy-policy"> Privacy policy</router-link>
+        <router-link class="align-content-center" to="company"> La nostra azienda</router-link>
+
 
 
 
@@ -25,6 +27,7 @@ export default {
 .ms_container{
     // position: absolute;
     // bottom: 0;
+    
     padding:20px;
     height: 100px;
     background-color: rgb(103, 100, 100);
