@@ -273,6 +273,14 @@ export default {
     this.findApartment(this.$route.params.id);
     // console.log(store.allApartments[this.$route.params.id - 1]);
     // nextTick fa in modo che il DOM sia completamente pronto
+
+    console.log(store.user.email);
+    // autocomplete mail se logged
+    if(!store.user.email){
+        this.email = '';
+    }else {
+        this.email = store.user.email;
+    }
   },
 };
 </script>
