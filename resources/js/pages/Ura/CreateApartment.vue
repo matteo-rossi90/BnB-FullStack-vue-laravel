@@ -19,7 +19,7 @@ export default {
         number_bathrooms: "1",
 
         square_meters: "100",
-        // services:[]
+        services: [],
       },
       services: [],
       image: "",
@@ -131,6 +131,14 @@ export default {
           console.error("Errore:", error.response || error.message);
         });
     },
+    addServices(idService) {
+      if (this.apartment.services.includes(idService)) {
+        // lo tolgo
+      } else {
+        // lo inserisco
+        this.apartment.services.push(idService);
+      }
+    },
     activeForm(index) {
       this.apartment.address =
         this.street +
@@ -189,9 +197,9 @@ export default {
 
 <template>
   <div class="wrapper d-flex">
-    <aside>
+    <!-- <aside>
       <Routinglist />
-    </aside>
+    </aside> -->
     <div class="dashboard-box">
       <div class="container-fluid mt-4 mb-5">
         <div class="row justify-content-center gap-2">
@@ -423,7 +431,10 @@ export default {
                         :id="item.id"
                         autocomplete="off"
                       />
-                      <label class="btn btn-outline-dark w-100" :for="item.id"
+                      <label
+                        class="btn btn-outline-dark w-100"
+                        @click="addServices(item.id)"
+                        :for="item.id"
                         >{{ item.name }}
                       </label>
                     </div>
