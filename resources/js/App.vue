@@ -59,10 +59,10 @@ export default {
 <template>
   <Header />
   <main>
-    <router-view></router-view>
+    <router-view :showFooter="false"></router-view>
   </main>
 
-  <Footer />
+  <Footer v-if="$route.name !== 'messages'"/>
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
