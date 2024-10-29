@@ -251,6 +251,9 @@ export default {
           console.log(err);
         });
     },
+    imageUrl(path) {
+      return `http://127.0.0.1:8000/${path}`;
+    },
   },
 
   computed: {
@@ -293,7 +296,7 @@ export default {
         <div class="col-12">
           <div v-if="apartment.image" class="image-container mb-4">
             <img
-              :src="apartment.image"
+              :src="imageUrl(apartment.image)"
               :alt="apartment.name"
               class="img-fluid rounded shadow-sm"
             />
