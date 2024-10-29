@@ -31,7 +31,7 @@ const store = reactive({
 
 const checkAdress = (adress) =>{
 // trasform adress in array
-let stringRequest = adress.trim().split(" ").join('%20')
+let stringRequest = adress.trim().split(" ").join('%')
 
 let urlRequest = `https://api.tomtom.com/search/2/geocode/${encodeURIComponent(stringRequest)}.json?countrySet=IT&limit=3&storeResult=false&topLeft=47.25145,2.35341&btmRight=36.08512,-6.29537&language=it-IT&extendedPostalCodesFor=str&view=Unified&key=qNjsW3gGJOBNhFoXhBzsGRJAk5RJMJhI`;
 
