@@ -235,7 +235,7 @@ export default {
       <Routinglist />
     </aside>
     <div class="dashboard-box">
-      <div class="container-fluid py-3">
+      <div class="container-fluid mt-4 mb-5">
         <div class="row justify-content-center gap-2">
           <div class="col-sm-12 col-md-10 col-lg-10">
             <h1>Inserisci un appartamento</h1>
@@ -425,15 +425,15 @@ export default {
                         </div>
 
                         <div class="row">
-                            <div v-if="isAproveStreet" class="input-group mb-3 col-12">
+                            <div v-if="isAproveStreet" class="mb-3 col-12">
+                                <label for="image" class="col-form-label">Carica un'immagine:</label>
                                 <input
                                 type="file"
-                                class="form-control"
+                                class="form-control mb-3"
                                 id="image"
                                 name="image"
                                 @change="savePhoto"
                                 />
-                                <label class="input-group-text" for="image">carica</label>
                             </div>
 
                         </div>
@@ -453,7 +453,7 @@ export default {
                         <div v-if="isAproveStreet">
                             <div class="row">
                                 <div v-for="item in services" :key="item.id"
-                                class="col-6 col-sm-4 col-md-3 col-lg-2 mb-2">
+                                class="col-6 col-sm-4 col-md-3 col-lg-3 mb-3">
                                     <input
                                         type="checkbox"
                                         class="btn-check"
@@ -497,7 +497,7 @@ export default {
                         </button>
                         <button
                             v-if="isAproveStreet"
-                            class="btn btn-dark"
+                            class="btn btn-dark mt-5"
                             @click="createApartment"
                         >
                             inserisci appartamento
