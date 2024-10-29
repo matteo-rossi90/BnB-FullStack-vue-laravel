@@ -1,7 +1,7 @@
 @import '../scss/variables';
 
 .wrapper {
-    min-height: 100vh;
+    height: 100%;
     width: 100%;
     // overflow: auto;
 }
@@ -10,12 +10,12 @@ aside {
     width: 350px;
     // position:fixed;
     // left:0;
-    height: 100vh;
+    // height: 100vh;
     border-right: 1px solid $color;
 }
 
 .dashboard-box {
-    width:calc(100% - 300px);
+    width:calc(100% - 350px);
 }
 
 ul {
@@ -32,8 +32,8 @@ ul {
             }
         }
 
-    .dashboard-box {
-        margin-left: 250px;
+    .dashboard-box{
+        width: calc(100% - 250px)
     }
 
     .actions{
@@ -52,7 +52,7 @@ ul {
     }
 
     .dashboard-box {
-        margin-left: 100px;
+        width: calc(100% - 100px)
     }
 
     table {
@@ -73,8 +73,8 @@ ul {
     }
 
     .dashboard-box {
-        margin-left: 50px;
         padding: 15px;
+        width: calc(100% - 50px)
     }
 
     table {
