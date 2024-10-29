@@ -32,7 +32,7 @@ class ApartmentController extends Controller
     {
 
         $data = $request->all();
-
+        dd($data);
         $data['slug'] = Helper::generateSlug($data['title'], Apartment::class);
         $data['user_id'] =  auth()->user()->id;
 

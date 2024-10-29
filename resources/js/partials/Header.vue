@@ -202,7 +202,7 @@ export default {
       return store.inApartmentPage;
     },
     haveApartment() {
-      return store.user.apartments.length;
+      return store.user.apartments?.length ?? false;
     },
   },
 };
