@@ -1,16 +1,14 @@
 @import '../scss/variables';
 
 .wrapper {
-    height: 100%;
+    min-height: 100vh;
+    flex: 1;
     width: 100%;
     // overflow: auto;
 }
 
 aside {
     width: 350px;
-    // position:fixed;
-    // left:0;
-    // height: 100vh;
     border-right: 1px solid $color;
 }
 
