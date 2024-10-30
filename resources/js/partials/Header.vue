@@ -218,7 +218,7 @@ export default {
               :to="{ name: 'home' }"
             >
               <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
-              <strong>
+              <strong class="text-logo">
                 BoolBnb
               </strong>
             </router-link>
@@ -247,9 +247,13 @@ export default {
                       v-for="(addressObj, index) in suggestAdress"
                       :key="index"
                     >
-                      <div class="link" @click="sendAdress(addressObj)">
+                      <div class="link d-flex align-items-center gap-2" @click="sendAdress(addressObj)">
+                        <font-awesome-icon
+                        class="icon-location me-2"
+                        :icon="['fas', 'location-dot']" />
                         <span class="street"
-                          >{{ addressObj.address.streetName }} <span> </span>
+                          >
+                          {{ addressObj.address.streetName }}
                         </span>
                         <span class="city"
                           >{{ addressObj.address.municipality }}
@@ -409,7 +413,7 @@ header {
         width: 50px;
       }
 
-      strong {
+      .text-logo {
         font-size: 20px;
       }
     }
@@ -473,7 +477,7 @@ p,
 
     li {
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.5rem;
 
       .link {
         width: 100%;
@@ -490,8 +494,14 @@ p,
         //   background-size: contain;
         //   background-repeat: no-repeat;
         // }
+        .icon-location{
+           font-size: 0.9rem;
+           padding: 1rem;
+           background-color: #DDDDDD;
+           border-radius: 10px;
+        }
         .street {
-          font-size: 0.8rem;
+          font-size: 0.9rem;
         }
         .city {
           font-size: 0.9rem;
@@ -518,6 +528,26 @@ p,
 #responsiveNavBar {
   height: 0;
   overflow: hidden;
+}
+
+
+//responsive
+@media (max-width: 1072px){
+    .city,
+    .street{
+        font-size: 0.7rem !important;
+
+    }
+}
+@media (max-width: 768px){
+    .contInput{
+        width: 100%;
+    }
+
+    .text-logo{
+        display: none;
+    }
+
 }
 @media all and (max-width: 623px) {
   #responsiveNavBar.hidden {
@@ -558,9 +588,6 @@ p,
     display: none;
   }
 
-  .contInput {
-    width: 100%;
-  }
   .button {
     display: block;
   }
@@ -573,5 +600,13 @@ p,
   font-size: 2rem;
   color: rgba($color: red, $alpha: 0.7);
   cursor: pointer;
+}
+
+@media (max-width: 500px){
+    .icon-location{
+        padding: 0.2rem !important;
+        background-color: transparent !important;
+
+    }
 }
 </style>
