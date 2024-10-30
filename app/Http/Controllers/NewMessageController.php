@@ -38,10 +38,19 @@ class NewMessageController extends Controller
             ]
         );
 
+        // dd($validator->errors());
         if($validator->fails()){
             $success = false;
             $errors = $validator->errors();
+            // dd($errors);
+            // $errors = '';
+            // foreach ($validator->errors()->messages() as $fieldErrors) {
+            //     $errors = $fieldErrors[0]; // Prendi solo il primo messaggio di errore di ogni campo
+            // }
+
+            // dd($errors);
             return response()->json(compact('success', 'errors'));
+
         } else {
 
             $new_message = new Message();
