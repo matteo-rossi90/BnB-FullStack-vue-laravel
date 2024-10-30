@@ -239,7 +239,7 @@ export default {
     <div id="rowContainer" v-if="!isLoading">
       <div class="leftCol">
         <h3>
-          Oltre {{ apartmensFiltred.length }} alloggi in questa località: Roma
+          Trovati {{ apartmensFiltred.length }} alloggi in questa località: Roma
         </h3>
         <div class="row" v-if="apartmensFiltred.length">
           <div
