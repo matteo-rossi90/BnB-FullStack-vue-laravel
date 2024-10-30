@@ -198,7 +198,7 @@ export default {
 </script>
 
 <template>
-  <div class="filterClass" :class="{ open: isOpenFilter }">
+  <div class="filterClass" @click.stop="" :class="{ open: isOpenFilter }">
     <label for="number_rooms">number_rooms</label>
     <input
       type="number"
