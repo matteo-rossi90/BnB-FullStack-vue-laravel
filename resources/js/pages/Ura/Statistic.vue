@@ -6,18 +6,20 @@ export default {
   data() {
     return {
       allData: [],
+      apartmentTitle: this.$route.params.title,
     };
   },
   mounted() {
     this.statisticCall(
       this.$route.params.id,
+      this.apartmentTitle,
       "2023-01-01 00:00:00",
       Date.now()
     );
     // this.createTable();
   },
   methods: {
-    statisticCall(idApartment, startDate, endDate) {
+    statisticCall(idApartment, apartmentTitle, startDate, endDate) {
       // Formatta le date nel formato `YYYY-MM-DD HH:mm:ss`
       const formattedStartDate = dayjs(startDate).format("YYYY-MM-DD HH:mm:ss");
       const formattedEndDate = dayjs(endDate).format("YYYY-MM-DD HH:mm:ss");
@@ -26,6 +28,7 @@ export default {
         .get("http://127.0.0.1:8000/api/user/view", {
           params: {
             id: idApartment,
+            title: apartmentTitle,
             start_date: formattedStartDate,
             end_date: formattedEndDate,
           },
@@ -115,21 +118,18 @@ export default {
 };
 </script>
 <template>
-  <div class="ms_container">
-    <div class="container my-1">
-
-    <canvas id="myChart"></canvas>
-    </div>
+  <div class="ms_container d-flex flex-column align-items-center justify-content-center">
+        <h3>Visualizzazioni per {{ apartmentTitle }}</h3>
+        <canvas id="myChart"></canvas>
   </div>
 </template>
 <style lang='scss' scoped>
 
     .ms_container{
         width: 100%;
-          height: calc(100vh - 200px);
-          #myChart{
-            height: 400px;
-          }
+        height: 80vh;
+        margin: 20px 0;
+        padding: 20px;
     }
 
 // @use 'path' as *;

@@ -213,7 +213,7 @@ export default {
                   <td class="img-container d-none d-sm-table-cell" scope="row">
                     <img
                       class="img-fluid"
-                      :src="apartment.image"
+                      :src="imageUrl(apartment.image)"
                       alt=""
                     />
                   </td>
@@ -265,7 +265,7 @@ export default {
                   </td>
                   <td scope="row" class="align-middle">
                     <router-link
-                      :to="{ name: 'statistic', params: { id: apartment.id } }"
+                      :to="{ name: 'statistic', params: { id: apartment.id, title: apartment.title } }"
                     >
                       <i class="fa-solid fa-chart-simple"></i>
                     </router-link>
