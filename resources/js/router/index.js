@@ -57,7 +57,7 @@ const router = createRouter({
                 component: IndexApartment
             },
             {
-                path: '/statistiche/:id',
+                path: '/statistiche/:id/:title',
                 name: 'statistic',
                 component: Statistic
             },
