@@ -224,7 +224,7 @@ export default {
                     <router-link
                       v-if="!isPremium"
                       class="sponsor"
-                      :to="{ name: 'payment', params: { id: apartment.id } }"
+                      :to="{ name: 'payment', params: { id: apartment.id, title: apartment.title } }"
                       >Sponsorizza</router-link
                     >
                     <span class="sponsor" v-if="apartment?.sponsors[0]">{{
