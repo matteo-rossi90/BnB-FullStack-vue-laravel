@@ -278,7 +278,7 @@ export default {
         <span v-else>Appartamento visibile</span>
       </div>
 
-      <button type="submit" class="btn btn-primary">Invia</button>
+      <button type="submit" class="btn btn-dark">Salva</button>
     </form>
   </div>
 </template>
