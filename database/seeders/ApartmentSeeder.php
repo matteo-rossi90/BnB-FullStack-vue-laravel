@@ -24,7 +24,7 @@ class ApartmentSeeder extends Seeder
         $streets = config('citySeader.rome_streets');
         $latitudes = config('citySeader.lat');
         $longitudes = config('citySeader.long');
-        $path = ['storage\uploads\gettyimages-1293762741-612x612.jpg', 'storage\uploads\images (1).jpg', 'storage\uploads\Mix-di-stili-in-un-appartamento-con-terrazzo-nel-cuore-di-Amsterdam10.webp'];
+        $path = ['storage/uploads/default/3-appartamento-moderno-elegante.webp', 'storage\uploads\default\03-IMG_5282s.webp', 'storage\uploads\default\appartamento-di-piccole-dimensioni-e-moderno-design-appartamenti-moderni-con-pareti-verdi-dettagli-dorati-neri-pavimenti-legno-265538769.webp', 'storage\uploads\default\lovepik-modern-small-house-living-room-effect-map-picture_500830021.jpg', 'storage\uploads\default\Mix-di-stili-in-un-appartamento-con-terrazzo-nel-cuore-di-Amsterdam10.webp', 'storage\uploads\default\modern_apartment_interior.jpg'];
 
 
         for ($i = 0; $i < count($streets) - 1; $i++) {
