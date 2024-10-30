@@ -213,7 +213,7 @@ export default {
                   <td class="img-container d-none d-sm-table-cell" scope="row">
                     <img
                       class="img-fluid"
-                      :src="imageUrl(apartment.image)"
+                      :src="apartment.image"
                       alt=""
                     />
                   </td>
