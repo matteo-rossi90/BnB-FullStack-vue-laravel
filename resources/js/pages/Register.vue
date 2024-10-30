@@ -409,4 +409,9 @@ label {
   right: 0;
   z-index: 1050;
 }
+
+.col-8{
+    margin-bottom: 15rem;
+    min-height: 80vh;
+}
 </style>
