@@ -10,6 +10,7 @@ export default {
       alt: "",
       name: "",
 
+
       //   dati messaggio
       name: "",
       surname: "",
@@ -260,6 +261,10 @@ export default {
     apartmentFiltred() {
       return this.apartment;
     },
+    is_logged(){
+        return store.is_logged
+    },
+
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -270,6 +275,9 @@ export default {
     });
   },
   mounted() {
+// console.log(apartmentFiltred);
+
+
     this.findApartment(this.$route.params.id);
     // console.log(store.allApartments[this.$route.params.id - 1]);
     // nextTick fa in modo che il DOM sia completamente pronto
@@ -296,7 +304,13 @@ export default {
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
+           <router-link v-if="is_logged  " class="btn btn-dark" :to="{
+                          name: 'EditApartment',
+                          params: { id: apartment.id },
+                        }">modifica
+                        </router-link>
         </div>
+
       </div>
 
       <!-- Sezione Immagini -->
@@ -304,7 +318,7 @@ export default {
         <div class="col-12">
           <div v-if="apartment.image" class="image-container mb-4">
             <img
-              :src="imageUrl(apartment.image)"
+              :src="apartment.image"
               :alt="apartment.name"
               class="img-fluid rounded shadow-sm"
             />
