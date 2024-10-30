@@ -372,10 +372,11 @@ header {
       cursor: pointer;
       display: block;
       z-index: 100;
-      border: 1px solid black;
+      border: 1px solid $color;
       z-index: 101;
-    //   &:hover {
-    //   }
+        &:hover {
+            box-shadow: $shadow-color 0px 2px 4px;
+        }
       .profile {
         position: relative;
         top: 50%;
