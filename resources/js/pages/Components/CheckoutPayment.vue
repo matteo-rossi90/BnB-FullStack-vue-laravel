@@ -108,6 +108,7 @@ export default {
 
   mounted() {
     // primo evento token
+
     axios
       .get("http://localhost:8000/api/order/generate")
       .then((res) => {
@@ -170,6 +171,9 @@ export default {
     countDownUpdate() {
       return this.countDown;
     },
+    sponsorName() {
+      return this.$route.params.name;
+    },
   },
 };
 </script>
@@ -178,11 +182,9 @@ export default {
     class="container pb-4 d-flex flex-column justify-content-center align-items-center"
     v-if="!isLoading"
   >
-    <h2 v-if="!paymentSuccess && !paymentError">
-      Sponsorizzazione per {{ apartmentTitle }}
-    </h2>
     <div v-if="!isLoading && !paymentError && !paymentSuccess">
-      <h2>Totale: {{ price }} €</h2>
+      <h2>Appartamento: {{ apartmentTitle }}</h2>
+      <h2>Totale abbonamento {{ sponsorName }}: {{ price }} €</h2>
       <PaymentBrain
         ref="paymentRef"
         :authorization="token"

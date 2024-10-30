@@ -42,7 +42,9 @@ export default {
             <li>Un abbonamento per profilo</li>
           </ul>
         </div>
-        <router-link :to="{ name: 'checkout', params: { sponsor: 1 } }">
+        <router-link
+          :to="{ name: 'checkout', params: { sponsor: 1, name: 'bronzo' } }"
+        >
           <button class="card-btn">Vai al pagamento</button>
         </router-link>
       </div>
@@ -67,7 +69,9 @@ export default {
             <li>Un abbonamento per profilo</li>
           </ul>
         </div>
-        <router-link :to="{ name: 'checkout', params: { sponsor: 2 } }">
+        <router-link
+          :to="{ name: 'checkout', params: { sponsor: 2, name: 'argento' } }"
+        >
           <button class="card-btn">Vai al pagamento</button>
         </router-link>
       </div>
@@ -92,7 +96,9 @@ export default {
             <li>Un abbonamento per profilo</li>
           </ul>
         </div>
-        <router-link :to="{ name: 'checkout', params: { sponsor: 3 } }">
+        <router-link
+          :to="{ name: 'checkout', params: { sponsor: 3, name: 'oro' } }"
+        >
           <button class="card-btn">Vai al pagamento</button>
         </router-link>
       </div>

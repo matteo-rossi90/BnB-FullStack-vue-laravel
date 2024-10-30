@@ -224,7 +224,10 @@ export default {
                     <router-link
                       v-if="!isPremium"
                       class="sponsor"
-                      :to="{ name: 'payment', params: { id: apartment.id, title: apartment.title } }"
+                      :to="{
+                        name: 'payment',
+                        params: { id: apartment.id, title: apartment.slug },
+                      }"
                       >Sponsorizza</router-link
                     >
                     <span class="sponsor" v-if="apartment?.sponsors[0]">{{
@@ -265,7 +268,10 @@ export default {
                   </td>
                   <td scope="row" class="align-middle">
                     <router-link
-                      :to="{ name: 'statistic', params: { id: apartment.id, title: apartment.title } }"
+                      :to="{
+                        name: 'statistic',
+                        params: { id: apartment.id, title: apartment.title },
+                      }"
                     >
                       <i class="fa-solid fa-chart-simple"></i>
                     </router-link>
@@ -306,30 +312,53 @@ export default {
                         >
                           <i class="fa-solid fa-trash"></i>
                         </button>
-
-
                       </div>
                     </div>
                     <!-- Modale -->
-                    <div class="modal fade" id="mioModale" tabindex="-1" aria-labelledby="mioModaleLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="mioModaleLabel"> Sei sicuro di voler eliminare
-                                        l'appartamento?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Chiudi"></button>
-                                </div>
-                                <div class="modal-body">
-                                    In questo modo
-                                    <strong>{{ apartment.title }}</strong> non
-                                    sarà più disponibile
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
-                                    <button type="button" @click="deleteApartment(apartment)" data-bs-dismiss="modal" class="btn btn-danger">Elimina</button>
-                                </div>
-                            </div>
+                    <div
+                      class="modal fade"
+                      id="mioModale"
+                      tabindex="-1"
+                      aria-labelledby="mioModaleLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="mioModaleLabel">
+                              Sei sicuro di voler eliminare l'appartamento?
+                            </h5>
+                            <button
+                              type="button"
+                              class="btn-close"
+                              data-bs-dismiss="modal"
+                              aria-label="Chiudi"
+                            ></button>
+                          </div>
+                          <div class="modal-body">
+                            In questo modo
+                            <strong>{{ apartment.title }}</strong> non sarà più
+                            disponibile
+                          </div>
+                          <div class="modal-footer">
+                            <button
+                              type="button"
+                              class="btn btn-secondary"
+                              data-bs-dismiss="modal"
+                            >
+                              Chiudi
+                            </button>
+                            <button
+                              type="button"
+                              @click="deleteApartment(apartment)"
+                              data-bs-dismiss="modal"
+                              class="btn btn-danger"
+                            >
+                              Elimina
+                            </button>
+                          </div>
                         </div>
+                      </div>
                     </div>
 
                     <!-- td responsive -->
@@ -380,11 +409,10 @@ export default {
                                 class="btn btn-danger m-1"
                                 id="liveToastBtn"
                                 data-bs-toggle="modal"
-                             data-bs-target="#mioModale"
+                                data-bs-target="#mioModale"
                               >
                                 <i class="fa-solid fa-trash"></i>
                               </button>
-
                             </div>
                           </li>
                         </ul>
