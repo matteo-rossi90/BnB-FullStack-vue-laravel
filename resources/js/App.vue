@@ -54,6 +54,11 @@ export default {
     //   //     });
     // });
   },
+  computed: {
+    isLoading() {
+      return store.isLoading;
+    },
+  },
 };
 </script>
 <template>
@@ -62,13 +67,16 @@ export default {
     <router-view :showFooter="false"></router-view>
   </main>
 
-  <Footer v-if="$route.name !== 'messages'"/>
+  <Footer v-if="$route.name !== 'messages'" />
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
+
 main {
   padding-top: 6rem;
-  footer{
+  min-height: calc(100vh - 6rem);
+
+  footer {
     position: absolute;
     bottom: 0;
     z-index: 2000;

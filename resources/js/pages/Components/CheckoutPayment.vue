@@ -15,6 +15,7 @@ export default {
         sponsor: "",
         apartment: this.$route.params.id,
       },
+      countDown: 5,
     };
   },
   methods: {
@@ -39,9 +40,16 @@ export default {
     paymentOnError(error) {
       store.isLoading = false;
       store.paymentError = true;
-      setTimeout(() => {
-        this.$router.push({ name: "apartments" });
-      }, 2500);
+
+      let countDownTimer = setInterval(() => {
+        this.countDown -= 1;
+        if (this.countDown === 0) {
+          clearInterval(countDownTimer);
+          setTimeout(() => {
+            this.$router.push({ name: "apartments" });
+          }, 1000);
+        }
+      }, 1000);
     },
 
     // beforeBuy() {
@@ -58,19 +66,31 @@ export default {
             { withCredentials: true }
           )
           .then((res) => {
-            console.log("pagamento effettuato");
+            console.log("pagamento effettuato inizio coun down");
             store.isLoading = false;
             store.successPayment = true;
-            setTimeout(() => {
-              this.$router.push({ name: "apartments" });
-            }, 2500);
+            let countDownTimer = setInterval(() => {
+              this.countDown -= 1;
+              if (this.countDown === 0) {
+                clearInterval(countDownTimer);
+                setTimeout(() => {
+                  this.$router.push({ name: "apartments" });
+                }, 1000);
+              }
+            }, 1000);
           })
           .catch((err) => {
             store.isLoading = false;
             store.paymentError = true;
-            setTimeout(() => {
-              this.$router.push({ name: "apartments" });
-            }, 2500);
+            let countDownTimer = setInterval(() => {
+              this.countDown -= 1;
+              if (this.countDown === 0) {
+                clearInterval(countDownTimer);
+                setTimeout(() => {
+                  this.$router.push({ name: "apartments" });
+                }, 1000);
+              }
+            }, 1000);
             console.log(err);
           });
       } catch {
@@ -95,7 +115,7 @@ export default {
         this.form.token = res.data.token;
         setTimeout(() => {
           store.isLoading = false;
-        }, 1000);
+        }, 3000);
       })
       .catch((err) => {
         store.paymentError = true;
@@ -147,14 +167,20 @@ export default {
     paymentSuccess() {
       return store.successPayment;
     },
+    countDownUpdate() {
+      return this.countDown;
+    },
   },
 };
 </script>
 <template>
   <div
     class="container pb-4 d-flex flex-column justify-content-center align-items-center"
+    v-if="!isLoading"
   >
-    <h2>Sponsorizzazione per {{ apartmentTitle }}</h2>
+    <h2 v-if="!paymentSuccess && !paymentError">
+      Sponsorizzazione per {{ apartmentTitle }}
+    </h2>
     <div v-if="!isLoading && !paymentError && !paymentSuccess">
       <h2>Totale: {{ price }} €</h2>
       <PaymentBrain
@@ -172,17 +198,13 @@ export default {
       </button>
     </div>
 
-    <div class="loader" v-if="isLoading && !paymentError"></div>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-5">
           <div class="message-box _success" v-if="paymentSuccess">
             <i class="fa fa-check-circle" aria-hidden="true"></i>
             <h2>Il tuo pagamento è stato eseguito con successo</h2>
-            <p>
-              Grazie per il tuo pagamento. Ti <br />
-              contatteremo per maggiori dettagli
-            </p>
+            <p class="countDown">{{ countDownUpdate }}</p>
           </div>
         </div>
       </div>
@@ -193,11 +215,14 @@ export default {
           <div class="message-box _success _failed">
             <i class="fa fa-times-circle" aria-hidden="true"></i>
             <h2>Il tuo pagamento è fallito!!!</h2>
-            <p>Prova più tardi</p>
+            <p class="countDown">{{ countDownUpdate }}</p>
           </div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="contLoader" v-else-if="isLoading && !paymentError">
+    <div class="loader"></div>
   </div>
 </template>
 <style lang='scss' scoped>
@@ -238,5 +263,8 @@ export default {
   font-size: 18px;
   color: #495057;
   font-weight: 500;
+}
+p.countDown {
+  font-size: 3rem;
 }
 </style>
