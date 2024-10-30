@@ -115,14 +115,22 @@ export default {
 };
 </script>
 <template>
-  <div class="container">
+  <div class="ms_container">
+    <div class="container my-1">
+
     <canvas id="myChart"></canvas>
+    </div>
   </div>
 </template>
 <style lang='scss' scoped>
-.container{
-    width: 100%;
-      height: 400px;
-}
+
+    .ms_container{
+        width: 100%;
+          height: calc(100vh - 200px);
+          #myChart{
+            height: 400px;
+          }
+    }
+
 // @use 'path' as *;
 </style>
