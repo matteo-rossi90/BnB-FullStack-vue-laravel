@@ -81,6 +81,10 @@ export default {
       };
     },
     createTable(data) {
+
+        if (this.chartInstance) {
+        this.chartInstance.destroy();  // Distrugge il grafico precedente
+      }
       const ctx = document.getElementById("myChart").getContext("2d");
       new Chart(ctx, {
         type: "bar",
@@ -90,13 +94,15 @@ export default {
             {
               label: "Visualizzazioni",
               data: data.view,
-              backgroundColor: "rgba(75, 192, 192, 0.2)",
-              borderColor: "rgba(75, 192, 192, 1)",
+              backgroundColor: "#FF5757",
+              borderColor: "#FF5757",
               borderWidth: 1,
             },
           ],
         },
         options: {
+            responsive: true,
+          maintainAspectRatio: false,
           scales: {
             y: {
               beginAtZero: true,
@@ -115,8 +121,8 @@ export default {
 </template>
 <style lang='scss' scoped>
 .container{
-    width: 70%;
-    height: 70%;
+    width: 100%;
+      height: 400px;
 }
 // @use 'path' as *;
 </style>
