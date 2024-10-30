@@ -97,7 +97,7 @@ const router = createRouter({
                 component: PaymentComponent //route temporanea per visualizzare gli appartamenti + mappa
             },
             {
-                path: '/payment/:id/sponsor/:sponsor',
+                path: '/payment/:id/:title/sponsor/:sponsor',
                 name: 'checkout',
                 component: CheckoutPayment //route temporanea per visualizzare gli appartamenti + mappa
             },
