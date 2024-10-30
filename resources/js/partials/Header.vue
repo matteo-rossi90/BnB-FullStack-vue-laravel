@@ -218,6 +218,9 @@ export default {
               :to="{ name: 'home' }"
             >
               <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
+              <strong>
+                BoolBnb
+              </strong>
             </router-link>
           </div>
           <div class="col">
@@ -336,12 +339,14 @@ export default {
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
+@use '../../scss/variables' as *;
+@use '../../scss/general' as*;
 
 header {
   display: flex;
   gap: 1rem;
   z-index: 100;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid $color;
   padding: 0.5rem;
   position: fixed;
   width: 100%;
@@ -365,8 +370,8 @@ header {
       z-index: 100;
       border: 1px solid black;
       z-index: 101;
-      &:hover {
-      }
+    //   &:hover {
+    //   }
       .profile {
         position: relative;
         top: 50%;
@@ -383,7 +388,7 @@ header {
         flex-direction: column;
         align-items: center;
         border-radius: 20px;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
         .link {
           border-radius: 20px;
           &:hover {
@@ -456,28 +461,28 @@ p,
   .suggest {
     position: absolute;
     width: 90%;
-    top: 89%;
+    top: 100%;
     left: 50%;
     transform: translate(-50%);
     background-color: white;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-radius: 20px;
     font-size: 0.75rem;
-    box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+    box-shadow: $shadow-color 0px 2px 15px;
     padding: 0;
     z-index: 10;
 
     li {
       width: 100%;
+      padding: 0.8rem;
 
       .link {
         width: 100%;
+        padding: 1rem;
         cursor: pointer;
         text-decoration: none;
         &:hover {
-          background-color: rgba($color: rgb(255, 171, 171), $alpha: 0.1);
+          background-color: $hover-list;
+          border-radius: 10px;
         }
         // &::before {
         //   content: "";
@@ -486,10 +491,10 @@ p,
         //   background-repeat: no-repeat;
         // }
         .street {
-          font-size: 0.9rem;
+          font-size: 0.8rem;
         }
         .city {
-          font-size: 0.75rem;
+          font-size: 0.9rem;
         }
       }
     }
@@ -498,13 +503,13 @@ p,
 .inputCustom {
   width: 100%;
   height: 100%;
-  border-radius: 20px;
+  border-radius: 50px;
   border: none;
-  padding: 0.3rem;
+  padding: 0 1rem;
   caret-color: black; // Cambia il colore del caret
   font-size: 1.2rem; // Aumenta la dimensione del testo, e di conseguenza la lunghezza del caret
   line-height: 1.5; // Modifica la linea del testo per allungare il caret
-  box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+  box-shadow: $shadow-color 0px 2px 10px;
   &:focus {
     border: none;
     outline: none;
