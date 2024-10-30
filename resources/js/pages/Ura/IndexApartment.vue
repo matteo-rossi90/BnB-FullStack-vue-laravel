@@ -185,9 +185,9 @@ export default {
       </router-link>
       <div class="row">
         <div class="col-lg-12 col-md-12">
-          <h2 class="my-4">I miei appartamenti</h2>
+          <h2 class="my-4">I miei appartamenti: {{ apartments.length }}</h2>
 
-          <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4>
+          <!-- <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4> -->
 
           <div class="table-responsive">
             <table class="table">
@@ -224,7 +224,7 @@ export default {
                     <router-link
                       v-if="!isPremium"
                       class="sponsor"
-                      :to="{ name: 'payment', params: { id: apartment.id } }"
+                      :to="{ name: 'payment', params: { id: apartment.id, title: apartment.title } }"
                       >Sponsorizza</router-link
                     >
                     <span class="sponsor" v-if="apartment?.sponsors[0]">{{

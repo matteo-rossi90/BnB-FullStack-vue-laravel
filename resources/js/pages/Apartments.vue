@@ -198,7 +198,7 @@ export default {
 </script>
 
 <template>
-  <div class="filterClass" :class="{ open: isOpenFilter }">
+  <div class="filterClass" @click.stop="" :class="{ open: isOpenFilter }">
     <label for="number_rooms">number_rooms</label>
     <input
       type="number"
@@ -239,7 +239,7 @@ export default {
     <div id="rowContainer" v-if="!isLoading">
       <div class="leftCol">
         <h3>
-          Oltre {{ apartmensFiltred.length }} alloggi in questa località: Roma
+          Trovati {{ apartmensFiltred.length }} alloggi in questa località: Roma
         </h3>
         <div class="row" v-if="apartmensFiltred.length">
           <div

@@ -210,6 +210,8 @@ export default {
           } else {
             this.showToast("Errore durante l'invio del messaggio", "error");
             this.errors = res.data.errors;
+            console.log(res.data.errors);
+
           }
         })
         .catch((er) => {
@@ -395,7 +397,7 @@ console.log(store.userApartment);
                   :disabled="disableCheck"
                 />
                 <small v-if="errors.name" class="error-message">{{
-                  errors.name
+                  errors.name.toString()
                 }}</small>
               </div>
               <div class="mb-3">
@@ -410,7 +412,7 @@ console.log(store.userApartment);
                   :disabled="disableCheck"
                 />
                 <small v-if="errors.surname" class="error-message">{{
-                  errors.surname
+                  errors.surname.toString()
                 }}</small>
               </div>
               <div class="mb-3">
@@ -425,7 +427,7 @@ console.log(store.userApartment);
                   :disabled="disableCheck"
                 />
                 <small v-if="errors.email" class="error-message">{{
-                  errors.email
+                  errors.email.toString()
                 }}</small>
               </div>
               <div class="mb-3">
@@ -440,7 +442,7 @@ console.log(store.userApartment);
                   :disabled="disableCheck"
                 ></textarea>
                 <small v-if="errors.message" class="error-message">{{
-                  errors.message
+                  errors.message.toString()
                 }}</small>
               </div>
               <button

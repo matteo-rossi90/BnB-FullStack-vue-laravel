@@ -11,6 +11,7 @@ export default {
       apartment: "",
       errors: {},
       image: "",
+      services: [],
     };
   },
   methods: {
@@ -23,22 +24,35 @@ export default {
         })
         .then((res) => {
           this.apartment = res.data;
+          console.log("services start", res.data.services);
+          axios
+            .get("http://127.0.0.1:8000/api/services")
+            .then((res) => {
+              this.services = res.data;
+            })
+            .catch((err) => console.log(err));
         })
         .catch((err) => {
           console.log(err);
         });
     },
-    changeItem(id) {
-      if (this.apartment.services.includes(id)) {
-        let index = this.apartment.services.indexOf(id);
-        this.apartment.services.splice(index, 1);
-      } else {
-        this.apartment.services.push(id);
-      }
-    },
+    // changeItem(id) {
+    //   let isInside = this.apartment.services.filter((service) => {
+    //     return service.id == id;
+    //   });
+    //   if (isInside) {
+    //     console.log();
+
+    //     this.apartment.services.splice(id - 1, 1);
+    //   } else {
+
+    //     this.apartment.services.push(this.services[id - 1]);
+    //   }
+    //   console.log(this.apartment.services);
+    // },
     changeVisibility() {
       // Cambia il valore booleano di is_visible
-      this.apartment.is_visible = !this.changes.is_visible;
+      this.apartment.is_visible = !this.apartment.is_visible;
     },
 
     validate() {
@@ -99,7 +113,23 @@ export default {
         this.errors.image = "Formato immagine non valido (solo JPG, PNG, GIF).";
       }
     },
-
+    createFormData(apartment) {
+      let objChange = {};
+      objChange["title"] = apartment.title;
+      objChange["number_rooms"] = apartment.number_rooms;
+      objChange["number_beds"] = apartment.number_beds;
+      objChange["number_bathrooms"] = apartment.number_bathrooms;
+      objChange["square_meters"] = apartment.square_meters;
+      objChange["is_visible"] = apartment.is_visible;
+      objChange["address"] = apartment.address;
+      objChange["lat"] = apartment.lat;
+      objChange["lon"] = apartment.lon;
+      let serviceToSend = this.apartment.services.map((service) => {
+        return service.id;
+      });
+      objChange["services"] = serviceToSend;
+      return objChange;
+    },
     async submit() {
       if (!this.validate()) {
         console.log("Errore di validazione", this.errors);
@@ -120,11 +150,15 @@ export default {
         .catch((error) => {
           console.error("Errore:", error.response || error.message);
         });
-      let formImage = new FormData();
-      formImage.append("image", this.image);
-      formImage.append("apartment", JSON.stringify(this.apartment));
+      let data = this.createFormData(this.apartment);
+      let formData = new FormData();
+      formData.append("image", this.image);
+
+      formData.append("apartment", JSON.stringify(data));
+      formData.append("id", this.apartment.id);
+
       axios
-        .post("http://127.0.0.1:8000/api/user/update-file", formImage)
+        .post("http://127.0.0.1:8000/api/user/update-file", formData)
         .then((res) => {
           this.$router.push({ name: "apartments" });
         })
@@ -132,6 +166,26 @@ export default {
           console.log(err);
         });
       console.log(this.changes, this.image);
+    },
+    isSelectedServices(id) {
+      return this.apartment.services
+        .map((service) => {
+          return service.id;
+        })
+        .includes(id);
+    },
+    toggleChecked(serviceId) {
+      // Aggiunge o rimuove l'ID del servizio all'array selectedServices
+      if (this.isSelectedServices(serviceId)) {
+        this.apartment.services = this.apartment.services.filter(
+          (service) => service.id !== serviceId
+        );
+        console.log("slice", this.apartment.services);
+      } else {
+        this.apartment.services.push(this.services[serviceId - 1]);
+        console.log("push", this.apartment.services);
+      }
+      console.log("new service", this.apartment.services);
     },
   },
   computed: {
@@ -141,6 +195,13 @@ export default {
     image() {
       return `http://127.0.0.1:8000/${this.apartment.image}`;
     },
+    // isSelectedServices(id) {
+    //   return this.apartment.services
+    //     .map((service) => {
+    //       return service.id;
+    //     })
+    //     .includes(id);
+    // },
   },
   mounted() {
     this.findApartment(this.$route.params.id);
@@ -249,13 +310,16 @@ export default {
       <img :src="image" alt="" /><br />
 
       <label>Servizi:</label>
-      <div class="d-flex flex-wrap" v-if="apartment.services">
-        <div v-for="item in apartment.services" :key="item.id">
-          <input type="checkbox" class="btn-check" checked :id="item.id" />
-          <label
-            class="btn btn-outline-dark w-100"
-            @click="changeItem(item.id)"
-            :for="item.id"
+      <div class="d-flex flex-wrap" v-if="services">
+        <div v-for="item in services" :key="item.id">
+          <input
+            type="checkbox"
+            class="btn-check"
+            :checked="isSelectedServices(item.id)"
+            :id="item.id"
+            @click="toggleChecked(item.id)"
+          />
+          <label class="btn btn-outline-dark w-100" :for="item.id"
             >{{ item.name }}
           </label>
         </div>
@@ -272,8 +336,8 @@ export default {
           :checked="!apartment.is_visible"
         />
 
-        <span v-if="apartment.is_visible">Appartamento non visibile</span>
-        <span v-else>Appartamento visibile</span>
+        <span v-if="apartment.is_visible">Appartamento visibile</span>
+        <span v-else>Appartamento non visibile</span>
       </div>
 
       <button type="submit" class="btn btn-primary">Invia</button>
