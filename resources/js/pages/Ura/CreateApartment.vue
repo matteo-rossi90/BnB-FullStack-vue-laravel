@@ -10,13 +10,13 @@ export default {
     return {
       //
       apartment: {
-        title: "prova foto e servizi",
+        title: "",
         address: "",
         lat: "",
         lon: "",
-        number_rooms: "1",
-        number_beds: "1",
-        number_bathrooms: "1",
+        number_rooms: "",
+        number_beds: "",
+        number_bathrooms: "",
 
         square_meters: "100",
         services: [],
@@ -26,11 +26,11 @@ export default {
       imagePreview: "", // Aggiunto per gestire l'anteprima dell'immagine
       isAproveStreet: false,
       errors: {},
-      street: "via lemonia",
-      number: "45",
-      city: "bologna",
-      postalCode: "40133",
-      place: "italia",
+      street: "",
+      number: "",
+      city: "",
+      postalCode: "",
+      place: "",
       resultOfSearch: "",
     };
   },
