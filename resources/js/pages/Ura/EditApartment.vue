@@ -24,11 +24,11 @@ export default {
         })
         .then((res) => {
           this.apartment = res.data;
+          console.log("services start", res.data.services);
           axios
             .get("http://127.0.0.1:8000/api/services")
             .then((res) => {
               this.services = res.data;
-              console.log("services", res.data);
             })
             .catch((err) => console.log(err));
         })
@@ -124,15 +124,9 @@ export default {
       objChange["address"] = apartment.address;
       objChange["lat"] = apartment.lat;
       objChange["lon"] = apartment.lon;
-      let serviceToSend = this.services
-        .filter((service) => {
-          return !this.apartment.services.some(
-            (service2) => service2.id === service.id
-          );
-        })
-        .map((service) => {
-          return { service_id: service.id };
-        });
+      let serviceToSend = this.apartment.services.map((service) => {
+        return service.id;
+      });
       objChange["services"] = serviceToSend;
       return objChange;
     },
@@ -181,16 +175,15 @@ export default {
         .includes(id);
     },
     toggleChecked(serviceId) {
-      this.services = this.services.map((service) => service);
       // Aggiunge o rimuove l'ID del servizio all'array selectedServices
       if (this.isSelectedServices(serviceId)) {
-        console.log("slice", this.apartment.services[serviceId - 1]);
         this.apartment.services = this.apartment.services.filter(
           (service) => service.id !== serviceId
         );
+        console.log("slice", this.apartment.services);
       } else {
-        console.log("push", this.apartment.services[serviceId - 1]);
         this.apartment.services.push(this.services[serviceId - 1]);
+        console.log("push", this.apartment.services);
       }
       console.log("new service", this.apartment.services);
     },
