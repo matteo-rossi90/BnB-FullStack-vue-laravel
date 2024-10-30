@@ -254,7 +254,7 @@ export default {
 <template>
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-8 mt-5">
+      <div class="col-8 my-5">
         <h2>
           Registrati o
           <router-link :to="{ name: 'login' }">effettua login</router-link>
