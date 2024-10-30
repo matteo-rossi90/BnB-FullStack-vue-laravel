@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\Ura\ApartmentController;
+use App\Http\Controllers\Auth\Ura\ApartmentGeneralController;
 use App\Http\Controllers\Auth\Ura\MessageController;
 use App\Http\Controllers\Auth\Ura\OrderController;
 use App\Http\Controllers\Auth\Ura\ViewController;
@@ -36,6 +37,7 @@ Route::middleware('auth:sanctum')
     ->group(function () {
         Route::resource('/utente/dashboard', ApartmentController::class);
         Route::get('/view', [ViewController::class, 'view']);
+        Route::post('update-file', [ApartmentGeneralController::class, 'update']);
 
     });
 

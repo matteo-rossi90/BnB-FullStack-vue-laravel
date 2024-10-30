@@ -86,7 +86,7 @@ export default {
       const file = event.target.files[0]; // Salva il file caricato
 
       if (file && /\.(jpe?g|png|gif)$/i.test(file.name)) {
-        this.apartment.image = file; // Assegna il file a apartment.image
+        this.image = file; // Assegna il file a apartment.image
 
         let reader = new FileReader();
         reader.onload = (e) => {
@@ -94,7 +94,7 @@ export default {
         };
         reader.readAsDataURL(file); // Converte il file immagine per l'anteprima
       } else {
-        this.apartment.image = null;
+        this.image = null;
         this.imagePreview = "";
         this.errors.image = "Formato immagine non valido (solo JPG, PNG, GIF).";
       }
@@ -122,11 +122,9 @@ export default {
         });
       let formImage = new FormData();
       formImage.append("image", this.image);
+      formImage.append("apartment", JSON.stringify(this.apartment));
       axios
-        .patch(
-          `http://127.0.0.1:8000/api/user/utente/dashboard/${this.apartment.id}`,
-          this.apartment
-        )
+        .post("http://127.0.0.1:8000/api/user/update-file", formImage)
         .then((res) => {
           this.$router.push({ name: "apartments" });
         })
