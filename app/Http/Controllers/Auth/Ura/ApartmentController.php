@@ -99,8 +99,8 @@ class ApartmentController extends Controller
     public function update(Request $request, Apartment $apartment)
     {
 
-
         $data = $request->all();
+        dd($data['image']);
         $oldApartament = Apartment::find($data['id']);
         $data['user_id'] =  auth()->user()->id;
 
