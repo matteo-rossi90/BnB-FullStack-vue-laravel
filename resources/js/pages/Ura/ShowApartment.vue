@@ -266,9 +266,11 @@ export default {
     is_logged(){
         return store.is_logged
     },
-    arrFilt(){
-        // if store.userApartment.includes()
-    }
+   // Computed  per verificare la presenza dell'appartamento in userApartment
+    isApartmentInUserList() {
+      // Verifica se l'id dell'appartamento è incluso nell'array userApartment
+      return store.userApartment.some((userApt) => userApt.id === this.apartment.id);
+    },
 
 
   },
@@ -281,7 +283,10 @@ export default {
     });
   },
   mounted() {
-console.log(store.userApartment);
+    console.log(store);
+
+
+
 
 
 
@@ -311,7 +316,7 @@ console.log(store.userApartment);
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
-           <router-link v-if="is_logged " class="btn btn-dark" :to="{
+           <router-link v-if="is_logged && isApartmentInUserList " class="btn btn-dark" :to="{
                           name: 'EditApartment',
                           params: { id: apartment.id },
                         }">modifica

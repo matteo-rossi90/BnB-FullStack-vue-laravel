@@ -140,7 +140,7 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        console.log("user", response.data);
+        // console.log("user", response.data);
         store.userApartment = response.data.map((apartment) => ({
           ...apartment,
           unreadMessages: apartment.messages.filter((m) => !m.read).length,
