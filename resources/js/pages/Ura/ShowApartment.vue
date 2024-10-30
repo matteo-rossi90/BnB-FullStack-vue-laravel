@@ -264,6 +264,10 @@ export default {
     is_logged(){
         return store.is_logged
     },
+    arrFilt(){
+        // if store.userApartment.includes()
+    }
+
 
   },
   beforeRouteEnter(to, from, next) {
@@ -275,7 +279,8 @@ export default {
     });
   },
   mounted() {
-// console.log(apartmentFiltred);
+console.log(store.userApartment);
+
 
 
     this.findApartment(this.$route.params.id);
@@ -304,7 +309,7 @@ export default {
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
-           <router-link v-if="is_logged  " class="btn btn-dark" :to="{
+           <router-link v-if="is_logged " class="btn btn-dark" :to="{
                           name: 'EditApartment',
                           params: { id: apartment.id },
                         }">modifica
@@ -318,7 +323,7 @@ export default {
         <div class="col-12">
           <div v-if="apartment.image" class="image-container mb-4">
             <img
-              :src="apartment.image"
+              :src="imageUrl(apartment.image)"
               :alt="apartment.name"
               class="img-fluid rounded shadow-sm"
             />
