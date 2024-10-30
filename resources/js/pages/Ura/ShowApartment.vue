@@ -10,7 +10,6 @@ export default {
       alt: "",
       name: "",
 
-
       //   dati messaggio
       name: "",
       surname: "",
@@ -211,7 +210,6 @@ export default {
             this.showToast("Errore durante l'invio del messaggio", "error");
             this.errors = res.data.errors;
             console.log(res.data.errors);
-
           }
         })
         .catch((er) => {
@@ -238,6 +236,7 @@ export default {
         })
         .then((res) => {
           this.apartment = res.data;
+          this.getMap();
         })
         .catch((err) => {
           console.log(err);
@@ -263,16 +262,16 @@ export default {
     apartmentFiltred() {
       return this.apartment;
     },
-    is_logged(){
-        return store.is_logged
+    is_logged() {
+      return store.is_logged;
     },
-   // Computed  per verificare la presenza dell'appartamento in userApartment
+    // Computed  per verificare la presenza dell'appartamento in userApartment
     isApartmentInUserList() {
       // Verifica se l'id dell'appartamento è incluso nell'array userApartment
-      return store.userApartment.some((userApt) => userApt.id === this.apartment.id);
+      return store.userApartment.some(
+        (userApt) => userApt.id === this.apartment.id
+      );
     },
-
-
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
@@ -285,21 +284,16 @@ export default {
   mounted() {
     console.log(store);
 
-
-
-
-
-
     this.findApartment(this.$route.params.id);
     // console.log(store.allApartments[this.$route.params.id - 1]);
     // nextTick fa in modo che il DOM sia completamente pronto
 
     console.log(store.user.email);
     // autocomplete mail se logged
-    if(!store.user.email){
-        this.email = '';
-    }else {
-        this.email = store.user.email;
+    if (!store.user.email) {
+      this.email = "";
+    } else {
+      this.email = store.user.email;
     }
   },
 };
@@ -316,13 +310,16 @@ export default {
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
-           <router-link v-if="is_logged && isApartmentInUserList " class="btn btn-dark" :to="{
-                          name: 'EditApartment',
-                          params: { id: apartment.id },
-                        }">modifica
-                        </router-link>
+          <router-link
+            v-if="is_logged && isApartmentInUserList"
+            class="btn btn-dark"
+            :to="{
+              name: 'EditApartment',
+              params: { id: apartment.id },
+            }"
+            >modifica
+          </router-link>
         </div>
-
       </div>
 
       <!-- Sezione Immagini -->

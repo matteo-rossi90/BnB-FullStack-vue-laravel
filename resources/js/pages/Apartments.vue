@@ -23,8 +23,7 @@ export default {
       activeItems: [],
       isReady: false,
       src: "",
-
-      isLoading: true,
+      isLoadingAp: true,
     };
   },
   methods: {
@@ -131,7 +130,7 @@ export default {
           console.log("filtro", this.filtredApartment);
           this.createFilterData();
           this.createDistanceData();
-          this.isLoading = false;
+          this.isLoadingAp = false;
           // wait of dom after is loading
           this.$nextTick(() => {
             this.getMap();
@@ -193,6 +192,9 @@ export default {
     isOpenFilter() {
       return store.isFilterClose;
     },
+    isLoading() {
+      return this.isLoadingAp;
+    },
   },
 };
 </script>
@@ -235,8 +237,8 @@ export default {
 
     <button @click="updateFilter" class="btn btn-primary">FIltra</button>
   </div>
-  <div class="container-fluid">
-    <div id="rowContainer" v-if="!isLoading">
+  <div class="container-fluid" v-if="!isLoading">
+    <div id="rowContainer">
       <div class="leftCol">
         <h3>
           Trovati {{ apartmensFiltred.length }} alloggi in questa località: Roma
@@ -287,7 +289,9 @@ export default {
         <div id="map"></div>
       </div>
     </div>
-    <div class="loader" v-else></div>
+  </div>
+  <div class="contLoader" v-else>
+    <div class="loader"></div>
   </div>
 </template>
 
