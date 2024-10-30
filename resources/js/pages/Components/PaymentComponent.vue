@@ -4,7 +4,7 @@ export default {
   name: "PaymentComponent",
   data() {
     return {
-        apartmentTitle: "",
+      apartmentTitle: "",
     };
   },
   methods: {},
