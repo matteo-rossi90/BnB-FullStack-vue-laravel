@@ -3,19 +3,23 @@ import { store } from "../../store/store";
 export default {
   name: "PaymentComponent",
   data() {
-    return {};
+    return {
+        apartmentTitle: "",
+    };
   },
   methods: {},
   mounted() {
     store.isLoading = true;
     store.paymentError = false;
     store.successPayment = false;
+    this.apartmentTitle = this.$route.params.title;
+    console.log(this.$route.params);
   },
 };
 </script>
 <template>
   <div class="container">
-    <h2>Scegli il piano Premium che preferisci</h2>
+    <h2>Scegli il piano Premium che preferisci per {{ apartmentTitle }}</h2>
     <div class="wrapper">
       <div class="cardT">
         <h3 class="card-title">Bronzo</h3>

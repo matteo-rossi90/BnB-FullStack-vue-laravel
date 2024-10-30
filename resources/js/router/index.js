@@ -14,7 +14,7 @@ import Sponsor from "../pages/Ura/Sponsor.vue";
 import ShowApartment from "../pages/Ura/ShowApartment.vue";
 import EditApartment from "../pages/Ura/EditApartment.vue";
 import Apartments from "../pages/Apartments.vue";
-import PaymentComponent from "../pages/components/PaymentComponent.vue";
+import PaymentComponent from "../pages/Components/PaymentComponent.vue";
 import CheckoutPayment from "../pages/components/CheckoutPayment.vue";
 import PageProfile from "../pages/Ur/PageProfile.vue";
 import PageMessage from "../pages/Ur/PageMessage.vue";
@@ -92,12 +92,12 @@ const router = createRouter({
                 component: Apartments //route temporanea per visualizzare gli appartamenti + mappa
             },
             {
-                path: '/payment/:id',
+                path: '/payment/:id/:title',
                 name: 'payment',
                 component: PaymentComponent //route temporanea per visualizzare gli appartamenti + mappa
             },
             {
-                path: '/payment/:id/sponsor/:sponsor',
+                path: '/payment/:id/:title/sponsor/:sponsor',
                 name: 'checkout',
                 component: CheckoutPayment //route temporanea per visualizzare gli appartamenti + mappa
             },

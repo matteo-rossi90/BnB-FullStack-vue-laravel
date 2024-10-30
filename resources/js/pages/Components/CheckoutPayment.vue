@@ -9,6 +9,7 @@ export default {
     return {
       userApartments: store.userApartment,
       tokenApi: "",
+      apartmentTitle: this.$route.params.title,
       form: {
         token: "",
         sponsor: "",
@@ -153,6 +154,7 @@ export default {
   <div
     class="container pb-4 d-flex flex-column justify-content-center align-items-center"
   >
+    <h2>Sponsorizzazione per {{ apartmentTitle }}</h2>
     <div v-if="!isLoading && !paymentError && !paymentSuccess">
       <h2>Totale: {{ price }} €</h2>
       <PaymentBrain
@@ -162,7 +164,7 @@ export default {
         @onError="paymentOnError"
       />
       <button
-        class="btn btn-primary"
+        class="btn btn-dark"
         @click="procediAlPagamento"
         v-if="!successPayment"
       >
