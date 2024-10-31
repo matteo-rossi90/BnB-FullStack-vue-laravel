@@ -201,19 +201,21 @@ export default {
 
 <template>
   <div class="filterClass" @click.stop="" :class="{ open: isOpenFilter }">
-    <label for="number_rooms">number_rooms</label>
+    <label for="number_rooms">Stanze</label>
     <input
       type="number"
       placeholder="inserisci numero"
       id="number_rooms"
       v-model.trim="filter.number_rooms"
+      class="form-control mb-3"
     />
-    <label for="number_beds">number_beds</label>
+    <label for="number_beds">Letti</label>
     <input
       type="number"
       placeholder="inserisci numero"
       id="number_beds"
       v-model.trim="filter.number_beds"
+      class="form-control mb-3"
     />
     <label for="square_meters">Metri quadri</label>
     <input
@@ -221,10 +223,14 @@ export default {
       placeholder="inserisci numero"
       id="square_meters"
       v-model.trim="filter.square_meters"
+      class="form-control mb-3"
     />
+
+    <label>Scegli il raggio di ricerca</label>
     <input type="range" min="1" max="200" v-model.trim="filter.distance" />
-    <span>{{ filter.distance }} km dal punto scelto</span>
-    <div class="contServices" v-if="isReady">
+    <span class="mb-3">{{ filter.distance }} km dal punto scelto</span>
+
+    <div class="contServices my-3" v-if="isReady">
       <span
         class="service"
         v-for="(service, index) in services"
@@ -235,14 +241,14 @@ export default {
       >
     </div>
 
-    <button @click="updateFilter" class="btn btn-primary">FIltra</button>
+    <button @click="updateFilter" class="btn btn-dark">FIltra</button>
   </div>
   <div class="container-fluid" v-if="!isLoading">
     <div id="rowContainer">
-      <div class="leftCol">
-        <h3>
+      <div class="leftCol my-4">
+        <h5>
           Trovati {{ apartmensFiltred.length }} alloggi in questa località: Roma
-        </h3>
+        </h5>
         <div class="row" v-if="apartmensFiltred.length">
           <div
             class="col-lg-6 col-md-6 col-sm-12 mb-4"
@@ -352,6 +358,7 @@ export default {
 </template>
 
 <style lang="scss">
+@use '../../scss/variables' as *;
 @use '../../scss/cardApartments' as *;
 // .scrollable-cards{
 // max-height: 650px;
@@ -429,15 +436,17 @@ a {
   gap: 1rem;
   .service {
     padding: 0.3rem 0.6rem;
-    border: 1px solid red;
+    border: 1px solid black;
+    border-radius: 8px;
     cursor: pointer;
     &:hover {
-      background: rgba($color: red, $alpha: 0.5);
-      color: white;
+      background: black;
+        color: white;
     }
   }
   .service.active {
-    background: rgba($color: red, $alpha: 0.8);
+    background: black;
+    // background: rgba($color: red, $alpha: 0.8);
     color: white;
   }
 }
@@ -459,7 +468,7 @@ a {
   transform: translate(-50%);
   padding: 2rem;
   border-radius: 20px;
-  box-shadow: rgba(140, 2, 2, 0.35) 0px 5px 15px;
+  box-shadow: $shadow-color 0px 2px 10px;
 }
 
 #rowContainer {
@@ -502,6 +511,7 @@ a {
   }
   .leftCol {
     width: 100%;
+    padding-left:0;
   }
   .filterClass.open {
     width: 70%;
@@ -513,5 +523,11 @@ a {
     padding: 1rem;
     overflow: auto;
   }
+}
+
+@media (max-width: 486px){
+    .service{
+        width: 40%;
+    }
 }
 </style>
