@@ -107,10 +107,10 @@ export default {
   </div> -->
 
   <!-- card -->
-  <div class="container">
+  <div class="container mx-auto">
     <div class="row pt-5">
       <router-link
-        class="col-lg-3 col-md-4 col-sm-6 mb-4"
+        class="col-lg-4 col-xl-3 col-md-6 col-sm-6 mb-4"
         :class="{ sponsorCard: apartment.sponsors.length }"
         :to="{
           name: 'showApartment',
