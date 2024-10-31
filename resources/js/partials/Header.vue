@@ -387,17 +387,20 @@ header {
       .dropDown.active {
         background-color: white;
         position: absolute;
-        left: -62px;
+        margin-top: 10px;
+        width: 200px;
+        top: 100%;
+        left: -100px;
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        // align-items: center;
         border-radius: 20px;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 2px 10px;
+        box-shadow: $shadow-color 0px 2px 10px;
         .link {
-          border-radius: 20px;
+          border-radius: 8px;
           &:hover {
-            background-color: rgb(241, 240, 240);
+            background-color: $hover-list;
             color: black;
           }
         }
