@@ -104,6 +104,12 @@ export default {
     display: flex;
     justify-content: center;
   }
+
+  .card-image-wrapper{
+    width: 100%;
+    height: 100%;
+  }
+
 }
 
 
