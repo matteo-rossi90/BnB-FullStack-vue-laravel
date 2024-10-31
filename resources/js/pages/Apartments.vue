@@ -246,42 +246,98 @@ export default {
         <div class="row" v-if="apartmensFiltred.length">
           <div
             class="col-lg-6 col-md-6 col-sm-12 mb-4"
-            :class="{ sponsorCard: apartment.sponsors.length }"
             v-for="(apartment, index) in apartmensFiltred"
             :key="index"
           >
-            <router-link
-              :to="{
-                name: 'showApartment',
-                params: { slug: apartment.slug, id: apartment.id },
-              }"
-            >
-              <div class="card shadow-sm border-0 rounded">
-                <img
-                  :src="apartment.image"
-                  class="apartment-image card-img-top"
-                  alt="Appart-Img"
-                />
-                <div class="card-body">
-                  <h5 class="card-title">{{ apartment.title }}</h5>
-                  <p class="card-text">{{ apartment.address }}</p>
-                  <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
-                  <p class="card-text">Letti: {{ apartment.number_beds }}</p>
-                  <p class="card-text">
-                    Superficie: {{ apartment.square_meters }} m²
-                  </p>
-                  <p class="card-text">
-                    Distanza:
-                    {{
-                      apartment.distanceOfCenter
-                        ? apartment.distanceOfCenter.toFixed(2)
-                        : 0
-                    }}
-                    Km
-                  </p>
+            <div v-if="apartment.sponsors.length">
+                <div class="sponsored-card">
+                    <div class="card-container">
+                            <router-link
+                            :to="{
+                                name: 'showApartment',
+                                params: { slug: apartment.slug, id: apartment.id },
+                            }"
+                            >
+
+                                <div class="card-image-wrapper">
+                                    <img
+                                    :src="apartment.image"
+                                    class="card-image"
+                                    alt="Appart-Img"
+                                    />
+                                </div>
+                                <div class="card-info">
+                                    <h5 class="card-title">{{ apartment.title }}</h5>
+                                    <p class="card-text"><strong>{{ apartment.address }}</strong></p>
+                                    <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
+                                    <p class="card-text">Letti: {{ apartment.number_beds }}</p>
+                                    <p class="card-text">
+                                        Superficie: {{ apartment.square_meters }} m²
+                                    </p>
+                                    <p class="card-text">
+                                        Distanza:
+                                        {{
+                                        apartment.distanceOfCenter
+                                            ? apartment.distanceOfCenter.toFixed(2)
+                                            : 0
+                                        }}
+                                        Km
+                                    </p>
+                                </div>
+
+                                <div class="sponsored-box">
+                                    <div class="text-sponsored">
+                                        <span>Sponsorizzato</span>
+                                    </div>
+                                <div class="sponsored-icon">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                            </div>
+                        </router-link>
+
+                    </div>
+
                 </div>
-              </div>
-            </router-link>
+            </div>
+            <div v-else>
+                <div class="card-container">
+                    <router-link
+                        :to="{
+                            name: 'showApartment',
+                            params: { slug: apartment.slug, id: apartment.id },
+                        }"
+                        >
+                            <div class="card-image-wrapper">
+                                <img
+                                :src="apartment.image"
+                                class="card-image"
+                                alt="Appart-Img"
+                                />
+                            </div>
+                            <div class="card-info">
+                                <h5 class="card-title">{{ apartment.title }}</h5>
+                                <p class="card-text"><strong>{{ apartment.address }}</strong></p>
+                                <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
+                                <p class="card-text">Letti: {{ apartment.number_beds }}</p>
+                                <p class="card-text">
+                                    Superficie: {{ apartment.square_meters }} m²
+                                </p>
+                                <p class="card-text">
+                                    Distanza:
+                                    {{
+                                    apartment.distanceOfCenter
+                                        ? apartment.distanceOfCenter.toFixed(2)
+                                        : 0
+                                    }}
+                                    Km
+                                </p>
+                            </div>
+
+                    </router-link>
+
+                </div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -296,60 +352,61 @@ export default {
 </template>
 
 <style lang="scss">
+@use '../../scss/cardApartments' as *;
 // .scrollable-cards{
 // max-height: 650px;
 //   overflow-y: auto;
 //   padding-right: 15px;
 // }
 
-.card {
-  max-width: 100%;
-  margin: 10px 0;
-  border-radius: 10px;
-  transition: transform 0.3s ease;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
+// .card {
+//   max-width: 100%;
+//   margin: 10px 0;
+//   border-radius: 10px;
+//   transition: transform 0.3s ease;
+//   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+//   overflow: hidden;
+// }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-}
+// .card:hover {
+//   transform: translateY(-5px);
+//   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+// }
 
-.card-img-top {
-  border-bottom: 2px solid #e0e0e0;
-  transition: transform 0.3s ease;
-}
+// .card-img-top {
+//   border-bottom: 2px solid #e0e0e0;
+//   transition: transform 0.3s ease;
+// }
 
-.card:hover .card-img-top {
-  transform: scale(1.05);
-}
+// .card:hover .card-img-top {
+//   transform: scale(1.05);
+// }
 
-.card-body {
-  padding: 20px;
-}
+// .card-body {
+//   padding: 20px;
+// }
 
-.card-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #333;
-}
+// .card-title {
+//   font-size: 1.25rem;
+//   font-weight: bold;
+//   color: #333;
+// }
 
-.card-text {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 10px;
-}
+// .card-text {
+//   font-size: 0.9rem;
+//   color: #666;
+//   margin-bottom: 10px;
+// }
 
-.card-text:last-child {
-  margin-bottom: 0;
-}
+// .card-text:last-child {
+//   margin-bottom: 0;
+// }
 
-img {
-  object-fit: cover;
-  height: 200px;
-  width: 200px;
-}
+// img {
+//   object-fit: cover;
+//   height: 200px;
+//   width: 200px;
+// }
 
 #map {
   width: 100%;

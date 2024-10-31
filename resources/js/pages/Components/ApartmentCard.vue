@@ -50,67 +50,6 @@ export default {
 </template>
 
 <style scoped lang="scss">
-.card-container {
-  width: 100%;
-  min-height: 100%;
-  margin: 10px 0;
-  border-radius: 15px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  background: none;
-  box-shadow: none;
-
-}
-
-.card-image-wrapper {
-  width: 100%;
-  aspect-ratio: 4 / 4;
-  overflow: hidden;
-  border-radius: 15px;
-}
-
-.card-image {
-    height: 100%;
-  width: 100%;
-  border-radius: 15px;
-  object-fit: cover;
-}
-
-.card-info {
-  padding: 10px;
-  height: 45%;
-  text-align: left;
-}
-
-.card-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 5px;
-}
-
-.card-text {
-  font-size: 0.8rem;
-  color: #666;
-  margin-bottom: 0px;
-  padding: 2px 0;
-}
-
-/* Query per centrare la card sui dispositivi mobili */
-@media (max-width: 576px) {
-  .card-container {
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-  }
-
-  .card-image-wrapper{
-    width: 100%;
-    height: 100%;
-  }
-
-}
-
+@use '../../../scss/cardApartments' as *;
 
 </style>
