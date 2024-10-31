@@ -11,7 +11,6 @@ export default {
   data() {
     return {
       name: "",
-      apartments: store.userApartment,
       toastMessage: "",
       sponsorType: "nulla",
     };
@@ -78,22 +77,31 @@ export default {
       axios
         .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
         .then((res) => {
-          //elimina l'appartamento dalla lista locale (frontend)
-          this.apartments = this.apartments.filter(
-            (a) => a.id !== apartment.id
-          );
-          //aggiorna il localStorage e lo store
-          store.userApartment = store.userApartment.filter(
-            (a) => a.id !== apartment.id
-          );
-          localStorage.setItem(
-            "apartments",
-            JSON.stringify(store.userApartment)
-          );
+          //   //elimina l'appartamento dalla lista locale (frontend)
+          //   this.apartments = this.apartments.filter(
+          //     (a) => a.id !== apartment.id
+          //   );
+          //   //aggiorna il localStorage e lo store
+          //   store.userApartment = store.userApartment.filter(
+          //     (a) => a.id !== apartment.id
+          //   );
+          //   localStorage.setItem(
+          //     "apartments",
+          //     JSON.stringify(store.userApartment)
+          //   );
+
           this.showToast(
             `Appartamento "${apartment.title}" eliminato con successo`,
             "success"
           );
+          axios
+            .get("api/user/utente/dashboard")
+            .then((response) => {
+              store.userApartment = response.data;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         })
         .catch((err) => {
           console.error(err);
@@ -140,12 +148,7 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        // console.log("user", response.data);
-        store.userApartment = response.data.map((apartment) => ({
-          ...apartment,
-          unreadMessages: apartment.messages.filter((m) => !m.read).length,
-        }));
-        this.apartments = store.userApartment;
+        store.userApartment = response.data;
       })
       .catch((err) => {
         console.log(err);
@@ -171,6 +174,12 @@ export default {
         (apartment) => apartment.sponsors.length > 0
       ).length;
     },
+    apartmentFiltred() {
+      return store.userApartment;
+    },
+    lengthArrayApartment() {
+      return store.userApartment.length;
+    },
   },
 };
 </script>
@@ -183,9 +192,9 @@ export default {
           :icon="['fas', 'circle-arrow-left']"
         />
       </router-link>
-      <div class="row">
+      <div class="row" v-if="lengthArrayApartment">
         <div class="col-lg-12 col-md-12">
-          <h2 class="my-4">I miei appartamenti: {{ apartments.length }}</h2>
+          <h2 class="my-4">I miei appartamenti: {{ lengthArrayApartment }}</h2>
 
           <!-- <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4> -->
 
@@ -206,7 +215,7 @@ export default {
                 </tr>
               </thead>
               <tbody>
-                <tr v-for="apartment in apartments" :key="apartment.id">
+                <tr v-for="apartment in apartmentFiltred" :key="apartment.id">
                   <td scope="row" class="align-middle">
                     {{ apartment.id }}
                   </td>
@@ -424,6 +433,16 @@ export default {
             </table>
           </div>
         </div>
+      </div>
+      <div v-else>
+        <h2 class="pt-5">
+          Non hai appartamenti, torna indietro nella
+          <router-link
+            class="link badge text-bg-dark"
+            :to="{ name: 'dashboard' }"
+            >dashboard</router-link
+          >
+        </h2>
       </div>
     </div>
 

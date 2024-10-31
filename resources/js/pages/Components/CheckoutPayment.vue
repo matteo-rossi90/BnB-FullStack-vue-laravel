@@ -38,18 +38,17 @@ export default {
       this.buy();
     },
     paymentOnError(error) {
-      store.isLoading = false;
-      store.paymentError = true;
-
-      let countDownTimer = setInterval(() => {
-        this.countDown -= 1;
-        if (this.countDown === 0) {
-          clearInterval(countDownTimer);
-          setTimeout(() => {
-            this.$router.push({ name: "apartments" });
-          }, 1000);
-        }
-      }, 1000);
+      //   store.isLoading = false;
+      //   store.paymentError = true;
+      //   let countDownTimer = setInterval(() => {
+      //     this.countDown -= 1;
+      //     if (this.countDown === 0) {
+      //       clearInterval(countDownTimer);
+      //       setTimeout(() => {
+      //         this.$router.push({ name: "apartments" });
+      //       }, 1000);
+      //     }
+      //   }, 1000);
     },
 
     // beforeBuy() {
