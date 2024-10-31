@@ -25,6 +25,8 @@ export default {
 
       toastMessage: "",
 
+      buttonMessage: "Invia messaggio",
+
       disableCheck: false,
 
       // Icone dei servizi
@@ -204,6 +206,7 @@ export default {
               email: "",
               message: "",
             };
+            this.buttonMessage = 'Messaggio inviato';
 
             this.changeDisable();
           } else {
@@ -452,7 +455,9 @@ export default {
                 class="btn btn-primary btn-lg w-100"
                 :disabled="disableCheck"
               >
-                Invia il messaggio
+                <!-- Invia il messaggio -->
+                 {{ buttonMessage }}
+
               </button>
             </form>
           </div>
