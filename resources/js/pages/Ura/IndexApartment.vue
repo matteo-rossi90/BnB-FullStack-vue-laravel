@@ -192,7 +192,7 @@ export default {
           :icon="['fas', 'circle-arrow-left']"
         />
       </router-link>
-      <div class="row">
+      <div class="row" v-if="lengthArrayApartment">
         <div class="col-lg-12 col-md-12">
           <h2 class="my-4">I miei appartamenti: {{ lengthArrayApartment }}</h2>
 
@@ -433,6 +433,16 @@ export default {
             </table>
           </div>
         </div>
+      </div>
+      <div>
+        <h2 class="pt-5">
+          Non hai appartamenti, torna indietro nella
+          <router-link
+            class="link badge text-bg-dark"
+            :to="{ name: 'dashboard' }"
+            >dashboard</router-link
+          >
+        </h2>
       </div>
     </div>
 
