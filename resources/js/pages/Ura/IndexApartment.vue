@@ -434,7 +434,7 @@ export default {
           </div>
         </div>
       </div>
-      <div>
+      <div v-else>
         <h2 class="pt-5">
           Non hai appartamenti, torna indietro nella
           <router-link
