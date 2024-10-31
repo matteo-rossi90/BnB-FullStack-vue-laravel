@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('apartment_id');
+            $table->string('apartment_title', 255);
             $table->foreign('apartment_id')->references('id')->on('apartments')->cascadeOnDelete();
             $table->string('name', 255);
             $table->string('surname', 255);
