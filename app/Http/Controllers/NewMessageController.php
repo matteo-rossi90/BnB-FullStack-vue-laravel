@@ -6,13 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\Apartment;
 use Illuminate\Support\Facades\Validator;
-
+use App\Mail\NewContact;
+use Illuminate\Support\Facades\Mail;
 
 class NewMessageController extends Controller
 {
     public function store(Request $request, $apartment_id)
     {
         $apartment = Apartment::find($apartment_id);
+
+        // dd($apartment->title);
         $data = $request->all();
 
         $success = true;
@@ -42,13 +45,7 @@ class NewMessageController extends Controller
         if($validator->fails()){
             $success = false;
             $errors = $validator->errors();
-            // dd($errors);
-            // $errors = '';
-            // foreach ($validator->errors()->messages() as $fieldErrors) {
-            //     $errors = $fieldErrors[0]; // Prendi solo il primo messaggio di errore di ogni campo
-            // }
 
-            // dd($errors);
             return response()->json(compact('success', 'errors'));
 
         } else {
@@ -56,8 +53,11 @@ class NewMessageController extends Controller
             $new_message = new Message();
             $new_message->fill($data);
             $new_message->apartment_id = $apartment->id;
+            $new_message->apartment_title = $apartment->title;
             $new_message->save();
 
+            // invio la mail
+            Mail::to($new_message->email)->send(new NewContact($new_message));
 
             return response()->json(compact('success'));
         }
