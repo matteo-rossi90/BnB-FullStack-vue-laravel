@@ -171,6 +171,7 @@ export default {
       handler(newQuery, oldQuery) {
         if (newQuery) {
           this.isLoading = true;
+          this.input = newQuery;
           this.filterApartment(this.$route.query);
         }
       },
@@ -241,13 +242,15 @@ export default {
       >
     </div>
 
-    <button @click="updateFilter" class="btn btn-dark">FIltra</button>
+    <button @click="updateFilter" class="btn btn-dark">Filtra</button>
   </div>
   <div class="container-fluid" v-if="!isLoading">
     <div id="rowContainer">
       <div class="leftCol my-4">
-        <h5>
-          Trovati {{ apartmensFiltred.length }} alloggi in questa località: Roma
+        <h5 class="text-search mb-3">
+            <strong>
+                Trovati {{ apartmensFiltred.length }} alloggi in questa località: {{ input.toUpperCase() }}
+            </strong>
         </h5>
         <div class="row" v-if="apartmensFiltred.length">
           <div
@@ -512,6 +515,7 @@ a {
   .leftCol {
     width: 100%;
     padding-left:0;
+
   }
   .filterClass.open {
     width: 70%;
@@ -523,11 +527,21 @@ a {
     padding: 1rem;
     overflow: auto;
   }
+ .text-search{
+   font-size: 1rem;
+}
 }
 
 @media (max-width: 486px){
     .service{
         width: 40%;
     }
+}
+
+@media (max-width: 375px){
+    .text-search{
+        font-size: 0.8rem;
+        }
+
 }
 </style>
