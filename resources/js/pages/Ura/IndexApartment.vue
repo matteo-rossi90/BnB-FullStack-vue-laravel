@@ -16,8 +16,8 @@ export default {
     };
   },
   methods: {
-    getMessages(apartmentId) {
-      const apartment = this.apartments.find((ap) => ap.id === apartmentId);
+    getMessages(apartmentId, apartments) {
+      const apartment = apartments.find((ap) => ap.id === apartmentId);
       if (apartment) {
         apartment.unreadMessages = 0;
 
@@ -77,18 +77,18 @@ export default {
       axios
         .delete(`/api/user/utente/dashboard/${apartment.id}`) //chiamata API al backend con DELETE
         .then((res) => {
-          //   //elimina l'appartamento dalla lista locale (frontend)
-          //   this.apartments = this.apartments.filter(
-          //     (a) => a.id !== apartment.id
-          //   );
-          //   //aggiorna il localStorage e lo store
-          //   store.userApartment = store.userApartment.filter(
-          //     (a) => a.id !== apartment.id
-          //   );
-          //   localStorage.setItem(
-          //     "apartments",
-          //     JSON.stringify(store.userApartment)
-          //   );
+          axios
+            .get("api/user/utente/dashboard")
+            .then((response) => {
+              store.userApartment = response.data.map((apartment) => ({
+                ...apartment,
+                unreadMessages: apartment.messages.filter((m) => !m.read)
+                  .length,
+              }));
+            })
+            .catch((err) => {
+              console.log(err);
+            });
 
           this.showToast(
             `Appartamento "${apartment.title}" eliminato con successo`,
@@ -148,7 +148,13 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        store.userApartment = response.data;
+        store.userApartment = response.data.map((apartment) => ({
+          ...apartment,
+
+          //   unreadMessages: apartment.messages.filter((m) => !m.read).length,
+          unreadMessages: apartment.messages.length,
+        }));
+        console.log(store.userApartment);
       })
       .catch((err) => {
         console.log(err);
@@ -262,7 +268,7 @@ export default {
                           id: apartment.id,
                         },
                       }"
-                      @click="getMessages(apartment.id)"
+                      @click="getMessages(apartment.id, apartmentFiltred)"
                     >
                       <span class="position-relative">
                         <span
