@@ -14,6 +14,8 @@ class NewMessageController extends Controller
     public function store(Request $request, $apartment_id)
     {
         $apartment = Apartment::find($apartment_id);
+
+        // dd($apartment->title);
         $data = $request->all();
 
         $success = true;
@@ -51,6 +53,7 @@ class NewMessageController extends Controller
             $new_message = new Message();
             $new_message->fill($data);
             $new_message->apartment_id = $apartment->id;
+            $new_message->apartment_title = $apartment->title;
             $new_message->save();
 
             // invio la mail

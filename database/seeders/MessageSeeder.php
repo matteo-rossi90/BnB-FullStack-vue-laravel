@@ -101,6 +101,7 @@ class MessageSeeder extends Seeder
             foreach ($randomMessages as $messageData) {
                 $new_message = new Message();
                 $new_message->apartment_id = $apartment->id;
+                $new_message->apartment_title = $apartment->title;
                 $new_message->name = $messageData['name'];
                 $new_message->surname = $messageData['surname'];
                 $new_message->email = $messageData['email'];
