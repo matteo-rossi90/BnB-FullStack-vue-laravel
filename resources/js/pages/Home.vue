@@ -111,7 +111,6 @@ export default {
     <div class="row pt-5">
       <router-link
         class="col-lg-4 col-xl-3 col-md-6 col-sm-6 mb-4"
-        :class="{ sponsorCard: apartment.sponsors.length }"
         :to="{
           name: 'showApartment',
           params: { slug: apartment.slug, id: apartment.id },
@@ -119,8 +118,22 @@ export default {
         v-for="(apartment, index) in sortedApartment"
         :key="index"
       >
-        <div>
-          <ApartmentCard :apartment="apartment" />
+        <div v-if="apartment.sponsors.length">
+            <div class="sponsored-card">
+                <ApartmentCard :apartment="apartment" />
+                <div class="sponsored-box">
+                    <div class="text-sponsored">
+                        <span>Sponsorizzato</span>
+                    </div>
+                    <div class="sponsored-icon">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div v-else>
+            <ApartmentCard :apartment="apartment" />
         </div>
       </router-link>
     </div>

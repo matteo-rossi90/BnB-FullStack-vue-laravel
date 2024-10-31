@@ -44,7 +44,7 @@ export default {
     <div class="card-info">
       <h5 class="card-title">{{ apartment.title }}</h5>
       <p class="card-text">{{ apartment.address }}</p>
-      <p class="card-text">Stanze n° {{ apartment.number_beds }}</p>
+      <p class="card-text">Stanze: {{ apartment.number_beds }}</p>
     </div>
   </div>
 </template>
