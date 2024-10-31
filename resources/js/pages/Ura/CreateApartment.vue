@@ -18,7 +18,7 @@ export default {
         number_beds: "",
         number_bathrooms: "",
 
-        square_meters: "100",
+        square_meters: "",
         services: [],
       },
       services: [],
