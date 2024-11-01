@@ -17,7 +17,7 @@ export default {
         lonCenter: "",
         distance: 20,
       },
-      input: store.inputValue,
+
       filtredApartment: "",
       services: "",
       activeItems: [],
@@ -151,6 +151,20 @@ export default {
     isActive(id) {
       return this.activeItems.includes(String(id));
     },
+    adressShorter(adress) {
+      return adress
+        .split("")
+        .map((letter, index) => {
+          if (index <= 36) {
+            return letter;
+          } else if (index > 36 && index < 39) {
+            return ".";
+          } else {
+            return;
+          }
+        })
+        .join("");
+    },
   },
 
   mounted() {
@@ -196,13 +210,16 @@ export default {
     isLoading() {
       return this.isLoadingAp;
     },
+    input() {
+      return this.$route.query.input.toUpperCase();
+    },
   },
 };
 </script>
 
 <template>
   <div class="filterClass" @click.stop="" :class="{ open: isOpenFilter }">
-    <label for="number_rooms">Stanze</label>
+    <label for="number_rooms">Camere</label>
     <input
       type="number"
       placeholder="inserisci numero"
@@ -218,7 +235,7 @@ export default {
       v-model.trim="filter.number_beds"
       class="form-control mb-3"
     />
-    <label for="square_meters">Metri quadri</label>
+    <label for="square_meters">Superficie</label>
     <input
       type="number"
       placeholder="inserisci numero"
@@ -228,7 +245,13 @@ export default {
     />
 
     <label>Scegli il raggio di ricerca</label>
-    <input class="dark" type="range" min="1" max="200" v-model.trim="filter.distance" />
+    <input
+      class="dark"
+      type="range"
+      min="1"
+      max="200"
+      v-model.trim="filter.distance"
+    />
     <span class="mb-3">{{ filter.distance }} km dal punto scelto</span>
 
     <div class="contServices my-3" v-if="isReady">
@@ -248,9 +271,10 @@ export default {
     <div id="rowContainer">
       <div class="leftCol my-4">
         <h5 class="text-search mb-3">
-            <strong>
-                Trovati {{ apartmensFiltred.length }} alloggi in questa località: {{ input.toUpperCase() }}
-            </strong>
+          <strong>
+            Trovati {{ apartmensFiltred.length }} alloggi in questa località:
+            {{ input }}
+          </strong>
         </h5>
         <div class="row" v-if="apartmensFiltred.length">
           <div
@@ -258,94 +282,57 @@ export default {
             v-for="(apartment, index) in apartmensFiltred"
             :key="index"
           >
-            <div v-if="apartment.sponsors.length">
-                <div class="sponsored-card">
-                    <div class="card-container">
-                            <router-link
-                            :to="{
-                                name: 'showApartment',
-                                params: { slug: apartment.slug, id: apartment.id },
-                            }"
-                            >
+            <div class="sponsored-card">
+              <div class="card-container">
+                <router-link
+                  :to="{
+                    name: 'showApartment',
+                    params: { slug: apartment.slug, id: apartment.id },
+                  }"
+                >
+                  <div class="card-image-wrapper">
+                    <img
+                      :src="apartment.image"
+                      class="card-image"
+                      alt="Appart-Img"
+                    />
+                  </div>
+                  <div class="card-info">
+                    <h5 class="card-title">{{ apartment.title }}</h5>
+                    <p class="card-text adress">
+                      <strong>{{ adressShorter(apartment.address) }}</strong>
+                    </p>
+                    <p class="card-text adress2">
+                      <strong>{{ apartment.address }}</strong>
+                    </p>
+                    <p class="card-text">
+                      Camere: {{ apartment.number_rooms }}
+                    </p>
+                    <p class="card-text">Letti: {{ apartment.number_beds }}</p>
+                    <p class="card-text">
+                      Superficie: {{ apartment.square_meters }} m²
+                    </p>
+                    <p class="card-text">
+                      Distanza:
+                      {{
+                        apartment.distanceOfCenter
+                          ? apartment.distanceOfCenter.toFixed(2)
+                          : 0
+                      }}
+                      Km
+                    </p>
+                  </div>
 
-                                <div class="card-image-wrapper">
-                                    <img
-                                    :src="apartment.image"
-                                    class="card-image"
-                                    alt="Appart-Img"
-                                    />
-                                </div>
-                                <div class="card-info">
-                                    <h5 class="card-title">{{ apartment.title }}</h5>
-                                    <p class="card-text"><strong>{{ apartment.address }}</strong></p>
-                                    <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
-                                    <p class="card-text">Letti: {{ apartment.number_beds }}</p>
-                                    <p class="card-text">
-                                        Superficie: {{ apartment.square_meters }} m²
-                                    </p>
-                                    <p class="card-text">
-                                        Distanza:
-                                        {{
-                                        apartment.distanceOfCenter
-                                            ? apartment.distanceOfCenter.toFixed(2)
-                                            : 0
-                                        }}
-                                        Km
-                                    </p>
-                                </div>
-
-                                <div class="sponsored-box">
-                                    <div class="text-sponsored">
-                                        <span>Sponsorizzato</span>
-                                    </div>
-                                <div class="sponsored-icon">
-                                    <i class="fa-solid fa-award"></i>
-                                </div>
-                            </div>
-                        </router-link>
-
+                  <div class="sponsored-box" v-if="apartment.sponsors.length">
+                    <div class="text-sponsored">
+                      <span>Sponsorizzato</span>
                     </div>
-
-                </div>
-            </div>
-            <div v-else>
-                <div class="card-container">
-                    <router-link
-                        :to="{
-                            name: 'showApartment',
-                            params: { slug: apartment.slug, id: apartment.id },
-                        }"
-                        >
-                            <div class="card-image-wrapper">
-                                <img
-                                :src="apartment.image"
-                                class="card-image"
-                                alt="Appart-Img"
-                                />
-                            </div>
-                            <div class="card-info">
-                                <h5 class="card-title">{{ apartment.title }}</h5>
-                                <p class="card-text"><strong>{{ apartment.address }}</strong></p>
-                                <p class="card-text">Camere: {{ apartment.number_rooms }}</p>
-                                <p class="card-text">Letti: {{ apartment.number_beds }}</p>
-                                <p class="card-text">
-                                    Superficie: {{ apartment.square_meters }} m²
-                                </p>
-                                <p class="card-text">
-                                    Distanza:
-                                    {{
-                                    apartment.distanceOfCenter
-                                        ? apartment.distanceOfCenter.toFixed(2)
-                                        : 0
-                                    }}
-                                    Km
-                                </p>
-                            </div>
-
-                    </router-link>
-
-                </div>
-
+                    <div class="sponsored-icon">
+                      <i class="fa-solid fa-award"></i>
+                    </div>
+                  </div>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -361,8 +348,8 @@ export default {
 </template>
 
 <style lang="scss">
-@use '../../scss/variables' as *;
-@use '../../scss/cardApartments' as *;
+@use "../../scss/variables" as *;
+@use "../../scss/cardApartments" as *;
 // .scrollable-cards{
 // max-height: 650px;
 //   overflow-y: auto;
@@ -438,8 +425,8 @@ input[type="range"].dark {
 
 .contServices {
   display: flex;
-//   justify-content: center;
-    flex-wrap:nowrap;
+  //   justify-content: center;
+  flex-wrap: nowrap;
   gap: 1rem;
   .service {
     width: calc(50% - 0.2rem);
@@ -449,7 +436,7 @@ input[type="range"].dark {
     cursor: pointer;
     &:hover {
       background: black;
-        color: white;
+      color: white;
     }
   }
   .service.active {
@@ -479,10 +466,10 @@ input[type="range"].dark {
   box-shadow: $shadow-color 0px 2px 10px;
 }
 
-.btn-filter{
+.btn-filter {
   background-color: $color-logo;
   color: white;
-  &:hover{
+  &:hover {
     background-color: #e54b4b;
     color: white;
   }
@@ -512,7 +499,17 @@ input[type="range"].dark {
   overflow-y: auto; /* Permette lo scrolling interno se necessario */
   background-color: #f8f9fa; /* Facoltativo: Imposta un colore di sfondo */
 }
+
+.card-text.adress2 {
+  display: none;
+}
 @media (max-width: 991px) {
+  .card-text.adress2 {
+    display: block;
+  }
+  .card-text.adress {
+    display: none;
+  }
   #rowContainer {
     display: flex;
     flex-direction: column-reverse; /* Le colonne vengono visualizzate in verticale e invertite */
@@ -528,8 +525,7 @@ input[type="range"].dark {
   }
   .leftCol {
     width: 100%;
-    padding-left:0;
-
+    padding-left: 0;
   }
   .filterClass.open {
     width: 70%;
@@ -541,22 +537,21 @@ input[type="range"].dark {
     padding: 1rem;
     overflow: auto;
   }
- .text-search{
-   font-size: 1rem;
-}
-}
-
-@media (max-width: 486px){
-    .service{
-        flex-wrap: wrap;
-        width: 20%;
-    }
+  .text-search {
+    font-size: 1rem;
+  }
 }
 
-@media (max-width: 375px){
-    .text-search{
-        font-size: 0.8rem;
-        }
+@media (max-width: 486px) {
+  .service {
+    flex-wrap: wrap;
+    width: 20%;
+  }
+}
 
+@media (max-width: 375px) {
+  .text-search {
+    font-size: 0.8rem;
+  }
 }
 </style>

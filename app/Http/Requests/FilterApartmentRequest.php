@@ -60,11 +60,11 @@ class FilterApartmentRequest extends FormRequest
 
         // Applicazione dei filtri opzionali, verificando se sono presenti nella query
         if ($this->filled('query.number_rooms')) {
-            $query->where('number_rooms', '=', $this->input('query.number_rooms'));
+            $query->where('number_rooms', '>=', $this->input('query.number_rooms'));
         }
 
         if ($this->filled('query.number_beds')) {
-            $query->where('number_beds', '=', $this->input('query.number_beds'));
+            $query->where('number_beds', '>=', $this->input('query.number_beds'));
         }
 
         if ($this->filled('query.square_meters')) {
@@ -80,12 +80,13 @@ class FilterApartmentRequest extends FormRequest
             }
 
             // Filtra gli appartamenti che hanno tutti i servizi specificati
-            $query->whereHas('services', function($q) use ($serviceArray) {
-                $q->whereIn('service_id', $serviceArray)  // Usare whereIn con servizi trattati come stringhe
-                  ->groupBy('apartment_id')               // Raggruppa per appartamento
-                  ->havingRaw('COUNT(service_id) = ?', [count($serviceArray)]); // Assicurati che l'appartamento abbia tutti i servizi
-            });
+            foreach ($serviceArray as $serviceId) {
+                $query->whereHas('services', function($q) use ($serviceId) {
+                    $q->where('service_id', $serviceId);
+                });
+            }
         }
+
 
 
 
