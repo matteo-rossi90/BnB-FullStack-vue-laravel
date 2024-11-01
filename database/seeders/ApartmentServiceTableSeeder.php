@@ -15,13 +15,14 @@ class ApartmentServiceTableSeeder extends Seeder
     public function run(): void
     {
 
-        for ($i = 0; $i < 10; $i++) {
+        $apartmentLength = count(Apartment::all());
+        for ($i = 0; $i < $apartmentLength; $i++) {
 
             $apartment = Apartment::inRandomOrder()->first();
 
             $service_id = Service::inRandomOrder()->first()->id;
 
-            $apartment->services()->attach($service_id);
+            $apartment->services()->syncWithoutDetaching([$service_id]);
         }
     }
 }
