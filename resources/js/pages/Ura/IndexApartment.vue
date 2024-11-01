@@ -285,7 +285,7 @@ export default {
                     <router-link
                       :to="{
                         name: 'statistic',
-                        params: { id: apartment.id, title: apartment.title },
+                        params: { id: apartment.id, title: apartment.slug },
                       }"
                     >
                       <i class="fa-solid fa-chart-simple"></i>
