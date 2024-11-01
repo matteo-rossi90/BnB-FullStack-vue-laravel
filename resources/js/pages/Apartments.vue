@@ -228,12 +228,12 @@ export default {
     />
 
     <label>Scegli il raggio di ricerca</label>
-    <input type="range" min="1" max="200" v-model.trim="filter.distance" />
+    <input class="dark" type="range" min="1" max="200" v-model.trim="filter.distance" />
     <span class="mb-3">{{ filter.distance }} km dal punto scelto</span>
 
     <div class="contServices my-3" v-if="isReady">
       <span
-        class="service"
+        class="btn service"
         v-for="(service, index) in services"
         :key="index"
         :class="{ active: isActive(service.id) }"
@@ -242,7 +242,7 @@ export default {
       >
     </div>
 
-    <button @click="updateFilter" class="btn btn-dark">Filtra</button>
+    <button @click="updateFilter" class="btn btn-filter">Filtra</button>
   </div>
   <div class="container-fluid" v-if="!isLoading">
     <div id="rowContainer">
@@ -432,12 +432,17 @@ a {
   text-decoration: none;
 }
 
+input[type="range"].dark {
+  background: black;
+}
+
 .contServices {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+//   justify-content: center;
+    flex-wrap:nowrap;
   gap: 1rem;
   .service {
+    width: calc(50% - 0.2rem);
     padding: 0.3rem 0.6rem;
     border: 1px solid black;
     border-radius: 8px;
@@ -472,6 +477,15 @@ a {
   padding: 2rem;
   border-radius: 20px;
   box-shadow: $shadow-color 0px 2px 10px;
+}
+
+.btn-filter{
+  background-color: $color-logo;
+  color: white;
+  &:hover{
+    background-color: #e54b4b;
+    color: white;
+  }
 }
 
 #rowContainer {
@@ -534,7 +548,8 @@ a {
 
 @media (max-width: 486px){
     .service{
-        width: 40%;
+        flex-wrap: wrap;
+        width: 20%;
     }
 }
 
