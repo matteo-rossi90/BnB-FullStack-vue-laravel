@@ -19,9 +19,12 @@ export default {
 </script>
 <template>
   <div class="container">
-    <h2>Scegli il piano Premium che preferisci per {{ apartmentTitle }}</h2>
-    <div class="wrapper">
+    <h2 class="main-text">Scegli il piano Premium che preferisci per {{ apartmentTitle }}</h2>
+    <div class="wrapper my-5">
       <div class="cardT">
+        <div class="icon icon-bronze">
+            <i class="fa-solid fa-award"></i>
+        </div>
         <h3 class="card-title">Bronzo</h3>
         <p class="card-content">
           Lavora di più con noi! Con l'abbonamento Bronzo, avrai maggiore
@@ -49,6 +52,9 @@ export default {
         </router-link>
       </div>
       <div class="cardT">
+        <div class="icon icon-silver">
+            <i class="fa-solid fa-award"></i>
+        </div>
         <h3 class="card-title">Argento</h3>
         <p class="card-content">
           Lavora di più con noi! Con l'abbonamento Argento, avrai maggiore
@@ -76,6 +82,9 @@ export default {
         </router-link>
       </div>
       <div class="cardT">
+        <div class="icon icon-gold">
+            <i class="fa-solid fa-award"></i>
+        </div>
         <h3 class="card-title">Oro</h3>
         <p class="card-content">
           Lavora di più con noi! Con l'abbonamento Oro, avrai maggiore
@@ -127,11 +136,13 @@ export default {
   </div>
 </template>
 <style lang='scss' scoped>
+@use '../../../scss/variables' as *;
 // @use 'path' as *;
 
 h2 {
-  text-align: center;
-  color: #4181ee;
+text-align: center;
+  color: #000000;
+  margin: 40px 0;
 }
 .wrapper {
   display: flex;
@@ -142,24 +153,58 @@ h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
+
 .cardT {
   max-width: 300px;
   min-height: 250px;
-  background-color: rgb(205, 127, 50);
   padding: 30px;
   border-radius: 3px;
   box-sizing: border-box;
   color: black;
   margin: 20px;
 
-  box-shadow: rgb(50 50 93 / 25%) 0px 30px 60px -12px,
-    rgb(0 0 0 / 30%) 0px 18px 36px -18px;
+  box-shadow: $shadow-color 0px 5px 10px;
 }
-.cardT:nth-child(2) {
-  background-color: rgb(192, 192, 192);
+// .cardT:nth-child(2) {
+//   background-color: rgb(192, 192, 192);
+// }
+// .cardT:last-child {
+//   background-color: rgb(255, 215, 0);
+// }
+
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding: 3rem 0;
 }
-.cardT:last-child {
-  background-color: rgb(255, 215, 0);
+
+.fa-solid{
+    font-size: 100px;
+}
+
+.icon-bronze{
+
+    .fa-award{
+        text-align:center;
+        color: #CD7F32;
+    }
+}
+
+.icon-silver{
+
+    .fa-award{
+        text-align:center;
+        color: rgb(192, 192, 192);
+    }
+}
+
+.icon-gold{
+
+    .fa-award{
+        text-align:center;
+        color: rgb(255, 215, 0);
+    }
 }
 
 .card-btn {
