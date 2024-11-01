@@ -19,7 +19,7 @@ export default {
 </script>
 <template>
   <div class="container">
-    <h2 class="main-text">Scegli il piano Premium che preferisci per {{ apartmentTitle }}</h2>
+    <h2 class="main-text">Scegli il piano Premium che preferisci per <strong> {{ apartmentTitle }} </strong></h2>
     <div class="wrapper my-5">
       <div class="cardT">
         <div class="icon icon-bronze">
@@ -37,18 +37,14 @@ export default {
 
         <div class="contInfo">
           <p>Vantaggi</p>
-          <ul class="">
+          <ul>
             <li class="sponsor-info">
                 <i class="fa-solid fa-eye"></i>
-                <span>
-                    Aumento delle visualizzazioni
-                </span>
+                Aumento delle visualizzazioni
             </li>
             <li class="sponsor-info">
                 <i class="fa-solid fa-chart-line"></i>
-                <span>
-                    Aumento delle prenotazioni
-                </span>
+                Aumento delle prenotazioni
             </li>
           </ul>
 
@@ -58,21 +54,15 @@ export default {
           <ul>
             <li class="sponsor-info">
                 <i class="fa-solid fa-credit-card"></i>
-                <span>
-                    Costo: 2.99€
-                </span>
+                Costo: 2.99€
             </li>
             <li class="sponsor-info">
                 <i class="fa-solid fa-clock"></i>
-                <span>
-                    24 ore di sponsorizzazione
-                </span>
+                24 ore di sponsorizzazione
             </li>
             <li class="sponsor-info">
                 <i class="fa-solid fa-user"></i>
-                <span>
-                    Un abbonamento per profilo
-                </span>
+                Un abbonamento per profilo
             </li>
           </ul>
         </div>
@@ -157,7 +147,7 @@ export default {
             <div class="line"></div>
 
             <p>Costi e dettagli:</p>
-            <ul class="">
+            <ul>
                 <li class="sponsor-info">
                     <i class="fa-solid fa-credit-card"></i>
                     Costo: 5.99€</li>
@@ -184,7 +174,7 @@ export default {
 @use '../../../scss/variables' as *;
 // @use 'path' as *;
 
-h2 {
+.main-text {
 text-align: center;
   color: #000000;
   margin: 40px 0;
@@ -305,6 +295,33 @@ text-align: center;
     margin: 1.5rem 0;
     display: flex;
     align-self: center;
+}
+
+@media (max-width: 768px){
+    .main-text{
+        text-align: left;
+        margin: 2rem;
+        line-height: 40px;
+    }
+}
+
+@media (max-width: 450px){
+
+    p{
+        font-size: 0.9rem;
+    }
+    ul li{
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 321px){
+    .cardT{
+        padding: 25px;
+    }
+    ul li{
+        font-size: 0.8rem;
+    }
 }
 
 
