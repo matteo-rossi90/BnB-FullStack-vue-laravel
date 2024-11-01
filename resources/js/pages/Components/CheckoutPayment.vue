@@ -178,12 +178,64 @@ export default {
 </script>
 <template>
   <div
-    class="container pb-4 d-flex flex-column justify-content-center align-items-center"
+    class="container pb-4 my-4 d-flex flex-column justify-content-center align-items-center"
     v-if="!isLoading"
   >
     <div v-if="!isLoading && !paymentError && !paymentSuccess">
-      <h2>Appartamento: {{ apartmentTitle }}</h2>
-      <h2>Totale abbonamento {{ sponsorName }}: {{ price }} €</h2>
+        <h2>Riepilogo dei dati</h2>
+
+        <ul class="w-50 my-3">
+            <li class="row py-2">
+                <div class="col-6">
+                    <strong>
+                        Appartamento
+                    </strong>
+                </div>
+                <div class="col-6">
+                    {{ apartmentTitle }}
+                </div>
+            </li>
+            <li class="row py-2">
+                <div class="col-6">
+                    <strong>
+                        Sponsor
+                    </strong>
+                </div>
+                <div class="col-6">
+                    {{ sponsorName }}
+                </div>
+            </li>
+            <li class="row py-2">
+                <div class="col-6">
+                    <strong>
+                        Totale
+                    </strong>
+                </div>
+                <div class="col-6">
+                    {{ price }} €
+                </div>
+            </li>
+        </ul>
+
+        <!-- <table class="table my-3"> -->
+            <!-- <thead> -->
+                <!-- <tr> -->
+                    <!-- <th scope="col">Appartamento</th> -->
+                    <!-- <th scope="col">Sponsor</th> -->
+                    <!-- <th scope="col">Totale abbonamento</th> -->
+                <!-- </tr> -->
+            <!-- </thead> -->
+            <!-- <tbody> -->
+                <!-- <tr> -->
+                    <!-- <td>{{ apartmentTitle }}</td> -->
+                    <!-- <td>{{ sponsorName }}</td> -->
+                    <!-- <td>{{ price }} €</td> -->
+                <!-- </tr> -->
+            <!-- </tbody> -->
+        <!-- </table> -->
+
+      <!-- <h2>Appartamento: {{ apartmentTitle }}</h2> -->
+      <!-- <h2>Totale abbonamento {{ sponsorName }}: {{ price }} €</h2> -->
       <PaymentBrain
         ref="paymentRef"
         :authorization="token"
@@ -267,5 +319,19 @@ export default {
 }
 p.countDown {
   font-size: 3rem;
+}
+
+ul{
+    padding-left:0;
+    padding-right:0;
+}
+
+@media (max-width: 500px){
+    ul{
+        padding: 0 0.8rem;
+        font-size: 0.85rem;
+
+    }
+
 }
 </style>
