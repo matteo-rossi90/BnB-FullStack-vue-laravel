@@ -19,9 +19,12 @@ export default {
 </script>
 <template>
   <div class="container">
-    <h2>Scegli il piano Premium che preferisci per {{ apartmentTitle }}</h2>
-    <div class="wrapper">
+    <h2 class="main-text">Scegli il piano Premium che preferisci per <strong> {{ apartmentTitle }} </strong></h2>
+    <div class="wrapper my-5">
       <div class="cardT">
+        <div class="icon icon-bronze">
+            <i class="fa-solid fa-award"></i>
+        </div>
         <h3 class="card-title">Bronzo</h3>
         <p class="card-content">
           Lavora di più con noi! Con l'abbonamento Bronzo, avrai maggiore
@@ -29,26 +32,50 @@ export default {
           concorrenza. Sponsorizza un appartamento alla volta e fai crescere il
           tuo fatturato.
         </p>
+
+        <div class="line"></div>
+
         <div class="contInfo">
-          <p>Vantaggi:</p>
+          <p>Vantaggi</p>
           <ul>
-            <li>Aumento delle visualizzazioni</li>
-            <li>Aumento delle prenotazioni</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-eye"></i>
+                Aumento delle visualizzazioni
+            </li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-chart-line"></i>
+                Aumento delle prenotazioni
+            </li>
           </ul>
+
+          <div class="line"></div>
+
           <p>Costi e dettagli:</p>
           <ul>
-            <li>Costo: 2.99€</li>
-            <li>24 ore di sponsorizzazione</li>
-            <li>Un abbonamento per profilo</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-credit-card"></i>
+                Costo: 2.99€
+            </li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-clock"></i>
+                24 ore di sponsorizzazione
+            </li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-user"></i>
+                Un abbonamento per profilo
+            </li>
           </ul>
         </div>
         <router-link
           :to="{ name: 'checkout', params: { sponsor: 1, name: 'bronzo' } }"
         >
-          <button class="card-btn">Vai al pagamento</button>
+          <button class="btn card-btn">Vai al pagamento</button>
         </router-link>
       </div>
       <div class="cardT">
+        <div class="icon icon-silver">
+            <i class="fa-solid fa-award"></i>
+        </div>
         <h3 class="card-title">Argento</h3>
         <p class="card-content">
           Lavora di più con noi! Con l'abbonamento Argento, avrai maggiore
@@ -56,26 +83,45 @@ export default {
           concorrenza. Sponsorizza un appartamento alla volta e fai crescere il
           tuo fatturato.
         </p>
+
+        <div class="line"></div>
+
         <div class="contInfo">
-          <p>Vantaggi:</p>
+          <p>Vantaggi</p>
           <ul>
-            <li>Aumento delle visualizzazioni</li>
-            <li>Aumento delle prenotazioni</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-eye"></i>
+                Aumento delle visualizzazioni</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-chart-line"></i>
+                Aumento delle prenotazioni</li>
           </ul>
+
+          <div class="line"></div>
+
           <p>Costi e dettagli:</p>
           <ul>
-            <li>Costo: 5.99€</li>
-            <li>72 ore di sponsorizzazione</li>
-            <li>Un abbonamento per profilo</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-credit-card"></i>
+                Costo: 5.99€</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-clock"></i>
+                72 ore di sponsorizzazione</li>
+            <li class="sponsor-info">
+                <i class="fa-solid fa-user"></i>
+                Un abbonamento per profilo</li>
           </ul>
         </div>
         <router-link
           :to="{ name: 'checkout', params: { sponsor: 2, name: 'argento' } }"
         >
-          <button class="card-btn">Vai al pagamento</button>
+          <button class="btn card-btn">Vai al pagamento</button>
         </router-link>
       </div>
       <div class="cardT">
+        <div class="icon icon-gold">
+            <i class="fa-solid fa-award"></i>
+        </div>
         <h3 class="card-title">Oro</h3>
         <p class="card-content">
           Lavora di più con noi! Con l'abbonamento Oro, avrai maggiore
@@ -83,55 +129,55 @@ export default {
           concorrenza. Sponsorizza un appartamento alla volta e fai crescere il
           tuo fatturato.
         </p>
+
+        <div class="line"></div>
+
         <div class="contInfo">
-          <p>Vantaggi:</p>
-          <ul>
-            <li>Aumento delle visualizzazioni</li>
-            <li>Aumento delle prenotazioni</li>
-          </ul>
-          <p>Costi e dettagli:</p>
-          <ul>
-            <li>Costo: 9.99€</li>
-            <li>144 ore di sponsorizzazione</li>
-            <li>Un abbonamento per profilo</li>
-          </ul>
+
+            <p>Vantaggi</p>
+            <ul>
+                <li class="sponsor-info">
+                    <i class="fa-solid fa-eye"></i>
+                    Aumento delle visualizzazioni</li>
+                <li class="sponsor-info">
+                    <i class="fa-solid fa-chart-line"></i>
+                    Aumento delle prenotazioni</li>
+            </ul>
+
+            <div class="line"></div>
+
+            <p>Costi e dettagli:</p>
+            <ul>
+                <li class="sponsor-info">
+                    <i class="fa-solid fa-credit-card"></i>
+                    Costo: 5.99€</li>
+                <li class="sponsor-info">
+                    <i class="fa-solid fa-clock"></i>
+                    72 ore di sponsorizzazione</li>
+                <li class="sponsor-info">
+                    <i class="fa-solid fa-user"></i>
+                    Un abbonamento per profilo</li>
+            </ul>
+
         </div>
         <router-link
           :to="{ name: 'checkout', params: { sponsor: 3, name: 'oro' } }"
         >
-          <button class="card-btn">Vai al pagamento</button>
+          <button class="btn card-btn">Vai al pagamento</button>
         </router-link>
       </div>
     </div>
 
-    <!-- <div class="col">
-        <h3>Piano di pagamento argento</h3>
-        <ul>
-          <li>72h di sponsorizzazione</li>
-          <li>5.99</li>
-        </ul>
-        <router-link :to="{ name: 'checkout', params: { sponsor: 2 } }"
-          >sponsorizza</router-link
-        >
-      </div>
-      <div class="col">
-        <h3>Piano di pagamento oro</h3>
-        <ul>
-          <li>144h di sponsorizzazione</li>
-          <li>9.99</li>
-        </ul>
-        <router-link :to="{ name: 'checkout', params: { sponsor: 3 } }"
-          >sponsorizza</router-link
-        >
-      </div> -->
   </div>
 </template>
 <style lang='scss' scoped>
+@use '../../../scss/variables' as *;
 // @use 'path' as *;
 
-h2 {
-  text-align: center;
-  color: #4181ee;
+.main-text {
+text-align: center;
+  color: #000000;
+  margin: 40px 0;
 }
 .wrapper {
   display: flex;
@@ -142,61 +188,141 @@ h2 {
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
+
+.card-content{
+    font-size: 1rem
+}
+
 .cardT {
   max-width: 300px;
   min-height: 250px;
-  background-color: rgb(205, 127, 50);
   padding: 30px;
   border-radius: 3px;
   box-sizing: border-box;
-  color: black;
+  color:rgb(63, 63, 63);
   margin: 20px;
+  border-radius: 20px;
+  box-shadow: $shadow-color 0px 5px 10px;
+}
 
-  box-shadow: rgb(50 50 93 / 25%) 0px 30px 60px -12px,
-    rgb(0 0 0 / 30%) 0px 18px 36px -18px;
+.icon{
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    padding: 3rem 0;
 }
-.cardT:nth-child(2) {
-  background-color: rgb(192, 192, 192);
+
+.fa-solid.fa-award{
+    font-size: 90px;
 }
-.cardT:last-child {
-  background-color: rgb(255, 215, 0);
+
+.fa-solid.fa-chart-line,
+.fa-solid.fa-credit-card,
+.fa-solid.fa-eye,
+.fa-solid.fa-clock,
+.fa-solid.fa-user{
+    text-align:center;
+}
+
+.icon-bronze{
+
+    .fa-award{
+        color: #CD7F32;
+    }
+}
+
+.icon-silver{
+
+    .fa-award{
+        color: rgb(192, 192, 192);
+    }
+}
+
+.icon-gold{
+
+    .fa-award{
+        color: rgb(255, 215, 0);
+    }
 }
 
 .card-btn {
-  all: unset;
-  display: block;
-  margin-left: auto;
-  border: 2px solid #fff;
-  padding: 10px 15px;
-  border-radius: 25px;
-  font-size: 10px;
-  font-weight: 600;
-  transition: all 0.5s;
-  cursor: pointer;
-  letter-spacing: 1.2px;
+    margin-top: 3rem;
+    width: 100%;
+    display: block;
+    padding: 8px 16px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    //   letter-spacing: 1.2px;
+    background-color: $color-logo;
+    color: white;
 }
+
 .card-btn:hover {
-  color: red;
-  background: #fff;
+    color: white;
+    background-color: $color-logo-dark;
 }
-.card:nth-child(2) .card-btn:hover {
-  color: #4181ee;
-  background: #fff;
-}
-.card:last-child .card-btn:hover {
-  color: #673ab7;
-  background: #fff;
-}
+
 .contInfo {
   padding: 0;
   p {
-    font-size: 1.3rem;
+    font-size: 1rem;
     font-weight: 600;
   }
   ul {
     padding: 0;
-    padding-left: 1rem;
-    list-style-type: circle;
+    padding-left: 0;
+    list-style-type: none;
+    font-size: 0.9rem;
+    color: rgb(63, 63, 63);
   }
+
+    .sponsor-info{
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.3rem 0;
+
+        i{
+            min-width: 20px;
+        }
+    }
 }
+
+.line{
+    border-top: 1px solid $hover-list;
+    width: 100%;
+    margin: 1.5rem 0;
+    display: flex;
+    align-self: center;
+}
+
+@media (max-width: 768px){
+    .main-text{
+        text-align: left;
+        margin: 2rem;
+        line-height: 40px;
+    }
+}
+
+@media (max-width: 450px){
+
+    p{
+        font-size: 0.9rem;
+    }
+    ul li{
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 321px){
+    .cardT{
+        padding: 25px;
+    }
+    ul li{
+        font-size: 0.8rem;
+    }
+}
+
+
 </style>
