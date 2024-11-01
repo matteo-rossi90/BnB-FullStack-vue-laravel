@@ -127,7 +127,19 @@ const router = createRouter({
                 name: 'Company',
                 component: Company //route footer
             },
-        ]
+        ],
+        scrollBehavior(to, from, savedPosition) {
+            if (savedPosition) {
+              return savedPosition;
+            } else if (to.hash) {
+              return {
+                el: to.hash,
+                behavior: "smooth",
+              };
+            } else {
+              return { left: 0, top: 0 };
+            }
+          },
 })
 // // Condizioni per disabilitare rotte (esempio: autenticazione)
 // router.beforeEach((to, from, next) => {
