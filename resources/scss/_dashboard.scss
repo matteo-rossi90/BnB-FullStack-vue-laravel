@@ -1,7 +1,7 @@
 @import '../scss/variables';
 
 .wrapper {
-    min-height: calc(100vh - 200px);
+    min-height: calc(100vh - 100px);
     flex: 1;
     width: 100%;
     // overflow: auto;
@@ -20,7 +20,7 @@ aside {
     background-color: rgb(239, 239, 239);
 }
 
-ul {
+aside ul {
     padding: 1.5rem 3rem;
     // font-size: 18px;
 }

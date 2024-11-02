@@ -69,7 +69,7 @@ export default {
     <aside>
       <routinglist :visible="lengthApartment" />
     </aside>
-    <div class="dashboard-box dashboard-color flex-grow-1">
+    <div class="dashboard-box dashboard-color flex-grow-1 px-2">
       <div class="container-fluid my-5">
         <div class="row">
           <div class="col-12">
@@ -124,30 +124,28 @@ export default {
           </div>
           <div class="col-12 col-md-6 col-lg-4 my-3 d-flex gap-3 box-routes">
             <div class="dashboard-card">
-              <ul>
-                <li>
-                  <router-link
+                <div class="routes">
+                    <router-link
                     :to="{ name: 'apartments' }"
                     class="d-flex align-items-center justify-content-center gap-3"
-                  >
-                    <i class="fa-solid fa-list"></i>
-                    <span>Gestisci appartamenti</span>
-                  </router-link>
-                </li>
-              </ul>
+                    >
+                        <i class="fa-solid fa-list"></i>
+                        <span>Gestisci appartamenti</span>
+                    </router-link>
+
+                </div>
             </div>
             <div class="dashboard-card">
-              <ul>
-                <li>
-                  <router-link
+                <div class="routes">
+                    <router-link
                     :to="{ name: 'createApartment' }"
                     class="d-flex align-items-center justify-content-center gap-3"
-                  >
-                    <i class="fa-solid fa-circle-plus"></i>
-                    <span>Nuovo appartamento</span>
-                  </router-link>
-                </li>
-              </ul>
+                    >
+                        <i class="fa-solid fa-circle-plus"></i>
+                        <span>Nuovo appartamento</span>
+                    </router-link>
+
+                </div>
             </div>
           </div>
         </div>
@@ -195,6 +193,10 @@ span {
 
 .box-routes {
   flex-direction: column;
+}
+
+.routes{
+    padding: 2rem 0;
 }
 
 .fa-circle-plus,
