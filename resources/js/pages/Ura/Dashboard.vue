@@ -26,7 +26,7 @@ export default {
     axios
       .get("api/user/utente/dashboard")
       .then((response) => {
-        console.log("dash- user apartment");
+        console.log("dash- user apartment", response.data);
         store.userApartment = response.data;
       })
       .catch((err) => {
@@ -37,6 +37,13 @@ export default {
     lengthApartment() {
       return store.userApartment.length;
     },
+    allMessages(){
+        return store.userApartment.reduce((total, apartment) => total + (apartment.messages ? apartment.messages.length : 0), 0);
+    },
+    allViews(){
+        return store.userApartment.reduce((total, apartment) => total + (apartment.views ? apartment.views.length : 0), 0);
+    }
+
   },
 };
 </script>
@@ -45,13 +52,80 @@ export default {
     <aside>
       <routinglist :visible="lengthApartment" />
     </aside>
-    <div class="dashboard-box">
+    <div class="dashboard-box flex-grow-1">
       <div class="container-fluid my-5">
-        <h1>Dashboard {{ name }}</h1>
-        <h4 class="my-5">
-          Al momento hai registrato {{ lengthApartment }} appartmanenti su
-          BoolBnb
-        </h4>
+            <div class="row">
+                <div class="col-12">
+                    <h4><strong>Benvenuto in BoolBnb! {{ name }}</strong></h4>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-12 col-md-12 col-lg-4 my-3 d-flex gap-3 flex-grow-1">
+                    <div class="dashboard-card d-flex flex-wrap">
+
+                        <div class="apartments col-12 col-sm-4 col-md-4 col-lg d-flex flex-column align-items-center justify-content-center gap-3">
+                            <div class="icon-box d-flex align-items-center justify-content-center">
+                                <i class="fa-regular fa-building"></i>
+                            </div>
+                            <h5 class="number">
+                                {{ lengthApartment }}
+                            </h5>
+                            <h5 class="text-center">
+                                Appartamanenti
+                            </h5>
+
+                        </div>
+                        <div class="apartments col-12 col-sm-4 col-md-4 col-lg d-flex flex-column align-items-center justify-content-center gap-3">
+                            <div class="icon-box d-flex align-items-center justify-content-center">
+                                <i class="fa-regular fa-message"></i>
+                            </div>
+                            <h5>
+                                {{ allMessages }}
+                            </h5>
+                            <h5 class="text-center">
+                                Messaggi ricevuti
+                            </h5>
+                        </div>
+                        <div class="apartments col-12 col-sm-4 col-md-4 col-lg d-flex flex-column align-items-center justify-content-center gap-3">
+                            <div class="icon-box d-flex align-items-center justify-content-center">
+                                <i class="fa-regular fa-eye"></i>
+                            </div>
+                            <h5>
+                                {{ allViews}}
+                            </h5>
+                            <h5 class="text-center">
+                                Visite totali
+                            </h5>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 my-3 d-flex gap-3 box-routes">
+                    <div class="dashboard-card">
+                        <ul>
+                            <li>
+                                <router-link :to="{ name: 'apartments'}"
+                                class="d-flex align-items-center justify-content-center gap-3">
+                                    <i class="fa-solid fa-list"></i>
+                                    <span>Gestisci appartamenti</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="dashboard-card">
+                        <ul>
+                            <li>
+                                <router-link :to="{ name: 'createApartment'}"
+                                class="d-flex align-items-center justify-content-center gap-3">
+                                    <i class="fa-solid fa-circle-plus"></i>
+                                    <span>Nuovo appartamento</span>
+                                </router-link>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
       </div>
     </div>
   </div>
@@ -59,6 +133,86 @@ export default {
 <style lang='scss' scoped>
 @use "../../../scss/variables" as *;
 @use "../../../scss/dashboard" as *;
+
+a{
+    color:black;
+}
+
+.dashboard-card{
+    background-color: white;
+    padding: 1rem;
+    border-radius: 20px;
+    width: 100%;
+}
+
+i{
+    font-size: 3rem;
+    color: #FF5757;
+}
+
+span{
+    font-size: 1rem;
+}
+
+.apartments{
+    padding: 1rem 0;
+}
+
+.icon-box{
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+    background-color: rgb(239, 239, 239);
+}
+
+.box-routes{
+    flex-direction: column;
+}
+
+.fa-circle-plus,
+.fa-list{
+    font-size: 2rem;
+}
+
+@media (max-width: 1024px){
+
+    .apartments{
+        padding: 0.7rem;
+    }
+
+    .icon-box{
+        height: 4rem;
+        width: 4rem;
+    }
+
+    i{
+        font-size: 2rem;
+    }
+
+    h5{
+        font-size: 0.9rem;
+    }
+
+    span{
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 990px){
+
+    .box-routes{
+        flex-direction: row;
+        flex-grow: 1;
+    }
+
+}
+
+@media (max-width: 600px){
+    .box-routes{
+        flex-direction: column;
+    }
+
+}
 
 // @use 'path' as *;
 </style>

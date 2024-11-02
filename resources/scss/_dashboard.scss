@@ -8,12 +8,13 @@
 }
 
 aside {
-    width: 350px;
+    width: 300px;
     border-right: 1px solid $color;
 }
 
 .dashboard-box {
-    width:calc(100% - 350px);
+    width:calc(100% - 300px);
+    background-color: rgb(239, 239, 239);
 }
 
 ul {

@@ -15,7 +15,7 @@ import ShowApartment from "../pages/Ura/ShowApartment.vue";
 import EditApartment from "../pages/Ura/EditApartment.vue";
 import Apartments from "../pages/Apartments.vue";
 import PaymentComponent from "../pages/Components/PaymentComponent.vue";
-import CheckoutPayment from "../pages/components/CheckoutPayment.vue";
+import CheckoutPayment from "../pages/Components/CheckoutPayment.vue";
 import PageProfile from "../pages/Ur/PageProfile.vue";
 import PageMessage from "../pages/Ur/PageMessage.vue";
 import About from "../pages/About.vue";

@@ -45,27 +45,29 @@ export default {
       <li class="py-3 d-flex align-items-center" v-if="visible">
         <router-link
           class="link d-flex align-items-center gap-2"
-          :to="{ name: 'apartments' }"
+          :to="{ name: 'dashboard' }"
         >
-          <i class="fa-solid fa-list"></i>
+          <i class="fa-solid fa-gauge"></i>
           <span class="d-none d-xl-inline d-lg-inline"
-            >I miei appartamenti</span
+            >Dashboard</span
           ></router-link
         >
       </li>
       <li class="py-3 d-flex align-items-center">
         <router-link
           class="link d-flex align-items-center gap-2"
-          :to="{ name: 'createApartment' }"
+          :to="{ name: 'home' }"
         >
-          <i class="fa-solid fa-circle-plus"></i>
+          <i class="fa-solid fa-house"></i>
           <span class="d-none d-xl-inline d-lg-inline"
-            >Nuovo appartamento</span
+            >Pagina principale</span
           ></router-link
         >
       </li>
       <li @click="logout" class="py-3 d-flex align-items-center">
-        <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" />
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <!-- <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> -->
+        <span class="d-none d-xl-inline d-lg-inline">Disconnetti</span>
       </li>
       <!-- <li class="py-3 d-flex align-items-center"> -->
       <!-- <router-link -->
