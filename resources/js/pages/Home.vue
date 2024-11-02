@@ -1,5 +1,5 @@
 <script>
-import ApartmentCard from "./Components/ApartmentCard.vue";
+import ApartmentCard from "./components/ApartmentCard.vue";
 import { store } from "../store/store";
 export default {
   name: "Home",
@@ -75,6 +75,7 @@ export default {
           params: this.$route.params,
           query: {},
         });
+        store.isLoading = false;
       })
       .catch((err) => {
         console.log("app- all apartment: ", err.message);
@@ -94,6 +95,15 @@ export default {
         return 0;
       });
     },
+    isLoading() {
+      return store.isLoading;
+    },
+  },
+  beforeRouteEnter() {
+    store.isLoading = true;
+  },
+  beforeRouteLeave() {
+    store.isLoading = true;
   },
 };
 </script>
@@ -107,7 +117,7 @@ export default {
   </div> -->
 
   <!-- card -->
-  <div class="container-fluid mx-auto">
+  <div class="container-fluid mx-auto" v-if="!isLoading">
     <div class="row pt-5">
       <router-link
         class="col-lg-4 col-xl-3 col-md-6 col-sm-6 mb-4"
@@ -119,26 +129,27 @@ export default {
         :key="index"
       >
         <div v-if="apartment.sponsors.length">
-            <div class="sponsored-card">
-                <ApartmentCard :apartment="apartment" />
-                <div class="sponsored-box">
-                    <div class="text-sponsored">
-                        <span>Sponsorizzato</span>
-                    </div>
-                    <div class="sponsored-icon">
-                        <i class="fa-solid fa-award"></i>
-                    </div>
-
-                </div>
+          <div class="sponsored-card">
+            <ApartmentCard :apartment="apartment" />
+            <div class="sponsored-box">
+              <div class="text-sponsored">
+                <span>Sponsorizzato</span>
+              </div>
+              <div class="sponsored-icon">
+                <i class="fa-solid fa-award"></i>
+              </div>
             </div>
+          </div>
         </div>
         <div v-else>
-            <ApartmentCard :apartment="apartment" />
+          <ApartmentCard :apartment="apartment" />
         </div>
       </router-link>
     </div>
   </div>
-
+  <div class="contLoader" v-else>
+    <div class="loader"></div>
+  </div>
   <!-- codice del toast per registrazione a buon fine -->
   <div
     ref="liveToast"

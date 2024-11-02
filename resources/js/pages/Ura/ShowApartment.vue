@@ -278,14 +278,20 @@ export default {
     haveServices() {
       return this.apartment?.services?.length;
     },
+    isLoading() {
+      return store.isLoading;
+    },
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      console.log(to.name === "showApartment" && from.name !== "apartments");
       if (to.name === "showApartment" && from.name !== "apartments") {
         vm.countView(to.params.id);
       }
     });
+  },
+
+  beforeRouteLeave() {
+    store.isLoading = true;
   },
   mounted() {
     console.log(store);
@@ -477,7 +483,9 @@ export default {
       </div>
     </div>
   </div>
-  <div v-else class="loading"></div>
+  <div class="contLoader" v-else>
+    <div class="loader"></div>
+  </div>
   <!-- <div v-else>Appartamento non trovato</div> -->
 
   <!-- Toast per notifiche -->

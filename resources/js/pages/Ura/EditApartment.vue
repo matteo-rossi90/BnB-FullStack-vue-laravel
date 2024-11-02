@@ -29,6 +29,7 @@ export default {
             .get("http://127.0.0.1:8000/api/services")
             .then((res) => {
               this.services = res.data;
+              store.isLoading = false;
             })
             .catch((err) => console.log(err));
         })
@@ -195,6 +196,9 @@ export default {
     image() {
       return `http://127.0.0.1:8000/${this.apartment.image}`;
     },
+    isLoading() {
+      return store.isLoading;
+    },
     // isSelectedServices(id) {
     //   return this.apartment.services
     //     .map((service) => {
@@ -206,11 +210,17 @@ export default {
   mounted() {
     this.findApartment(this.$route.params.id);
   },
+  beforeRouteEnter() {
+    store.isLoading = true;
+  },
+  beforeRouteLeave() {
+    store.isLoading = true;
+  },
 };
 </script>
 
 <template>
-  <div class="container">
+  <div class="container" v-if="!isLoading">
     <h1 class="my-5">Modifica di {{ apartamentFiltred.title }}</h1>
 
     <form @submit.prevent="submit" class="mb-4">
@@ -342,6 +352,9 @@ export default {
 
       <button type="submit" class="btn btn-dark">Salva</button>
     </form>
+  </div>
+  <div class="contLoader" v-else>
+    <div class="loader"></div>
   </div>
 </template>
 
