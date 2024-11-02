@@ -32,6 +32,8 @@ export default {
       postalCode: "",
       place: "",
       resultOfSearch: "",
+      activeButton: true,
+      clickOfStreet: false,
     };
   },
   methods: {
@@ -125,6 +127,7 @@ export default {
         })
         .then((response) => {
           this.resultOfSearch = response.data.results;
+          this.activeButton = false;
         })
 
         .catch((error) => {
@@ -143,6 +146,7 @@ export default {
       console.log(this.apartment.services);
     },
     activeForm(index) {
+      this.clickOfStreet = true;
       this.apartment.address =
         this.street +
         " " +
@@ -156,6 +160,13 @@ export default {
       this.isAproveStreet = true;
     },
     createApartment() {
+      console.log(
+        "evento finale",
+        "result of search",
+        this.resultOfSearch,
+        "is aproved street ",
+        this.isAproveStreet
+      );
       if (!this.validateForm()) return;
       let formData = new FormData();
       formData.append("image", this.image);
@@ -443,9 +454,17 @@ export default {
                     </div>
                   </div>
                 </div>
-                <div v-if="resultOfSearch && !isAproveStreet">
+                <div
+                  v-if="resultOfSearch && !isAproveStreet"
+                  class="d-flex flex-column justify-content-center align-items-center"
+                >
+                  <p class="badge rounded-pill text-bg-dark m-0 p-2 fw-bold">
+                    Clicca sulla via dell'apparamento che vuoi selezionare:
+                  </p>
                   <ul>
                     <li
+                      class="badge rounded-pill text-bg-success"
+                      role="button"
                       v-for="(street, index) in resultOfSearch"
                       :key="index"
                       @click="activeForm(index)"
@@ -465,16 +484,16 @@ export default {
                   </ul>
                 </div>
                 <button
-                  v-if="!isAproveStreet"
                   @click="submit"
                   class="btn btn-dark"
+                  v-if="activeButton"
                 >
                   Approva indirizzo
                 </button>
                 <button
-                  v-if="isAproveStreet"
                   class="btn btn-dark mt-5"
                   @click="createApartment"
+                  v-if="!activeButton && clickOfStreet"
                 >
                   inserisci appartamento
                 </button>
