@@ -52,7 +52,7 @@ export default {
     <aside>
       <routinglist :visible="lengthApartment" />
     </aside>
-    <div class="dashboard-box flex-grow-1">
+    <div class="dashboard-box dashboard-color flex-grow-1">
       <div class="container-fluid my-5">
             <div class="row">
                 <div class="col-12">
