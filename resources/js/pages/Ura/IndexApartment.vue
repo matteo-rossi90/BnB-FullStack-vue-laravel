@@ -13,9 +13,13 @@ export default {
       name: "",
       toastMessage: "",
       sponsorType: "nulla",
+      isSidebarCollapsed: false,
     };
   },
   methods: {
+    toggleSidebar() {
+      this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    },
     getMessages(apartmentId, apartments) {
       const apartment = apartments.find((ap) => ap.id === apartmentId);
       if (apartment) {
@@ -189,8 +193,8 @@ export default {
 </script>
 <template>
   <div class="wrapper d-flex">
-    <aside>
-        <routinglist :visible="lengthArrayApartment"/>
+    <aside :class="{ 'collapsed': isSidebarCollapsed }">
+        <routinglist :visible="lengthArrayApartment" v-if="!isSidebarCollapsed"/>
     </aside>
     <div class="dashboard-box dashboard-color px-2">
       <!-- <router-link :to="{ name: 'dashboard' }"> -->
@@ -201,253 +205,256 @@ export default {
       <!-- </router-link> -->
       <div class="container-fluid my-3">
 
+            <button @click="toggleSidebar" class=" btn sidebar-toggle my-1">
+                <i :class="isSidebarCollapsed ? 'fa-solid fa-arrow-right' : 'fa-solid fa-bars'"></i>
+            </button>
             <div class="row" v-if="lengthArrayApartment">
                 <div class="col-lg-12 col-md-12">
-                <h4 class="my-4">
-                    <strong>
-                        I miei appartamenti: {{ lengthArrayApartment }}
-                    </strong>
-                </h4>
+                    <h4 class="mb-4 mt-2">
+                        <strong>
+                            I miei appartamenti: {{ lengthArrayApartment }}
+                        </strong>
+                    </h4>
 
                 <!-- <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4> -->
 
-                <div class="dashboard-card table-responsive px-2">
-                    <table class="table">
-                    <thead>
-                        <tr>
-                        <th scope="col" class="d-none d-lg-table-cell">#id</th>
-                        <th scope="col" class="d-none d-lg-table-cell">Immagine</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Sponsor</th>
-                        <th scope="col" class="d-none d-sm-table-cell">
-                            Disponibilità
-                        </th>
-                        <th scope="col">Messaggi</th>
-                        <th scope="col">Statistiche</th>
-                        <th scope="col">Azioni</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="apartment in apartmentFiltred" :key="apartment.id">
-                        <td scope="row" class="align-middle d-none d-lg-table-cell">
-                            {{ apartment.id }}
-                        </td>
-                        <td class="img-container align-middle d-none d-lg-table-cell" scope="row">
-                            <img
-                            class="img-fluid thumbnail"
-                            :src="imageUrl(apartment.image)"
-                            alt=""
-                            />
-                        </td>
-                        <td scope="row" class="align-middle">
-                            {{ apartment.title }}
-                        </td>
-                        <td scope="row" class="align-middle">
-                            <router-link
-                            v-if="!isPremium"
-                            class="sponsor"
-                            :to="{
-                                name: 'payment',
-                                params: { id: apartment.id, title: apartment.slug },
-                            }"
-                            >Sponsorizza</router-link
-                            >
-                            <span class="sponsor" v-if="apartment?.sponsors[0]">{{
-                            formatDate(apartment.sponsors[0].pivot.end_at)
-                            }}</span>
-                            <span v-if="!apartment?.sponsors[0] && isPremium">-</span>
-                        </td>
-                        <td scope="row" class="align-middle d-none d-md-table-cell text-center">
-                            <span
-                            class="badge text-bg-success"
-                            v-if="apartment.is_visible === 1"
-                            >
-                            <i class="fa-solid fa-check"></i>
-                            </span>
-                            <span class="badge text-bg-danger" v-else>
-                                <i class="fa-solid fa-xmark"></i>
-                            </span>
-                        </td>
-
-                        <td scope="row" class="align-middle text-center">
-                            <router-link
-                            :to="{
-                                name: 'messages',
-                                params: {
-                                id: apartment.id,
-                                },
-                            }"
-                            @click="getMessages(apartment.id, apartmentFiltred)"
-                            >
-                            <span class="position-relative">
+                    <div class="dashboard-card table-responsive px-2">
+                        <table class="table">
+                        <thead>
+                            <tr>
+                            <th scope="col" class="d-none d-lg-table-cell">#id</th>
+                            <th scope="col" class="d-none d-lg-table-cell">Immagine</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Sponsor</th>
+                            <th scope="col" class="d-none d-sm-table-cell">
+                                Disponibilità
+                            </th>
+                            <th scope="col">Messaggi</th>
+                            <th scope="col">Statistiche</th>
+                            <th scope="col">Azioni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="apartment in apartmentFiltred" :key="apartment.id">
+                            <td scope="row" class="align-middle d-none d-lg-table-cell">
+                                {{ apartment.id }}
+                            </td>
+                            <td class="img-container align-middle d-none d-lg-table-cell" scope="row">
+                                <img
+                                class="img-fluid thumbnail"
+                                :src="imageUrl(apartment.image)"
+                                alt=""
+                                />
+                            </td>
+                            <td scope="row" class="align-middle">
+                                {{ apartment.title }}
+                            </td>
+                            <td scope="row" class="align-middle">
+                                <router-link
+                                v-if="!isPremium"
+                                class="sponsor"
+                                :to="{
+                                    name: 'payment',
+                                    params: { id: apartment.id, title: apartment.slug },
+                                }"
+                                >Sponsorizza</router-link
+                                >
+                                <span class="sponsor" v-if="apartment?.sponsors[0]">{{
+                                formatDate(apartment.sponsors[0].pivot.end_at)
+                                }}</span>
+                                <span v-if="!apartment?.sponsors[0] && isPremium">-</span>
+                            </td>
+                            <td scope="row" class="align-middle d-none d-md-table-cell text-center">
                                 <span
-                                v-if="getUnreadMessages(apartment) > 0"
-                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                class="badge text-bg-success"
+                                v-if="apartment.is_visible === 1"
                                 >
-                                {{ getUnreadMessages(apartment) }}
+                                Visibile
                                 </span>
-                                <i class="fa-solid fa-envelope"> </i>
-                            </span>
-                            </router-link>
-                        </td>
-                        <td scope="row" class="align-middle text-center">
-                            <router-link
-                            :to="{
-                                name: 'statistic',
-                                params: { id: apartment.id, title: apartment.slug },
-                            }"
-                            >
-                            <i class="fa-solid fa-chart-simple"></i>
-                            </router-link>
-                        </td>
+                                <span class="badge text-bg-danger" v-else>
+                                    Non visibile
+                                </span>
+                            </td>
 
-                        <td scope="row" class="actions align-middle">
-                            <!-- td grandezza normale -->
-                            <div class="d-none d-sm-table-cell">
-                            <router-link
+                            <td scope="row" class="align-middle text-center">
+                                <router-link
                                 :to="{
-                                name: 'showApartment',
-                                params: { slug: apartment.slug, id: apartment.id },
+                                    name: 'messages',
+                                    params: {
+                                    id: apartment.id,
+                                    },
                                 }"
-                            >
-                                <div class="btn btn-dark">
-                                <i class="fa-solid fa-eye"></i>
-                                </div>
-                            </router-link>
-                            <router-link
-                                class="link"
+                                @click="getMessages(apartment.id, apartmentFiltred)"
+                                >
+                                <span class="position-relative">
+                                    <span
+                                    v-if="getUnreadMessages(apartment) > 0"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                    >
+                                    {{ getUnreadMessages(apartment) }}
+                                    </span>
+                                    <i class="fa-solid fa-envelope"> </i>
+                                </span>
+                                </router-link>
+                            </td>
+                            <td scope="row" class="align-middle text-center">
+                                <router-link
                                 :to="{
-                                name: 'EditApartment',
-                                params: { id: apartment.id },
+                                    name: 'statistic',
+                                    params: { id: apartment.id, title: apartment.slug },
                                 }"
-                            >
-                                <div class="btn btn-warning">
-                                <i class="fa-solid fa-pencil"></i>
-                                </div>
-                            </router-link>
-
-                            <div class="d-inline-block">
-                                <button
-                                type="button"
-                                class="btn btn-danger"
-                                id="liveToastBtn"
-                                data-bs-toggle="modal"
-                                data-bs-target="#mioModale"
                                 >
-                                <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                            </div>
-                            <!-- Modale -->
-                            <div
-                            class="modal fade"
-                            id="mioModale"
-                            tabindex="-1"
-                            aria-labelledby="mioModaleLabel"
-                            aria-hidden="true"
-                            >
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="mioModaleLabel">
-                                    Sei sicuro di voler eliminare l'appartamento?
-                                    </h5>
-                                    <button
-                                    type="button"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Chiudi"
-                                    ></button>
-                                </div>
-                                <div class="modal-body">
-                                    In questo modo
-                                    <strong>{{ apartment.title }}</strong> non sarà più
-                                    disponibile
-                                </div>
-                                <div class="modal-footer">
-                                    <button
-                                    type="button"
-                                    class="btn btn-secondary"
-                                    data-bs-dismiss="modal"
-                                    >
-                                    Chiudi
-                                    </button>
-                                    <button
-                                    type="button"
-                                    @click="deleteApartment(apartment)"
-                                    data-bs-dismiss="modal"
-                                    class="btn btn-danger"
-                                    >
-                                    Elimina
-                                    </button>
-                                </div>
-                                </div>
-                            </div>
-                            </div>
+                                <i class="fa-solid fa-chart-simple"></i>
+                                </router-link>
+                            </td>
 
-                            <!-- td responsive -->
-                            <div class="d-block d-sm-none">
-                            <div class="btn-group dropup">
-                                <button
-                                type="button"
-                                class="btn btn-light dropdown-toggle"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                                >
-                                <i class="fa-solid fa-ellipsis-vertical"></i>
-                                </button>
-                                <ul class="dropdown-menu">
-                                <li>
-                                    <router-link
+                            <td scope="row" class="actions align-middle">
+                                <!-- td grandezza normale -->
+                                <div class="d-none d-sm-table-cell">
+                                <router-link
                                     :to="{
-                                        name: 'showApartment',
-                                        params: {
-                                        slug: apartment.slug,
-                                        id: apartment.id,
-                                        },
+                                    name: 'showApartment',
+                                    params: { slug: apartment.slug, id: apartment.id },
                                     }"
-                                    >
-                                    <div class="btn btn-dark m-1">
-                                        <i class="fa-solid fa-eye"></i>
+                                >
+                                    <div class="btn btn-dark">
+                                    <i class="fa-solid fa-eye"></i>
                                     </div>
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <router-link
+                                </router-link>
+                                <router-link
                                     class="link"
                                     :to="{
-                                        name: 'EditApartment',
-                                        params: { id: apartment.id },
+                                    name: 'EditApartment',
+                                    params: { id: apartment.id },
                                     }"
-                                    >
-                                    <div class="btn btn-warning m-1">
-                                        <i class="fa-solid fa-pencil"></i>
+                                >
+                                    <div class="btn btn-warning">
+                                    <i class="fa-solid fa-pencil"></i>
                                     </div>
-                                    </router-link>
-                                </li>
+                                </router-link>
 
-                                <li>
-                                    <div class="d-inline-block">
+                                <div class="d-inline-block">
                                     <button
-                                        type="button"
-                                        class="btn btn-danger m-1"
-                                        id="liveToastBtn"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#mioModale"
+                                    type="button"
+                                    class="btn btn-danger"
+                                    id="liveToastBtn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#mioModale"
                                     >
-                                        <i class="fa-solid fa-trash"></i>
+                                    <i class="fa-solid fa-trash"></i>
                                     </button>
+                                </div>
+                                </div>
+                                <!-- Modale -->
+                                <div
+                                class="modal fade"
+                                id="mioModale"
+                                tabindex="-1"
+                                aria-labelledby="mioModaleLabel"
+                                aria-hidden="true"
+                                >
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="mioModaleLabel">
+                                        Sei sicuro di voler eliminare l'appartamento?
+                                        </h5>
+                                        <button
+                                        type="button"
+                                        class="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Chiudi"
+                                        ></button>
                                     </div>
-                                </li>
-                                </ul>
-                            </div>
-                            </div>
-                        </td>
-                        </tr>
-                    </tbody>
-                    </table>
+                                    <div class="modal-body">
+                                        In questo modo
+                                        <strong>{{ apartment.title }}</strong> non sarà più
+                                        disponibile
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button
+                                        type="button"
+                                        class="btn btn-secondary"
+                                        data-bs-dismiss="modal"
+                                        >
+                                        Chiudi
+                                        </button>
+                                        <button
+                                        type="button"
+                                        @click="deleteApartment(apartment)"
+                                        data-bs-dismiss="modal"
+                                        class="btn btn-danger"
+                                        >
+                                        Elimina
+                                        </button>
+                                    </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <!-- td responsive -->
+                                <div class="d-block d-sm-none">
+                                <div class="btn-group dropup">
+                                    <button
+                                    type="button"
+                                    class="btn btn-light dropdown-toggle"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false"
+                                    >
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                    <li>
+                                        <router-link
+                                        :to="{
+                                            name: 'showApartment',
+                                            params: {
+                                            slug: apartment.slug,
+                                            id: apartment.id,
+                                            },
+                                        }"
+                                        >
+                                        <div class="btn btn-dark m-1">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </div>
+                                        </router-link>
+                                    </li>
+                                    <li>
+                                        <router-link
+                                        class="link"
+                                        :to="{
+                                            name: 'EditApartment',
+                                            params: { id: apartment.id },
+                                        }"
+                                        >
+                                        <div class="btn btn-warning m-1">
+                                            <i class="fa-solid fa-pencil"></i>
+                                        </div>
+                                        </router-link>
+                                    </li>
+
+                                    <li>
+                                        <div class="d-inline-block">
+                                        <button
+                                            type="button"
+                                            class="btn btn-danger m-1"
+                                            id="liveToastBtn"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#mioModale"
+                                        >
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                        </div>
+                                    </li>
+                                    </ul>
+                                </div>
+                                </div>
+                            </td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
             </div>
             <div v-else>
                 <h2 class="pt-5">

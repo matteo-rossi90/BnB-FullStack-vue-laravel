@@ -44,7 +44,7 @@ export default {
     <ul class="d-flex flex-column justify-content-center">
       <li class="py-3 d-flex align-items-center" v-if="visible">
         <router-link
-          class="link d-flex align-items-center gap-2"
+          class="link d-flex align-items-center gap-3"
           :to="{ name: 'dashboard' }"
         >
           <i class="fa-solid fa-gauge"></i>
@@ -55,7 +55,7 @@ export default {
       </li>
       <li class="py-3 d-flex align-items-center">
         <router-link
-          class="link d-flex align-items-center gap-2"
+          class="link d-flex align-items-center gap-3"
           :to="{ name: 'home' }"
         >
           <i class="fa-solid fa-house"></i>
@@ -64,7 +64,7 @@ export default {
           ></router-link
         >
       </li>
-      <li @click="logout" class="py-3 d-flex align-items-center">
+      <li @click="logout" class="py-3 d-flex align-items-center gap-3 click link">
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <!-- <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> -->
         <span class="d-none d-xl-inline d-lg-inline">Disconnetti</span>
@@ -97,4 +97,9 @@ export default {
 
 <style lang="scss" scoped>
 @use "../../../../scss/dashboard" as *;
+
+.click{
+    cursor: pointer;
+}
+
 </style>
