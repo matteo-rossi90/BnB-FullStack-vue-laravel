@@ -22,7 +22,7 @@ export default {
         .then((response) => {
           store.is_logged = true;
           store.user = response.data;
-        //   console.log("user", store.user);
+          //   console.log("user", store.user);
           if (response.data.name) {
             store.userName = response.data.name;
           } else {
@@ -74,7 +74,7 @@ export default {
 
 main {
   padding-top: 6rem;
-  min-height: calc(100vh - 6rem);
+  min-height: 100vh;
 
   footer {
     position: absolute;

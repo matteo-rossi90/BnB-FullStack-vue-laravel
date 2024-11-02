@@ -67,7 +67,7 @@ export default {
     },
     updateFilter() {
       this.isLoading = true;
-
+      store.isFilterClose = false;
       this.$router
         .push({
           query: {
@@ -225,7 +225,7 @@ export default {
       placeholder="inserisci numero"
       id="number_rooms"
       v-model.trim="filter.number_rooms"
-      class="form-control mb-3"
+      class="form-control mb-1"
     />
     <label for="number_beds">Letti</label>
     <input
@@ -233,7 +233,7 @@ export default {
       placeholder="inserisci numero"
       id="number_beds"
       v-model.trim="filter.number_beds"
-      class="form-control mb-3"
+      class="form-control mb-1"
     />
     <label for="square_meters">Superficie</label>
     <input
@@ -241,20 +241,19 @@ export default {
       placeholder="inserisci numero"
       id="square_meters"
       v-model.trim="filter.square_meters"
-      class="form-control mb-3"
+      class="form-control mb-1"
     />
 
-    <label>Scegli il raggio di ricerca</label>
+    <span class="">{{ filter.distance }} km dal punto scelto</span>
     <input
-      class="dark"
+      class="dark mb-1"
       type="range"
       min="1"
       max="200"
       v-model.trim="filter.distance"
     />
-    <span class="mb-3">{{ filter.distance }} km dal punto scelto</span>
-
-    <div class="contServices my-3" v-if="isReady">
+    <label for="square_meters ">Servizi</label>
+    <div class="contServices mb-1" v-if="isReady">
       <span
         class="btn service"
         v-for="(service, index) in services"
@@ -461,7 +460,7 @@ input[type="range"].dark {
   top: 6rem;
   left: 50%;
   transform: translate(-50%);
-  padding: 2rem;
+  padding: 1.5rem;
   border-radius: 20px;
   box-shadow: $shadow-color 0px 2px 10px;
 }
