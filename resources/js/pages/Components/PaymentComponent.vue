@@ -3,17 +3,20 @@ import { store } from "../../store/store";
 export default {
   name: "PaymentComponent",
   data() {
-    return {
-      apartmentTitle: "",
-    };
+    return {};
   },
   methods: {},
   mounted() {
     store.isLoading = true;
     store.paymentError = false;
     store.successPayment = false;
-    this.apartmentTitle = this.$route.params.title;
+
     console.log(this.$route.params);
+  },
+  computed: {
+    apartmentTitle() {
+      return this.$route.params.title.split("-").join(" ");
+    },
   },
 };
 </script>
