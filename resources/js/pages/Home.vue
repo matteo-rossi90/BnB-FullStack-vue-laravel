@@ -107,7 +107,7 @@ export default {
   </div> -->
 
   <!-- card -->
-  <div class="container mx-auto">
+  <div class="container-fluid mx-auto">
     <div class="row pt-5">
       <router-link
         class="col-lg-4 col-xl-3 col-md-6 col-sm-6 mb-4"
