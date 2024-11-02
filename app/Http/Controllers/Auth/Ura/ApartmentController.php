@@ -57,7 +57,7 @@ class ApartmentController extends Controller
             // Salva il percorso dell'immagine nella variabile $data
             $data['image'] = "storage/uploads/$imageName"; // Percorso relativo da salvare nel database
         } else {
-            $data['image'] = 'img/no-image.jpg';
+            $data['image'] = 'storage/uploads/default/1.jpg';
         }
 
         $apartment = Apartment::create($data);
