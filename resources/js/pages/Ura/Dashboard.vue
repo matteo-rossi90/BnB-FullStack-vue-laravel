@@ -164,13 +164,6 @@ a {
   color: black;
 }
 
-.dashboard-card {
-  background-color: white;
-  padding: 1rem;
-  border-radius: 20px;
-  width: 100%;
-}
-
 i {
   font-size: 3rem;
   color: #ff5757;
