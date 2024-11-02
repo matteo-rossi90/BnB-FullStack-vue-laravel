@@ -301,7 +301,7 @@ export default {
                           params: { slug: apartment.slug, id: apartment.id },
                         }"
                       >
-                        <div class="btn btn-primary">
+                        <div class="btn btn-dark">
                           <i class="fa-solid fa-eye"></i>
                         </div>
                       </router-link>
@@ -398,7 +398,7 @@ export default {
                                 },
                               }"
                             >
-                              <div class="btn btn-primary m-1">
+                              <div class="btn btn-dark m-1">
                                 <i class="fa-solid fa-eye"></i>
                               </div>
                             </router-link>

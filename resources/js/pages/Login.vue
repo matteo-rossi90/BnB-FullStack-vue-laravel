@@ -159,7 +159,7 @@ export default {
               errors.password
             }}</small>
           </div>
-          <button class="btn btn-primary mt-3" type="submit">Login</button>
+          <button class="btn btn-dark mt-3" type="submit">Login</button>
 
           <!-- <div v-if="loginError" class="text-danger mt-4"> -->
           <!-- {{ loginError }} -->
