@@ -19,11 +19,14 @@ export default {
 </script>
 <template>
   <div class="container">
-    <h2 class="main-text">Scegli il piano Premium che preferisci per <strong> {{ apartmentTitle }} </strong></h2>
+    <h2 class="main-text">
+      Scegli il piano Premium che preferisci per
+      <strong> {{ apartmentTitle }} </strong>
+    </h2>
     <div class="wrapper my-5">
       <div class="cardT">
         <div class="icon icon-bronze">
-            <i class="fa-solid fa-award"></i>
+          <i class="fa-solid fa-award"></i>
         </div>
         <h3 class="card-title">Bronzo</h3>
         <p class="card-content">
@@ -39,12 +42,12 @@ export default {
           <p>Vantaggi</p>
           <ul>
             <li class="sponsor-info">
-                <i class="fa-solid fa-eye"></i>
-                Aumento delle visualizzazioni
+              <i class="fa-solid fa-eye"></i>
+              Aumento delle visualizzazioni
             </li>
             <li class="sponsor-info">
-                <i class="fa-solid fa-chart-line"></i>
-                Aumento delle prenotazioni
+              <i class="fa-solid fa-chart-line"></i>
+              Aumento delle prenotazioni
             </li>
           </ul>
 
@@ -53,16 +56,16 @@ export default {
           <p>Costi e dettagli:</p>
           <ul>
             <li class="sponsor-info">
-                <i class="fa-solid fa-credit-card"></i>
-                Costo: 2.99€
+              <i class="fa-solid fa-credit-card"></i>
+              Costo: 2.99€
             </li>
             <li class="sponsor-info">
-                <i class="fa-solid fa-clock"></i>
-                24 ore di sponsorizzazione
+              <i class="fa-solid fa-clock"></i>
+              24 ore di sponsorizzazione
             </li>
             <li class="sponsor-info">
-                <i class="fa-solid fa-user"></i>
-                Un abbonamento per profilo
+              <i class="fa-solid fa-user"></i>
+              Un abbonamento per profilo
             </li>
           </ul>
         </div>
@@ -74,7 +77,7 @@ export default {
       </div>
       <div class="cardT">
         <div class="icon icon-silver">
-            <i class="fa-solid fa-award"></i>
+          <i class="fa-solid fa-award"></i>
         </div>
         <h3 class="card-title">Argento</h3>
         <p class="card-content">
@@ -90,11 +93,13 @@ export default {
           <p>Vantaggi</p>
           <ul>
             <li class="sponsor-info">
-                <i class="fa-solid fa-eye"></i>
-                Aumento delle visualizzazioni</li>
+              <i class="fa-solid fa-eye"></i>
+              Aumento delle visualizzazioni
+            </li>
             <li class="sponsor-info">
-                <i class="fa-solid fa-chart-line"></i>
-                Aumento delle prenotazioni</li>
+              <i class="fa-solid fa-chart-line"></i>
+              Aumento delle prenotazioni
+            </li>
           </ul>
 
           <div class="line"></div>
@@ -102,14 +107,17 @@ export default {
           <p>Costi e dettagli:</p>
           <ul>
             <li class="sponsor-info">
-                <i class="fa-solid fa-credit-card"></i>
-                Costo: 5.99€</li>
+              <i class="fa-solid fa-credit-card"></i>
+              Costo: 5.99€
+            </li>
             <li class="sponsor-info">
-                <i class="fa-solid fa-clock"></i>
-                72 ore di sponsorizzazione</li>
+              <i class="fa-solid fa-clock"></i>
+              72 ore di sponsorizzazione
+            </li>
             <li class="sponsor-info">
-                <i class="fa-solid fa-user"></i>
-                Un abbonamento per profilo</li>
+              <i class="fa-solid fa-user"></i>
+              Un abbonamento per profilo
+            </li>
           </ul>
         </div>
         <router-link
@@ -120,7 +128,7 @@ export default {
       </div>
       <div class="cardT">
         <div class="icon icon-gold">
-            <i class="fa-solid fa-award"></i>
+          <i class="fa-solid fa-award"></i>
         </div>
         <h3 class="card-title">Oro</h3>
         <p class="card-content">
@@ -133,32 +141,35 @@ export default {
         <div class="line"></div>
 
         <div class="contInfo">
+          <p>Vantaggi</p>
+          <ul>
+            <li class="sponsor-info">
+              <i class="fa-solid fa-eye"></i>
+              Aumento delle visualizzazioni
+            </li>
+            <li class="sponsor-info">
+              <i class="fa-solid fa-chart-line"></i>
+              Aumento delle prenotazioni
+            </li>
+          </ul>
 
-            <p>Vantaggi</p>
-            <ul>
-                <li class="sponsor-info">
-                    <i class="fa-solid fa-eye"></i>
-                    Aumento delle visualizzazioni</li>
-                <li class="sponsor-info">
-                    <i class="fa-solid fa-chart-line"></i>
-                    Aumento delle prenotazioni</li>
-            </ul>
+          <div class="line"></div>
 
-            <div class="line"></div>
-
-            <p>Costi e dettagli:</p>
-            <ul>
-                <li class="sponsor-info">
-                    <i class="fa-solid fa-credit-card"></i>
-                    Costo: 5.99€</li>
-                <li class="sponsor-info">
-                    <i class="fa-solid fa-clock"></i>
-                    72 ore di sponsorizzazione</li>
-                <li class="sponsor-info">
-                    <i class="fa-solid fa-user"></i>
-                    Un abbonamento per profilo</li>
-            </ul>
-
+          <p>Costi e dettagli:</p>
+          <ul>
+            <li class="sponsor-info">
+              <i class="fa-solid fa-credit-card"></i>
+              Costo: 9.99€
+            </li>
+            <li class="sponsor-info">
+              <i class="fa-solid fa-clock"></i>
+              144 ore di sponsorizzazione
+            </li>
+            <li class="sponsor-info">
+              <i class="fa-solid fa-user"></i>
+              Un abbonamento per profilo
+            </li>
+          </ul>
         </div>
         <router-link
           :to="{ name: 'checkout', params: { sponsor: 3, name: 'oro' } }"
@@ -167,15 +178,14 @@ export default {
         </router-link>
       </div>
     </div>
-
   </div>
 </template>
 <style lang='scss' scoped>
-@use '../../../scss/variables' as *;
+@use "../../../scss/variables" as *;
 // @use 'path' as *;
 
 .main-text {
-text-align: center;
+  text-align: center;
   color: #000000;
   margin: 40px 0;
 }
@@ -189,8 +199,8 @@ text-align: center;
   margin-bottom: 1rem;
 }
 
-.card-content{
-    font-size: 1rem
+.card-content {
+  font-size: 1rem;
 }
 
 .cardT {
@@ -199,68 +209,65 @@ text-align: center;
   padding: 30px;
   border-radius: 3px;
   box-sizing: border-box;
-  color:rgb(63, 63, 63);
+  color: rgb(63, 63, 63);
   margin: 20px;
   border-radius: 20px;
   box-shadow: $shadow-color 0px 5px 10px;
 }
 
-.icon{
-    display: flex;
-    justify-content: center;
-    align-items:center;
-    padding: 3rem 0;
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 0;
 }
 
-.fa-solid.fa-award{
-    font-size: 90px;
+.fa-solid.fa-award {
+  font-size: 90px;
 }
 
 .fa-solid.fa-chart-line,
 .fa-solid.fa-credit-card,
 .fa-solid.fa-eye,
 .fa-solid.fa-clock,
-.fa-solid.fa-user{
-    text-align:center;
+.fa-solid.fa-user {
+  text-align: center;
 }
 
-.icon-bronze{
-
-    .fa-award{
-        color: #CD7F32;
-    }
+.icon-bronze {
+  .fa-award {
+    color: #cd7f32;
+  }
 }
 
-.icon-silver{
-
-    .fa-award{
-        color: rgb(192, 192, 192);
-    }
+.icon-silver {
+  .fa-award {
+    color: rgb(192, 192, 192);
+  }
 }
 
-.icon-gold{
-
-    .fa-award{
-        color: rgb(255, 215, 0);
-    }
+.icon-gold {
+  .fa-award {
+    color: rgb(255, 215, 0);
+  }
 }
 
 .card-btn {
-    margin-top: 3rem;
-    width: 100%;
-    display: block;
-    padding: 8px 16px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    //   letter-spacing: 1.2px;
-    background-color: $color-logo;
-    color: white;
+  margin-top: 3rem;
+  width: 100%;
+  display: block;
+  padding: 8px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  //   letter-spacing: 1.2px;
+  background-color: $color-logo;
+  color: white;
 }
 
 .card-btn:hover {
-    color: white;
-    background-color: $color-logo-dark;
+  color: white;
+  background-color: $color-logo-dark;
 }
 
 .contInfo {
@@ -277,52 +284,49 @@ text-align: center;
     color: rgb(63, 63, 63);
   }
 
-    .sponsor-info{
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.3rem 0;
-
-        i{
-            min-width: 20px;
-        }
-    }
-}
-
-.line{
-    border-top: 1px solid $hover-list;
-    width: 100%;
-    margin: 1.5rem 0;
+  .sponsor-info {
     display: flex;
-    align-self: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0;
+
+    i {
+      min-width: 20px;
+    }
+  }
 }
 
-@media (max-width: 768px){
-    .main-text{
-        text-align: left;
-        margin: 2rem;
-        line-height: 40px;
-    }
+.line {
+  border-top: 1px solid $hover-list;
+  width: 100%;
+  margin: 1.5rem 0;
+  display: flex;
+  align-self: center;
 }
 
-@media (max-width: 450px){
-
-    p{
-        font-size: 0.9rem;
-    }
-    ul li{
-        font-size: 0.85rem;
-    }
+@media (max-width: 768px) {
+  .main-text {
+    text-align: left;
+    margin: 2rem;
+    line-height: 40px;
+  }
 }
 
-@media (max-width: 321px){
-    .cardT{
-        padding: 25px;
-    }
-    ul li{
-        font-size: 0.8rem;
-    }
+@media (max-width: 450px) {
+  p {
+    font-size: 0.9rem;
+  }
+  ul li {
+    font-size: 0.85rem;
+  }
 }
 
-
+@media (max-width: 321px) {
+  .cardT {
+    padding: 25px;
+  }
+  ul li {
+    font-size: 0.8rem;
+  }
+}
 </style>

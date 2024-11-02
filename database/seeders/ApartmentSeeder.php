@@ -24,6 +24,7 @@ class ApartmentSeeder extends Seeder
         $streets = config('citySeader.rome_streets');
         $latitudes = config('citySeader.lat');
         $longitudes = config('citySeader.long');
+        $titles = config('citySeader.title');
         $path = ['storage\uploads\default\1.jpg', 'storage\uploads\default\2.jpg', 'storage\uploads\default\3.jpg', 'storage\uploads\default\4.jpg', 'storage\uploads\default\5.jpg', 'storage\uploads\default\6.jpg'];
 
 
@@ -35,7 +36,7 @@ class ApartmentSeeder extends Seeder
             $new_apartment->user_id = $user->id;
             $new_apartment->image = $path[array_rand($path)];
             $new_apartment->original_name = 'alt foto';
-            $new_apartment->title = "BnB da $user->name $i";
+            $new_apartment->title = $titles[$i];
             $new_apartment->slug = Helper::generateSlug($new_apartment->title, Apartment::class);
             $new_apartment->number_rooms = rand(1, 7);
             $new_apartment->number_beds = rand(1, 5);

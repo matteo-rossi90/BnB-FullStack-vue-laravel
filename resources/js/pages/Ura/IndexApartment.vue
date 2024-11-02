@@ -134,7 +134,6 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-
     // axios
     //   .get("api/user/utente/dashboard")
     //   .then((response) => {
@@ -154,8 +153,6 @@ export default {
           //   unreadMessages: apartment.messages.filter((m) => !m.read).length,
           unreadMessages: apartment.messages.length,
         }));
-        console.log(store.userApartment);
-        store.isLoading = false;
       })
       .catch((err) => {
         console.log(err);
@@ -187,20 +184,11 @@ export default {
     lengthArrayApartment() {
       return store.userApartment.length;
     },
-    isLoading() {
-      return store.isLoading;
-    },
-  },
-  beforeRouteEnter() {
-    store.isLoading = true;
-  },
-  beforeRouteLeave() {
-    store.isLoading = true;
   },
 };
 </script>
 <template>
-  <div class="wrapper d-flex" v-if="!isLoading">
+  <div class="wrapper d-flex">
     <div class="container-fluid my-3">
       <router-link :to="{ name: 'dashboard' }">
         <font-awesome-icon
@@ -483,9 +471,6 @@ export default {
         ></button>
       </div>
     </div>
-  </div>
-  <div class="contLoader" v-else>
-    <div class="loader"></div>
   </div>
 </template>
 <style lang='scss' scoped>

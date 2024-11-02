@@ -126,9 +126,7 @@ export default {
   },
   mounted() {
     window.addEventListener("click", () => {
-      if (this.isClose) {
-        this.isClose = false;
-      }
+      store.is_open = false;
     });
     window.addEventListener("scroll", () => {
       //   if (this.inScrollPage) {
@@ -218,9 +216,7 @@ export default {
               :to="{ name: 'home' }"
             >
               <img class="logo" src="Boolnb_circle.png" alt="airbnb photo" />
-              <strong class="text-logo">
-                BoolBnb
-              </strong>
+              <strong class="text-logo"> BoolBnb </strong>
             </router-link>
           </div>
           <div class="col">
@@ -247,12 +243,15 @@ export default {
                       v-for="(addressObj, index) in suggestAdress"
                       :key="index"
                     >
-                      <div class="link d-flex align-items-center gap-2" @click="sendAdress(addressObj)">
+                      <div
+                        class="link d-flex align-items-center gap-2"
+                        @click="sendAdress(addressObj)"
+                      >
                         <font-awesome-icon
-                        class="icon-location me-2"
-                        :icon="['fas', 'location-dot']" />
-                        <span class="street"
-                          >
+                          class="icon-location me-2"
+                          :icon="['fas', 'location-dot']"
+                        />
+                        <span class="street">
                           {{ addressObj.address.streetName }}
                         </span>
                         <span class="city"
@@ -343,8 +342,8 @@ export default {
 </template>
 <style lang="scss" scoped>
 /* // @use 'path' as *; */
-@use '../../scss/variables' as *;
-@use '../../scss/general' as*;
+@use "../../scss/variables" as *;
+@use "../../scss/general" as *;
 
 header {
   display: flex;
@@ -374,9 +373,9 @@ header {
       z-index: 100;
       border: 1px solid $color;
       z-index: 101;
-        &:hover {
-            box-shadow: $shadow-color 0px 2px 4px;
-        }
+      &:hover {
+        box-shadow: $shadow-color 0px 2px 4px;
+      }
       .profile {
         position: relative;
         top: 50%;
@@ -498,11 +497,11 @@ p,
         //   background-size: contain;
         //   background-repeat: no-repeat;
         // }
-        .icon-location{
-           font-size: 0.9rem;
-           padding: 1rem;
-           background-color: #DDDDDD;
-           border-radius: 10px;
+        .icon-location {
+          font-size: 0.9rem;
+          padding: 1rem;
+          background-color: #dddddd;
+          border-radius: 10px;
         }
         .street {
           font-size: 0.9rem;
@@ -534,24 +533,21 @@ p,
   overflow: hidden;
 }
 
-
 //responsive
-@media (max-width: 1072px){
-    .city,
-    .street{
-        font-size: 0.7rem !important;
-
-    }
+@media (max-width: 1072px) {
+  .city,
+  .street {
+    font-size: 0.7rem !important;
+  }
 }
-@media (max-width: 768px){
-    .contInput{
-        width: 100%;
-    }
+@media (max-width: 768px) {
+  .contInput {
+    width: 100%;
+  }
 
-    .text-logo{
-        display: none;
-    }
-
+  .text-logo {
+    display: none;
+  }
 }
 @media all and (max-width: 623px) {
   #responsiveNavBar.hidden {
@@ -606,11 +602,10 @@ p,
   cursor: pointer;
 }
 
-@media (max-width: 500px){
-    .icon-location{
-        padding: 0.2rem !important;
-        background-color: transparent !important;
-
-    }
+@media (max-width: 500px) {
+  .icon-location {
+    padding: 0.2rem !important;
+    background-color: transparent !important;
+  }
 }
 </style>

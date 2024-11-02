@@ -223,6 +223,7 @@ export default {
     },
 
     submitForm() {
+      this.buttonMessage = "Invio in corso...";
       this.validateName();
       this.validateSurname();
       this.validateEmail();
