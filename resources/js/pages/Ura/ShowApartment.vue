@@ -206,7 +206,7 @@ export default {
               email: "",
               message: "",
             };
-            this.buttonMessage = 'Messaggio inviato';
+            this.buttonMessage = "Messaggio inviato";
 
             this.changeDisable();
           } else {
@@ -274,6 +274,9 @@ export default {
       return store.userApartment.some(
         (userApt) => userApt.id === this.apartment.id
       );
+    },
+    haveServices() {
+      return this.apartment?.services?.length;
     },
   },
   beforeRouteEnter(to, from, next) {
@@ -361,10 +364,12 @@ export default {
           <div class="row">
             <div class="col-12 mb-3 services-section p-3">
               <h3 class="section-title">Servizi Aggiuntivi</h3>
-              <ul class="services-list">
-                <li v-if="apartment.services?.length">
+              <ul class="services-list" v-if="!haveServices">
+                <li>
                   <i :class="defaultIcon"></i> Nessun servizio disponibile
                 </li>
+              </ul>
+              <ul v-else>
                 <li v-for="(service, index) in apartment.services" :key="index">
                   <i
                     :class="servicesIcons[service.name] || defaultIcon"
@@ -456,8 +461,7 @@ export default {
                 :disabled="disableCheck"
               >
                 <!-- Invia il messaggio -->
-                 {{ buttonMessage }}
-
+                {{ buttonMessage }}
               </button>
             </form>
           </div>
