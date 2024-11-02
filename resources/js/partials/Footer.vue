@@ -12,9 +12,9 @@ export default {
 
         <div class="align-content-center">&copy; BolBnb 2024</div>
         <router-link class="align-content-center" to="/">Home</router-link>
-        <router-link class="align-content-center" to="chi-siamo"> chi siamo</router-link>
-        <router-link class="align-content-center" to="privacy-policy"> Privacy policy</router-link>
-        <router-link class="align-content-center" to="company"> La nostra azienda</router-link>
+        <router-link class="align-content-center" to="/chi-siamo"> chi siamo</router-link>
+        <router-link class="align-content-center" to="/privacy-policy"> Privacy policy</router-link>
+        <router-link class="align-content-center" to="/company"> La nostra azienda</router-link>
 
 
 

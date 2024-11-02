@@ -310,7 +310,7 @@ export default {
       <img :src="image" alt="" /><br />
 
       <label>Servizi:</label>
-      <div class="d-flex flex-wrap" v-if="services">
+      <div class="d-flex flex-wrap gap-2" v-if="services">
         <div v-for="item in services" :key="item.id">
           <input
             type="checkbox"
@@ -340,7 +340,7 @@ export default {
         <span v-else>Appartamento non visibile</span>
       </div>
 
-      <button type="submit" class="btn btn-primary">Invia</button>
+      <button type="submit" class="btn btn-dark">Salva</button>
     </form>
   </div>
 </template>

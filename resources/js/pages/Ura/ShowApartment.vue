@@ -457,7 +457,7 @@ export default {
               </div>
               <button
                 type="submit"
-                class="btn btn-primary btn-lg w-100"
+                class="btn btn-dark btn-lg w-100"
                 :disabled="disableCheck"
               >
                 <!-- Invia il messaggio -->
@@ -573,7 +573,7 @@ export default {
   margin-bottom: 0.5rem;
 }
 
-.btn-primary {
+.btn-dark {
   background-color: #ff5a5f;
   border: none;
 }
