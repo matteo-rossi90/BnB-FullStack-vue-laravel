@@ -125,6 +125,12 @@ export default {
       let string = date + " " + hour;
       return string;
     },
+    counterApartment(index) {
+      let length = store.userApartment.length;
+      for (let i = 0; i < length; i++) {
+        return length - index;
+      }
+    },
   },
   //   detailApartment(id) {},
 
@@ -206,7 +212,7 @@ export default {
         <div class="row" v-if="lengthArrayApartment">
           <div class="col-lg-12 col-md-12">
             <h4 class="mb-4 mt-2">
-              <strong> I miei appartamenti: {{ lengthArrayApartment }} </strong>
+              <strong>Hai {{ lengthArrayApartment }} appartamenti</strong>
             </h4>
 
             <!-- <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4> -->
@@ -228,9 +234,12 @@ export default {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="apartment in apartmentFiltred" :key="apartment.id">
+                  <tr
+                    v-for="(apartment, index) in apartmentFiltred"
+                    :key="index"
+                  >
                     <td scope="row" class="align-middle d-none d-lg-table-cell">
-                      {{ apartment.id }}
+                      {{ counterApartment(index) }}
                     </td>
                     <td
                       class="img-container align-middle d-none d-lg-table-cell"

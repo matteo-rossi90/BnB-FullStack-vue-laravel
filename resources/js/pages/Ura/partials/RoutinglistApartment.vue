@@ -41,7 +41,7 @@ export default {
 
 <template>
   <aside>
-    <div class="mt-2 container-fluid">
+    <div class="mt-2 container-fluid d-flex justify-content-center">
       <ul class="d-flex flex-column justify-content-center">
         <li class="py-3 d-flex align-items-center">
           <router-link
@@ -57,6 +57,22 @@ export default {
             :to="{ name: 'dashboard' }"
           >
             <i class="fa-solid fa-gauge"></i>
+          </router-link>
+        </li>
+        <li class="py-3 d-flex align-items-center">
+          <router-link
+            class="link d-flex align-items-center gap-3"
+            :to="{ name: 'apartments' }"
+          >
+            <i class="fa-solid fa-list"></i>
+          </router-link>
+        </li>
+        <li class="py-3 d-flex align-items-center">
+          <router-link
+            class="link d-flex align-items-center gap-3"
+            :to="{ name: 'createApartment' }"
+          >
+            <i class="fa-solid fa-circle-plus"></i>
           </router-link>
         </li>
 

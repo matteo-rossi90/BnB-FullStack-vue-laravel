@@ -40,7 +40,7 @@ export default {
 </script>
 
 <template>
-  <div class="mt-2 container-fluid">
+  <div class="mt-2 container-fluid d-flex justify-content-center">
     <ul class="d-flex flex-column justify-content-center">
       <li class="py-3 d-flex align-items-center">
         <router-link
@@ -63,6 +63,24 @@ export default {
             >Dashboard</span
           ></router-link
         >
+      </li>
+      <li class="py-3 d-flex align-items-center">
+        <router-link
+          :to="{ name: 'apartments' }"
+          class="link d-flex align-items-center gap-3"
+        >
+          <i class="fa-solid fa-list"></i>
+          <span>Appartamenti</span>
+        </router-link>
+      </li>
+      <li class="py-3 d-flex align-items-center">
+        <router-link
+          :to="{ name: 'createApartment' }"
+          class="link d-flex align-items-center gap-3"
+        >
+          <i class="fa-solid fa-circle-plus"></i>
+          <span>Nuovo appartamento</span>
+        </router-link>
       </li>
 
       <li
