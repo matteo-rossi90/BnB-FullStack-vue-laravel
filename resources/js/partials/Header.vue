@@ -31,6 +31,7 @@ export default {
           .post("/api/logout")
           .then((response) => {
             store.userName = "Accedi";
+            store.is_logged = false;
             this.$router.push({ name: "login" });
           })
           .catch((err) => {

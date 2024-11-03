@@ -54,6 +54,7 @@ export default {
             .get("/api/user")
             .then((response) => {
               store.user = response.data;
+              store.is_logged = true;
               if (response.data.name) {
                 store.userName = response.data.name;
               } else {
@@ -215,8 +216,8 @@ label {
   z-index: 1050;
 }
 
-.col-8{
-    margin-bottom: 15rem;
-    min-height: 60vh;
+.col-8 {
+  margin-bottom: 15rem;
+  min-height: 60vh;
 }
 </style>
