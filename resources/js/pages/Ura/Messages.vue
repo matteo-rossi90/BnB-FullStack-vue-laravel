@@ -255,6 +255,10 @@ small {
     .fa-comments{
         font-size: 2rem;
         padding: 1rem 0;
+
+        @media (max-width: 1024px){
+            font-size: 1.5rem;
+        }
     }
 }
 
@@ -264,6 +268,11 @@ small {
     width: 80px;
     height: 80px;
     margin-bottom: 1rem;
+
+    @media (max-width: 1024px){
+        width: 65px;
+        height: 65px;
+    }
 }
 
 .btn-menu{
