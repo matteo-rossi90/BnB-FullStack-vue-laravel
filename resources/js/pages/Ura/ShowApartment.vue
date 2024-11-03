@@ -240,6 +240,7 @@ export default {
         })
         .then((res) => {
           this.apartment = res.data;
+          console.log(res.data);
           this.getMap();
         })
         .catch((err) => {
@@ -278,6 +279,9 @@ export default {
     },
     haveServices() {
       return this.apartment?.services?.length;
+    },
+    ifSponsored(){
+        return this.apartment.sponsors && this.apartment.sponsors.length > 0;
     },
     isLoading() {
       return store.isLoading;
@@ -319,7 +323,13 @@ export default {
       <!-- Titolo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-start">
-          <h1 class="apartment-title">{{ apartment.title }}</h1>
+            <div class="box-title">
+                <h1 class="apartment-title">{{ apartment.title }}</h1>
+                <div v-if="ifSponsored" class="d-flex align-items-center gap-3 box-sponsor">
+                    Sponsorizzato
+                    <i class="fa solid fa-award"></i>
+                </div>
+            </div>
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
@@ -532,7 +542,9 @@ ul{
 i{
     width: 20px;
 }
-
+.fa-award{
+    font-size: 2rem;
+}
 .apartment-title {
   font-size: 2rem;
   font-weight: bold;
@@ -611,7 +623,34 @@ i{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.box-sponsor{
+    padding: 10px 0;
+    /* background-color: rgb(255, 255, 200); */
+    border-radius: 50px;
+}
+
+.box-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
 @media (max-width: 768px){
+
+    .box-title{
+        display: block;
+    }
+
+    .fa-award{
+        font-size: 1.5rem;
+    }
+
+    .box-sponsor{
+        font-size: 0.9rem;
+        width: 40%;
+    }
+
     .box-message{
         justify-content: center;
     }
@@ -630,5 +669,16 @@ i{
         font-size: 0.9rem;
     }
 
+    .box-sponsor{
+        font-size: 0.7rem;
+        padding: 0.8rem 0;
+    }
+
+}
+
+@media (max-width: 400px){
+    .apartment-title{
+        font-size: 1.5rem
+    }
 }
 </style>
