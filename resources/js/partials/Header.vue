@@ -334,13 +334,14 @@ header {
   display: flex;
   gap: 1rem;
   z-index: 100;
-  border-bottom: 1px solid $color;
+
   padding: 0.5rem;
   position: fixed;
   width: 100%;
   background-color: white;
   padding: 1rem;
   height: 6rem;
+  box-shadow: rgba(33, 35, 38, 0.1) 0px 10px 10px -10px;
 
   nav {
     width: 100%;
