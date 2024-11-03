@@ -185,32 +185,25 @@ export default {
     v-if="!isLoading"
   >
     <div v-if="!isLoading && !paymentError && !paymentSuccess">
-      <h2>Riepilogo dei dati</h2>
+      <div class="container-fluid d-flex flex-column gap-1">
+        <h2>Pagamento per abbonamento {{ sponsorName.toUpperCase() }}</h2>
 
-      <ul class="w-50 my-3">
-        <li class="row py-2">
-          <div class="col-6">
-            <strong> Appartamento </strong>
-          </div>
-          <div class="col-6">
-            {{ apartmentTitle }}
-          </div>
-        </li>
-        <li class="row py-2">
-          <div class="col-6">
-            <strong> Sponsor </strong>
-          </div>
-          <div class="col-6">
-            {{ sponsorName }}
-          </div>
-        </li>
-        <li class="row py-2">
-          <div class="col-6">
-            <strong> Totale </strong>
-          </div>
-          <div class="col-6">{{ price }} €</div>
-        </li>
-      </ul>
+        <ul class="w-75 p-1">
+          <li class="row d-flex">
+            <div class="col">
+              <strong> APPARTAMENTO: </strong>
+              <span> {{ apartmentTitle.toUpperCase() }}</span>
+            </div>
+          </li>
+
+          <li class="row d-flex">
+            <div class="col">
+              <strong>TOTALE: </strong>
+              <span> {{ price }} €</span>
+            </div>
+          </li>
+        </ul>
+      </div>
 
       <!-- <table class="table my-3"> -->
       <!-- <thead> -->
