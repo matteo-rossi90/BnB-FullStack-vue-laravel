@@ -142,13 +142,13 @@ aside.sidenav-message {
     margin: 0 1.5rem;
 
     @media (max-width: 700px){
-        margin: 0 0.3rem;
+        margin: 0;
     }
 }
 
 .main-image{
-    height: 100px;
-    width: 100px;
+    height: 90px;
+    width: 90px;
     margin-right: 1.5rem;
 
     @media (max-width:700px) {
@@ -157,8 +157,8 @@ aside.sidenav-message {
         }
 
     @media (max-width: 500px) {
-        height: 60px;
-        width: 60px;
+        height: 50px;
+        width: 50px;
     }
 
 

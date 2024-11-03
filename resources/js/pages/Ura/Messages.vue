@@ -90,8 +90,22 @@ export default {
   <div class="wrapper-message d-flex">
     <aside class="sidenav-message" :class="{ 'show-sidenav': showSidenav }">
       <div class="container-fluid">
-        <div class="d-flex justify-content-center mx-4 my-3">
+        <div class="d-flex justify-content-between align-items-center mx-4 my-3">
           <h5>{{ filteredApartment.title }}</h5>
+          <div class="d-flex gap-2">
+                <ul>
+                    <li class="btn btn-menu">
+                        <router-link :to="{name: 'dashboard'}">
+                            <i class="fa-solid fa-gauge"></i>
+                        </router-link>
+                    </li>
+                    <li class="btn btn-menu">
+                        <router-link :to="{name: 'apartments'}">
+                            <i class="fa-solid fa-list"></i>
+                        </router-link>
+                    </li>
+                </ul>
+            </div>
         </div>
 
         <div class="d-flex mx-4 mt-3">
@@ -141,8 +155,8 @@ export default {
             <div
               class="d-flex justify-content-between container container-details"
             >
-              <div class="d-flex align-items-center box-user">
-                <div class="main-image d-flex align-items-center">
+              <div class="d-flex align-items-center box-user gap-2">
+                <div class="main-image">
                   <Avatar :name="message.name" :surname="message.surname" :index="selectedImage" />
                 </div>
                 <div class="text-box my-3 ms-2">
@@ -160,9 +174,9 @@ export default {
               <button
                 v-if="showContent"
                 @click="goBackToMessages"
-                class="btn-close btn-back me-3"
+                class="btn btn-back"
               >
-                <i class="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark"></i>
               </button>
             </div>
             <div class="container container-message mt-3 message-details">
@@ -171,8 +185,13 @@ export default {
           </div>
         </div>
 
-        <div v-else>
-          <p>Seleziona un messaggio dalla lista</p>
+        <div v-else class="block-else">
+            <div class="block-select d-flex align-items-center justify-content-center flex-column">
+                <div class="icon-comments d-flex align-items-center justify-content-center">
+                    <i class="fa-solid fa-comments"></i>
+                </div>
+                <p>Seleziona un messaggio dalla lista</p>
+            </div>
         </div>
       </div>
     </div>
@@ -182,6 +201,15 @@ export default {
 <style lang="scss" scoped>
 @use "../../../scss/variables" as *;
 @use "../../../scss/message" as *;
+
+ul{
+    padding:0;
+    margin-bottom: 0;
+}
+
+li{
+    cursor:pointer;
+}
 
 li:hover {
   background-color: #f1f1f1;
@@ -211,4 +239,46 @@ input {
 small {
   color: #555;
 }
+
+.block-else{
+    position:relative;
+}
+
+.block-select{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-align:center;
+    margin-top: 3rem;
+
+    .fa-comments{
+        font-size: 2rem;
+        padding: 1rem 0;
+    }
+}
+
+.icon-comments{
+    background-color:#f1f1f1;
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1rem;
+}
+
+.btn-menu{
+    border: none;
+    background-color: transparent;
+
+    a{
+        color: black;
+    }
+
+    &:hover{
+        a{
+            color: #FF5757;
+        }
+    }
+}
+
 </style>
