@@ -322,10 +322,7 @@ export default {
                       :key="index"
                       @click="activeForm(index)"
                     >
-                      <font-awesome-icon
-                        :icon="['fas', 'arrow-pointer']"
-                        class="me-2"
-                      />
+                      <font-awesome-icon :icon="['fas', 'location-dot']" />
                       {{
                         street.address.streetName +
                         " " +

@@ -66,9 +66,9 @@ export default {
   <!-- <div>
     <v-btn ref="paymentBtnRef" @click="submitPayment" />
   </div> -->
-  <div v-if="error">
+  <!-- <div v-if="error">
     <p>{{ error }}</p>
-  </div>
+  </div> -->
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;

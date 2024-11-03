@@ -36,8 +36,9 @@ export default {
     },
 
     getUnreadMessages(apartment) {
-      if (!localStorage.getItem("firstEnter")) {
-        localStorage.setItem("apartmentId", apartment.id);
+      let firstEnter = localStorage.getItem("firstEnter");
+      if (!firstEnter) {
+        console.log(firstEnter);
         localStorage.setItem(
           `apartment${apartment.id}Count`,
           apartment.unreadMessages

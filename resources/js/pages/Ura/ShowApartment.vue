@@ -99,10 +99,13 @@ export default {
 
     validateName() {
       if (!this.name) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.name = "";
       } else if (!/^[a-zA-Z]+$/.test(this.name)) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.name = "Il nome deve contenere solo lettere";
       } else if (this.name.length < 4) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.name =
           "il nome non può avere una lunghezza inferiore di 4 caratteri";
       } else {
@@ -112,10 +115,13 @@ export default {
 
     validateSurname() {
       if (!this.surname) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.surname = "";
       } else if (!/^[a-zA-Z\s]+$/.test(this.surname)) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.surname = "Il cognome deve contenere solo lettere";
       } else if (this.surname.length < 4) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.surname =
           "Il cognome non può avere una lunghezza inferiore di 4 caratteri";
       } else {
@@ -127,8 +133,10 @@ export default {
       const emailRegex = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
       if (!this.email) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.email = "L'email è obbligatoria.";
       } else if (!emailRegex.test(this.email)) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.email =
           "Inserisci una email valida, ad esempio: nome.cognome@mail.com";
       } else {
@@ -138,8 +146,10 @@ export default {
 
     validateMessage() {
       if (!this.message) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.message = "";
       } else if (this.message.length < 10) {
+        this.buttonMessage = "Invia messaggio";
         this.errors.message =
           "Il messaggio non può avere una lunghezza inferiore a 10 caratteri";
       } else {
@@ -280,8 +290,8 @@ export default {
     haveServices() {
       return this.apartment?.services?.length;
     },
-    ifSponsored(){
-        return this.apartment.sponsors && this.apartment.sponsors.length > 0;
+    ifSponsored() {
+      return this.apartment.sponsors && this.apartment.sponsors.length > 0;
     },
     isLoading() {
       return store.isLoading;
@@ -323,13 +333,16 @@ export default {
       <!-- Titolo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-start">
-            <div class="box-title">
-                <h1 class="apartment-title">{{ apartment.title }}</h1>
-                <div v-if="ifSponsored" class="d-flex align-items-center gap-3 box-sponsor">
-                    Sponsorizzato
-                    <i class="fa solid fa-award"></i>
-                </div>
+          <div class="box-title">
+            <h1 class="apartment-title">{{ apartment.title }}</h1>
+            <div
+              v-if="ifSponsored"
+              class="d-flex align-items-center gap-3 box-sponsor"
+            >
+              Sponsorizzato
+              <i class="fa solid fa-award"></i>
             </div>
+          </div>
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
@@ -378,44 +391,51 @@ export default {
 
       <div class="row">
         <div class="col-lg-6 col-md-12 mb-4">
-
-            <div class="row">
-                <div class="col-6 mb-3 services-section py-3">
-                    <h3 class="section-title my-2">Cosa troverai</h3>
-                    <ul class="services-list my-3" v-if="!haveServices">
-                        <li class="py-2 d-flex align-items-center">
-                            <i :class="defaultIcon"></i> Nessun servizio disponibile
-                        </li>
-                    </ul>
-                    <ul v-else class="my-3 d-flex flex-column">
-                        <li v-for="(service, index) in apartment.services" :key="index" class="py-2 d-flex align-items-center gap-3">
-                            <i
-                                :class="servicesIcons[service.name] || defaultIcon"
-                                class="service-icon"
-                            ></i>
-                        <span>{{ service.name }}</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Stato di Disponibilità -->
-                <div class="col-6 availability-section py-3">
-                    <h3 class="section-title my-2">Disponibilità</h3>
-                    <p class="py-3 is-visible">{{ apartment.is_visible ? "Sì" : "No" }}</p>
-                </div>
+          <div class="row">
+            <div class="col-6 mb-3 services-section py-3">
+              <h3 class="section-title my-2">Cosa troverai</h3>
+              <ul class="services-list my-3" v-if="!haveServices">
+                <li class="py-2 d-flex align-items-center">
+                  <i :class="defaultIcon"></i> Nessun servizio disponibile
+                </li>
+              </ul>
+              <ul v-else class="my-3 d-flex flex-column">
+                <li
+                  v-for="(service, index) in apartment.services"
+                  :key="index"
+                  class="py-2 d-flex align-items-center gap-3"
+                >
+                  <i
+                    :class="servicesIcons[service.name] || defaultIcon"
+                    class="service-icon"
+                  ></i>
+                  <span>{{ service.name }}</span>
+                </li>
+              </ul>
             </div>
 
-            <!-- Descrizione fittizia -->
-            <div class="col">
-                <h3 class="section-title my-3">Descrizione</h3>
-                <p class="description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste explicabo nihil,
-                    ex totam debitis adipisci ullam! Sunt obcaecati fugiat magni, exercitationem ab aliquid
-                    voluptates corrupti earum debitis iusto nam porro dignissimos dolor dolore illum quidem
-                    ipsum perspiciatis magnam alias veritatis voluptate ipsam labore aspernatur.
-                    Sunt voluptate maiores qui asperiores deleniti quidem iste aperiam, vel et eveniet?
-                </p>
+            <!-- Stato di Disponibilità -->
+            <div class="col-6 availability-section py-3">
+              <h3 class="section-title my-2">Disponibilità</h3>
+              <p class="py-3 is-visible">
+                {{ apartment.is_visible ? "Sì" : "No" }}
+              </p>
             </div>
+          </div>
+
+          <!-- Descrizione fittizia -->
+          <div class="col">
+            <h3 class="section-title my-3">Descrizione</h3>
+            <p class="description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+              iste explicabo nihil, ex totam debitis adipisci ullam! Sunt
+              obcaecati fugiat magni, exercitationem ab aliquid voluptates
+              corrupti earum debitis iusto nam porro dignissimos dolor dolore
+              illum quidem ipsum perspiciatis magnam alias veritatis voluptate
+              ipsam labore aspernatur. Sunt voluptate maiores qui asperiores
+              deleniti quidem iste aperiam, vel et eveniet?
+            </p>
+          </div>
         </div>
 
         <!-- Colonna Destra per il Modulo Messaggi -->
@@ -535,15 +555,15 @@ export default {
 
 
 <style scoped>
-ul{
-    padding-left:0;
+ul {
+  padding-left: 0;
 }
 
-i{
-    width: 20px;
+i {
+  width: 20px;
 }
-.fa-award{
-    font-size: 2rem;
+.fa-award {
+  font-size: 2rem;
 }
 .apartment-title {
   font-size: 2rem;
@@ -623,62 +643,60 @@ i{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.box-sponsor{
-    padding: 10px 0;
-    /* background-color: rgb(255, 255, 200); */
-    border-radius: 50px;
+.box-sponsor {
+  padding: 10px 0;
+  /* background-color: rgb(255, 255, 200); */
+  border-radius: 50px;
 }
 
-.box-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
+.box-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-@media (max-width: 768px){
+@media (max-width: 768px) {
+  .box-title {
+    display: block;
+  }
 
-    .box-title{
-        display: block;
-    }
+  .fa-award {
+    font-size: 1.5rem;
+  }
 
-    .fa-award{
-        font-size: 1.5rem;
-    }
+  .box-sponsor {
+    font-size: 0.9rem;
+    width: 40%;
+  }
 
-    .box-sponsor{
-        font-size: 0.9rem;
-        width: 40%;
-    }
-
-    .box-message{
-        justify-content: center;
-    }
+  .box-message {
+    justify-content: center;
+  }
 }
 
-@media (max-width: 500px){
-    .section-title,
-    .services-list,
-    span,
-    p.is-visible,
-    p.description,
-    .form-title,
-    label,
-    .btn-text,
-    .map-title{
-        font-size: 0.9rem;
-    }
+@media (max-width: 500px) {
+  .section-title,
+  .services-list,
+  span,
+  p.is-visible,
+  p.description,
+  .form-title,
+  label,
+  .btn-text,
+  .map-title {
+    font-size: 0.9rem;
+  }
 
-    .box-sponsor{
-        font-size: 0.7rem;
-        padding: 0.8rem 0;
-    }
-
+  .box-sponsor {
+    font-size: 0.7rem;
+    padding: 0.8rem 0;
+  }
 }
 
-@media (max-width: 400px){
-    .apartment-title{
-        font-size: 1.5rem
-    }
+@media (max-width: 400px) {
+  .apartment-title {
+    font-size: 1.5rem;
+  }
 }
 </style>
