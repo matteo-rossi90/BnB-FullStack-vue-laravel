@@ -35,6 +35,7 @@ export default {
         })
         .catch((err) => {
           console.log(err);
+
         });
     },
     // changeItem(id) {
@@ -161,10 +162,24 @@ export default {
       axios
         .post("http://127.0.0.1:8000/api/user/update-file", formData)
         .then((res) => {
-          this.$router.push({ name: "apartments" });
+          this.$router.push({
+            name: "apartments",
+            query: {
+                    toastMessage: `Appartamento ${this.apartment.title} modificato con successo`,
+                    toastType: "success",
+                },
+            });
         })
         .catch((err) => {
           console.log(err);
+            this.$router.push({
+                name: "apartments",
+                query: {
+                        toastMessage: `Errore nella modifica di ${this.apartment.title}`,
+                        toastType: "danger",
+                    },
+                });
+
         });
       console.log(this.changes, this.image);
     },
