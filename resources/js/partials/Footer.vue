@@ -20,7 +20,6 @@ export default {
 
 
     </div>
-  </footer>
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
