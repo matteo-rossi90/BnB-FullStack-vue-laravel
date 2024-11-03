@@ -266,10 +266,10 @@ export default {
 
     <button @click="updateFilter" class="btn btn-filter">Filtra</button>
   </div>
-  <div class="container-fluid" v-if="!isLoading">
+  <div class="container-fluid contResponsive" v-if="!isLoading">
     <div id="rowContainer">
-      <div class="leftCol my-4">
-        <h5 class="text-search mb-3">
+      <div class="leftCol">
+        <h5 class="text-search">
           <strong>
             Trovati {{ apartmensFiltred.length }} alloggi in questa località:
             {{ input }}
@@ -349,60 +349,6 @@ export default {
 <style lang="scss">
 @use "../../scss/variables" as *;
 @use "../../scss/cardApartments" as *;
-// .scrollable-cards{
-// max-height: 650px;
-//   overflow-y: auto;
-//   padding-right: 15px;
-// }
-
-// .card {
-//   max-width: 100%;
-//   margin: 10px 0;
-//   border-radius: 10px;
-//   transition: transform 0.3s ease;
-//   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-//   overflow: hidden;
-// }
-
-// .card:hover {
-//   transform: translateY(-5px);
-//   box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-// }
-
-// .card-img-top {
-//   border-bottom: 2px solid #e0e0e0;
-//   transition: transform 0.3s ease;
-// }
-
-// .card:hover .card-img-top {
-//   transform: scale(1.05);
-// }
-
-// .card-body {
-//   padding: 20px;
-// }
-
-// .card-title {
-//   font-size: 1.25rem;
-//   font-weight: bold;
-//   color: #333;
-// }
-
-// .card-text {
-//   font-size: 0.9rem;
-//   color: #666;
-//   margin-bottom: 10px;
-// }
-
-// .card-text:last-child {
-//   margin-bottom: 0;
-// }
-
-// img {
-//   object-fit: cover;
-//   height: 200px;
-//   width: 200px;
-// }
 
 #map {
   width: 100%;
@@ -486,6 +432,7 @@ input[type="range"].dark {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 1rem;
 }
 #mapCont {
   height: calc(100vh - 6rem);
@@ -538,6 +485,7 @@ input[type="range"].dark {
   }
   .text-search {
     font-size: 1rem;
+    margin-bottom: 1rem;
   }
 }
 
@@ -546,11 +494,15 @@ input[type="range"].dark {
     flex-wrap: wrap;
     width: 20%;
   }
+  .contResponsive {
+    margin-top: 1rem;
+  }
 }
 
 @media (max-width: 375px) {
-  .text-search {
-    font-size: 0.8rem;
-  }
+  //   .text-search {
+  //     font-size: 1rem;
+  //     margin-bottom: 1rem;
+  //   }
 }
 </style>

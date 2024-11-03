@@ -314,14 +314,14 @@ export default {
     <div class="contIcon" v-if="haveApartment">
       <router-link class="link" :to="{ name: 'apartments' }">
         <font-awesome-icon :icon="['far', 'message']" />
+        <p>Messaggi</p>
       </router-link>
-      <p>Messaggi</p>
     </div>
     <div class="contIcon">
       <router-link class="link" :to="{ name: 'dashboard' }">
         <font-awesome-icon :icon="['far', 'user']" />
+        <p>Profilo</p>
       </router-link>
-      <p>Profilo</p>
     </div>
   </nav>
 </template>
