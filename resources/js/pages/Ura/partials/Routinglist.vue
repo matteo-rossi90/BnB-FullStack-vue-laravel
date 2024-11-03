@@ -42,17 +42,6 @@ export default {
 <template>
   <div class="mt-2 container-fluid">
     <ul class="d-flex flex-column justify-content-center">
-      <li class="py-3 d-flex align-items-center" v-if="visible">
-        <router-link
-          class="link d-flex align-items-center gap-3"
-          :to="{ name: 'dashboard' }"
-        >
-          <i class="fa-solid fa-gauge"></i>
-          <span class="d-none d-xl-inline d-lg-inline"
-            >Dashboard</span
-          ></router-link
-        >
-      </li>
       <li class="py-3 d-flex align-items-center">
         <router-link
           class="link d-flex align-items-center gap-3"
@@ -64,7 +53,22 @@ export default {
           ></router-link
         >
       </li>
-      <li @click="logout" class="py-3 d-flex align-items-center gap-3 click link">
+      <li class="py-3 d-flex align-items-center" v-if="visible">
+        <router-link
+          class="link d-flex align-items-center gap-3"
+          :to="{ name: 'dashboard' }"
+        >
+          <i class="fa-solid fa-gauge"></i>
+          <span class="d-none d-xl-inline d-lg-inline"
+            >Dashboard</span
+          ></router-link
+        >
+      </li>
+
+      <li
+        @click="logout"
+        class="py-3 d-flex align-items-center gap-3 click link"
+      >
         <i class="fa-solid fa-arrow-right-from-bracket"></i>
         <!-- <font-awesome-icon :icon="['fas', 'arrow-right-from-bracket']" /> -->
         <span class="d-none d-xl-inline d-lg-inline">Disconnetti</span>
@@ -98,8 +102,7 @@ export default {
 <style lang="scss" scoped>
 @use "../../../../scss/dashboard" as *;
 
-.click{
-    cursor: pointer;
+.click {
+  cursor: pointer;
 }
-
 </style>
