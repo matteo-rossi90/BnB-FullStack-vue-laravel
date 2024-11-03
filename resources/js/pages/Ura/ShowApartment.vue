@@ -367,12 +367,13 @@ export default {
       </div>
 
       <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="row">
+        <div class="col-lg-6 col-md-12 mb-4">
+
+            <div class="row">
             <div class="col-12 mb-3 services-section p-3">
-              <h3 class="section-title">Servizi Aggiuntivi</h3>
+              <h3 class="section-title my-2">Servizi Aggiuntivi</h3>
               <ul class="services-list" v-if="!haveServices">
-                <li>
+                <li class="py-4 d-flex align-items-center">
                   <i :class="defaultIcon"></i> Nessun servizio disponibile
                 </li>
               </ul>
@@ -389,15 +390,27 @@ export default {
 
             <!-- Stato di Disponibilità -->
             <div class="col-12 availability-section p-3">
-              <h3 class="section-title">Disponibilità</h3>
+              <h3 class="section-title my-2">Disponibilità</h3>
               <p>{{ apartment.is_visible ? "Sì" : "No" }}</p>
             </div>
           </div>
+
+            <!-- Descrizione fittizia -->
+            <div class="col">
+                <h3 class="section-title my-2">Descrizione</h3>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste explicabo nihil,
+                    ex totam debitis adipisci ullam! Sunt obcaecati fugiat magni, exercitationem ab aliquid
+                    voluptates corrupti earum debitis iusto nam porro dignissimos dolor dolore illum quidem
+                    ipsum perspiciatis magnam alias veritatis voluptate ipsam labore aspernatur.
+                    Sunt voluptate maiores qui asperiores deleniti quidem iste aperiam, vel et eveniet?
+                </p>
+            </div>
         </div>
 
         <!-- Colonna Destra per il Modulo Messaggi -->
-        <div class="col-md-8 d-flex justify-content-end align-items-start">
-          <div class="message-form-container rounded p-4">
+        <div class="col-lg-6 col-md-12 d-flex justify-content-end">
+          <div class="message-form-container mt-4 rounded p-4">
             <h2 class="form-title text-center">
               Invia un messaggio al proprietario
             </h2>
@@ -512,6 +525,10 @@ export default {
 
 
 <style scoped>
+ul{
+    padding-left:0;
+}
+
 .apartment-title {
   font-size: 2rem;
   font-weight: bold;
@@ -542,7 +559,6 @@ export default {
 
 .services-list {
   list-style-type: none;
-  padding: 0;
 }
 
 .service-icon {
