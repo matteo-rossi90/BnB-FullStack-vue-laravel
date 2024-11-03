@@ -96,10 +96,17 @@ aside {
   position: sticky;
   top: 6rem;
   background-color: white;
+  .link:hover{
+    color: red;
+  }
+
   ul {
     padding: 0 0.5rem;
-  }
+
+    }
+
 }
+
 
 .dashboard-box {
   padding: 15px;

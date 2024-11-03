@@ -162,6 +162,9 @@ export default {
 
 a {
   color: black;
+  &:hover{
+    color: red;
+  }
 }
 
 i {

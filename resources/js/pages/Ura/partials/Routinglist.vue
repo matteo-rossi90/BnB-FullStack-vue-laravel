@@ -98,5 +98,11 @@ export default {
 
 .click {
   cursor: pointer;
+
 }
+
+.link:hover{
+    color: red;
+}
+
 </style>
