@@ -1,4 +1,5 @@
 <script>
+import { store } from "../../../store/store";
 export default {
   name: "RoutinglistApartment",
   methods: {
@@ -7,22 +8,7 @@ export default {
         axios
           .post("/api/logout")
           .then((response) => {
-            axios
-              .get("/api/user")
-              .then((response) => {
-                store.user = response.data;
-                if (response.data.name) {
-                  store.userName = response.data.name;
-                } else {
-                  store.userName = "Profilo";
-                }
-                console.log("app- user e user name: ok");
-              })
-              .catch((err) => {
-                store.is_logged = false;
-                store.userName = "Accedi";
-                console.log("app- user e user name:", err.message);
-              });
+            store.userName = "Accedi";
             this.$router.push({ name: "login" });
           })
           .catch((err) => {
