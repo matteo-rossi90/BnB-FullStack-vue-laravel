@@ -66,9 +66,8 @@ export default {
 </script>
 <template>
   <div class="wrapper d-flex" v-if="!isLoading">
-    <aside>
-      <routinglist :visible="lengthApartment" />
-    </aside>
+    <routinglist :visible="lengthApartment" />
+
     <div class="dashboard-box dashboard-color flex-grow-1 px-2">
       <div class="container-fluid my-5">
         <div class="row">
@@ -124,28 +123,26 @@ export default {
           </div>
           <div class="col-12 col-md-6 col-lg-4 my-3 d-flex gap-3 box-routes">
             <div class="dashboard-card">
-                <div class="routes">
-                    <router-link
-                    :to="{ name: 'apartments' }"
-                    class="d-flex align-items-center justify-content-center gap-3"
-                    >
-                        <i class="fa-solid fa-list"></i>
-                        <span>Gestisci appartamenti</span>
-                    </router-link>
-
-                </div>
+              <div class="routes">
+                <router-link
+                  :to="{ name: 'apartments' }"
+                  class="d-flex align-items-center justify-content-center gap-3"
+                >
+                  <i class="fa-solid fa-list"></i>
+                  <span>Gestisci appartamenti</span>
+                </router-link>
+              </div>
             </div>
             <div class="dashboard-card">
-                <div class="routes">
-                    <router-link
-                    :to="{ name: 'createApartment' }"
-                    class="d-flex align-items-center justify-content-center gap-3"
-                    >
-                        <i class="fa-solid fa-circle-plus"></i>
-                        <span>Nuovo appartamento</span>
-                    </router-link>
-
-                </div>
+              <div class="routes">
+                <router-link
+                  :to="{ name: 'createApartment' }"
+                  class="d-flex align-items-center justify-content-center gap-3"
+                >
+                  <i class="fa-solid fa-circle-plus"></i>
+                  <span>Nuovo appartamento</span>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -158,11 +155,10 @@ export default {
 </template>
 <style lang='scss' scoped>
 @use "../../../scss/variables" as *;
-@use "../../../scss/dashboard" as *;
 
 a {
   color: black;
-  &:hover{
+  &:hover {
     color: red;
   }
 }
@@ -191,8 +187,8 @@ span {
   flex-direction: column;
 }
 
-.routes{
-    padding: 2rem 0;
+.routes {
+  padding: 2rem 0;
 }
 
 .fa-circle-plus,

@@ -2,14 +2,15 @@
 
 .wrapper {
     min-height: 100vh;
-    // flex: 1;
-    // width: 100%;
-    // overflow: auto;
     display: flex;
     align-items: stretch;
+
 }
 
 aside {
+    height: calc(100vh - 1rem);
+    position: sticky;
+    top: 6rem;
     width: 300px;
     border-right: 1px solid $color;
     transition: width 0.2s ease;
@@ -90,11 +91,13 @@ aside ul {
 }
 
 @media (max-width: 576px) {
-    .wrapper{
-        overflow-x:hidden;
-    }
+    // .wrapper{
+    //     overflow:hidden;
+    // }
 
     aside {
+        overflow: hidden;
+        height: 100vh;
         width: 50px;
         ul {
                 padding: 0 0.5rem;
