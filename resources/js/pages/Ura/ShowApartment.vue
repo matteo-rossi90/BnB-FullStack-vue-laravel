@@ -370,35 +370,35 @@ export default {
         <div class="col-lg-6 col-md-12 mb-4">
 
             <div class="row">
-            <div class="col-12 mb-3 services-section p-3">
-              <h3 class="section-title my-2">Cosa troverai</h3>
-              <ul class="services-list my-3" v-if="!haveServices">
-                <li class="py-2 d-flex align-items-center">
-                  <i :class="defaultIcon"></i> Nessun servizio disponibile
-                </li>
-              </ul>
-              <ul v-else class="my-3 d-flex flex-column">
-                <li v-for="(service, index) in apartment.services" :key="index" class="py-2 d-flex align-items-center gap-3">
-                  <i
-                    :class="servicesIcons[service.name] || defaultIcon"
-                    class="service-icon"
-                  ></i>
-                  {{ service.name }}
-                </li>
-              </ul>
-            </div>
+                <div class="col-6 mb-3 services-section py-3">
+                    <h3 class="section-title my-2">Cosa troverai</h3>
+                    <ul class="services-list my-3" v-if="!haveServices">
+                        <li class="py-2 d-flex align-items-center">
+                            <i :class="defaultIcon"></i> Nessun servizio disponibile
+                        </li>
+                    </ul>
+                    <ul v-else class="my-3 d-flex flex-column">
+                        <li v-for="(service, index) in apartment.services" :key="index" class="py-2 d-flex align-items-center gap-3">
+                            <i
+                                :class="servicesIcons[service.name] || defaultIcon"
+                                class="service-icon"
+                            ></i>
+                        <span>{{ service.name }}</span>
+                        </li>
+                    </ul>
+                </div>
 
-            <!-- Stato di Disponibilità -->
-            <div class="col-12 availability-section p-3">
-              <h3 class="section-title my-2">Disponibilità</h3>
-              <p>{{ apartment.is_visible ? "Sì" : "No" }}</p>
+                <!-- Stato di Disponibilità -->
+                <div class="col-6 availability-section py-3">
+                    <h3 class="section-title my-2">Disponibilità</h3>
+                    <p class="py-3 is-visible">{{ apartment.is_visible ? "Sì" : "No" }}</p>
+                </div>
             </div>
-          </div>
 
             <!-- Descrizione fittizia -->
             <div class="col">
                 <h3 class="section-title my-3">Descrizione</h3>
-                <p>
+                <p class="description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste explicabo nihil,
                     ex totam debitis adipisci ullam! Sunt obcaecati fugiat magni, exercitationem ab aliquid
                     voluptates corrupti earum debitis iusto nam porro dignissimos dolor dolore illum quidem
@@ -409,10 +409,10 @@ export default {
         </div>
 
         <!-- Colonna Destra per il Modulo Messaggi -->
-        <div class="col-lg-6 col-md-12 d-flex justify-content-end">
+        <div class="col-lg-6 col-md-12 d-flex justify-content-end box-message">
           <div class="message-form-container mt-4 rounded p-4">
             <h4 class="form-title text-center my-3">
-              Invia un messaggio al proprietario
+              <strong>Invia un messaggio al proprietario</strong>
             </h4>
             <form class="message-form" @submit.prevent="submitForm">
               <div class="mb-3">
@@ -477,7 +477,7 @@ export default {
               </div>
               <button
                 type="submit"
-                class="btn btn-dark btn-lg w-100"
+                class="btn btn-dark btn-lg w-100 btn-text"
                 :disabled="disableCheck"
               >
                 <!-- Invia il messaggio -->
@@ -580,7 +580,7 @@ i{
   background-color: #f8f9fa;
   border-radius: 8px;
   margin-top: -3rem;
-  max-width: 500px;
+  width: 100%;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -609,5 +609,26 @@ i{
 
 .shadow-sm {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px){
+    .box-message{
+        justify-content: center;
+    }
+}
+
+@media (max-width: 500px){
+    .section-title,
+    .services-list,
+    span,
+    p.is-visible,
+    p.description,
+    .form-title,
+    label,
+    .btn-text,
+    .map-title{
+        font-size: 0.9rem;
+    }
+
 }
 </style>
