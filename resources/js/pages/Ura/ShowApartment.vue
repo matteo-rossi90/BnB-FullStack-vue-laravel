@@ -216,6 +216,7 @@ export default {
               email: "",
               message: "",
             };
+            localStorage.setItem(`apartment${12}Count`, 1);
             this.buttonMessage = "Messaggio inviato";
 
             this.changeDisable();
