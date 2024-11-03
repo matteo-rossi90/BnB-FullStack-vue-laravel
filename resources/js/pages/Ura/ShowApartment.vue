@@ -371,14 +371,14 @@ export default {
 
             <div class="row">
             <div class="col-12 mb-3 services-section p-3">
-              <h3 class="section-title my-2">Servizi Aggiuntivi</h3>
-              <ul class="services-list" v-if="!haveServices">
-                <li class="py-4 d-flex align-items-center">
+              <h3 class="section-title my-2">Cosa troverai</h3>
+              <ul class="services-list my-3" v-if="!haveServices">
+                <li class="py-2 d-flex align-items-center">
                   <i :class="defaultIcon"></i> Nessun servizio disponibile
                 </li>
               </ul>
-              <ul v-else>
-                <li v-for="(service, index) in apartment.services" :key="index">
+              <ul v-else class="my-3 d-flex flex-column">
+                <li v-for="(service, index) in apartment.services" :key="index" class="py-2 d-flex align-items-center gap-3">
                   <i
                     :class="servicesIcons[service.name] || defaultIcon"
                     class="service-icon"
@@ -397,7 +397,7 @@ export default {
 
             <!-- Descrizione fittizia -->
             <div class="col">
-                <h3 class="section-title my-2">Descrizione</h3>
+                <h3 class="section-title my-3">Descrizione</h3>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste explicabo nihil,
                     ex totam debitis adipisci ullam! Sunt obcaecati fugiat magni, exercitationem ab aliquid
@@ -411,9 +411,9 @@ export default {
         <!-- Colonna Destra per il Modulo Messaggi -->
         <div class="col-lg-6 col-md-12 d-flex justify-content-end">
           <div class="message-form-container mt-4 rounded p-4">
-            <h2 class="form-title text-center">
+            <h4 class="form-title text-center my-3">
               Invia un messaggio al proprietario
-            </h2>
+            </h4>
             <form class="message-form" @submit.prevent="submitForm">
               <div class="mb-3">
                 <label for="name" class="form-label">Il tuo nome</label>
@@ -491,7 +491,7 @@ export default {
       <!-- Mappa per geolocalizzazione dell'appartamento -->
       <div class="row g-2">
         <div class="col-12 my-4">
-          <h4 class="map-title">Dove sarai</h4>
+          <h4 class="map-title my-3">Dove sarai</h4>
           <div id="map"></div>
         </div>
       </div>
@@ -527,6 +527,10 @@ export default {
 <style scoped>
 ul{
     padding-left:0;
+}
+
+i{
+    width: 20px;
 }
 
 .apartment-title {
