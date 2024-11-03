@@ -45,14 +45,7 @@ export default {
             <i class="fa-solid fa-gauge"></i>
           </router-link>
         </li>
-        <li class="py-3 d-flex align-items-center">
-          <router-link
-            class="link d-flex align-items-center gap-3"
-            :to="{ name: 'apartments' }"
-          >
-            <i class="fa-solid fa-list"></i>
-          </router-link>
-        </li>
+
         <li class="py-3 d-flex align-items-center">
           <router-link
             class="link d-flex align-items-center gap-3"

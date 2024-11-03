@@ -39,17 +39,7 @@ export default {
           ></router-link
         >
       </li>
-      <li class="py-3 d-flex align-items-center" v-if="visible">
-        <router-link
-          class="link d-flex align-items-center gap-3"
-          :to="{ name: 'dashboard' }"
-        >
-          <i class="fa-solid fa-gauge"></i>
-          <span class="d-none d-xl-inline d-lg-inline"
-            >Dashboard</span
-          ></router-link
-        >
-      </li>
+
       <li class="py-3 d-flex align-items-center">
         <router-link
           :to="{ name: 'apartments' }"

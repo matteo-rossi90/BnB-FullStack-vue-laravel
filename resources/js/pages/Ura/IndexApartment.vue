@@ -20,32 +20,32 @@ export default {
     toggleSidebar() {
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
     },
-    getMessages(apartmentId, apartments) {
-      const apartment = apartments.find((ap) => ap.id === apartmentId);
-      if (apartment) {
-        apartment.unreadMessages = 0;
+    getMessages(apartment) {
+      localStorage.setItem(`apartment${apartment.id}Count`, 0);
+      localStorage.setItem("firstEnter", true);
+      // const readMessages =
+      //   JSON.parse(localStorage.getItem("readMessages")) || {};
 
-        const readMessages =
-          JSON.parse(localStorage.getItem("readMessages")) || {};
+      // readMessages[apartmentId] = apartment.messages.map((msg) => msg.id);
 
-        readMessages[apartmentId] = apartment.messages.map((msg) => msg.id);
+      // localStorage.setItem("readMessages", JSON.stringify(readMessages));
 
-        localStorage.setItem("readMessages", JSON.stringify(readMessages));
-
-        apartment.messages.forEach((message) => {
-          message.read = true;
-        });
-      }
+      // apartment.messages.forEach((message) => {
+      //   message.read = true;
+      // });
     },
 
     getUnreadMessages(apartment) {
-      const readMessages =
-        JSON.parse(localStorage.getItem("readMessages")) || {};
-      const readMessageIds = readMessages[apartment.id] || [];
-
-      return apartment.messages.filter(
-        (msg) => !readMessageIds.includes(msg.id)
-      ).length;
+      if (!localStorage.getItem("firstEnter")) {
+        localStorage.setItem("apartmentId", apartment.id);
+        localStorage.setItem(
+          `apartment${apartment.id}Count`,
+          apartment.unreadMessages
+        );
+        return apartment.unreadMessages;
+      } else {
+        return localStorage.getItem(`apartment${apartment.id}Count`);
+      }
     },
     showToast(message, type = "success") {
       //metodo che permette di mostrare il toast
@@ -292,7 +292,7 @@ export default {
                             id: apartment.id,
                           },
                         }"
-                        @click="getMessages(apartment.id, apartmentFiltred)"
+                        @click="getMessages(apartment)"
                       >
                         <span class="position-relative">
                           <span
