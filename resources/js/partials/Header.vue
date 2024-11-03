@@ -30,22 +30,7 @@ export default {
         axios
           .post("/api/logout")
           .then((response) => {
-            axios
-              .get("/api/user")
-              .then((response) => {
-                store.user = response.data;
-                if (response.data.name) {
-                  store.userName = response.data.name;
-                } else {
-                  store.userName = "Profilo";
-                }
-                console.log("app- user e user name: ok");
-              })
-              .catch((err) => {
-                store.is_logged = false;
-                store.userName = "Accedi";
-                console.log("app- user e user name:", err.message);
-              });
+            store.userName = "Accedi";
             this.$router.push({ name: "login" });
           })
           .catch((err) => {
@@ -327,16 +312,16 @@ export default {
       <p>Viaggia</p>
     </div>
     <div class="contIcon" v-if="haveApartment">
-      <router-link :to="{ name: 'apartments' }">
+      <router-link class="link" :to="{ name: 'apartments' }">
         <font-awesome-icon :icon="['far', 'message']" />
+        <p>Messaggi</p>
       </router-link>
-      <p>Messaggi</p>
     </div>
     <div class="contIcon">
-      <router-link :to="{ name: 'dashboard' }">
+      <router-link class="link" :to="{ name: 'dashboard' }">
         <font-awesome-icon :icon="['far', 'user']" />
+        <p>Profilo</p>
       </router-link>
-      <p>Profilo</p>
     </div>
   </nav>
 </template>

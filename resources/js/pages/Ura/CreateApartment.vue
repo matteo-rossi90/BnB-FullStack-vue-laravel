@@ -294,7 +294,6 @@ export default {
                     }}</span>
                   </div>
                 </div>
-
                 <div class="row">
                   <div v-if="!isAproveStreet" class="mb-3 col-12">
                     <label for="address" class="col-form-label"
@@ -312,6 +311,34 @@ export default {
                       errors.postalCode
                     }}</span>
                   </div>
+                </div>
+                <div v-if="resultOfSearch && !isAproveStreet" class="">
+                  <p>Scegli e clicca un indirizzo per andare avanti:</p>
+                  <ul class="p-0 mt-2">
+                    <li
+                      class="badge rounded-pill text-bg-light p-2"
+                      role="button"
+                      v-for="(street, index) in resultOfSearch"
+                      :key="index"
+                      @click="activeForm(index)"
+                    >
+                      <font-awesome-icon
+                        :icon="['fas', 'arrow-pointer']"
+                        class="me-2"
+                      />
+                      {{
+                        street.address.streetName +
+                        " " +
+                        street.address.countrySubdivisionCode +
+                        " " +
+                        street.address.municipality +
+                        " " +
+                        street.address.neighbourhood +
+                        " " +
+                        street.address.postalCode
+                      }}
+                    </li>
+                  </ul>
                 </div>
 
                 <div class="row">
@@ -420,7 +447,6 @@ export default {
                     />
                   </div>
                 </div>
-
                 <!-- Anteprima immagine caricata -->
                 <div class="row">
                   <div v-if="imagePreview && isAproveStreet">
@@ -431,7 +457,6 @@ export default {
                     />
                   </div>
                 </div>
-
                 <div v-if="isAproveStreet">
                   <div class="row">
                     <div
@@ -454,35 +479,7 @@ export default {
                     </div>
                   </div>
                 </div>
-                <div
-                  v-if="resultOfSearch && !isAproveStreet"
-                  class="d-flex flex-column justify-content-center align-items-center"
-                >
-                  <p class="badge rounded-pill text-bg-dark m-0 p-2 fw-bold">
-                    Clicca sulla via dell'apparamento che vuoi selezionare:
-                  </p>
-                  <ul>
-                    <li
-                      class="badge rounded-pill text-bg-success"
-                      role="button"
-                      v-for="(street, index) in resultOfSearch"
-                      :key="index"
-                      @click="activeForm(index)"
-                    >
-                      {{
-                        street.address.streetName +
-                        " " +
-                        street.address.countrySubdivisionCode +
-                        " " +
-                        street.address.municipality +
-                        " " +
-                        street.address.neighbourhood +
-                        " " +
-                        street.address.postalCode
-                      }}
-                    </li>
-                  </ul>
-                </div>
+
                 <button
                   @click="submit"
                   class="btn btn-dark"

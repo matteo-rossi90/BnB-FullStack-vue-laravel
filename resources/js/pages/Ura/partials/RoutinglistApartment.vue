@@ -1,4 +1,5 @@
 <script>
+import { store } from "../../../store/store";
 export default {
   name: "RoutinglistApartment",
   methods: {
@@ -7,22 +8,7 @@ export default {
         axios
           .post("/api/logout")
           .then((response) => {
-            axios
-              .get("/api/user")
-              .then((response) => {
-                store.user = response.data;
-                if (response.data.name) {
-                  store.userName = response.data.name;
-                } else {
-                  store.userName = "Profilo";
-                }
-                console.log("app- user e user name: ok");
-              })
-              .catch((err) => {
-                store.is_logged = false;
-                store.userName = "Accedi";
-                console.log("app- user e user name:", err.message);
-              });
+            store.userName = "Accedi";
             this.$router.push({ name: "login" });
           })
           .catch((err) => {
@@ -41,7 +27,7 @@ export default {
 
 <template>
   <aside>
-    <div class="mt-2 container-fluid">
+    <div class="mt-2 container-fluid d-flex justify-content-center">
       <ul class="d-flex flex-column justify-content-center">
         <li class="py-3 d-flex align-items-center">
           <router-link
@@ -57,6 +43,15 @@ export default {
             :to="{ name: 'dashboard' }"
           >
             <i class="fa-solid fa-gauge"></i>
+          </router-link>
+        </li>
+
+        <li class="py-3 d-flex align-items-center">
+          <router-link
+            class="link d-flex align-items-center gap-3"
+            :to="{ name: 'createApartment' }"
+          >
+            <i class="fa-solid fa-circle-plus"></i>
           </router-link>
         </li>
 
@@ -101,10 +96,17 @@ aside {
   position: sticky;
   top: 6rem;
   background-color: white;
+  .link:hover{
+    color: red;
+  }
+
   ul {
     padding: 0 0.5rem;
-  }
+
+    }
+
 }
+
 
 .dashboard-box {
   padding: 15px;

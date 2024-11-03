@@ -20,32 +20,32 @@ export default {
     toggleSidebar() {
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
     },
-    getMessages(apartmentId, apartments) {
-      const apartment = apartments.find((ap) => ap.id === apartmentId);
-      if (apartment) {
-        apartment.unreadMessages = 0;
+    getMessages(apartment) {
+      localStorage.setItem(`apartment${apartment.id}Count`, 0);
+      localStorage.setItem("firstEnter", true);
+      // const readMessages =
+      //   JSON.parse(localStorage.getItem("readMessages")) || {};
 
-        const readMessages =
-          JSON.parse(localStorage.getItem("readMessages")) || {};
+      // readMessages[apartmentId] = apartment.messages.map((msg) => msg.id);
 
-        readMessages[apartmentId] = apartment.messages.map((msg) => msg.id);
+      // localStorage.setItem("readMessages", JSON.stringify(readMessages));
 
-        localStorage.setItem("readMessages", JSON.stringify(readMessages));
-
-        apartment.messages.forEach((message) => {
-          message.read = true;
-        });
-      }
+      // apartment.messages.forEach((message) => {
+      //   message.read = true;
+      // });
     },
 
     getUnreadMessages(apartment) {
-      const readMessages =
-        JSON.parse(localStorage.getItem("readMessages")) || {};
-      const readMessageIds = readMessages[apartment.id] || [];
-
-      return apartment.messages.filter(
-        (msg) => !readMessageIds.includes(msg.id)
-      ).length;
+      if (!localStorage.getItem("firstEnter")) {
+        localStorage.setItem("apartmentId", apartment.id);
+        localStorage.setItem(
+          `apartment${apartment.id}Count`,
+          apartment.unreadMessages
+        );
+        return apartment.unreadMessages;
+      } else {
+        return localStorage.getItem(`apartment${apartment.id}Count`);
+      }
     },
     showToast(message, type = "success") {
       //metodo che permette di mostrare il toast
@@ -124,6 +124,12 @@ export default {
       let hour = dateCarbon.split(" ")[1].split(":").slice(0, -1).join(":");
       let string = date + " " + hour;
       return string;
+    },
+    counterApartment(index) {
+      let length = store.userApartment.length;
+      for (let i = 0; i < length; i++) {
+        return length - index;
+      }
     },
   },
   //   detailApartment(id) {},
@@ -206,7 +212,7 @@ export default {
         <div class="row" v-if="lengthArrayApartment">
           <div class="col-lg-12 col-md-12">
             <h4 class="mb-4 mt-2">
-              <strong> I miei appartamenti: {{ lengthArrayApartment }} </strong>
+              <strong>Hai {{ lengthArrayApartment }} appartamenti</strong>
             </h4>
 
             <!-- <h4 class="my-5">Appartamenti totali: {{ apartments.length }}</h4> -->
@@ -228,9 +234,12 @@ export default {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="apartment in apartmentFiltred" :key="apartment.id">
+                  <tr
+                    v-for="(apartment, index) in apartmentFiltred"
+                    :key="index"
+                  >
                     <td scope="row" class="align-middle d-none d-lg-table-cell">
-                      {{ apartment.id }}
+                      {{ counterApartment(index) }}
                     </td>
                     <td
                       class="img-container align-middle d-none d-lg-table-cell"
@@ -283,7 +292,7 @@ export default {
                             id: apartment.id,
                           },
                         }"
-                        @click="getMessages(apartment.id, apartmentFiltred)"
+                        @click="getMessages(apartment)"
                       >
                         <span class="position-relative">
                           <span
