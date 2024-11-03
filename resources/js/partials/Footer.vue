@@ -26,13 +26,7 @@ export default {
 </template>
 <style lang='scss' scoped>
 // @use 'path' as *;
-// footer {
-//   z-index: 100;
-//   position: fixed;
-//   top: calc(100% - 6rem);
-//   left: 0;
-//   width: 100%;
-// }
+
 .ms_container {
   // position: absolute;
   // bottom: 0;
