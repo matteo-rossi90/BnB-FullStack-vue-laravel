@@ -240,6 +240,7 @@ export default {
         })
         .then((res) => {
           this.apartment = res.data;
+          console.log(res.data);
           this.getMap();
         })
         .catch((err) => {
@@ -278,6 +279,9 @@ export default {
     },
     haveServices() {
       return this.apartment?.services?.length;
+    },
+    ifSponsored(){
+        return this.apartment.sponsors && this.apartment.sponsors.length > 0;
     },
     isLoading() {
       return store.isLoading;
@@ -319,7 +323,13 @@ export default {
       <!-- Titolo dell'appartamento -->
       <div class="row">
         <div class="col-12 text-start">
-          <h1 class="apartment-title">{{ apartment.title }}</h1>
+            <div class="box-title">
+                <h1 class="apartment-title">{{ apartment.title }}</h1>
+                <div v-if="ifSponsored" class="d-flex align-items-center gap-3 box-sponsor">
+                    Sponsorizzato
+                    <i class="fa solid fa-award"></i>
+                </div>
+            </div>
           <p class="apartment-description">
             Scopri il comfort e la bellezza di questo appartamento unico.
           </p>
@@ -367,40 +377,53 @@ export default {
       </div>
 
       <div class="row">
-        <div class="col-md-4 mb-4">
-          <div class="row">
-            <div class="col-12 mb-3 services-section p-3">
-              <h3 class="section-title">Servizi Aggiuntivi</h3>
-              <ul class="services-list" v-if="!haveServices">
-                <li>
-                  <i :class="defaultIcon"></i> Nessun servizio disponibile
-                </li>
-              </ul>
-              <ul v-else>
-                <li v-for="(service, index) in apartment.services" :key="index">
-                  <i
-                    :class="servicesIcons[service.name] || defaultIcon"
-                    class="service-icon"
-                  ></i>
-                  {{ service.name }}
-                </li>
-              </ul>
+        <div class="col-lg-6 col-md-12 mb-4">
+
+            <div class="row">
+                <div class="col-6 mb-3 services-section py-3">
+                    <h3 class="section-title my-2">Cosa troverai</h3>
+                    <ul class="services-list my-3" v-if="!haveServices">
+                        <li class="py-2 d-flex align-items-center">
+                            <i :class="defaultIcon"></i> Nessun servizio disponibile
+                        </li>
+                    </ul>
+                    <ul v-else class="my-3 d-flex flex-column">
+                        <li v-for="(service, index) in apartment.services" :key="index" class="py-2 d-flex align-items-center gap-3">
+                            <i
+                                :class="servicesIcons[service.name] || defaultIcon"
+                                class="service-icon"
+                            ></i>
+                        <span>{{ service.name }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Stato di Disponibilità -->
+                <div class="col-6 availability-section py-3">
+                    <h3 class="section-title my-2">Disponibilità</h3>
+                    <p class="py-3 is-visible">{{ apartment.is_visible ? "Sì" : "No" }}</p>
+                </div>
             </div>
 
-            <!-- Stato di Disponibilità -->
-            <div class="col-12 availability-section p-3">
-              <h3 class="section-title">Disponibilità</h3>
-              <p>{{ apartment.is_visible ? "Sì" : "No" }}</p>
+            <!-- Descrizione fittizia -->
+            <div class="col">
+                <h3 class="section-title my-3">Descrizione</h3>
+                <p class="description">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam iste explicabo nihil,
+                    ex totam debitis adipisci ullam! Sunt obcaecati fugiat magni, exercitationem ab aliquid
+                    voluptates corrupti earum debitis iusto nam porro dignissimos dolor dolore illum quidem
+                    ipsum perspiciatis magnam alias veritatis voluptate ipsam labore aspernatur.
+                    Sunt voluptate maiores qui asperiores deleniti quidem iste aperiam, vel et eveniet?
+                </p>
             </div>
-          </div>
         </div>
 
         <!-- Colonna Destra per il Modulo Messaggi -->
-        <div class="col-md-8 d-flex justify-content-end align-items-start">
-          <div class="message-form-container rounded p-4">
-            <h2 class="form-title text-center">
-              Invia un messaggio al proprietario
-            </h2>
+        <div class="col-lg-6 col-md-12 d-flex justify-content-end box-message">
+          <div class="message-form-container mt-4 rounded p-4">
+            <h4 class="form-title text-center my-3">
+              <strong>Invia un messaggio al proprietario</strong>
+            </h4>
             <form class="message-form" @submit.prevent="submitForm">
               <div class="mb-3">
                 <label for="name" class="form-label">Il tuo nome</label>
@@ -464,7 +487,7 @@ export default {
               </div>
               <button
                 type="submit"
-                class="btn btn-dark btn-lg w-100"
+                class="btn btn-dark btn-lg w-100 btn-text"
                 :disabled="disableCheck"
               >
                 <!-- Invia il messaggio -->
@@ -478,7 +501,7 @@ export default {
       <!-- Mappa per geolocalizzazione dell'appartamento -->
       <div class="row g-2">
         <div class="col-12 my-4">
-          <h4 class="map-title">Dove sarai</h4>
+          <h4 class="map-title my-3">Dove sarai</h4>
           <div id="map"></div>
         </div>
       </div>
@@ -512,6 +535,16 @@ export default {
 
 
 <style scoped>
+ul{
+    padding-left:0;
+}
+
+i{
+    width: 20px;
+}
+.fa-award{
+    font-size: 2rem;
+}
 .apartment-title {
   font-size: 2rem;
   font-weight: bold;
@@ -542,7 +575,6 @@ export default {
 
 .services-list {
   list-style-type: none;
-  padding: 0;
 }
 
 .service-icon {
@@ -560,7 +592,7 @@ export default {
   background-color: #f8f9fa;
   border-radius: 8px;
   margin-top: -3rem;
-  max-width: 500px;
+  width: 100%;
   border: 1px solid #ddd;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -589,5 +621,64 @@ export default {
 
 .shadow-sm {
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box-sponsor{
+    padding: 10px 0;
+    /* background-color: rgb(255, 255, 200); */
+    border-radius: 50px;
+}
+
+.box-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+@media (max-width: 768px){
+
+    .box-title{
+        display: block;
+    }
+
+    .fa-award{
+        font-size: 1.5rem;
+    }
+
+    .box-sponsor{
+        font-size: 0.9rem;
+        width: 40%;
+    }
+
+    .box-message{
+        justify-content: center;
+    }
+}
+
+@media (max-width: 500px){
+    .section-title,
+    .services-list,
+    span,
+    p.is-visible,
+    p.description,
+    .form-title,
+    label,
+    .btn-text,
+    .map-title{
+        font-size: 0.9rem;
+    }
+
+    .box-sponsor{
+        font-size: 0.7rem;
+        padding: 0.8rem 0;
+    }
+
+}
+
+@media (max-width: 400px){
+    .apartment-title{
+        font-size: 1.5rem
+    }
 }
 </style>
